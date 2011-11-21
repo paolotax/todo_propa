@@ -1,0 +1,15 @@
+- title @appunto.to_s
+
+.content-view
+  = render 'shared/title_bar', title: @appunto.to_s
+  #collapse
+    .field
+      %span.label Destinatario
+      %span.destinatario= @appunto.destinatario
+    .field
+      %span.label Scuola
+      %span.scuola_nome= @appunto.scuola_nome
+    .field
+      %span.label Note
+      %span.note= @appunto.note
+    

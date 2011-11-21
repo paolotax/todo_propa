@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  destinatario: MyString
+  note: MyString
+  scuola_id: 1
+
+two:
+  destinatario: MyString
+  note: MyString
+  scuola_id: 1

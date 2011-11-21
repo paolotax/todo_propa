@@ -1,0 +1,20 @@
+- title "Appunti"
+
+.content
+  .side
+    = render :partial => 'shared/episode_views'
+    = render :partial => 'shared/search_options'
+  
+  %h1 Appunti
+  
+  - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
+    = render :partial => 'shared/filters'
+
+
+  
+  #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
+    - @appunti.each do |appunto|
+      = render "appunto", :mustache => appunto_for_mustache(appunto)
+
+%script{ type: "text/html", id: "appunto_template" }
+  = render "appunto"

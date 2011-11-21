@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  keywords: MyString
+  model: MyString
+  stato: MyString
+  scuola: MyString
+
+two:
+  keywords: MyString
+  model: MyString
+  stato: MyString
+  scuola: MyString

@@ -1,0 +1,18 @@
+.filters
+  %strong Filtri: 
+  - if params[:search].present?
+    %span.filter
+      = params[:search]
+      = link_to "x", params.merge(:search => nil, :page => nil)
+  - if params[:status].present?
+    %span.filter
+      = params[:status].humanize.downcase
+      = link_to "x", params.merge(:status => nil, :page => nil)
+  - if params[:provincia].present?
+    %span.filter
+      = params[:provincia] 
+      = link_to "x", params.merge(:provincia => nil, :page => nil)
+  - if params[:citta].present?
+    %span.filter
+      = params[:citta] 
+      = link_to "x", params.merge(:citta => nil, :page => nil)

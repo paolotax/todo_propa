@@ -1,0 +1,13 @@
+= form_for @scuola, html: {:class => "feedback #{params[:action]}_scuola"} do |f|
+  -if @scuola.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@scuola.errors.count, "error")} prohibited this scuola from being saved:"
+      %ul
+        - @scuola.errors.full_messages.each do |msg|
+          %li= msg
+  = field f, :nome
+  = field f, :citta
+  = field f, :provincia
+  .actions
+    = f.submit 'Save'
+

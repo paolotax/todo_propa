@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %title= yield :title || "Untitled"
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+%body
+  #top
+    .logo
+    .user_nav
+    %ul.subscribe.horizontal
+  %div(data-pjax-container)
+    #nav_bar
+      %ul.nav.horizontal
+        %li= link_to_unless_current "Appunti",  appunti_url
+        %li= link_to_unless_current "Scuole",   scuole_url
+        %li= link_to_unless_current "Fatture",  root_url
+        %li= link_to_unless_current "Giri",     scuole_url
+      / = yield :search
+      = render partial: "shared/search"
+    #main
+      = yield

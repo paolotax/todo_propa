@@ -1,0 +1,10 @@
+.title-bar
+  %span= title
+  .links
+    - if params[:action] == 'edit'
+      = link_to "Show", url_for(controller: params[:controller], action: 'show')
+      \|
+    - if params[:action] == 'show'
+      = link_to "Edit", url_for(controller: params[:controller], action: 'edit')
+      \|
+    = link_to "Back", :back
