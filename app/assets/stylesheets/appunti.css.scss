@@ -22,9 +22,12 @@
 	  width: 160px;
 	  text-align: right;
 	  padding-right: 10px;
+		display: block;
+		
 	}
 	.label + span {
 		font-size: 18px;
+		display: block;
 	}
 	h2.bar {
 	  padding: 4px 20px;

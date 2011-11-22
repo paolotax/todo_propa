@@ -6,7 +6,7 @@
         - @scuola.errors.full_messages.each do |msg|
           %li= msg
   = field f, :nome
-  = field f, :citta
+  = field f, :citta, :label => "Città"
   = field f, :provincia
   .actions
     = f.submit 'Save'

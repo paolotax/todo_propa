@@ -8,7 +8,7 @@
 
   = field f, :destinatario
   .field
-    = f.label :scuola_id, "Scuola"
+    = f.label :scuola_id, "Scuola:"
     = f.collection_select :scuola_id, Scuola.order(:nome), :id, :nome, {}, {:class => 'chzn-select'} 
   = field f, :note, type: :text_area, rows: 6, cols: 50
   .actions
