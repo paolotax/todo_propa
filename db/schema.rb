@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117162727) do
+ActiveRecord::Schema.define(:version => 20111118094542) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -39,6 +39,22 @@ ActiveRecord::Schema.define(:version => 20111117162727) do
     t.string   "nome"
     t.string   "citta"
     t.string   "provincia"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "searches", :force => true do |t|
+    t.string   "title"
+    t.string   "model"
+    t.string   "keywords"
+    t.string   "destinatario"
+    t.string   "note"
+    t.string   "stato"
+    t.string   "scuola"
+    t.string   "citta"
+    t.string   "provincia"
+    t.string   "zona"
+    t.string   "tag_list"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

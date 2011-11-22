@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ProvaCompass::Application.load_tasks
+TodoPropa::Application.load_tasks
