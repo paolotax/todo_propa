@@ -25,9 +25,9 @@ gem 'pg'
 #   gem 'pg'
 # end
 #  
-# group :development do
-#   gem 'sqlite3'
-# end
+group :test do
+  gem 'sqlite3'
+end
 
 
 

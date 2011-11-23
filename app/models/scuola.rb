@@ -21,7 +21,7 @@ class Scuola < ActiveRecord::Base
   def self.filtra(params)
 
     scuole = scoped
-    scuole = scuole.where("scuole.nome like ?  or scuole.citta like ?", 
+    scuole = scuole.where("scuole.nome ilike ?  or scuole.citta ilike ?", 
                           "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
     scuole = scuole.where("scuole.provincia = ?", params[:provincia]) if params[:provincia].present?
     scuole = scuole.where("scuole.citta = ?",     params[:citta])     if params[:citta].present?
