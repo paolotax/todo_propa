@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111118094542) do
+ActiveRecord::Schema.define(:version => 20111123094604) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
-    t.string   "note"
+    t.text     "note"
     t.string   "stato",          :default => "",  :null => false
     t.date     "scadenza"
     t.integer  "scuola_id"
