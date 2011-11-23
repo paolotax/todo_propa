@@ -4,25 +4,24 @@
 
 jQuery ->
   if $('#scuole').length
-    new ScuolePager()
-  
-  $('.scuola a').pjax('[data-pjax-container]')
-	
-  $('.links a').pjax('[data-pjax-container]')
-	
-  $('.search_options a').pjax('[data-pjax-container]')
-	
-  $('.filter a').pjax('[data-pjax-container]')
+    scuole_pager = new ScuolePager
 
+  $('.scuola a').pjax('[data-pjax-container]')
+  $('.links a').pjax('[data-pjax-container]')
+  $('.search_options a').pjax('[data-pjax-container]')
+  $('.filter a').pjax('[data-pjax-container]')
+  
   $("[data-pjax-container]").bind 'pjax:end', () =>
     $('.chzn-select').chosen()
     if $('#scuole').length
-      new ScuolePager()
-		
+      scuole_pager = new ScuolePager if @new_pager == true
+      scuole_pager.page = 1
+      @new_pager = false
+
 class ScuolePager
   constructor: (@page = 1) ->
     $(window).scroll(@check)
-  
+
   check: =>
     if @nearBottom()
       @page++
@@ -30,10 +29,10 @@ class ScuolePager
       $.getJSON($('#scuole').data('json-url'), {page: @page}, @render)
 
   nearBottom: =>
-    $(window).scrollTop() > $(document).height() - $(window).height() - 50
-    
+    ($(window).scrollTop() > $(document).height() - $(window).height() - 50) || ($(window).scrollTop() > ($("#scuole").offset().top + $("#scuole").height()))
+		
   render: (scuole) =>
     for scuola in scuole
       $('#scuole').append Mustache.to_html($('#scuola_template').html(), scuola)
-    $(window).scroll(@check) if scuole.length > 0
+    $(window).scroll(@check) if scuole.length > 0 else @new_pager = true
 

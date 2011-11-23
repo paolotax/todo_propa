@@ -7,8 +7,8 @@ class ScuoleController < ApplicationController
     @scuole = @search.limit(20)
     @scuole = @scuole.offset((params[:page].to_i-1)*20) if params[:page].present?
     
-    @provincie = Scuola.select_provincia.filtra(params.except(:provincia).except(:citta))
-    @citta     = Scuola.select_citta.filtra(params.except(:citta))
+    @provincie = Scuola.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
+    @citta     = Scuola.select_citta.filtra(params.except(:citta)).order(:citta)
     
     respond_to do |format|
       format.html
