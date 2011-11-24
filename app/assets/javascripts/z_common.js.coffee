@@ -23,16 +23,22 @@ jQuery ->
   if $('#scuole').length
     console.log("scuole present 1: ")
     scuole_pager = new ScuolePager
+  if $('#appunti').length
+    console.log("scuole present 1: ")
+    new AppuntiPager(1)
+
+
 
   $("[data-pjax-container]").bind 'pjax:start', () =>
+    $(window).unbind('scroll', @check)
     if $('#scuole').length == 0
       @new_pager = true
-    console.log("pjax:start " + scuole_pager.page)
+      console.log("pjax:start " + scuole_pager.page)
 
   $("[data-pjax-container]").bind 'pjax:end', () =>
     $('.chzn-select').chosen()
     if $('#scuole').length
-      scuole_pager = new ScuolePager if @new_pager == true
+      scuole_pager = new ScuolePager if @new_pager == true else $(window).scroll(@check)
       scuole_pager.page = 1
       @new_pager = false
     console.log("pjax:end " + $('#scuole').length)
