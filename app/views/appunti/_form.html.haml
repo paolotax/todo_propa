@@ -9,7 +9,7 @@
   = field f, :destinatario
   .field
     = f.label :scuola_id, "Scuola:"
-    = f.collection_select :scuola_id, Scuola.order(:nome), :id, :nome, {}, {:class => 'chzn-select'} 
+    = f.collection_select :scuola_id, current_user.scuole.order(:nome), :id, :nome, {}, {:class => 'chzn-select', :placeholder => "Choose a country..."} 
   = field f, :note, type: :text_area, rows: 6, cols: 50
   .actions
     = f.submit 'Save'

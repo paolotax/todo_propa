@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111126070612) do
+ActiveRecord::Schema.define(:version => 20111126193009) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -41,7 +41,11 @@ ActiveRecord::Schema.define(:version => 20111126070612) do
     t.string   "provincia"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "scuole", ["nome"], :name => "index_scuole_on_nome"
+  add_index "scuole", ["user_id"], :name => "index_scuole_on_user_id"
 
   create_table "searches", :force => true do |t|
     t.string   "title"

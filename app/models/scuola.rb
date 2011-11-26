@@ -1,4 +1,6 @@
 class Scuola < ActiveRecord::Base
+  
+  belongs_to :user
   has_many :appunti
   
   validates :nome,  :presence => true,

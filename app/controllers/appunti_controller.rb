@@ -2,13 +2,13 @@ class AppuntiController < ApplicationController
   
   def index
     
-    @search = Appunto.includes(:scuola).filtra(params)
+    @search = current_user.appunti.includes(:scuola).filtra(params)
 
     @appunti = @search.recente.limit(20)
     @appunti = @appunti.offset((params[:page].to_i-1)*20) if params[:page].present?
 
-    @provincie = Scuola.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
-    @citta     = Scuola.select_citta.filtra(params.except(:citta)).order(:citta)
+    @provincie = current_user.scuole.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
+    @citta     = current_user.scuole.select_citta.filtra(params.except(:citta)).order(:citta)
     
     respond_to do |format|
       format.html
@@ -21,7 +21,7 @@ class AppuntiController < ApplicationController
   # GET /appunti/1
   # GET /appunti/1.json
   def show
-    @appunto = Appunto.find(params[:id])
+    @appunto = current_user.appunti.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -32,7 +32,7 @@ class AppuntiController < ApplicationController
   # GET /appunti/new
   # GET /appunti/new.json
   def new
-    @appunto = Appunto.new
+    @appunto = current_user.appunti.build
 
     respond_to do |format|
       format.html # new.html.erb

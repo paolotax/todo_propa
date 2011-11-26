@@ -1,4 +1,6 @@
 class Appunto < ActiveRecord::Base
+  
+  belongs_to :user
   belongs_to :scuola
   
  #  validates :user_id,  :presence => true

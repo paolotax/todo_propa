@@ -3,13 +3,13 @@ class ScuoleController < ApplicationController
   
   def index
     
-    @search = Scuola.filtra(params)
+    @search = current_user.scuole.filtra(params)
   
     @scuole = @search.limit(20)
     @scuole = @scuole.offset((params[:page].to_i-1)*20) if params[:page].present?
     
-    @provincie = Scuola.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
-    @citta     = Scuola.select_citta.filtra(params.except(:citta)).order(:citta)
+    @provincie = current_user.scuole.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
+    @citta     = current_user.scuole.select_citta.filtra(params.except(:citta)).order(:citta)
     
     respond_to do |format|
       format.html
@@ -22,7 +22,7 @@ class ScuoleController < ApplicationController
   
 
   def show
-    @scuola = Scuola.find(params[:id])
+    @scuola = current_user.scuole.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -33,7 +33,7 @@ class ScuoleController < ApplicationController
   # GET /scuole/new
   # GET /scuole/new.json
   def new
-    @scuola = Scuola.new
+    @scuola = current_user.scuole.build
 
     respond_to do |format|
       format.html # new.html.erb
