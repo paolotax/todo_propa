@@ -1,5 +1,6 @@
 class ScuoleController < ApplicationController
-
+  
+  
   def index
     
     @search = Scuola.filtra(params)

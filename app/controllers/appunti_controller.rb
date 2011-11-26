@@ -1,5 +1,5 @@
 class AppuntiController < ApplicationController
-
+  
   def index
     
     @search = Appunto.includes(:scuola).filtra(params)
