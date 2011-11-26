@@ -5,6 +5,8 @@
     = render :partial => 'shared/episode_views'
     = render :partial => 'shared/search_options'
   
+  = render "form_appunto_small"
+
   %h1 Appunti
   
   - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?

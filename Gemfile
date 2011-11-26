@@ -18,7 +18,7 @@ gem "mustache"
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'rack-pjax'
-
+gem 'devise'
 
 gem 'pg'
 # group :production do

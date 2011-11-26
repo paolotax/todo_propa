@@ -3,10 +3,10 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  $('.scuola a').pjax('[data-pjax-container]')
-  $('.links a').pjax('[data-pjax-container]')
-  $('.search_options a').pjax('[data-pjax-container]')
-  $('.filter a').pjax('[data-pjax-container]')
+  $('.scuola a').pjax('[data-pjax-container]', { timeout: 10000 })
+  $('.links a').pjax('[data-pjax-container]', { timeout: 10000 })
+  $('.search_options a').pjax('[data-pjax-container]', { timeout: 10000 })
+  $('.filter a').pjax('[data-pjax-container]', { timeout: 10000 })
 
 
 
