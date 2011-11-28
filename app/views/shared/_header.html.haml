@@ -1,0 +1,20 @@
+- if user_signed_in?
+  #header_settings
+    = image_tag gravatar_url(current_user.email, :size => 80, :default => "mm"), :class => "avatar"
+    / = image_tag("default-avatar.jpg", :alt => "avatar", :class => 'avatar', :title => 'avatar')
+    %ul
+      %li.user-name= current_user.username
+      %li#account-links.account
+        .support
+          = image_tag 'header_support.png'
+        %a.tab 
+          Supporto
+        .separator
+        .wheel
+          = image_tag 'header_preferences.png'
+        = link_to 'Profilo', edit_user_registration_path, :class => 'tab' 
+        .separator
+        = link_to "Esci", destroy_user_session_path, {:method => :delete, :class => 'tab'}
+        
+- logo  = image_tag("TodoPropa3.png", :size => "224x80", :alt => "TodoPropa - Propaganda scolastica")
+.logo= link_to logo, root_path
