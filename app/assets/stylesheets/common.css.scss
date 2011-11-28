@@ -41,6 +41,40 @@
   padding-left: 5px;
 }
 
+
+/* root element for scrollable */
+.scrollable {
+	/* required settings */
+	position:relative;
+	overflow:hidden;
+	/* vertical scrollables have typically larger height than width but not now */
+	height: 300px;
+	
+	list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px #BBB;
+  border-top: none;
+  padding: 5px 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  -moz-border-radius-bottomright: 5px;
+}
+
+/* root element for scrollable items */
+.scrollable .items {
+	position:absolute;
+	/* this time we have very large space for the height */
+	height:20000em;
+	
+	.item {
+		margin: 5px 0;
+	  font-size: 14px;
+	}
+}
 /*** SEARCH_OPTIONS ***/
 
 .search_options {

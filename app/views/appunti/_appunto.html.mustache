@@ -1,10 +1,19 @@
-<div class="appunto">
-  <h2><a href="{{url}}">{{destinatario}}</a></h2>
-  <h3><a href="{{url_scuola}}">{{scuola_nome}}</a></h2>
-  <div class="details">
-    {{note}}
-    {{telefono}}
-    {{email}}
-    {{stato}}
+<div class="appunto {{stato}}" id="appunto_{{id}}">
+  <div class="stato {{stato}}">{{stato}}</div>
+  <div class="intestazione">
+    <div class="destinatario"><a href="{{url}}">{{destinatario}}</a></div>
+    <div class="scuola_nome" ><a href="{{url_scuola}}">{{scuola_nome}}</a></div>
   </div>
+  <div class="note"        >{{note}}</div>
+  <div class="recapiti {{con_recapiti}}">
+    <div class="telefono"    >{{telefono}}</div>
+    <div class="email"       >{{email}}</div>
+  </div>
+  <div class="azioni">
+    <div class="show"  ><a href="{{url}}"     >Mostra</a></div>
+    <div class="print" ><a href="{{url}}.pdf" >Stampa</a></div>
+    <div class="edit"  ><a href="{{url}}/edit">Modifica</a></div>
+    <div class="delete"><a href="{{url}}" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a></div>
+  </div>
+  <div class="clear"></div>
 </div>

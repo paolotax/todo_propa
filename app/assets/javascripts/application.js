@@ -5,9 +5,14 @@
 // the compiled file.
 //
 //= require jquery
+//= require jquery.tools.min
 //= require jquery_ujs
 //= require chosen.jquery
 //= require mustache
 //= require jquery.pjax
 //= require_tree .
 
+
+$(document).ready(function() {
+	$(".scrollable").scrollable({ vertical: true, mousewheel: true, circular: true });	
+});

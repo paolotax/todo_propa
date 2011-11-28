@@ -4,13 +4,25 @@ module AppuntiHelper
     {
       url:          appunto_url(appunto),
       url_scuola:   "#{scuola_url(appunto.scuola) if appunto.scuola.present?}",
-      destinatario: appunto.destinatario,
+      id:           appunto.id, 
+      destinatario: appunto.destinatario.present? ? appunto.destinatario : "...",
       scuola_nome:  appunto.scuola_nome,
       note:         appunto.note,
-      stato:        appunto.stato,
+      stato:        stato_to_s(appunto),
       telefono:     appunto.telefono,
-      email:        appunto.email
+      email:        appunto.email,
+      con_recapiti: appunto.telefono.present? || appunto.email.present? ? "con_recapiti" : "senza_recapiti"
     }
+  end
+  
+  def stato_to_s(appunto)
+    if appunto.stato == "P"
+      "in_sospeso"
+    elsif appunto.stato == "X"
+      "completato"
+    else
+      "da_fare"
+    end   
   end
   
   

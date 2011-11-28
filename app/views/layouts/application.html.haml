@@ -7,10 +7,7 @@
     = csrf_meta_tags
 %body
   #top
-    .logo
-      = link_to image_tag("TodoPropa3.png", :size => "224x80", :alt => "TodoPropa - Propaganda scolastica"), root_path
-    .user_nav
-      = link_to "Esci", destroy_user_session_path, :method => :delete
+    = render "shared/header"
     %ul.subscribe.horizontal
 
   %div(data-pjax-container)

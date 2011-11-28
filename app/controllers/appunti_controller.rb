@@ -18,8 +18,6 @@ class AppuntiController < ApplicationController
     end
   end
 
-  # GET /appunti/1
-  # GET /appunti/1.json
   def show
     @appunto = current_user.appunti.find(params[:id])
 
@@ -29,8 +27,6 @@ class AppuntiController < ApplicationController
     end
   end
 
-  # GET /appunti/new
-  # GET /appunti/new.json
   def new
     @appunto = current_user.appunti.build
 
@@ -40,19 +36,16 @@ class AppuntiController < ApplicationController
     end
   end
 
-  # GET /appunti/1/edit
   def edit
-    @appunto = Appunto.find(params[:id])
+    @appunto = current_user.appunti.find(params[:id])
   end
 
-  # POST /appunti
-  # POST /appunti.json
   def create
-    @appunto = Appunto.new(params[:appunto])
+    @appunto = current_user.appunti.build(params[:appunto])
 
     respond_to do |format|
       if @appunto.save
-        format.html { redirect_to @appunto, notice: 'Appunto was successfully created.' }
+        format.html { redirect_to @appunto, notice: 'Appunto creato!' }
         format.json { render json: @appunto, status: :created, location: @appunto }
       else
         format.html { render action: "new" }
@@ -61,14 +54,12 @@ class AppuntiController < ApplicationController
     end
   end
 
-  # PUT /appunti/1
-  # PUT /appunti/1.json
   def update
-    @appunto = Appunto.find(params[:id])
+    @appunto = current_user.appunti.find(params[:id])
 
     respond_to do |format|
       if @appunto.update_attributes(params[:appunto])
-        format.html { redirect_to @appunto, notice: 'Appunto was successfully updated.' }
+        format.html { redirect_to @appunto, notice: 'Appunto modificato.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -77,15 +68,14 @@ class AppuntiController < ApplicationController
     end
   end
 
-  # DELETE /appunti/1
-  # DELETE /appunti/1.json
   def destroy
-    @appunto = Appunto.find(params[:id])
+    @appunto = current_user.appunti.find(params[:id])
     @appunto.destroy
 
     respond_to do |format|
       format.html { redirect_to appunti_url }
       format.json { head :ok }
+      format.js
     end
   end
 end

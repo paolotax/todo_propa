@@ -42,6 +42,10 @@ jQuery ->
       console.log("pjax:start " + @page)
 
   $("[data-pjax-container]").bind 'pjax:end', () =>
+    $(".scrollable").scrollable  
+      vertical: true, 
+      mousewheel: true,
+      circular: true 
     $('.chzn-select').chosen()
     if $('#scuole').length
       scuole_pager = new ListPager(1, $("#scuole"), $('#scuola_template')) if @new_pager == true else $(window).scroll(@check)
