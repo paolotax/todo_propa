@@ -1,5 +1,7 @@
 class AppuntiController < ApplicationController
   
+  can_edit_on_the_spot
+  
   def index
     
     @search = current_user.appunti.includes(:scuola).filtra(params)

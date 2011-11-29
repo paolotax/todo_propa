@@ -1,5 +1,6 @@
 class ScuoleController < ApplicationController
   
+  can_edit_on_the_spot
   
   def index
     

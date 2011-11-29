@@ -14,6 +14,7 @@ gem 'haml-rails'
 gem 'jquery-rails'
 gem 'rack-pjax'
 gem 'devise'
+gem 'on_the_spot'
 
 gem 'pg'
 

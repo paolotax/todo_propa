@@ -6,3 +6,5 @@
 jQuery ->
   #$('.appunto a').pjax('[data-pjax-container]', { timeout: 10000 })
   $('.chzn-select').chosen()
+  $('.appunto .stato').live 'click', () ->
+    alert 'gino'

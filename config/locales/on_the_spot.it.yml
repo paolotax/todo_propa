@@ -1,0 +1,5 @@
+it:
+  on_the_spot:
+    ok: Ok
+    cancel: Annulla
+    tooltip: Click per modificare ...

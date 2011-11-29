@@ -5,11 +5,10 @@
   #collapse
     .field
       %span.label Destinatario:
-      %span.destinatario= @appunto.destinatario
+      %span.destinatario= on_the_spot_edit @appunto, :destinatario
     .field
       %span.label Scuola:
       %span.scuola_nome= @appunto.scuola_nome
     .field
       %span.label Note:
-      %span.note= simple_format @appunto.note
-    
+      %span.note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5
