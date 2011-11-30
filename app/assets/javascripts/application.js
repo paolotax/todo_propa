@@ -24,6 +24,12 @@ $(document).ready(function() {
 		$(this).css('background-color', '#EEF2A0');
 	});
 	
+	$('.note_markdown').live('click',function(event) {
+		$(this).editable("appunti" {
+			
+		});
+	});
+	
 	// $('.on_the_spot_editing').live('click',function(event) {
 	//     $(this).editable($(this).data('url'), {
 	// 		  type:       'textarea',

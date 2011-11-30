@@ -11,6 +11,10 @@ module ApplicationHelper
     content_tag(:div, (f.label(attribute, "#{label_name}:" ) + f.send(type, attribute, options)), :class => "field")
   end
   
+  def markdown(text)
+    options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]
+    Redcarpet.new(text, *options).to_html.html_safe
+  end
 
   def gravatar(user, options = {})
     email_address = user.email.downcase

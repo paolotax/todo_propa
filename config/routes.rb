@@ -6,6 +6,9 @@ TodoPropa::Application.routes.draw do
     collection do
       put :update_attribute_on_the_spot
     end
+    member do
+      get :get_note
+    end
   end
   
   resources :scuole do

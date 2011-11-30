@@ -11,4 +11,7 @@
       %span.scuola_nome= @appunto.scuola_nome
     .field
       %span.label Note:
-      %span.note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5
+      %span.note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :loadurl => get_note_appunto_path(@appunto)
+    .field
+      %span.label Note:
+      %span.note_markdown= markdown @appunto.note
