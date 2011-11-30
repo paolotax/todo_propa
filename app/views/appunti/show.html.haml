@@ -2,16 +2,14 @@
 
 .content-view
   = render 'shared/title_bar', title: @appunto.to_s
-  #collapse
+  #appunto-show
     .field
-      %span.label Destinatario:
-      %span.destinatario= on_the_spot_edit @appunto, :destinatario
+      .label Destinatario:
+      .destinatario= on_the_spot_edit @appunto, :destinatario
     .field
-      %span.label Scuola:
-      %span.scuola_nome= @appunto.scuola_nome
+      .label Scuola:
+      .scuola_nome= @appunto.scuola_nome
     .field
-      %span.label Note:
-      %span.note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :loadurl => get_note_appunto_path(@appunto)
-    .field
-      %span.label Note:
-      %div.note_markdown{id: "appunto__note__#{@appunto.id}", "data-auth" => "ppp"}= markdown @appunto.note
+      .label Note:
+      .note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :raw => true, :display_text => markdown(@appunto.note), :loadurl => get_note_appunto_path(@appunto)
+    

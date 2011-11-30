@@ -24,21 +24,21 @@ $(document).ready(function() {
 		$(this).css('background-color', '#EEF2A0');
 	});
 	
-	$('.note_markdown').live('click',function(event) {
-		$(this).editable("update_attribute_on_the_spot", {
-            type:       'textarea',
-            cancel:     'Annulla',
-            submit:     'OK',
-            indicator:  '...',
-            tooltip:    'Click to edit...',
-            rows:       3,
-            cols:       40,
-            method:     "post",
-            placeholder: "...",
-            submitdata: {id: $(this).attr('id'), _method: "put" }
-
-		});
-	});
+	// $('.note_markdown').live('click',function(event) {
+	// 	$(this).editable("update_attribute_on_the_spot", {
+	//             type:       'textarea',
+	//             cancel:     'Annulla',
+	//             submit:     'OK',
+	//             indicator:  '...',
+	//             tooltip:    'Click to edit...',
+	//             rows:       3,
+	//             cols:       40,
+	//             method:     "post",
+	//             placeholder: "...",
+	//             submitdata: {id: $(this).attr('id'), _method: "put" }
+	// 
+	// 	});
+	// });
 	
 	// $('.on_the_spot_editing').live('click',function(event) {
 	//     $(this).editable($(this).data('url'), {

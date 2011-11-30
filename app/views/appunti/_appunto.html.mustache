@@ -7,8 +7,9 @@
   <div class="note"        >
     <span class="on_the_spot_editing" data-auth="{{auth_token}}" data-cancel="Annulla" 
           data-columns="40" data-edittype="textarea" data-ok="Ok" data-rows="3" 
-          data-tooltip="Click per modificare ..." data-raw="true"
-          data-url="/appunti/update_attribute_on_the_spot" id="appunto__note__{{id}}" 
+          data-tooltip="Click per modificare ..."
+          data-url="/appunti/update_attribute_on_the_spot?raw=true" id="appunto__note__{{id}}" 
+          data-loadurl="/appunti/{{id}}/get_note"
           title="...">{{note}}</span>
   </div>
   <div class="recapiti {{con_recapiti}}">

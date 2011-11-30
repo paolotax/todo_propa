@@ -9,7 +9,7 @@ development:
   reconnect: false
   database: todopropa_development
   pool: 5
-  username: ptax
+  username: paolotax
   password: ptax
   min_messages: warning
 
