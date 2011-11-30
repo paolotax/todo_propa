@@ -14,4 +14,4 @@
       %span.note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :loadurl => get_note_appunto_path(@appunto)
     .field
       %span.label Note:
-      %span.note_markdown= markdown @appunto.note
+      %div.note_markdown{id: "appunto__note__#{@appunto.id}", "data-auth" => "ppp"}= markdown @appunto.note

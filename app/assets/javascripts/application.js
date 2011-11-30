@@ -25,8 +25,18 @@ $(document).ready(function() {
 	});
 	
 	$('.note_markdown').live('click',function(event) {
-		$(this).editable("appunti", {
-			
+		$(this).editable("update_attribute_on_the_spot", {
+            type:       'textarea',
+            cancel:     'Annulla',
+            submit:     'OK',
+            indicator:  '...',
+            tooltip:    'Click to edit...',
+            rows:       3,
+            cols:       40,
+            method:     "post",
+            placeholder: "...",
+            submitdata: {id: $(this).attr('id'), _method: "put" }
+
 		});
 	});
 	
