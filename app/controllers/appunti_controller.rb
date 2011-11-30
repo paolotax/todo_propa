@@ -1,5 +1,7 @@
 class AppuntiController < ApplicationController
   
+  can_edit_on_the_spot
+  
   def index
     
     @search = current_user.appunti.includes(:scuola).filtra(params)
@@ -16,6 +18,11 @@ class AppuntiController < ApplicationController
         render json: @appunti.map { |a| view_context.appunto_for_mustache(a) }
       end
     end
+  end
+  
+  def get_note
+    @appunto = current_user.appunti.find(params[:id])
+    render :inline => "<%= markdown @appunto.note %>"
   end
 
   def show

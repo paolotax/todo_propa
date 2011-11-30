@@ -15,12 +15,14 @@ class ListPager
       @page++
       $(window).unbind('scroll', @check)
       $.getJSON(@list.data('json-url'), {page: @page}, @render)
-
+      $('.on_the_spot_editing').each initializeOnTheSpot
+	
   nearBottom: =>
     $(window).scrollTop() > $(document).height() - $(window).height() - 50  or $(window).scrollTop() + $(window).height() + 50 > @list.offset().top + @list.height() 
 
   render: (objs) =>
     for obj in objs
+      console.log(obj)
       @list.append Mustache.to_html(@template.html(), obj)
     $(window).scroll(@check) if objs.length > 0 else @new_pager = true
 
@@ -42,6 +44,7 @@ jQuery ->
       console.log("pjax:start " + @page)
 
   $("[data-pjax-container]").bind 'pjax:end', () =>
+    $('.on_the_spot_editing').each initializeOnTheSpot
     $(".scrollable").scrollable  
       vertical: true, 
       mousewheel: true,

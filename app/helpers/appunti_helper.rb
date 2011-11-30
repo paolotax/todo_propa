@@ -11,7 +11,8 @@ module AppuntiHelper
       stato:        stato_to_s(appunto),
       telefono:     appunto.telefono,
       email:        appunto.email,
-      con_recapiti: appunto.telefono.present? || appunto.email.present? ? "con_recapiti" : "senza_recapiti"
+      con_recapiti: appunto.telefono.present? || appunto.email.present? ? "con_recapiti" : "senza_recapiti",
+      auth_token:   form_authenticity_token
     }
   end
   

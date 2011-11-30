@@ -4,7 +4,13 @@
     <div class="destinatario"><a href="{{url}}">{{destinatario}}</a></div>
     <div class="scuola_nome" ><a href="{{url_scuola}}">{{scuola_nome}}</a></div>
   </div>
-  <div class="note"        >{{note}}</div>
+  <div class="note"        >
+    <span class="on_the_spot_editing" data-auth="{{auth_token}}" data-cancel="Annulla" 
+          data-columns="40" data-edittype="textarea" data-ok="Ok" data-rows="3" 
+          data-tooltip="Click per modificare ..." 
+          data-url="/appunti/update_attribute_on_the_spot" id="appunto__note__{{id}}" 
+          style="background-color: inherit; font-size: 14px;" title="...">{{note}}</span>
+  </div>
   <div class="recapiti {{con_recapiti}}">
     <div class="telefono"    >{{telefono}}</div>
     <div class="email"       >{{email}}</div>
@@ -15,5 +21,6 @@
     <div class="edit"  ><a href="{{url}}/edit">Modifica</a></div>
     <div class="delete"><a href="{{url}}" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a></div>
   </div>
+  
   <div class="clear"></div>
 </div>
