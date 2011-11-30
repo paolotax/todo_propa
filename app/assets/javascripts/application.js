@@ -25,7 +25,7 @@ $(document).ready(function() {
 	});
 	
 	$('.note_markdown').live('click',function(event) {
-		$(this).editable("appunti" {
+		$(this).editable("appunti", {
 			
 		});
 	});
