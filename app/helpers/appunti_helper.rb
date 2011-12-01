@@ -7,7 +7,7 @@ module AppuntiHelper
       id:           appunto.id, 
       destinatario: appunto.destinatario.present? ? appunto.destinatario : "...",
       scuola_nome:  appunto.scuola_nome,
-      note:         appunto.note,
+      note:         markdown(appunto.note),
       stato:        stato_to_s(appunto),
       telefono:     appunto.telefono,
       email:        appunto.email,

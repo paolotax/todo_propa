@@ -22,7 +22,7 @@ class AppuntiController < ApplicationController
   
   def get_note
     @appunto = current_user.appunti.find(params[:id])
-    render :inline => "<%= markdown @appunto.note %>"
+    render :inline => @appunto.note
   end
 
   def show
