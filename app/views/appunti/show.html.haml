@@ -12,4 +12,9 @@
     .field
       .label Note:
       .note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :display_text => markdown(@appunto.note), :loadurl => get_note_appunto_path(@appunto), :callback => "testCallback"
-    
+    .field
+      .label Telefono:
+      .telefono= on_the_spot_edit @appunto, :telefono
+    .field
+      .label Email:
+      .telefono= on_the_spot_edit @appunto, :email

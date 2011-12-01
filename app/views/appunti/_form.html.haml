@@ -11,5 +11,7 @@
     = f.label :scuola_id, "Scuola:"
     = f.collection_select :scuola_id, current_user.scuole.order(:nome), :id, :nome, {}, {:class => 'chzn-select', :placeholder => "Choose a country..."} 
   = field f, :note, type: :text_area, rows: 6, cols: 50
+  = field f, :telefono  
+  = field f, :email
   .actions
     = f.submit 'Save'

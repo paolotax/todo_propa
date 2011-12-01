@@ -15,9 +15,6 @@
 //= require_tree .
 
 function testCallback(object, value, settings) {
-  console.log(object);
-  console.log(value);
-  console.log(settings);
   var converter = new Showdown.converter();
   var html = converter.makeHtml(value);
   $(object).html(html);
@@ -34,23 +31,23 @@ $(document).ready(function() {
 		$(this).css('background-color', '#EEF2A0');
 	});
 	
-  $('.note_mark').live('click',function(event) {
-    $(this).editable($(this).data('url'), {
-              type:       'textarea',
-              cancel:     'Annulla',
-              submit:     'OK',
-              indicator:  '...',
-              tooltip:    'Click to edit...',
-              rows:       3,
-              cols:       40,
-              method:      "post",
-              placeholder: "...",
-              loadurl:     $(this).data('loadurl'), 
-              callback:   "testCallback",
-              submitdata: {id: $(this).attr('id'), value:$(this).attr('name'), _method: "put", authenticity_token: $(this).data('auth_token') }
-  
-    });
-  });
+  // $('.note_mark').live('click',function(event) {
+  //   $(this).editable($(this).data('url'), {
+  //             type:       'textarea',
+  //             cancel:     'Annulla',
+  //             submit:     'OK',
+  //             indicator:  '...',
+  //             tooltip:    'Click to edit...',
+  //             rows:       3,
+  //             cols:       40,
+  //             method:      "post",
+  //             placeholder: "...",
+  //             loadurl:     $(this).data('loadurl'), 
+  //             callback:   "testCallback",
+  //             submitdata: {id: $(this).attr('id'), value:$(this).attr('name'), _method: "put", authenticity_token: $(this).data('auth_token') }
+  // 
+  //   });
+  // });
 	
 	// $('.on_the_spot_editing').live('click',function(event) {
 	//     $(this).editable($(this).data('url'), {
