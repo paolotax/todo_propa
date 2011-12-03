@@ -1,5 +1,14 @@
+#wrapper {
+	padding-top: 113px;
+}
+
 #top {
-  position: relative;
+  top: 0;
+  height: 113px;
+  position: fixed;
+  width: 100%;
+  background-color: inherit;
+  z-index: 30;
 }
 
 #top .logo {

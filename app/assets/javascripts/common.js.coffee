@@ -1,2 +1,2 @@
 jQuery ->
-  $('#flash_notice').delay(2000).slideUp('slow')
+  $('#flash_notice, #flash_alert').delay(2000).slideUp('slow')

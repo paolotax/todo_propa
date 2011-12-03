@@ -16,7 +16,7 @@ gem 'rack-pjax'
 gem 'devise'
 gem 'on_the_spot', git: 'https://github.com/maximecurioni/on_the_spot.git'
 gem 'redcarpet'
-
+gem 'css3buttons'
 
 gem 'pg'
 

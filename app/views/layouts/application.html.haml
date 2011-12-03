@@ -9,8 +9,7 @@
   #top
     = render "shared/header"
     %ul.subscribe.horizontal
-
-  %div(data-pjax-container)
+  %div#wrapper(data-pjax-container)
     - if ['scuole', 'appunti'].include?(params[:controller])
       #nav_bar
         %ul.nav.horizontal

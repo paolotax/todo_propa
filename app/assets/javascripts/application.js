@@ -12,6 +12,7 @@
 //= require jquery.pjax
 //= require showdown
 //= require on_the_spot
+
 //= require_tree .
 
 function testCallback(object, value, settings) {
@@ -22,6 +23,8 @@ function testCallback(object, value, settings) {
 
 
 $(document).ready(function() {
+	
+	
 	$(".scrollable").scrollable({ vertical: true, mousewheel: true, circular: true });	
 	
 	$(".on_the_spot_editing, .note_mark").live( 'mouseout', function() {

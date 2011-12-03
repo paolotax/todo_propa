@@ -132,13 +132,17 @@ label.check_box {
 }
 
 
-/*** SECTIONS ***/
+/*** NAV_BAR ***/
 
 
 #nav_bar {
-  position: relative;
-  padding: 8px 100px;
-  height: 23px;
+  top: 113px;
+  width:100%;
+  z-index: 30;
+  position: fixed;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  min-height: 23px;
 	background-color: #333;
   border-top: solid 1px #FFF;
   background: -webkit-gradient(linear, left top, left bottom, from(#5C5C5C), to(#111));
@@ -151,6 +155,11 @@ label.check_box {
 #nav_bar .nav {
   float: right;
   padding-top: 2px;
+  padding-right: 100px;
+}
+
+#nav_bar form {
+	padding-left: 100px;
 }
 
 #nav_bar .nav li {
@@ -164,7 +173,7 @@ label.check_box {
 }
 
 #main {
-  padding-top: 15px;
+  padding-top: 69px;
   max-width: 1500px;
 }
 
@@ -178,6 +187,7 @@ label.check_box {
 
 .content {
   margin: 0 100px;
+  min-width: 720px;
 }
 
 .content {
@@ -367,7 +377,8 @@ label.check_box {
   position: absolute;
   right: 0;
   top: 0;
-	width: 180px;
+	width: 20%;
+	min-width: 165px;
 }
 
 .side .banner {

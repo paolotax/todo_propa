@@ -1,27 +1,29 @@
 <div class="appunto {{stato}}" id="appunto_{{id}}">
   <div class="stato {{stato}}">{{stato}}</div>
-  <div class="intestazione">
-    <div class="destinatario"><a href="{{url}}">{{destinatario}}</a></div>
-    <div class="scuola_nome" ><a href="{{url_scuola}}">{{scuola_nome}}</a></div>
-  </div>
-  <div class="note"        >
-    <span class="on_the_spot_editing" data-auth="{{auth_token}}" data-cancel="Annulla" 
-          data-columns="40" data-edittype="textarea" data-ok="Ok" data-rows="3" 
-          data-tooltip="Click per modificare ..."
-          data-url="/appunti/update_attribute_on_the_spot?raw=true" id="appunto__note__{{id}}" 
-          data-loadurl="/appunti/{{id}}/get_note"
-          data-callback="testCallback"
-          title="...">{{{note}}}</span>
-  </div>
-  <div class="recapiti {{con_recapiti}}">
-    <div class="telefono"    >{{telefono}}</div>
-    <div class="email"       >{{email}}</div>
-  </div>
+  <div class="appunto-wrap">
+    <div class="intestazione">
+      <div class="destinatario"><a href="{{url}}">{{destinatario}}</a></div>
+      <div class="scuola_nome" ><a href="{{url_scuola}}">{{scuola_nome}}</a></div>
+    </div>
+    <div class="note"        >
+      <span class="on_the_spot_editing" data-auth="{{auth_token}}" data-cancel="Annulla" 
+            data-columns="40" data-edittype="textarea" data-ok="Ok" data-rows="3" 
+            data-tooltip="Click per modificare ..."
+            data-url="/appunti/update_attribute_on_the_spot?raw=true" id="appunto__note__{{id}}" 
+            data-loadurl="/appunti/{{id}}/get_note"
+            data-callback="testCallback"
+            title="...">{{{note}}}</span>
+      <div class="recapiti {{con_recapiti}}">
+        <div class="telefono"    >{{telefono}}</div>
+        <div class="email"       >{{email}}</div>
+      </div>
+    </div>
+  </div>  
   <div class="azioni">
-    <div class="show"  ><a href="{{url}}"     >Mostra</a></div>
-    <div class="print" ><a href="{{url}}.pdf" >Stampa</a></div>
-    <div class="edit"  ><a href="{{url}}/edit">Modifica</a></div>
-    <div class="delete"><a href="{{url}}" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a></div>
+    <div class="show"  ><a href="{{url}}" title="mostra dettagli">Mostra</a></div>
+    <div class="print" ><a href="{{url}}.pdf" title="stampa pdf">Stampa</a></div>
+    <div class="edit"  ><a href="{{url}}/edit" title="modifica">Modifica</a></div>
+    <div class="delete"><a href="{{url}}" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a></div>
   </div>
   
   <div class="clear"></div>
