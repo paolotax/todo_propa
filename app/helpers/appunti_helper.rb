@@ -2,8 +2,7 @@ module AppuntiHelper
   
   def appunto_for_mustache(appunto)
     {
-      url:          appunto_url(appunto),
-      url_scuola:   "#{scuola_url(appunto.scuola) if appunto.scuola.present?}",
+      scuola_id:    appunto.scuola_id,
       id:           appunto.id, 
       destinatario: appunto.destinatario.present? ? appunto.destinatario : "...",
       scuola_nome:  appunto.scuola_nome,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111126193009) do
+ActiveRecord::Schema.define(:version => 20111204101411) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -34,6 +34,44 @@ ActiveRecord::Schema.define(:version => 20111126193009) do
   add_index "appunti", ["scuola_id"], :name => "index_appunti_on_scuola_id"
   add_index "appunti", ["stato"], :name => "index_appunti_on_stato"
   add_index "appunti", ["user_id"], :name => "index_appunti_on_user_id"
+
+  create_table "libri", :force => true do |t|
+    t.string   "autore"
+    t.string   "titolo"
+    t.string   "sigla"
+    t.decimal  "prezzo_copertina",   :precision => 8, :scale => 2
+    t.decimal  "prezzo_consigliato", :precision => 8, :scale => 2
+    t.decimal  "coefficente",        :precision => 2, :scale => 1
+    t.string   "cm"
+    t.string   "ean"
+    t.string   "type"
+    t.integer  "materia_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "libri", ["titolo"], :name => "index_libri_on_titolo"
+
+  create_table "righe", :force => true do |t|
+    t.integer  "libro_id"
+    t.integer  "quantita"
+    t.decimal  "prezzo_unitario", :precision => 9, :scale => 3
+    t.decimal  "sconto",          :precision => 5, :scale => 2, :default => 0.0
+    t.boolean  "consegnato"
+    t.boolean  "pagato"
+    t.integer  "appunto_id"
+    t.integer  "fattura_id"
+    t.integer  "magazzino_id"
+    t.integer  "causale_id"
+    t.integer  "movimento"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "righe", ["appunto_id"], :name => "index_righe_on_appunto_id"
+  add_index "righe", ["causale_id"], :name => "index_righe_on_causale_id"
+  add_index "righe", ["fattura_id"], :name => "index_righe_on_fattura_id"
+  add_index "righe", ["libro_id"], :name => "index_righe_on_libro_id"
 
   create_table "scuole", :force => true do |t|
     t.string   "nome"

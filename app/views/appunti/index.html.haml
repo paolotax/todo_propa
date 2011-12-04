@@ -15,8 +15,10 @@
 
   
   #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
+    = add_pill_button_link_to "Nuovo appunto", new_appunto_path, style: "float: right;", id: "nuovo-appunto"
     - @appunti.each do |appunto|
       = render "appunto", :mustache => appunto_for_mustache(appunto)
+      
 
 %script{ type: "text/html", id: "appunto_template" }
   = render "appunto"

@@ -16,8 +16,9 @@ gem 'rack-pjax'
 gem 'devise'
 gem 'on_the_spot', git: 'https://github.com/maximecurioni/on_the_spot.git'
 gem 'redcarpet'
-gem 'css3buttons'
-
+gem 'css3buttons', :git => 'git://github.com/johnrees/css3buttons_rails_helpers.git'
+gem 'rabl'
+gem 'yajl-ruby'
 gem 'pg'
 
 group :test do

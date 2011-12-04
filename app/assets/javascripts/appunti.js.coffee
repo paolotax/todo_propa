@@ -6,5 +6,11 @@
 jQuery ->
   #$('.appunto a').pjax('[data-pjax-container]', { timeout: 10000 })
   $('.chzn-select').chosen()
-  $('.appunto .stato').live 'click', () ->
+  $('.appunto .stato').live 'click', (e) ->
     alert 'gino'
+  $('#nuovo-appunto').live 'click', (e) ->
+    e.preventDefault()
+    $(this).fadeOut('slow')
+    $('#feedback').show()
+    $('#appunto_scuola_id_chzn input').focus();
+    $('#appunto_scuola_id_chzn input').css 'background-color': 'blue'

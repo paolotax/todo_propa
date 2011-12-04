@@ -11,13 +11,6 @@ class ScuoleController < ApplicationController
     
     @provincie = current_user.scuole.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
     @citta     = current_user.scuole.select_citta.filtra(params.except(:citta)).order(:citta)
-    
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: @scuole.map { |s| view_context.scuola_for_mustache(s) }
-      end
-    end
   end
   
   

@@ -1,10 +1,10 @@
 class AppuntiController < ApplicationController
   
   can_edit_on_the_spot
-  
+
   def index
     
-    @search = current_user.appunti.includes(:scuola).filtra(params)
+    @search = current_user.appunti.includes(:scuola, :user).filtra(params)
 
     @appunti = @search.recente.limit(20)
     @appunti = @appunti.offset((params[:page].to_i-1)*20) if params[:page].present?
@@ -12,12 +12,13 @@ class AppuntiController < ApplicationController
     @provincie = current_user.scuole.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
     @citta     = current_user.scuole.select_citta.filtra(params.except(:citta)).order(:citta)
     
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: @appunti.map { |a| view_context.appunto_for_mustache(a) }
-      end
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.json do
+    #     render json: @appunti.map { |a| view_context.appunto_for_mustache(a) }
+    #   end
+    #   format.xml
+    # end
   end
   
   def get_note

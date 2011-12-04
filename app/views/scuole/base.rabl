@@ -1,0 +1,1 @@
+attributes :id, :nome, :citta, :provincia
