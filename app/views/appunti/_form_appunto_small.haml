@@ -1,4 +1,4 @@
-#feedback{:style => "display:none;"}
+#feedback{:style => "display:none; float:rigth;"}
   = render 'shared/title_bar', title: "Nuovo appunto"
   - @appunto = Appunto.new
   = form_for @appunto do |f|
@@ -17,5 +17,4 @@
     = field f, :telefono 
     = field f, :email 
     .actions
-      = f.submit 'Save'
-.clear
+      = button_submit_tag 'Salva'

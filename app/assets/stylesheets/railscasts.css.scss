@@ -103,11 +103,12 @@ label.check_box {
 }
 
 #error_explanation {
-  width: 400px;
+  
+	width: 400px;
   border: 2px solid #CF0000;
   padding: 0px;
   padding-bottom: 12px;
-  margin: 20px 0;
+  margin: 20px auto;
   background-color: #f0f0f0;
   font-size: 12px;
 }
@@ -127,7 +128,7 @@ label.check_box {
 }
 
 #error_explanation ul {
-  margin: 0;
+  margin-top: 5px;
   margin-left: 10px;
 }
 

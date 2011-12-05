@@ -4,21 +4,16 @@
   .side
     = render :partial => 'shared/episode_views'
     = render :partial => 'shared/search_options'
-  
-  = render "form_appunto_small"
-
-  %h1 Appunti
-  
-  - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
-    = render :partial => 'shared/filters'
 
 
-  
   #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
     = add_pill_button_link_to "Nuovo appunto", new_appunto_path, style: "float: right;", id: "nuovo-appunto"
+    = render "form_appunto_small"
+    %h1 Appunti
+    - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
+      = render :partial => 'shared/filters'
     - @appunti.each do |appunto|
       = render "appunto", :mustache => appunto_for_mustache(appunto)
       
-
 %script{ type: "text/html", id: "appunto_template" }
   = render "appunto"
