@@ -38,10 +38,11 @@ class AppuntiController < ApplicationController
   def new
     @appunto = current_user.appunti.build
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @appunto }
-    end
+    # respond_to do |format|
+    #   format.html # new.html.erb
+    #   format.json { render json: @appunto }
+    # end
+    
   end
 
   def edit
@@ -50,16 +51,18 @@ class AppuntiController < ApplicationController
 
   def create
     @appunto = current_user.appunti.build(params[:appunto])
-
-    respond_to do |format|
-      if @appunto.save
-        format.html { redirect_to @appunto, notice: 'Appunto creato!' }
-        format.json { render json: @appunto, status: :created, location: @appunto }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @appunto.errors, status: :unprocessable_entity }
-      end
-    end
+    unless @appunto.save!
+      render action: 'new'
+    end 
+    # respond_to do |format|
+    #   if @appunto.save
+    #     format.html { redirect_to @appunto, notice: 'Appunto creato!' }
+    #     format.json { render json: @appunto, status: :created, location: @appunto }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @appunto.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   def update

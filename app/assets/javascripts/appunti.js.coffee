@@ -12,5 +12,5 @@ jQuery ->
     e.preventDefault()
     $(this).fadeOut()
     $('#appunto-small').fadeIn('slow')
-    # $('#appunto_scuola_id_chzn input').focus();
+    $('#appunto_scuola_id_chzn input').focus();
     # $('#appunto_scuola_id_chzn input').css 'background-color': 'blue'
