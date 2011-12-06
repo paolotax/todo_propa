@@ -1,7 +1,7 @@
-#feedback{:style => "display:none; float:rigth;"}
+#appunto-small.form{:style => "display:none;"}
   = render 'shared/title_bar', title: "Nuovo appunto"
   - @appunto = Appunto.new
-  = form_for @appunto do |f|
+  = form_for @appunto, remote: true, format: :json do |f|
     -if @appunto.errors.any?
       #error_explanation
         %h2= "#{pluralize(@appunto.errors.count, "error")} prohibited this appunto from being saved:"

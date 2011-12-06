@@ -10,7 +10,7 @@ jQuery ->
     alert 'gino'
   $('#nuovo-appunto').live 'click', (e) ->
     e.preventDefault()
-    $(this).fadeOut('slow')
-    $('#feedback').show()
-    $('#appunto_scuola_id_chzn input').focus();
-    $('#appunto_scuola_id_chzn input').css 'background-color': 'blue'
+    $(this).fadeOut()
+    $('#appunto-small').fadeIn('slow')
+    # $('#appunto_scuola_id_chzn input').focus();
+    # $('#appunto_scuola_id_chzn input').css 'background-color': 'blue'

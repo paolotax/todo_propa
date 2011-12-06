@@ -1,0 +1,6 @@
+<% if @appunto.new_record? %>
+	$("input#appunto_scuola_nome_scuola").effect("highlight", { color: 'red'}, 5000);
+<% else %>
+	$('#appunti').prepend Mustache.to_html($('#appunto_template').html(),<%= @appunto %> )
+	$("#new_appunto")[0].reset();
+<% end %>
