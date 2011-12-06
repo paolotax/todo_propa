@@ -12,5 +12,9 @@ code do |u|
   }
 end
 
+node :errors do |model|
+   model.errors
+end
+
 child(:user)   { attributes :username }
 child(:scuola) { attributes :id, :nome, :citta, :provincia }

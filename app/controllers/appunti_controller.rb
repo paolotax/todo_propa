@@ -51,18 +51,16 @@ class AppuntiController < ApplicationController
 
   def create
     @appunto = current_user.appunti.build(params[:appunto])
-    unless @appunto.save!
-      render action: 'new'
-    end 
-    # respond_to do |format|
-    #   if @appunto.save
-    #     format.html { redirect_to @appunto, notice: 'Appunto creato!' }
-    #     format.json { render json: @appunto, status: :created, location: @appunto }
-    #   else
-    #     format.html { render action: "new" }
-    #     format.json { render json: @appunto.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
+    respond_to do |format|
+      if @appunto.save
+        format.html { redirect_to @appunto, notice: 'Appunto creato!' }
+        format.json
+      else
+        format.html { render action: "new" }
+        format.json { render rabl: @appunto.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
