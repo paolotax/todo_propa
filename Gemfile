@@ -6,15 +6,15 @@ group :assets do
   gem 'sass-rails',   '~> 3.1.4'
   gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier', '>= 1.0.3'
-  gem 'compass', git: 'https://github.com/chriseppstein/compass.git'
 end
 
+gem 'compass', git: 'https://github.com/chriseppstein/compass.git'
 gem "mustache"
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'rack-pjax'
 gem 'devise'
-gem 'on_the_spot'   #, git: 'https://github.com/maximecurioni/on_the_spot.git'
+gem 'on_the_spot', git: 'https://github.com/maximecurioni/on_the_spot.git'
 gem 'redcarpet'
 gem 'css3buttons', :git => 'git://github.com/johnrees/css3buttons_rails_helpers.git'
 gem 'rabl'
