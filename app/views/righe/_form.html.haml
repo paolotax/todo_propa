@@ -1,0 +1,23 @@
+#create-riga
+  .field_inline.titolo
+    = label_tag "Libro"
+    - @vendibili = Libro.unscoped.vendibili.select('distinct type').order(:type)
+    = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :type, :id, :titolo), {include_blank: true, class: 'chzn-select', style: 'width:300px;'}
+  .field_inline
+    = label_tag "new_quantita", "Quantità"
+    = text_field_tag "new_quantita", nil, :class => 'qta'
+  .field_inline
+    = label_tag "new_prezzo", "Prezzo"
+    = text_field_tag "new_prezzo", nil,   :class => 'qta'
+  .field_inline
+    = label_tag "Sconto"
+    = text_field_tag "new_sconto", nil,   :class => 'qta'
+  .field_inline
+    = label_tag "new_consegnato", "Cons."
+    = check_box_tag "new_consegnato"
+  .field_inline
+    = label_tag "new_pagato", "Pagato"
+    = check_box_tag "new_pagato"
+  = link_to 'Aggiungi', '#', { :class => 'btn_green', id: "add-riga" }
+  
+  .clear

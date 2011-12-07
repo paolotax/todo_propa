@@ -16,7 +16,11 @@ TodoPropa::Application.routes.draw do
       put :update_attribute_on_the_spot
     end
   end
-
+  
+  resources :righe
+  
+  resources :libri
+  
   root :to => 'appunti#index'
 
 end

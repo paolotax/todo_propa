@@ -16,6 +16,12 @@ module ApplicationHelper
     Redcarpet.new(text, *options).to_html.html_safe
   end
 
+  def title_bar(*links)    
+  
+  end
+
+
+
   def gravatar(user, options = {})
     email_address = user.email.downcase
     hash = Digest::MD5.hexdigest(email_address)

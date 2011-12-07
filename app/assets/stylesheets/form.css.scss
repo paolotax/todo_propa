@@ -34,7 +34,7 @@
 	  -moz-border-radius-bottomleft: 5px;
 	  -moz-border-radius-bottomright: 5px;
 	}
-	label {
+	.field label {
 	  float: left;
 	  width: 30%;
 	  text-align: right;
@@ -47,10 +47,10 @@
 	  padding-left: 30%;
 	  margin-left: 10px;
 	}
-	input, textarea {
+	.field input, .field textarea {
 	  font-size: 14px;
 	}
-	select {
+	.field select {
 		// background: transparent;
 	  width: 214px;
 	  padding: 5px;

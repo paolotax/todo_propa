@@ -3,7 +3,11 @@ class Appunto < ActiveRecord::Base
   belongs_to :user
   belongs_to :scuola
   
- #  validates :user_id,  :presence => true
+  has_many :righe
+  
+  accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => true
+  
+  #  validates :user_id,  :presence => true
   validates :scuola_nome,  :presence => true
 
   scope :recente,  order("appunti.id desc")
@@ -11,6 +15,7 @@ class Appunto < ActiveRecord::Base
   scope :completo,   includes(:scuola).where("appunti.stato = 'X'")
   scope :da_fare,    includes(:scuola).where("appunti.stato = ''")
   scope :in_sospeso, includes(:scuola).where("appunti.stato = 'P'")
+  
   
   def to_s
     "##{id} - #{destinatario} (#{scuola_nome})"
