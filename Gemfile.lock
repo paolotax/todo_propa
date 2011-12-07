@@ -87,7 +87,6 @@ GEM
     mime-types (1.17.2)
     multi_json (1.0.3)
     mustache (0.99.4)
-    nested_form (0.1.1)
     on_the_spot (0.0.17)
       json_pure (>= 1.4.6)
     orm_adapter (0.0.5)
@@ -165,7 +164,6 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   mustache
-  nested_form
   on_the_spot
   pg
   rabl
