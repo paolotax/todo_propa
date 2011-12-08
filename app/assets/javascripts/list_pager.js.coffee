@@ -44,7 +44,7 @@ jQuery ->
       vertical: true, 
       mousewheel: true,
       circular: true 
-    $('.chzn-select').chosen()
+    $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
     if $('#scuole').length
       scuole_pager = new ListPager(1, $("#scuole"), $('#scuola_template'), 'scuola') if @new_pager == true else $(window).scroll(@check)
       @new_pager = false

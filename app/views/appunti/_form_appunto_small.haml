@@ -11,7 +11,7 @@
 
     .field
       = f.label :scuola_id, "Scuola:"
-      = f.collection_select :scuola_id, current_user.scuole.order(:nome), :id, :nome, {:prompt => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona la scuola"} 
+      = f.collection_select :scuola_id, current_user.scuole.order(:nome), :id, :nome, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona la scuola..."} 
     = field f, :destinatario
     = field f, :note, type: :text_area, rows: 6, cols: 50
     = field f, :telefono 

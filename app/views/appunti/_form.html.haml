@@ -6,10 +6,10 @@
         - @appunto.errors.full_messages.each do |msg|
           %li= msg
 
-  = field f, :destinatario
   .field
     = f.label :scuola_id, "Scuola:"
-    = f.collection_select :scuola_id, current_user.scuole.order(:nome), :id, :nome, {}, {:class => 'chzn-select', :placeholder => "Choose a country..."} 
+    = f.select :scuola_id, current_user.scuole.order(:nome).collect {|s| [ s.nome, s.id ] }, {:include_blank => true}, { :class => 'chzn-select', 'data-placeholder' => "Seleziona la scuola..."} 
+  = field f, :destinatario
   = field f, :note, type: :text_area, rows: 6, cols: 50
   = field f, :telefono  
   = field f, :email

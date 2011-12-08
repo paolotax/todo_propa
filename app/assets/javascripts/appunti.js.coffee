@@ -5,7 +5,7 @@
 
 jQuery ->
   #$('.appunto a').pjax('[data-pjax-container]', { timeout: 10000 })
-  $('.chzn-select').chosen()
+  $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
   $('.appunto .stato').live 'click', (e) ->
     alert 'gino'
   $('#nuovo-appunto').live 'click', (e) ->

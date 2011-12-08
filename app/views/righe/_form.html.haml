@@ -2,7 +2,7 @@
   .field_inline.titolo
     = label_tag "Libro"
     - @vendibili = Libro.unscoped.vendibili.select('distinct type').order(:type)
-    = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :type, :id, :titolo), {include_blank: true, class: 'chzn-select', style: 'width:300px;'}
+    = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :type, :id, :titolo), {:include_blank => true, :class => 'chzn-select', 'data-placeholder' => "Seleziona un titolo...", :style => 'width:300px;'}
   .field_inline
     = label_tag "new_quantita", "Quantità"
     = text_field_tag "new_quantita", nil, :class => 'qta'
