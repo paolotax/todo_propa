@@ -1,12 +1,85 @@
-// .group-result {
-// 	display: list-item !important;
-// }
+.blue_button {
+  background-attachment:initial;
+  background-clip:initial;
+  background-color:initial;
+  background-image:-webkit-gradient(linear, 0 0%, 0 100%, from(#67B0EF), to(#2B5EA4));
+  background-origin:initial;
+  background-position:initial initial;
+  background-repeat:initial initial;
+  border-bottom-color:#466A98;
+  border-bottom-left-radius:4px 4px;
+  border-bottom-right-radius:4px 4px;
+  border-bottom-style:solid;
+  border-bottom-width:1px;
+  border-left-color:#466A98;
+  border-left-style:solid;
+  border-left-width:1px;
+  border-right-color:#466A98;
+  border-right-style:solid;
+  border-right-width:1px;
+  border-top-color:#466A98;
+  border-top-left-radius:4px 4px;
+  border-top-right-radius:4px 4px;
+  border-top-style:solid;
+  border-top-width:1px;
+  color:#FFFFFF;
+  font-size:13px;
+  font-weight:bold;
+  padding-bottom:6px;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:5px;
+  text-decoration:none;
+  text-shadow:#003366 0 -1px 0;
+  &:hover {
+	  text-decoration: none;
+  }
+}
+
+.red_button {
+  background-attachment:initial;
+  background-clip:initial;
+  background-color:initial;
+  background-image:-webkit-gradient(linear, 0 0%, 0 100%, from(#F98179), to(#A23831));
+  background-origin:initial;
+  background-position:initial initial;
+  background-repeat:initial initial;
+  border-bottom-color:#6F2C26;
+  border-bottom-left-radius:4px 4px;
+  border-bottom-right-radius:4px 4px;
+  border-bottom-style:solid;
+  border-bottom-width:1px;
+  border-left-color:#6F2C26;
+  border-left-style:solid;
+  border-left-width:1px;
+  border-right-color:#6F2C26;
+  border-right-style:solid;
+  border-right-width:1px;
+  border-top-color:#6F2C26;
+  border-top-left-radius:4px 4px;
+  border-top-right-radius:4px 4px;
+  border-top-style:solid;
+  border-top-width:1px;
+  color:#FFFFFF;
+  font-size:13px;
+  font-weight:bold;
+  padding-bottom:6px;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:5px;
+  text-decoration:none;
+  text-shadow:#661514 0 -1px 0;
+  &:hover {
+	  text-decoration: none;
+  }
+}
 
 #create-riga {
   margin: auto;
   width: 80%;
+  border: 1px solid #999999;
   #add-riga {
-     margin-top:30px;
+     margin-top:27px;
      float: right;
   }
   .field_inline {

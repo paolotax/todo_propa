@@ -34,7 +34,7 @@ jQuery ->
         $("#new_appunto")[0].reset();
         $(".chzn-select").val('').trigger("liszt:updated");
         flash =	$('<div id="flash_notice">Appunto inserito!</div>')
-        flash.prependTo("#main").delay(2000).slideUp "slow", () ->
+        flash.prependTo("#top").delay(2000).slideUp "slow", () ->
           $(this).remove()
 
 flash_error = (error) ->

@@ -24,9 +24,16 @@ jQuery ->
     new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_quantita' name='appunto[righe_attributes][new_#{new_id}][quantita]' value='#{quantita}' class='qta'/>")
     new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_prezzo'   name='appunto[righe_attributes][new_#{new_id}][prezzo]'   value='#{prezzo}' class='qta'/>")
     new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_sconto'   name='appunto[righe_attributes][new_#{new_id}][sconto]'   value='#{sconto}'   class='qta'/>")
-    new_riga.append("<a href='javascript:void(0)' class='btn_red remove_nested_fields'>-</a>")
+    new_riga.append("<a href='javascript:void(0)' class='red_button remove_button'> - </a>")
 
+    $("#new_libro.chzn-select").val('').trigger("liszt:updated");
+    $('#new_libro_chzn input').focus();
+    # $("#new_appunto")[0].reset();
 
+  $('.remove_button').live 'click', (e) ->
+    e.preventDefault()
+    $(this).parent().fadeOut 'slow', () ->
+      $(this).remove()
 
 
 

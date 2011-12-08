@@ -16,6 +16,16 @@
     padding: 3px;
     background-color: #FFFFFF;
     overflow: auto;
+    .remove_button {
+	    float: right;
+	    margin-top: 1px;
+	    display: none;
+    }
+    &:hover {
+			.remove_button {
+				display: inline;
+			}
+    }
     &:nth-child(even) {
       background-color: #EEEEEE;
     }
