@@ -5,6 +5,7 @@
  *= require css3buttons/without-reset
  *= require_self
  *= require chosen	
+ *= require jquery.validity	
  *= require_tree . 
 */
 

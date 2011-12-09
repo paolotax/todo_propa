@@ -12,6 +12,7 @@
 //= require mustache
 //= require jquery.pjax
 //= require showdown
+//= require jquery.validity
 //= require on_the_spot
 
 //= require_tree .

@@ -6,29 +6,32 @@
 jQuery ->
   $("#add-riga").live 'click', (e) ->
     e.preventDefault()
-    titolo   =  $('#new_libro_chzn span').text()
-    quantita =  $('#new_quantita').val()
-    prezzo   =  $('#new_prezzo').val()
-    sconto   =  $('#new_sconto').val()
-    libro_id =  $('#create-riga .chzn-select').val()
-    new_id  = new Date().getTime();
-
-    if $("#righe").length == 0
-      $('#create-riga').after("<div id='righe'></div>")
     
-    new_riga = $("<div id='riga_#{new_id}' class='riga'></div>")
-    $("#righe").append(new_riga)
+    if validateRiga()
 
-    new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_libro_id' name='appunto[righe_attributes][new_#{new_id}][libro_id]' value='#{libro_id}' type='hidden'/>")
-    new_riga.append("<div class='titolo'>#{titolo}</div>")
-    new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_quantita' name='appunto[righe_attributes][new_#{new_id}][quantita]' value='#{quantita}' class='qta'/>")
-    new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_prezzo'   name='appunto[righe_attributes][new_#{new_id}][prezzo]'   value='#{prezzo}' class='qta'/>")
-    new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_sconto'   name='appunto[righe_attributes][new_#{new_id}][sconto]'   value='#{sconto}'   class='qta'/>")
-    new_riga.append("<a href='javascript:void(0)' class='red_button remove_button'> - </a>")
+      titolo   =  $('#new_libro_chzn span').text()
+      quantita =  $('#new_quantita').val()
+      prezzo   =  $('#new_prezzo').val()
+      sconto   =  $('#new_sconto').val()
+      libro_id =  $('#create-riga .chzn-select').val()
+      new_id  = new Date().getTime();
 
-    $("#new_libro.chzn-select").val('').trigger("liszt:updated");
-    $('#new_libro_chzn input').focus();
-    # $("#new_appunto")[0].reset();
+      if $("#righe").length == 0
+        $('#create-riga').after("<div id='righe'></div>")
+    
+      new_riga = $("<div id='riga_#{new_id}' class='riga'></div>")
+      $("#righe").append(new_riga)
+
+      new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_libro_id' name='appunto[righe_attributes][new_#{new_id}][libro_id]' value='#{libro_id}' type='hidden'/>")
+      new_riga.append("<div class='titolo'>#{titolo}</div>")
+      new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_quantita' name='appunto[righe_attributes][new_#{new_id}][quantita]' value='#{quantita}' class='qta'/>")
+      new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_prezzo'   name='appunto[righe_attributes][new_#{new_id}][prezzo]'   value='#{prezzo}' class='qta'/>")
+      new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_sconto'   name='appunto[righe_attributes][new_#{new_id}][sconto]'   value='#{sconto}'   class='qta'/>")
+      new_riga.append("<a href='javascript:void(0)' class='red_button remove_button'> - </a>")
+
+      $("#new_libro.chzn-select").val('').trigger("liszt:updated");
+      $('#new_libro_chzn input').focus();
+      # $("#new_appunto")[0].reset();
 
   $('.remove_button').live 'click', (e) ->
     e.preventDefault()
@@ -36,7 +39,25 @@ jQuery ->
       $(this).remove()
 
 
+validateRiga = () ->
+  $.validity.start();
+  $("#create-riga .chzn-select")
+    .require()
+    .match("number")
+  $("#new_quantita")  
+    .require()
+    .match("number")
+  result = $.validity.end()
+  return result.valid
 
+
+
+
+# function testValidationNoForm() {
+#   var nameValue = jQuery("#new_prezzo");
+#   var isValid = $("<form action='' name=''><input name='name' class='required' minlength='2' value='" + nameValue.val() + "'/></form>").valid();
+#   alert('isValid = ' + isValid);
+# }
 
 
 
