@@ -27,12 +27,12 @@ class AppuntiController < ApplicationController
   end
 
   def show
-    @appunto = current_user.appunti.find(params[:id])
+    @appunto = current_user.appunti.includes(:scuola, :user, :righe => [:libro]).find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @appunto }
-    end
+    # respond_to do |format|
+    #   format.html # show.html.erb
+    #   format.json { render rabl: @appunto }
+    # end
   end
 
   def new

@@ -1,8 +1,13 @@
 class LibriController < ApplicationController
+  
+  respond_to :html, :js, :json 
+  
   def index
   end
 
   def show
+    @libro = Libro.find(params[:id])
+    respond_with @libro
   end
 
   def new

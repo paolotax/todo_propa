@@ -1,4 +1,6 @@
 #create-riga
+  / .validity-summary-container
+  /   %ul
   .field_inline.titolo
     = label_tag "Libro"
     - @vendibili = Libro.unscoped.vendibili.select('distinct type').order(:type)

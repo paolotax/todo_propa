@@ -39,6 +39,8 @@ jQuery ->
 	  
 
   $("[data-pjax-container]").bind 'pjax:end', () =>
+    $("ul.tabs").tabs("div.panes > div")
+
     $('.on_the_spot_editing').each initializeOnTheSpot
     $(".scrollable").scrollable  
       vertical: true, 

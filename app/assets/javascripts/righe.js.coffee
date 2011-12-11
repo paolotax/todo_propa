@@ -4,6 +4,17 @@
 
 
 jQuery ->
+
+  $.validity.setup outputMode: 'summary'
+
+  $('#new_libro.chzn-select').live 'change', () ->
+    $.getJSON "/libri/#{$(this).val()}",
+      (libro) ->
+        console.log(libro)
+        $('#new_prezzo').val(libro.prezzo_copertina )
+        $('#new_libro_chzn').removeClass 'validity-erroneous'
+
+  
   $("#add-riga").live 'click', (e) ->
     e.preventDefault()
     
@@ -29,36 +40,27 @@ jQuery ->
       new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_sconto'   name='appunto[righe_attributes][new_#{new_id}][sconto]'   value='#{sconto}'   class='qta'/>")
       new_riga.append("<a href='javascript:void(0)' class='red_button remove_button'> - </a>")
 
-      $("#new_libro.chzn-select").val('').trigger("liszt:updated");
+      # $("#new_libro.chzn-select").val('').trigger("liszt:updated");
       $('#new_libro_chzn input').focus();
       # $("#new_appunto")[0].reset();
 
   $('.remove_button').live 'click', (e) ->
     e.preventDefault()
-    $(this).parent().fadeOut 'slow', () ->
+    $(this).parent().fadeOut 'normal', () ->
       $(this).remove()
 
 
 validateRiga = () ->
   $.validity.start();
   $("#create-riga .chzn-select")
-    .require()
-    .match("number")
+    .require("Seleziona il titolo!")
   $("#new_quantita")  
     .require()
-    .match("number")
+    .match("integer")
   result = $.validity.end()
+  unless result.valid
+    $('#new_libro_chzn').addClass 'validity-erroneous'
   return result.valid
-
-
-
-
-# function testValidationNoForm() {
-#   var nameValue = jQuery("#new_prezzo");
-#   var isValid = $("<form action='' name=''><input name='name' class='required' minlength='2' value='" + nameValue.val() + "'/></form>").valid();
-#   alert('isValid = ' + isValid);
-# }
-
 
 
 

@@ -17,6 +17,11 @@
         <div class="telefono"    >{{telefono}}</div>
         <div class="email"       >{{email}}</div>
       </div>
+      <ul class="righe">
+        {{#righe}}
+        <li class="riga">{{riga.titolo}} {{riga.quantita}} x {{riga.prezzo_unitario}} - {{riga.sconto}} = {{riga.importo}} </li>
+        {{/righe}}  
+      </ul>
     </div>
   </div>  
   <div class="azioni">

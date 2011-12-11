@@ -1,23 +1,33 @@
 #appunto-small.form{:style => "display:none;"}
-  = render 'shared/title_bar', title: "Nuovo appunto"
   - @appunto = Appunto.new
   = form_for @appunto, remote: true, format: :json do |f|
-    -if @appunto.errors.any?
-      #error_explanation
-        %h2= "#{pluralize(@appunto.errors.count, "error")} prohibited this appunto from being saved:"
-        %ul
-          - @appunto.errors.full_messages.each do |msg|
-            %li= msg
+    %ul.tabs
+      %li
+        %a Info appunto...
+      %li
+        %a Libri ordinati...
+      %li.nascondi
+        = link_to "Nascondi"
+    .panes
+      %div
+        -if @appunto.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@appunto.errors.count, "error")} prohibited this appunto from being saved:"
+            %ul
+              - @appunto.errors.full_messages.each do |msg|
+                %li= msg
 
-    .field
-      = f.label :scuola_id, "Scuola:"
-      = f.collection_select :scuola_id, current_user.scuole.order(:nome), :id, :nome, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona la scuola..."} 
-    = field f, :destinatario
-    = field f, :note, type: :text_area, rows: 6, cols: 50
-    = field f, :telefono 
-    = field f, :email 
-    .actions
-      = button_submit_tag 'Aggiungi', id: "btn-appunto"
-    
-    / - @riga = @appunto.righe.build
-    = render 'righe/form'
+        .field
+          = f.label :scuola_id, "Scuola:"
+          = f.collection_select :scuola_id, current_user.scuole.order(:nome), :id, :nome, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona la scuola..."} 
+        = field f, :destinatario
+        = field f, :note, type: :text_area, rows: 6, cols: 50
+        = field f, :telefono 
+        = field f, :email 
+        .actions
+          = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+      %div#ordine
+        %h3= @appunto.scuola_nome
+        = render 'righe/form'
+        .actions
+          = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"

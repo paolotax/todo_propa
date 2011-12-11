@@ -12,8 +12,16 @@ code do |u|
   }
 end
 
+
 node :errors do |model|
    model.errors
+end
+
+child :righe do |u|
+   attributes :id, :libro_id, :quantita, :prezzo_unitario, :sconto, :importo
+   glue :libro do |l|
+     attributes :titolo, :prezzo_copertina
+   end
 end
 
 child(:user)   { attributes :username }

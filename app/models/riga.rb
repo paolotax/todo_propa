@@ -10,4 +10,8 @@ class Riga < ActiveRecord::Base
   def prezzo=(text)
     self.prezzo_unitario = text
   end
+  
+  def importo
+    #prezzo_unitario * quantita * (100.0 - sconto) / 100
+  end
 end

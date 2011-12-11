@@ -1,6 +1,22 @@
 module AppuntiHelper
   
   def appunto_for_mustache(appunto)
+    
+    righe = []
+    
+    appunto.righe.each do |r|
+      riga = {
+                riga: {
+                        id:              r.id,
+                        titolo:          r.libro.titolo,
+                        quantita:        r.quantita,
+                        prezzo_unitario: r.prezzo_unitario,
+                        importo:         r.importo
+                      }
+              }
+      righe << riga
+    end
+
     {
       scuola_id:    appunto.scuola_id,
       id:           appunto.id, 
@@ -11,7 +27,8 @@ module AppuntiHelper
       telefono:     appunto.telefono,
       email:        appunto.email,
       con_recapiti: appunto.telefono.present? || appunto.email.present? ? "con_recapiti" : "senza_recapiti",
-      auth_token:   form_authenticity_token
+      auth_token:   form_authenticity_token,
+      righe:        righe
     }
   end
   
