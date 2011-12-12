@@ -19,10 +19,10 @@
       </div>
       <ul class="righe">
         {{#righe}}
-        <li class="riga">{{riga.titolo}} {{riga.quantita}} x {{riga.prezzo_unitario}} - {{riga.sconto}} = {{riga.importo}} </li>
+        <li class="riga">{{riga.titolo}} {{riga.quantita}} x {{riga.prezzo_unitario}} - {{riga.sconto}}% = {{riga.importo}} </li>
         {{/righe}}  
       </ul>
-      <div>{{totale_copie}} {{totale_importo}}</div>
+      <div class="totali"><span class="tot_copie">{{totale_copie}}</span><span class="tot_importo">{{totale_importo}}</span></div>
     </div>
   </div>  
   <div class="azioni">
