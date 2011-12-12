@@ -5,7 +5,7 @@ class CreateRighe < ActiveRecord::Migration
       t.integer  :libro_id
       t.integer  :quantita
       t.decimal  :prezzo_unitario, :precision => 9, :scale => 3
-      t.decimal  :sconto,          :precision => 5, :scale => 2, :default => 0
+      t.decimal  :sconto,          :precision => 5, :scale => 2, :default => 0.0
       t.boolean  :consegnato
       t.boolean  :pagato
       t.integer  :appunto_id

@@ -18,16 +18,18 @@ module AppuntiHelper
     end
 
     {
-      scuola_id:    appunto.scuola_id,
-      id:           appunto.id, 
-      destinatario: appunto.destinatario.present? ? appunto.destinatario : "...",
-      scuola_nome:  appunto.scuola_nome,
-      note:         markdown(appunto.note),
-      stato:        stato_to_s(appunto),
-      telefono:     appunto.telefono,
-      email:        appunto.email,
-      con_recapiti: appunto.telefono.present? || appunto.email.present? ? "con_recapiti" : "senza_recapiti",
-      auth_token:   form_authenticity_token,
+      scuola_id:      appunto.scuola_id,
+      id:             appunto.id, 
+      destinatario:   appunto.destinatario.present? ? appunto.destinatario : "...",
+      scuola_nome:    appunto.scuola_nome,
+      note:           markdown(appunto.note),
+      stato:          stato_to_s(appunto),
+      telefono:       appunto.telefono,
+      email:          appunto.email,
+      con_recapiti:   appunto.telefono.present? || appunto.email.present? ? "con_recapiti" : "senza_recapiti",
+      auth_token:     form_authenticity_token,
+      totale_copie:   appunto.totale_copie,
+      totale_importo: appunto.totale_importo,
       righe:        righe
     }
   end
