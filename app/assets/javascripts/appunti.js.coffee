@@ -38,7 +38,7 @@ jQuery ->
         flash.prependTo("#top").delay(2000).slideUp "slow", () ->
           $(this).remove()
         
-        # reset_appunto()
+        reset_appunto()
 
   $('#appunto_scuola_id.chzn-select').live 'change', () ->
     

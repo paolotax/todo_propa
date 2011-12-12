@@ -12,6 +12,7 @@ class Riga < ActiveRecord::Base
   end
   
   def importo
-    #prezzo_unitario * quantita * (100.0 - sconto) / 100
+    sconto.nil? ? sc = 0.0 : sc = sconto
+    prezzo_unitario * quantita * (100.0 - sc) / 100
   end
 end
