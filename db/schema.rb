@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111204101411) do
+ActiveRecord::Schema.define(:version => 20111213111407) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20111204101411) do
     t.integer  "materia_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image"
   end
 
   add_index "libri", ["titolo"], :name => "index_libri_on_titolo"
@@ -115,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20111204101411) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

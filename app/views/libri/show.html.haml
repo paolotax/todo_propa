@@ -1,2 +1,6 @@
 %h1 Libri#show
-%p Find me in app/views/libri/show.html.haml
+
+= @libro.titolo
+= @libro.prezzo_copertina
+= @libro.prezzo_consigliato
+= image_tag @libro.image_url

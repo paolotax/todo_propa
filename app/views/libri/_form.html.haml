@@ -1,0 +1,14 @@
+= form_for @libro, :html => { :multipart => true } do |f|
+  .fields
+    = f.label :titolo
+    = f.text_field :titolo
+  .fields
+    = f.label :prezzo_copertina
+    = f.text_field :prezzo_copertina
+  .fields
+    = f.label :prezzo_consigliato
+    = f.text_field :prezzo_consigliato
+  .fields
+    = f.file_field :image
+  .actions
+    = f.submit "Salva"
