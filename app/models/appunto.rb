@@ -3,7 +3,7 @@ class Appunto < ActiveRecord::Base
   belongs_to :user
   belongs_to :scuola
   
-  has_many :righe
+  has_many :righe, :dependent => :destroy
   
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => true
   

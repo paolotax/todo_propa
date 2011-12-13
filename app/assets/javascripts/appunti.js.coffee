@@ -6,15 +6,22 @@
 jQuery ->
   #$('.appunto a').pjax('[data-pjax-container]', { timeout: 10000 })
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
+  $('.chzn-select-bis').chosen({no_results_text: "Nessuna corrispondenza trovata"})
+	
+  $('.nascondi a').live 'click', (e) ->
+    e.preventDefault()
+    $('#appunto-small').fadeOut()
+    $(".tabs > li:first a").trigger "click"
+    $('#nuovo-appunto').fadeIn('slow')
+
+	  $('#nuovo-appunto').live 'click', (e) ->
+	    e.preventDefault()
+	    $(this).fadeOut()
+	    $('#appunto-small').fadeIn('slow')
+	    $('#appunto_scuola_id_chzn input').focus();
 
   $('.appunto .stato').live 'click', (e) ->
     alert 'gino'
-
-  $('#nuovo-appunto').live 'click', (e) ->
-    e.preventDefault()
-    $(this).fadeOut()
-    $('#appunto-small').fadeIn('slow')
-    $('#appunto_scuola_id_chzn input').focus();
 
   $('#btn-appunto').live 'click', (e) ->
     e.preventDefault()
