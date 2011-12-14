@@ -8,22 +8,27 @@ jQuery ->
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
   $('.chzn-select-bis').chosen({no_results_text: "Nessuna corrispondenza trovata"})
 	
-  $('.nascondi a').live 'click', (e) ->
+  $('.nascondi').live 'click', (e) ->
     e.preventDefault()
+    $(this).hide()
     $('#appunto-small').fadeOut()
     $(".tabs > li:first a").trigger "click"
     $('#nuovo-appunto').fadeIn('slow')
-    $.mask.close()     
+    $.mask.close()
+    reset_appunto()
 
   $('#nuovo-appunto').live 'click', (e) ->
     e.preventDefault()
     $(this).fadeOut()
-    $('#appunto-small').fadeIn('slow')
+    $('#appunto-small').fadeIn 'slow', () ->
+      $('.nascondi').show()
     $('#appunto_scuola_id_chzn input').focus();
       
     $("#appunto-small").expose
       color: '#789', 
       lazy: true
+    
+    
   
   $('.appunto .stato').live 'click', (e) ->
     alert 'gino'
@@ -73,11 +78,13 @@ flash_notice = (message) ->
 reset_appunto = () ->
   $(".chzn-select").val('').trigger("liszt:updated");
   $("#new_appunto")[0].reset()
-  $('#righe').remove()
+  $('#righe .riga:first-child').show()
   $('#new_quantita').val ''
   $('#new_prezzo').val ''
   $('#new_sconto').val ''
   $('#ordine h3').text ''
+  $("ul.tabs").data("tabs").click(0)
+  # $('.nascondi').trigger 'click'
 
 
 flash_error = (error) ->

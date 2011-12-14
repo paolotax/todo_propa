@@ -74,60 +74,6 @@
   }
 }
 
-#create-riga {
-  margin: auto;
-  width: 80%;
-  #add-riga {
-     margin-top:27px;
-     float: right;
-  }
-  .field_inline {
-    float:left;
-    margin-top: 1em;
-    margin-right: 10px;
-    input.qta {
-
-			background-color: #fff;
-		  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.5, white));
-		  background-image: -webkit-linear-gradient(center bottom, #eeeeee 0%, white 50%);
-		  background-image: -moz-linear-gradient(center bottom, #eeeeee 0%, white 50%);
-		  background-image: -o-linear-gradient(top, #eeeeee 0%,#ffffff 50%);
-		  background-image: -ms-linear-gradient(top, #eeeeee 0%,#ffffff 50%);
-		  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
-		  background-image: linear-gradient(top, #eeeeee 0%,#ffffff 50%);
-		  -webkit-border-radius: 4px;
-		  -moz-border-radius   : 4px;
-		  border-radius        : 4px;
-		  -moz-background-clip   : padding;
-		  -webkit-background-clip: padding-box;
-		  background-clip        : padding-box;
-		  border: 1px solid #aaa;
-		  display: block;
-		  overflow: hidden;
-		  white-space: nowrap;
-		  position: relative;
-		  height: 24px;
-		  padding-right: 8px;
-		  color: #444;
-		  text-decoration: none;
-		  text-align: right;
-		  width:50px;
-		}
-		input[type=checkbox] {
-			height: 23px;
-			margin-left: 8px;
-		}
-		label {
-			color:#999999;
-			font-size:11px;
-		}
-  }
-}
-
-
-
-
-
 
 .content-view {
 	width: 680px;

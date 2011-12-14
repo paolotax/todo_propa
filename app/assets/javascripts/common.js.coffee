@@ -6,13 +6,15 @@ jQuery ->
   $("ul.tabs", wizard).tabs "div.panes > div", (event, index) ->
     allow = $('#appunto_scuola_id.chzn-select').val()
     if index > 0 and allow == ""
+      $('#appunto_scuola_id_chzn').addClass 'validity-erroneous'
       console.log allow
       return false
+    $('#appunto_scuola_id_chzn').removeClass 'validity-erroneous'
 
   # non funziona
   myTabs = $("ul.tabs", wizard).data("tabs");
 
-  $("button.btn-next", wizard).click () ->
+  $("button.next", wizard).click () ->
     myTabs.next()
 	
   wizard.live 'click', () ->

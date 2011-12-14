@@ -5,11 +5,13 @@
       %li
         %a Info appunto...
       %li
-        %a Libri ordinati...
-      %li.nascondi
-        = link_to "Nascondi"
+        %a Inserisci dettaglio...
+      %li
+        %a Completa ordine...
+      %span.nascondi{style: "display:none;"} 
+        Chiudi
     .panes
-      %div
+      %div#info
         -if @appunto.errors.any?
           #error_explanation
             %h2= "#{pluralize(@appunto.errors.count, "error")} prohibited this appunto from being saved:"
@@ -26,10 +28,17 @@
         = field f, :email 
         .actions
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
-          = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button btn-next"
+          = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button next"
       %div#ordine
         %h3= @appunto.scuola_nome
         = render 'righe/form'
+        #righe
+          .riga.empty
+            Nessuna riga in questo ordine...
         .actions
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
-          = button_tag 'Rivedi appunto ->', class: "red_button"
+          = button_tag 'Completa ordine ->', class: "red_button next"
+      %div#finale
+        %h3= @appunto.scuola_nome
+        .actions
+          = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
