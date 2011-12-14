@@ -26,8 +26,10 @@
         = field f, :email 
         .actions
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+          = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button btn-next"
       %div#ordine
         %h3= @appunto.scuola_nome
         = render 'righe/form'
         .actions
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+          = button_tag 'Rivedi appunto ->', class: "red_button"

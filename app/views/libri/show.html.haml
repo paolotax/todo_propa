@@ -1,6 +1,21 @@
-%h1 Libri#show
+- title @libro.titolo
 
-= @libro.titolo
-= @libro.prezzo_copertina
-= @libro.prezzo_consigliato
-= image_tag @libro.image_url if @libro.image?
+.content-view
+  = render 'shared/title_bar', title: @libro.titolo
+  #appunto-show
+    .field
+      .label Titolo:
+      .titolo= @libro.titolo
+    .field
+      .label Codice:
+      .cm= @libro.cm
+    .field
+      .label Prezzo di copertina:
+      .prezzo_copertina= number_to_currency @libro.prezzo_copertina
+    .field
+      .label Prezzo consigliato:
+      .prezzo_consigliato= number_to_currency @libro.prezzo_consigliato
+    .field
+      .copertina= image_tag @libro.image_url if @libro.image?
+      
+      

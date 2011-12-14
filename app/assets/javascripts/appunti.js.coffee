@@ -13,13 +13,18 @@ jQuery ->
     $('#appunto-small').fadeOut()
     $(".tabs > li:first a").trigger "click"
     $('#nuovo-appunto').fadeIn('slow')
+    $.mask.close()     
 
-	  $('#nuovo-appunto').live 'click', (e) ->
-	    e.preventDefault()
-	    $(this).fadeOut()
-	    $('#appunto-small').fadeIn('slow')
-	    $('#appunto_scuola_id_chzn input').focus();
-
+  $('#nuovo-appunto').live 'click', (e) ->
+    e.preventDefault()
+    $(this).fadeOut()
+    $('#appunto-small').fadeIn('slow')
+    $('#appunto_scuola_id_chzn input').focus();
+      
+    $("#appunto-small").expose
+      color: '#789', 
+      lazy: true
+  
   $('.appunto .stato').live 'click', (e) ->
     alert 'gino'
 
@@ -55,6 +60,9 @@ jQuery ->
     $.getJSON "/scuole/#{$(this).val()}",
       (scuola) ->
         console.log scuola
+
+
+    
 
 flash_notice = (message) ->
   flash =	$("<div id='flash_notice'>#{message}</div>")

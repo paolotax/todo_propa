@@ -1,3 +1,6 @@
-%h1 Nuovo Libro
+- title "Modifica libro"
 
-= render 'form'
+.content-view
+  = render 'shared/title_bar', title: "Modifica Libro"
+  #feedback
+    = render 'form'
