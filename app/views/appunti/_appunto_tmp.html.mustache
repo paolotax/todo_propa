@@ -1,0 +1,29 @@
+<div class="appunto_flash">
+  <h2 class="bar">Appunto salvato!</h2>
+  <div class="appunto-wrap">
+    <div class="intestazione">
+      <div class="destinatario">{{destinatario}}</a></div>
+      <div class="scuola_nome" >>{{scuola_nome}}</a></div>
+    </div>
+    <div class="note"        >
+      <span>{{{note}}}</span>
+      <div class="recapiti {{con_recapiti}}">
+        <div class="telefono"    >{{telefono}}</div>
+        <div class="email"       >{{email}}</div>
+      </div>
+      <ul class="righe">
+        {{#righe}}
+        <li class="riga">{{riga.titolo}} {{riga.quantita}} x {{riga.prezzo_unitario}} - {{riga.sconto}}% = {{riga.importo}} </li>
+        {{/righe}}  
+      </ul>
+      <div class="totali"><span class="tot_copie">{{totale_copie}}</span><span class="tot_importo">{{totale_importo}}</span></div>
+    </div>
+  </div>
+  <div class="azioni">
+    <div class="show"  ><a href="/appunti/{{id}}" title="mostra dettagli">Mostra</a></div>
+    <div class="print" ><a href="/appunti/{{id}}.pdf" title="stampa pdf">Stampa</a></div>
+    <div class="edit"  ><a href="/appunti/{{id}}/edit" title="modifica">Modifica</a></div>
+    <div class="delete"><a href="/appunti/{{id}}" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a></div>
+  </div>
+  <div class="clear"></div>
+</div>

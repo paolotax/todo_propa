@@ -30,7 +30,7 @@
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
           = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button next"
       %div#ordine
-        %h3= @appunto.scuola_nome
+        %h3.scuola_nome= @appunto.scuola_nome
         = render 'righe/form'
         #righe
           .riga.empty
@@ -39,6 +39,11 @@
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
           = button_tag 'Completa ordine ->', class: "red_button next"
       %div#finale
-        %h3= @appunto.scuola_nome
+        %h3.scuola_nome= @appunto.scuola_nome
+        = field f, :stato 
         .actions
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+%div#salvato{style: "display:none;"}
+  Salvo
+  - unless @appunto.new_record?
+    = render "appunto_tmp", :mustache => appunto_for_mustache(@appunto)

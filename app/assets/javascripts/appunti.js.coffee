@@ -52,11 +52,19 @@ jQuery ->
         $.getJSON "appunti/#{id}.json",
           (appunto) ->
             console.log appunto
+            $('#salvato').html Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
+            $.mask.close()
+            
+            $('#appunto-small').fadeOut () ->
+              $('.nascondi').hide()
+              $('#salvato').fadeIn()
+              $('#nuovo-appunto').fadeIn()
+            
             $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
             nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
             nuovoAppunto.effect("highlight", {}, 3000)
             $('.on_the_spot_editing', nuovoAppunto).each initializeOnTheSpot
-            flash_notice "Appunto inserito!"
+            # flash_notice "Appunto inserito!"
             reset_appunto()
 
   $('#appunto_scuola_id.chzn-select').live 'change', () ->
