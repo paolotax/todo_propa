@@ -2,13 +2,14 @@
   - @appunto = Appunto.new
   = form_for @appunto, remote: true, format: :json do |f|
     %ul.tabs
-      %li
+      %li.wiz
         %a Info appunto...
-      %li
+      %li.wiz
         %a Inserisci dettaglio...
-      %li
+      %li.wiz
         %a Completa ordine...
-      %li.salvato{style: "display:none"}
+      %li.wiz_finish{style: "display:none"}
+        %a Appunto Salvato!!!...
       %span.nascondi{style: "display:none;"} 
         Chiudi
     .panes

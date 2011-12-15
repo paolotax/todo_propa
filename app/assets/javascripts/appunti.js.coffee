@@ -21,7 +21,9 @@ jQuery ->
     e.preventDefault()
     $(this).fadeOut()
     $('#appunto-small').fadeIn 'slow', () ->
+      $("ul.tabs li.wiz").show()
       $('.nascondi').show()
+    $('#appunto_scuola_id_chzn').addClass('chzn-container-active');  
     $('#appunto_scuola_id_chzn input').focus();
       
     $("#appunto-small").expose
@@ -53,29 +55,24 @@ jQuery ->
           (appunto) ->
             console.log appunto
             $('#salvato').html Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
-
-            $("ul.tabs").data("tabs").click(3)
-
-            # $.mask.close()
-            # 
-            # $('#appunto-small').fadeOut () ->
-            #   $('.nascondi').hide()
-            #   $('#salvato').fadeIn()
-            #   $('#nuovo-appunto').fadeIn()
             
-            # $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
-            # nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
-            # nuovoAppunto.effect("highlight", {}, 3000)
-            # $('.on_the_spot_editing', nuovoAppunto).each initializeOnTheSpot
-            # # flash_notice "Appunto inserito!"
+            $("ul.tabs li").hide()
+            $("ul.tabs").data("tabs").click(3)
+            
+            $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
+            nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
+            nuovoAppunto.effect("highlight", {}, 3000)
+            $('.on_the_spot_editing', nuovoAppunto).each initializeOnTheSpot
+            # flash_notice "Appunto inserito!"
             # reset_appunto()
 
   $('#appunto_scuola_id.chzn-select').live 'change', () ->
     nomeScuola = $('#appunto_scuola_id_chzn a span').text()
+    $('#appunto_scuola_id_chzn').removeClass('chzn-container-active')
     $('#ordine h3').html nomeScuola
     $.getJSON "/scuole/#{$(this).val()}",
       (scuola) ->
-        console.log scuola
+        $('#appunto_destinatario').focus().select()
 
 
 

@@ -9,6 +9,9 @@ jQuery ->
       $('#appunto_scuola_id_chzn').addClass 'validity-erroneous'
       console.log allow
       return false
+    if index == 1
+      $('#new_libro_chzn input').focus()
+      $("#new_libro_chzn").addClass 'chzn-container-active'
     $('#appunto_scuola_id_chzn').removeClass 'validity-erroneous'
 
   # non funziona
