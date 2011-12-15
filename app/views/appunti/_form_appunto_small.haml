@@ -8,6 +8,7 @@
         %a Inserisci dettaglio...
       %li
         %a Completa ordine...
+      %li.salvato{style: "display:none"}
       %span.nascondi{style: "display:none;"} 
         Chiudi
     .panes
@@ -43,7 +44,7 @@
         = field f, :stato 
         .actions
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
-%div#salvato{style: "display:none;"}
-  Salvo
-  - unless @appunto.new_record?
-    = render "appunto_tmp", :mustache => appunto_for_mustache(@appunto)
+      %div#salvato
+        Salvo
+        - unless @appunto.new_record?
+          = render "appunto_tmp", :mustache => appunto_for_mustache(@appunto)

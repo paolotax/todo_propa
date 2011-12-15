@@ -7,7 +7,7 @@ jQuery ->
   #$('.appunto a').pjax('[data-pjax-container]', { timeout: 10000 })
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
   $('.chzn-select-bis').chosen({no_results_text: "Nessuna corrispondenza trovata"})
-	
+
   $('.nascondi').live 'click', (e) ->
     e.preventDefault()
     $(this).hide()
@@ -53,19 +53,22 @@ jQuery ->
           (appunto) ->
             console.log appunto
             $('#salvato').html Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
-            $.mask.close()
+
+            $("ul.tabs").data("tabs").click(3)
+
+            # $.mask.close()
+            # 
+            # $('#appunto-small').fadeOut () ->
+            #   $('.nascondi').hide()
+            #   $('#salvato').fadeIn()
+            #   $('#nuovo-appunto').fadeIn()
             
-            $('#appunto-small').fadeOut () ->
-              $('.nascondi').hide()
-              $('#salvato').fadeIn()
-              $('#nuovo-appunto').fadeIn()
-            
-            $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
-            nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
-            nuovoAppunto.effect("highlight", {}, 3000)
-            $('.on_the_spot_editing', nuovoAppunto).each initializeOnTheSpot
-            # flash_notice "Appunto inserito!"
-            reset_appunto()
+            # $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
+            # nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
+            # nuovoAppunto.effect("highlight", {}, 3000)
+            # $('.on_the_spot_editing', nuovoAppunto).each initializeOnTheSpot
+            # # flash_notice "Appunto inserito!"
+            # reset_appunto()
 
   $('#appunto_scuola_id.chzn-select').live 'change', () ->
     nomeScuola = $('#appunto_scuola_id_chzn a span').text()
@@ -75,13 +78,13 @@ jQuery ->
         console.log scuola
 
 
-    
+
 
 flash_notice = (message) ->
   flash =	$("<div id='flash_notice'>#{message}</div>")
   flash.prependTo("#top").delay(2000).slideUp "slow", () ->
     $(this).remove()
-  
+
 
 reset_appunto = () ->
   $(".chzn-select").val('').trigger("liszt:updated");
