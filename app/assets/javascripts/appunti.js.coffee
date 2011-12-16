@@ -12,7 +12,6 @@ jQuery ->
     e.preventDefault()
     $(this).hide()
     $('#appunto-small').fadeOut()
-    $(".tabs > li:first a").trigger "click"
     $('#nuovo-appunto').fadeIn('slow')
     $.mask.close()
     reset_appunto()
@@ -20,6 +19,7 @@ jQuery ->
   $('#nuovo-appunto').live 'click', (e) ->
     e.preventDefault()
     $(this).fadeOut()
+    $("ul.tabs").data("tabs").click(0)
     $('#appunto-small').fadeIn 'slow', () ->
       $("ul.tabs li.wiz").show()
       $('.nascondi').show()
@@ -77,23 +77,23 @@ jQuery ->
 
 
 
-flash_notice = (message) ->
-  flash =	$("<div id='flash_notice'>#{message}</div>")
-  flash.prependTo("#top").delay(2000).slideUp "slow", () ->
-    $(this).remove()
-
-
-reset_appunto = () ->
+reset_appunto = ->
   $(".chzn-select").val('').trigger("liszt:updated");
   $("#new_appunto")[0].reset()
-  $('#righe .riga:first-child').show()
+  $('#ordine .riga').remove()
+  $('#ordine .empty').show()
   $('#new_quantita').val ''
   $('#new_prezzo').val ''
   $('#new_sconto').val ''
   $('#ordine h3').text ''
-  $("ul.tabs").data("tabs").click(0)
+ 
   # $('.nascondi').trigger 'click'
 
+
+flash_notice = (message) ->
+  flash =	$("<div id='flash_notice'>#{message}</div>")
+  flash.prependTo("#top").delay(2000).slideUp "slow", () ->
+    $(this).remove()
 
 flash_error = (error) ->
   obj = JSON.parse(error)
