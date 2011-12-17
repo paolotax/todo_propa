@@ -9,10 +9,11 @@ jQuery ->
       $('#appunto_scuola_id_chzn').addClass 'validity-erroneous'
       return false
     if index == 1
-      $('#new_libro_chzn input').focus()
-      $("#new_libro_chzn").addClass 'chzn-container-active'
-    $('#appunto_scuola_id_chzn').removeClass 'validity-erroneous'
-
+      $.getJSON "/scuole/#{$('#appunto_scuola_id.chzn-select').val()}", (scuola) ->
+        $('#ordine h3').html scuola.nome
+        $('#new_libro_chzn input').focus()
+        $("#new_libro_chzn").addClass 'chzn-container-active'
+    
   # non funziona
   myTabs = $("ul.tabs", wizard).data "tabs"
 

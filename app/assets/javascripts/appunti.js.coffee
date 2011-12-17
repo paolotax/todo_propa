@@ -29,8 +29,6 @@ jQuery ->
     $("#appunto-small").expose
       color: '#789', 
       lazy: true
-    
-    
   
   $('.appunto .stato').live 'click', (e) ->
     alert 'gino'
@@ -38,27 +36,22 @@ jQuery ->
   $('#btn-appunto').live 'click', (e) ->
     e.preventDefault()
     $.ajax
-      data: $('#new_appunto').serialize(),
-      dataType: 'json',
-      type: 'post',
-      url: "/appunti",
-
+      data: $('#new_appunto').serialize()
+      dataType: 'json'
+      type: 'post'
+      url: "/appunti"
       error: (xhr, status, error) ->
         flash_error xhr.responseText
-
       success: (response) ->
         $('#error_explanation').remove()
-
         # richiamo l'appunto inserito per avere i totali' da CORREGGERE
         id = response['appunto']['id']
         $.getJSON "appunti/#{id}.json",
           (appunto) ->
             console.log appunto
             $('#salvato').html Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
-            
             $("ul.tabs li").hide()
             $("ul.tabs").data("tabs").click(3)
-            
             $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
             nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
             nuovoAppunto.effect("highlight", {}, 3000)
@@ -67,13 +60,9 @@ jQuery ->
             # reset_appunto()
 
   $('#appunto_scuola_id.chzn-select').live 'change', () ->
-    nomeScuola = $('#appunto_scuola_id_chzn a span').text()
-    $('#appunto_scuola_id_chzn').removeClass('chzn-container-active')
-    $('#ordine h3').html nomeScuola
-    $.getJSON "/scuole/#{$(this).val()}",
-      (scuola) ->
-        $('#appunto_destinatario').focus().select()
-
+    $('#appunto_scuola_id_chzn').removeClass 'validity-erroneous chzn-container-active'
+    $('#appunto_destinatario').focus().select()
+   
 
 
 

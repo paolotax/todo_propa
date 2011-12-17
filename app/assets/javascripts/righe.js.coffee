@@ -11,7 +11,11 @@ jQuery ->
     $('#new_libro_chzn').removeClass 'validity-erroneous chzn-container-active'
     $.getJSON "/libri/#{$(this).val()}", 
       (libro) ->
-        $('#new_prezzo').val(libro.prezzo_copertina)
+        console.log $('input#prezzo_consigliato').val()
+        if $('input#prezzo_consigliato').is ':checked'
+          $('#new_prezzo').val(libro.prezzo_consigliato)
+        else
+          $('#new_prezzo').val(libro.prezzo_copertina)
         $('#new_quantita').focus().select()
   
   $("#add-riga").live 'click', (e) ->

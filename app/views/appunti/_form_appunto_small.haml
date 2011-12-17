@@ -33,6 +33,13 @@
           = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button next"
       %div#ordine
         %h3.scuola_nome= @appunto.scuola_nome
+        .condizioni
+          Condizioni di pagamento:
+          = radio_button_tag 'prezzo', 'consigliato', true
+          = label_tag 'prezzo_consigliato', 'prezzo consigliato oppure'
+          = radio_button_tag 'prezzo', 'con_sconto', false
+          = label_tag 'prezzo_con_sconto', 'sconto'
+          = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43])
         = render 'righe/form'
         #righe
           .empty
