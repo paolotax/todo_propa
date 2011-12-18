@@ -57,7 +57,7 @@ appendRiga = (riga) ->
   new_riga.stop().effect("highlight", {}, 1000)
 
   
-validateRiga = () ->
+window.validateRiga = () ->
   $.validity.start();
   $("#create-riga .chzn-select")
     .require("Seleziona il titolo!")

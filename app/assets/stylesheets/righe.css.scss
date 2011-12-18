@@ -61,7 +61,18 @@
   border-bottom-radius:5px 5px;
   border-bottom-right-radius:5px 5px;
   border: solid 1px #BBBBBB;
+  
+  min-height: 112px;
   padding: 10px;
+  .empty {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    line-height: 28px;
+    
+    text-align: center;
+    vertical-align: middle;
+    font-style: italic;
+  }
   .riga {
     padding: 3px;
     background-color: #FFFFFF;

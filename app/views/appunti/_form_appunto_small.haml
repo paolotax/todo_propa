@@ -53,6 +53,7 @@
         .actions
           = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
       %div#salvato
-        Salvo
         - unless @appunto.new_record?
           = render "appunto_tmp", :mustache => appunto_for_mustache(@appunto)
+        .actions
+          = button_tag 'Nuovo appunto', id: "nuovo_appunto", class: "blue_button"

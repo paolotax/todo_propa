@@ -39,8 +39,9 @@ jQuery ->
 	  
 
   $("[data-pjax-container]").bind 'pjax:end', () =>
-    $("ul.tabs").tabs("div.panes > div")
 
+    window.activateTabs() if $('#appunto-small').length
+    
     $('.on_the_spot_editing').each initializeOnTheSpot
     $(".scrollable").scrollable  
       vertical: true, 

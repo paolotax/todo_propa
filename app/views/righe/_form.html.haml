@@ -14,12 +14,12 @@
   .field_inline
     = label_tag "Sconto"
     = text_field_tag "new_sconto", nil,   :class => 'qta'
-  .field_inline
-    = label_tag "new_consegnato", "Cons."
-    = check_box_tag "new_consegnato"
-  .field_inline
-    = label_tag "new_pagato", "Pagato"
-    = check_box_tag "new_pagato"
+  / .field_inline
+  /   = label_tag "new_consegnato", "Cons."
+  /   = check_box_tag "new_consegnato"
+  / .field_inline
+  /   = label_tag "new_pagato", "Pagato"
+  /   = check_box_tag "new_pagato"
   = link_to ' + ', 'javascript:void(0)', { id: "add-riga", :class => 'blue_button' }
   
   .clear
