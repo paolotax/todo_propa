@@ -49,7 +49,7 @@ jQuery ->
         $.getJSON "appunti/#{id}.json",
           (appunto) ->
             console.log appunto
-            $('#salvato').prepend Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
+            $('.appunto_flash').html Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
             $("ul.tabs li").hide()
             $("ul.tabs").data("tabs").click(3)
             $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])

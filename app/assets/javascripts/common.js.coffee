@@ -18,7 +18,9 @@ window.activateTabs = () ->
         $('#ordine h3').html scuola.nome
         $('#new_libro_chzn input').focus()
         $("#new_libro_chzn").addClass 'chzn-container-active'
-  
+    if index is 2 and validateAppunto() is false
+      return false
+    
   wizard.click ->
     wizard.expose
       color: '#789', 
@@ -34,6 +36,9 @@ validateAppunto = () ->
   $.validity.start();
   $("#appunto_scuola_id.chzn-select")
     .require("Seleziona il cliente!")
+  $(".riga_quantita")
+    .require()
+    .match("integer")
   result = $.validity.end()
   console.log "Validation result " + result
   unless result.valid

@@ -19,11 +19,11 @@
       <div class="totali"><span class="tot_copie">{{totale_copie}}</span><span class="tot_importo">{{totale_importo}}</span></div>
     </div>
   </div>
-  <div class="azioni">
-    <div class="show"  ><a href="/appunti/{{id}}" title="mostra dettagli">Mostra</a></div>
-    <div class="print" ><a href="/appunti/{{id}}.pdf" title="stampa pdf">Stampa</a></div>
-    <div class="edit"  ><a href="/appunti/{{id}}/edit" title="modifica">Modifica</a></div>
-    <div class="delete"><a href="/appunti/{{id}}" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a></div>
+  <div class="azio">
+    <a href="/appunti/{{id}}"      class="blue_button" title="mostra dettagli">Mostra</a>
+    <a href="/appunti/{{id}}.pdf"  class="blue_button" title="stampa pdf">Stampa</a>
+    <a href="/appunti/{{id}}/edit" class="blue_button" title="modifica">Modifica</a>
+    <a href="/appunti/{{id}}" class="red_button" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a>
   </div>
   <div class="clear"></div>
 </div>
