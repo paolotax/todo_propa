@@ -1,4 +1,4 @@
-#appunto-small.form{:style => "display:none;"}
+#appunto-small.form{style: 'display:none;'}
   - @appunto = Appunto.new
   = form_for @appunto, remote: true, format: :json do |f|
     %ul.tabs
@@ -57,5 +57,5 @@
           - unless @appunto.new_record?
             = render "appunto_tmp", :mustache => appunto_for_mustache(@appunto)
         .actions
-          = button_tag 'Nuovo appunto', id: "nuovo_appunto", class: "blue_button"
-          = button_tag 'Moifica appunto', id: "modifica_appunto", class: "blue_button"
+        /  = link_to 'Nuovo appunto', new_appunto_path, id: "nuovo_appunto", class: "blue_button", remote: true
+        /   = button_tag 'Moifica appunto', id: "modifica_appunto", class: "blue_button"

@@ -38,10 +38,10 @@ class AppuntiController < ApplicationController
   def new
     @appunto = current_user.appunti.build
 
-    # respond_to do |format|
-    #   format.html # new.html.erb
-    #   format.json { render json: @appunto }
-    # end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.js
+    end
     
   end
 

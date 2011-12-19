@@ -1,0 +1,5 @@
+$('#appunto-small').replaceWith("<%= escape_javascript(render 'form_appunto_small') %>");
+$('#appunto-small').fadeIn();
+activateTabs();
+$.mask.close()
+$("#appunto-small").trigger('click');

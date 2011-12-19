@@ -16,6 +16,7 @@ jQuery ->
           $('#new_prezzo').val(libro.prezzo_consigliato)
         else
           $('#new_prezzo').val(libro.prezzo_copertina)
+          $('#new_sconto').val $('#prezzo').val()
         $('#new_quantita').focus().select()
   
   $("#add-riga").live 'click', (e) ->

@@ -25,14 +25,20 @@ window.activateTabs = () ->
     wizard.expose
       color: '#789', 
       lazy: true
-
+  
+  # wizard.expose
+  #   color: '#789', 
+  #   lazy: true
+  
   $("button.next", wizard).click (e) ->
     e.preventDefault()
     if validateAppunto() is true
       myTabs = $("ul.tabs", wizard).data "tabs"
       myTabs.next()
-
-validateAppunto = () ->
+  $('#appunto_scuola_id.chzn-select').chosen();
+  $('#new_libro.chzn-select').chosen();
+  
+window.validateAppunto = () ->
   $.validity.start();
   $("#appunto_scuola_id.chzn-select")
     .require("Seleziona il cliente!")

@@ -35,36 +35,38 @@ jQuery ->
 
   $('#btn-appunto').live 'click', (e) ->
     e.preventDefault()
-    $.ajax
-      data: $('#new_appunto').serialize()
-      dataType: 'json'
-      type: 'post'
-      url: "/appunti"
-      error: (xhr, status, error) ->
-        flash_error xhr.responseText
-      success: (response) ->
-        $('#error_explanation').remove()
-        # richiamo l'appunto inserito per avere i totali' da CORREGGERE
-        id = response['appunto']['id']
-        $.getJSON "appunti/#{id}.json",
-          (appunto) ->
-            console.log appunto
-            $('.appunto_flash').html Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
-            $("ul.tabs li").hide()
-            $("ul.tabs").data("tabs").click(3)
-            $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
-            nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
-            nuovoAppunto.effect("highlight", {}, 3000)
-            $('.on_the_spot_editing', nuovoAppunto).each initializeOnTheSpot
-            # flash_notice "Appunto inserito!"
-            # reset_appunto()
+    if validateAppunto()
+      $.ajax
+        data: $('#new_appunto').serialize()
+        dataType: 'json'
+        type: 'post'
+        url: "/appunti"
+        error: (xhr, status, error) ->
+          flash_error xhr.responseText
+        success: (response) ->
+          $('#error_explanation').remove()
+          # richiamo l'appunto inserito per avere i totali' da CORREGGERE
+          id = response['appunto']['id']
+          $.getJSON "appunti/#{id}.json",
+            (appunto) ->
+              console.log appunto
+              $('.appunto_flash').replaceWith Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
+              $("ul.tabs li").hide()
+              $("ul.tabs").data("tabs").click(3)
+              $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
+              nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
+              nuovoAppunto.effect("highlight", {}, 3000)
+              $('.on_the_spot_editing', nuovoAppunto).each initializeOnTheSpot
+              # flash_notice "Appunto inserito!"
+              # reset_appunto()
 
   $('#appunto_scuola_id.chzn-select').live 'change', () ->
     $('#appunto_scuola_id_chzn').removeClass 'validity-erroneous chzn-container-active'
     $('#appunto_destinatario').focus().select()
    
 
-
+window.sbocci = ->
+  alert "Sbocci!"
 
 reset_appunto = ->
   $(".chzn-select").val('').trigger("liszt:updated");
