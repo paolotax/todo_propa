@@ -37,10 +37,10 @@ jQuery ->
     e.preventDefault()
     if validateAppunto()
       $.ajax
-        data: $('#new_appunto').serialize()
+        data: $('#appunto-small > form').serialize()
         dataType: 'json'
-        type: 'post'
-        url: "/appunti"
+        url: $('#appunto-small > form').attr 'action'
+        type: $('#appunto-small > form').attr 'method'
         error: (xhr, status, error) ->
           flash_error xhr.responseText
         success: (response) ->
@@ -61,8 +61,10 @@ jQuery ->
               # reset_appunto()
 
   $('#appunto_scuola_id.chzn-select').live 'change', () ->
-    $('#appunto_scuola_id_chzn').removeClass 'validity-erroneous chzn-container-active'
-    $('#appunto_destinatario').focus().select()
+    $.getJSON "/scuole/#{$('#appunto_scuola_id.chzn-select').val()}", (scuola) ->
+      $('#ordine h3').html scuola.nome
+      $('#appunto_scuola_id_chzn').removeClass 'validity-erroneous chzn-container-active'
+      $('#appunto_destinatario').focus().select()
    
 
 window.sbocci = ->
@@ -71,7 +73,7 @@ window.sbocci = ->
 reset_appunto = ->
   $(".chzn-select").val('').trigger("liszt:updated");
   $("#new_appunto")[0].reset()
-  $('#ordine .riga').remove()
+  # $('#ordine .riga').remove()
   $('#ordine .empty').show()
   $('#new_quantita').val ''
   $('#new_prezzo').val ''

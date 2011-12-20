@@ -37,16 +37,10 @@ class AppuntiController < ApplicationController
 
   def new
     @appunto = current_user.appunti.build
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.js
-    end
-    
   end
 
   def edit
-    @appunto = current_user.appunti.find(params[:id])
+    @appunto = current_user.appunti.includes(:scuola, :user, :righe => [:libro]).find(params[:id])
   end
 
   def create
@@ -69,10 +63,10 @@ class AppuntiController < ApplicationController
     respond_to do |format|
       if @appunto.update_attributes(params[:appunto])
         format.html { redirect_to @appunto, notice: 'Appunto modificato.' }
-        format.json { head :ok }
+        format.json
       else
         format.html { render action: "edit" }
-        format.json { render json: @appunto.errors, status: :unprocessable_entity }
+        format.json { render rabl: @appunto.errors, status: :unprocessable_entity }
       end
     end
   end

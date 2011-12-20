@@ -1,4 +1,3 @@
-- @appunto = Appunto.new
 = form_for @appunto, remote: true, format: :json do |f|
   %ul.tabs
     %li.wiz
@@ -28,7 +27,7 @@
       = field f, :telefono 
       = field f, :email 
       .actions
-        = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+        = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"
         = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button next"
     %div#ordine
       %h3.scuola_nome= @appunto.scuola_nome
@@ -43,14 +42,22 @@
       #righe
         .empty
           Nessuna riga in questo ordine...
+        = f.fields_for :righe do |riga|
+          = div_for riga.object do
+            = riga.hidden_field :id
+            = riga.hidden_field :libro_id
+            = riga.object.libro.titolo
+            = field riga, :quantita, class: 'qta'
+            = field riga, :prezzo
+            = field riga, :sconto
       .actions
-        = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+        = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"
         = button_tag 'Completa ordine ->', class: "red_button next"
     %div#finale
       %h3.scuola_nome= @appunto.scuola_nome
       = field f, :stato 
       .actions
-        = submit_tag 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+        = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"
     %div#salvato
       .appunto_flash
         - unless @appunto.new_record?
