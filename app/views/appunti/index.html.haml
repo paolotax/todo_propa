@@ -6,7 +6,8 @@
     = render :partial => 'shared/search_options'
   .content-list
     = link_to "Nuovo appunto", new_appunto_path, style: "float: right;", id: "nuovo-appunto", :class => 'blue_button'
-    = render "form_appunto_small"
+    #appunto-small.form{style: 'display:none;'}
+      = render "form_appunto_small"
     %h1 Appunti
     - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
       = render :partial => 'shared/filters'

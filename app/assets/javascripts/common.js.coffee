@@ -25,11 +25,7 @@ window.activateTabs = () ->
     wizard.expose
       color: '#789', 
       lazy: true
-  
-  # wizard.expose
-  #   color: '#789', 
-  #   lazy: true
-  
+
   $("button.next", wizard).click (e) ->
     e.preventDefault()
     if validateAppunto() is true
@@ -37,6 +33,7 @@ window.activateTabs = () ->
       myTabs.next()
   $('#appunto_scuola_id.chzn-select').chosen();
   $('#new_libro.chzn-select').chosen();
+  
   
 window.validateAppunto = () ->
   $.validity.start();
