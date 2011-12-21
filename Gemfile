@@ -13,6 +13,10 @@ end
 gem "mustache"
 gem 'haml-rails'
 gem 'jquery-rails'
+
+gem 'spine-rails'
+gem 'eco'
+
 gem 'rack-pjax'
 gem 'devise'
 gem 'on_the_spot', git: 'https://github.com/maximecurioni/on_the_spot.git'
