@@ -15,6 +15,7 @@
 //= require jquery.validity
 //= require on_the_spot
 
+//= require app
 //= require_tree .
 
 function testCallback(object, value, settings) {

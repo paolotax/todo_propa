@@ -1,0 +1,41 @@
+<div class="title-bar">
+  <span><%= @titolo %></span>
+  <div class="links">
+    <a data-type="destroy">Elimina</a>
+    |
+    <a data-type="edit">Modifica</a>
+    |
+    <a data-type="back">Tutti</a>
+  </div>  
+</div>
+  
+<div class="spine">
+
+
+  <label>
+    <span>Titolo</span>
+    <div><%= @titolo %></div>
+  </label>
+  
+  <label>
+    <span>Cm</span>
+    <div><%= @cm %></div>
+  </label>
+  
+  <label>
+    <span>Prezzo Copertina</span>
+    <div><%= @prezzo_copertina %></div>
+  </label>
+  
+  <label>
+    <span>Prezzo Consigliato</span>
+    <div><%= @prezzo_consigliato %></div>
+  </label>
+
+  <label>
+    <span>Type</span>
+    <div><%= @type %></div>
+  </label>
+  
+
+</div>

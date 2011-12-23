@@ -1,0 +1,78 @@
+<% Libro = App.Libro  %>
+
+<div class="title-bar">
+  <span><%= @titolo %></span>
+  <div class="links">
+    <a data-type="show">Mostra</a>
+      |
+    <a data-type="back">Tutti</a>
+  </div>  
+</div>
+
+
+<form class="spine">
+  <label>
+    <span>Titolo</span>
+    <input 
+      type="text" name="titolo" 
+      value="<%= @titolo %>" required autofocus>
+      <br />
+  </label>
+
+  <label>
+    <span>Cm</span>
+    <input 
+      type="text" name="cm" 
+      value="<%= @cm %>" required>
+      <br />
+  </label>
+  
+  <label>
+    <span>Prezzo Copertina</span>
+    <input 
+      type="text" name="prezzo_copertina" 
+      value="<%= @prezzo_copertina %>" required>
+      <br />  
+  </label>
+  
+  <label>
+    <span>Prezzo Consigliato</span>
+    <input 
+      type="text" name="prezzo_consigliato" 
+      value="<%= @prezzo_consigliato %>" required>
+      <br />  
+  </label>
+  
+  <label>
+    <span>inserisci URL copertina...</span>
+    <input name="remote_image_url" value="<%= @remote_image_url %>" type="text"/>
+    <br />  
+  </label>
+  
+  <label>
+    <span>Settore</span>
+    <select name="type" 
+      value="<%= @type %>" class="chzn">
+      <% for option in ['Scolastico', 'Parascolastico', 'Varia', 'VariaSpeciale', 'Vacanze', 'Scorrimento', 'Concorrenza' ]: %>
+        <option value="<%= option %>"><%= option %></option>
+      <% end %>
+    </select >
+  </label>  
+  
+  <label>
+    <span>Materia</span>
+    <select name="materia_id" id="materia_id"
+      value="<%= @materia_id %>" class="chosen">
+      <% for m in Libro.all().sort(Libro.titoloSort): %>
+        <option value="<%= m.id %>"><%= m.titolo %></option>
+      <% end %>
+    </select >
+  </label>
+  
+    
+  <div class='actions'>
+    <button class="blue_button">Salva</button>
+  </div>
+</form>
+
+

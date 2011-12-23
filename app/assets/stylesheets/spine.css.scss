@@ -1,0 +1,90 @@
+.stack > *:not(.active) {
+  display: none;
+}
+
+input[name=titolo] {width: 50%;}
+input[name=cm]     {width: 20%;}
+input[name=prezzo_copertina]   {width: 20%; text-align: right;}
+input[name=prezzo_consigliato] {width: 20%; text-align: right;}
+
+
+.stack .item > div {
+  float: left;
+}
+.stack label span {
+  display: block;
+  float: left;
+  width: 30%;
+  // background-color: red;
+  padding-right: 1%;
+  line-height: 27px;
+  text-align: right; 
+}
+
+.stack label div {
+  min-height: 27px;
+  font-size: 16px;
+}
+
+
+/*** FEEDBACK ***/
+
+.stack {
+  width: 680px;
+  margin: auto;
+}
+
+
+.stack h2.bar {
+  padding: 4px 20px;
+  margin: 0;
+  font-weight: normal;
+  color: #333;
+  font-size: 14px;
+  text-align: center;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  -webkit-border-top-left-radius: 6px;
+  -webkit-border-top-right-radius: 6px;
+  -moz-border-radius-topleft: 6px;
+  -moz-border-radius-topright: 6px;
+  border: solid 1px #BBB;
+  border-bottom-color: #AAA;
+  background-color: #DDD;
+  background: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3), to(#BBB));
+  background: -moz-linear-gradient(top,  #F3F3F3, #BBB);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F3F3F3', endColorstr='#BBB');
+}
+
+.stack .spine {
+  background-color: #EEE;
+  padding: 10px 20px;
+  border: solid 1px #BBB;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  -moz-border-radius-bottomright: 5px;
+}
+
+.stack .actions {
+  padding-left: 31%;
+}
+
+.stack input, .stack textarea {
+  font-size: 14px;
+}
+
+.stack select {
+	// background: transparent;
+  width: 214px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  height: 27px;
+}
+
+
+

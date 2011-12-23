@@ -1,6 +1,6 @@
 .title-bar
   %span= title
-  .links
+  .links.pjax
     - if params[:action] == 'edit'
       = link_to "Show", url_for(controller: params[:controller], action: 'show')
       \|

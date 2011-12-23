@@ -1,0 +1,30 @@
+<div class="content-list">
+
+  <h1>Listing Libri</h1>
+
+  <p><a data-type="new">New Libro</a></p>
+  <ul class="Settori">
+    <li><a data-type="filter">Parascolastico</a></li>
+    <li><a data-type="filter">Scolastico</a></li>
+    <li><a data-type="filter">Vacanze</a></li>
+    <li><a data-type="filter">Varia</a></li>
+    <li><a data-type="filter">Concorrenza</a></li>
+  </ul>
+  
+  <div class:"libri">
+    <% for libro in @libri: %>
+      <div class="item" data-id="<%= libro.id %>">
+        <div><img src="<%= libro.image.url %>"></img></div>
+        <div><%= libro.type %></div>
+        <div><%= libro.cm %></div>
+        <div><a data-type="show"><%= libro.titolo %></a></div>
+        <div><%= libro.prezzo_copertina %></div>
+        <div><%= libro.prezzo_consigliato %></div>
+        <div>| <a data-type="edit">Edit</a> </div>
+        <div class="clear"></div>
+      </div>
+    <% end %>
+  </div>
+
+
+</div>
