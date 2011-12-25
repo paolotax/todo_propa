@@ -43,11 +43,11 @@
       <br />  
   </label>
   
-  <label>
+  <!-- <label>
     <span>inserisci URL copertina...</span>
     <input name="remote_image_url" value="<%= @remote_image_url %>" type="text"/>
     <br />  
-  </label>
+  </label> -->
   
   <label>
     <span>Settore</span>
@@ -58,18 +58,7 @@
       <% end %>
     </select >
   </label>  
-  
-  <label>
-    <span>Materia</span>
-    <select name="materia_id" id="materia_id"
-      value="<%= @materia_id %>" class="chosen">
-      <% for m in Libro.all().sort(Libro.titoloSort): %>
-        <option value="<%= m.id %>"><%= m.titolo %></option>
-      <% end %>
-    </select >
-  </label>
-  
-    
+
   <div class='actions'>
     <button class="blue_button">Salva</button>
   </div>

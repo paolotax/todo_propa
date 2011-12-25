@@ -1,30 +1,25 @@
-<div class="content-list">
+<header>
+  <input type="search" placeholder="cerca" results="0" incremental="true" autofocus>
+</header>
 
-  <h1>Listing Libri</h1>
+<ul class="Settori">
+  <li><a data-type="filter">Parascolastico</a></li>
+  <li><a data-type="filter">Scolastico</a></li>
+  <li><a data-type="filter">Vacanze</a></li>
+  <li><a data-type="filter">Varia</a></li>
+  <li><a data-type="filter">Concorrenza</a></li>
+</ul>
 
-  <p><a data-type="new">New Libro</a></p>
-  <ul class="Settori">
-    <li><a data-type="filter">Parascolastico</a></li>
-    <li><a data-type="filter">Scolastico</a></li>
-    <li><a data-type="filter">Vacanze</a></li>
-    <li><a data-type="filter">Varia</a></li>
-    <li><a data-type="filter">Concorrenza</a></li>
-  </ul>
-  
-  <div class:"libri">
-    <% for libro in @libri: %>
-      <div class="item" data-id="<%= libro.id %>">
-        <div><img src="<%= libro.image.url %>"></img></div>
-        <div><%= libro.type %></div>
-        <div><%= libro.cm %></div>
-        <div><a data-type="show"><%= libro.titolo %></a></div>
-        <div><%= libro.prezzo_copertina %></div>
-        <div><%= libro.prezzo_consigliato %></div>
-        <div>| <a data-type="edit">Edit</a> </div>
-        <div class="clear"></div>
-      </div>
-    <% end %>
-  </div>
-
-
+<div class="items">
+  <% for libro in @libri: %>
+    <div class="item" data-id="<%= libro.id %>">
+      <!-- <img src="<%= libro.image.url %>" width='60' height='83'></img> -->
+      <%= libro.titolo %>
+    </div>
+  <% end %>
 </div>
+
+<footer>
+  <button>Nuovo Libro</button>
+</footer>
+

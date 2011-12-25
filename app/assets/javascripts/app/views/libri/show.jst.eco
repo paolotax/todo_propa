@@ -10,8 +10,6 @@
 </div>
   
 <div class="spine">
-
-
   <label>
     <span>Titolo</span>
     <div><%= @titolo %></div>
@@ -36,6 +34,4 @@
     <span>Type</span>
     <div><%= @type %></div>
   </label>
-  
-
 </div>

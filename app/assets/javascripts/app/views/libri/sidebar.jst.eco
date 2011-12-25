@@ -1,0 +1,9 @@
+<header>
+  <input type="search" placeholder="cerca" results="0" incremental="true" autofocus>
+</header>
+
+<div class="items"></div>
+
+<footer>
+  <button>Nuovo Libro</button>
+</footer>

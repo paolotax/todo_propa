@@ -4,10 +4,10 @@
 #= require spine/manager
 #= require spine/ajax
 #= require spine/route
-
 #= require_tree ./lib
 #= require_self
 #= require_tree ./models
+
 #= require_tree ./controllers
 #= require_tree ./views
 
@@ -16,7 +16,11 @@ class App extends Spine.Controller
     super
     
     # Initialize controllers:
-    @append(@libri = new App.Libri)
+    
+    @libri = new App.Libri
+    @append @libri.active()
+    
+    # @append(@libri = new App.Libri)
     #  ...
 
     window.App = App    
