@@ -6,14 +6,12 @@ module AppuntiHelper
     
     appunto.righe.each do |r|
       riga = {
-                riga: {
                         id:              r.id,
                         titolo:          r.libro.titolo,
                         quantita:        r.quantita,
                         prezzo_unitario: r.prezzo_unitario,
                         importo:         r.importo
-                      }
-              }
+             }
       righe << riga
     end
 
