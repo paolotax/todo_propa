@@ -1,5 +1,8 @@
 class Scuola < ActiveRecord::Base
   
+  extend FriendlyId
+  friendly_id :nome
+  
   belongs_to :user
   has_many :appunti
   

@@ -15,7 +15,6 @@
 //= require jquery.validity
 //= require on_the_spot
 
-//= require app
 //= require_tree .
 
 function testCallback(object, value, settings) {
@@ -54,7 +53,6 @@ $(document).ready(function() {
   // 
   //   });
   // });
-	
 	// $('.on_the_spot_editing').live('click',function(event) {
 	//     $(this).editable($(this).data('url'), {
 	// 		  type:       'textarea',

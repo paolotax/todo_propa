@@ -1,5 +1,8 @@
 class Libro < ActiveRecord::Base
   
+  extend FriendlyId
+  friendly_id :titolo
+  
   has_many :righe
   
   mount_uploader :image, ImageUploader

@@ -7,15 +7,14 @@ class ListPager
       @page++
       $(window).unbind('scroll', @check)
       $.getJSON(@list.data('json-url'), {page: @page}, @render)
-           
-      
+
   nearBottom: =>
     $(window).scrollTop() > $(document).height() - $(window).height() - 50  or $(window).scrollTop() + $(window).height() + 50 > @list.offset().top + @list.height() 
 
   render: (objs) =>
     for obj in objs
-      @list.append Mustache.to_html(@template.html(), obj[@model])
-      riga =  $("##{@model}_#{obj[@model]['id']}")
+      @list.append Mustache.to_html(@template.html(), obj)
+      riga =  $("##{@model}_#{obj.id}")
       $(".on_the_spot_editing", riga).each initializeOnTheSpot
     $.mask.fit()
     $(window).scroll(@check) if objs.length > 0 else @new_pager = true
@@ -32,11 +31,8 @@ jQuery ->
     $(window).unbind('scroll', @check)
     if $('#scuole').length == 0
       @new_pager = true
-      console.log("pjax:start " + @page)
     if $('#appunti').length == 0
       @new_pager = true
-      console.log("pjax:start " + @page)
-	  
 
   $("[data-pjax-container]").bind 'pjax:end', () =>
 

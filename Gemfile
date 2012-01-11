@@ -14,8 +14,8 @@ gem "mustache"
 gem 'haml-rails'
 gem 'jquery-rails'
 
-gem 'spine-rails'
-gem 'eco'
+# gem 'spine-rails'
+# gem 'eco'
 
 gem 'rack-pjax'
 gem 'devise'
@@ -26,6 +26,7 @@ gem 'rabl'
 gem 'yajl-ruby'
 gem 'fog'
 gem 'carrierwave'
+gem 'friendly_id'
 gem 'pg'
 
 group :test do

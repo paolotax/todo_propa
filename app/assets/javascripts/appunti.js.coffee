@@ -46,19 +46,26 @@ jQuery ->
         success: (response) ->
           $('#error_explanation').remove()
           # richiamo l'appunto inserito per avere i totali' da CORREGGERE
-          id = response['appunto']['id']
+          id = response.id
           $.getJSON "appunti/#{id}.json",
             (appunto) ->
-              console.log appunto
-              $('.appunto_flash').replaceWith Mustache.to_html($('#appunto_tmp_template').html(), appunto['appunto'])
+              $('.appunto_flash').replaceWith Mustache.to_html($('#appunto_tmp_template').html(), appunto)
+
               $("ul.tabs li").hide()
               $("ul.tabs").data("tabs").click(3)
-              $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto['appunto'])
-              nuovoAppunto = $("#appunto_#{response['appunto']['id']}")
-              nuovoAppunto.effect("highlight", {}, 3000)
-              $('.on_the_spot_editing', nuovoAppunto).each initializeOnTheSpot
+
+              reset_appunto()
+                            
+              item =  $("#appunto_#{response.id}")
+              unless item.length
+                $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto)
+              else
+                item.replaceWith Mustache.to_html($('#appunto_template').html(), appunto)
+
+              item.effect("highlight", {}, 3000)
+              $('.on_the_spot_editing', item).each initializeOnTheSpot
               # flash_notice "Appunto inserito!"
-              # reset_appunto()
+
 
   $('#appunto_scuola_id.chzn-select').live 'change', () ->
     $.getJSON "/scuole/#{$('#appunto_scuola_id.chzn-select').val()}", (scuola) ->
@@ -71,8 +78,10 @@ window.sbocci = ->
   alert "Sbocci!"
 
 reset_appunto = ->
+  console.log 'reset'
   $(".chzn-select").val('').trigger("liszt:updated");
-  $("#new_appunto")[0].reset()
+  $("#appunto-small input[type=text], #appunto-small textarea").each ->
+    $(@).val ''
   # $('#ordine .riga').remove()
   $('#ordine .empty').show()
   $('#new_quantita').val ''
