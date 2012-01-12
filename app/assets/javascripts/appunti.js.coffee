@@ -53,8 +53,7 @@ jQuery ->
 
               $("ul.tabs li").hide()
               $("ul.tabs").data("tabs").click(3)
-
-                            
+               
               item =  $("#appunto_#{id}")
               if item.length
                 item.replaceWith Mustache.to_html $('#appunto_template').html(), appunto
