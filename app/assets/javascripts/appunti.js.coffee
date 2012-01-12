@@ -54,16 +54,19 @@ jQuery ->
               $("ul.tabs li").hide()
               $("ul.tabs").data("tabs").click(3)
 
-              reset_appunto()
                             
-              item =  $("#appunto_#{response.id}")
-              unless item.length
-                $('#appunti').prepend Mustache.to_html($('#appunto_template').html(), appunto)
-              else
-                item.replaceWith Mustache.to_html($('#appunto_template').html(), appunto)
-
-              item.effect("highlight", {}, 3000)
-              $('.on_the_spot_editing', item).each initializeOnTheSpot
+              item =  $("#appunto_#{id}")
+              if item.length
+                item.replaceWith Mustache.to_html $('#appunto_template').html(), appunto
+              else  
+                $("#appunti").prepend Mustache.to_html $("#appunto_template").html(), appunto
+ 
+              ri =  $("#appunto_#{id}")
+              $('.on_the_spot_editing', ri ).each initializeOnTheSpot   
+              ri.effect("highlight", {}, 3000)
+              
+              reset_appunto()
+              
               # flash_notice "Appunto inserito!"
 
 
