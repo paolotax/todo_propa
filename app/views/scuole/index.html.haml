@@ -1,12 +1,5 @@
 - title "Scuole"
 
-
-/ - content_for :search do
-/   = form_tag scuole_path, :method => "get" do
-/     = text_field_tag :search, params[:search], :size => 35
-/     = submit_tag "Cerca Scuole", :name => nil
-
-
 .content
   .side
     = render :partial => 'shared/episode_views'
