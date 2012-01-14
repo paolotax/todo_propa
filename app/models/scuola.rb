@@ -4,7 +4,9 @@ class Scuola < ActiveRecord::Base
   friendly_id :nome
   
   belongs_to :user
+
   has_many :appunti
+  has_many :indirizzi, :as => :indirizzable, :dependent => :destroy
   
   validates :nome,  :presence => true,
                     :uniqueness => { :message => "gia' utilizzato!" } # { :scope => :user_id, :message => "gia' utilizzato!" }
@@ -21,6 +23,10 @@ class Scuola < ActiveRecord::Base
   
   def to_s
     "##{id} - #{nome} #{citta} (#{provincia})"
+  end
+  
+  def indirizzo
+    self.indirizzi.first
   end
   
   def self.filtra(params)

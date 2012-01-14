@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213111407) do
+ActiveRecord::Schema.define(:version => 20120114131156) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(:version => 20111213111407) do
   add_index "appunti", ["scuola_id"], :name => "index_appunti_on_scuola_id"
   add_index "appunti", ["stato"], :name => "index_appunti_on_stato"
   add_index "appunti", ["user_id"], :name => "index_appunti_on_user_id"
+
+  create_table "indirizzi", :force => true do |t|
+    t.string   "destinatario"
+    t.string   "indirizzo"
+    t.string   "cap"
+    t.string   "citta"
+    t.string   "provincia"
+    t.string   "tipo"
+    t.integer  "indirizzable_id"
+    t.string   "indirizzable_type"
+    t.boolean  "gmaps"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "libri", :force => true do |t|
     t.string   "autore"

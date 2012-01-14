@@ -12,6 +12,9 @@ TodoPropa::Application.routes.draw do
   end
   
   resources :scuole do
+    
+    resources :indirizzi
+    
     collection do
       put :update_attribute_on_the_spot
     end
