@@ -31,6 +31,7 @@ class Scuola < ActiveRecord::Base
     self.indirizzi.first
   end
   
+  
   def self.filtra(params)
 
     scuole = scoped

@@ -25,6 +25,9 @@ class ScuoleController < ApplicationController
 
   def new
     @scuola = current_user.scuole.build
+    @scuola.indirizzi.build
+    @scuola.indirizzi.build(tipo: 'Indirizzo spedizione')
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @scuola }
@@ -32,13 +35,13 @@ class ScuoleController < ApplicationController
   end
 
   def edit
-    @scuola = Scuola.find(params[:id])
+    @scuola = current_user.scuole.find(params[:id])
+    @scuola.indirizzi.build unless @scuola.indirizzo.present?
+    @scuola.indirizzi.build(tipo: 'Indirizzo spedizione')
   end
 
-  # POST /scuole
-  # POST /scuole.json
   def create
-    @scuola = Scuola.new(params[:scuola])
+    @scuola = current_user.scuole.build(params[:scuola])
 
     respond_to do |format|
       if @scuola.save
@@ -55,7 +58,7 @@ class ScuoleController < ApplicationController
   # PUT /scuole/1.json
   def update
     @scuola = Scuola.find(params[:id])
-
+    
     respond_to do |format|
       if @scuola.update_attributes(params[:scuola])
         format.html { redirect_to @scuola, notice: 'Scuola was successfully updated.' }
