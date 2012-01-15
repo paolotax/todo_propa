@@ -6,6 +6,9 @@ class Indirizzo < ActiveRecord::Base
   
   #acts_as_gmappable :process_geocoding => "before_save"
   
+  validates :citta,        :presence => true
+  validates :provincia,    :presence => true, :length => { :is => 2 }
+  
   belongs_to :indirizzable, :polymorphic => true
   
   def label_indirizzo

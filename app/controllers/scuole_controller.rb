@@ -3,39 +3,34 @@ class ScuoleController < ApplicationController
   can_edit_on_the_spot
   
   def index
-    
+
     @search = current_user.scuole.filtra(params)
-  
     @scuole = @search.limit(20)
+
     @scuole = @scuole.offset((params[:page].to_i-1)*20) if params[:page].present?
-    
+
     @provincie = current_user.scuole.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
     @citta     = current_user.scuole.select_citta.filtra(params.except(:citta)).order(:citta)
   end
-  
-  
+
+
 
   def show
-    @scuola = current_user.scuole.find(params[:id])
-
+    @scuola = current_user.scuole.includes(:indirizzi).find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @scuola }
     end
   end
 
-  # GET /scuole/new
-  # GET /scuole/new.json
   def new
     @scuola = current_user.scuole.build
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @scuola }
     end
   end
 
-  # GET /scuole/1/edit
   def edit
     @scuola = Scuola.find(params[:id])
   end

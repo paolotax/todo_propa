@@ -7,9 +7,11 @@ class Scuola < ActiveRecord::Base
 
   has_many :appunti
   has_many :indirizzi, :as => :indirizzable, :dependent => :destroy
+  accepts_nested_attributes_for :indirizzi,     :reject_if => lambda { |a| a[:citta].blank? }, :allow_destroy => true  
   
   validates :nome,  :presence => true,
                     :uniqueness => { :message => "gia' utilizzato!" } # { :scope => :user_id, :message => "gia' utilizzato!" }
+  
   validates :citta,        :presence => true
   validates :provincia,    :presence => true, :length => { :is => 2 }
   
