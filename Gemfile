@@ -27,6 +27,7 @@ gem 'yajl-ruby'
 gem 'fog'
 gem 'carrierwave'
 gem 'friendly_id'
+gem 'prawn'
 gem 'pg'
 
 group :test do

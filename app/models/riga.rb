@@ -1,10 +1,16 @@
 class Riga < ActiveRecord::Base
   belongs_to :appunto
   belongs_to :libro
-  
+
   after_initialize :init
   after_save :ricalcola_totali
   after_destroy :ricalcola_totali
+
+
+  delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :to => :libro
+
+  scope :per_libro_id, order("righe.libro_id")
+  
     
   def prezzo
     prezzo_unitario

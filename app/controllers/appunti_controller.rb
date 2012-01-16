@@ -28,7 +28,22 @@ class AppuntiController < ApplicationController
 
   def show
     @appunto = current_user.appunti.includes(:scuola, :user, :righe => [:libro]).find(params[:id])
+    
+    respond_to do |format|
+      format.html  # show.html.erb
+      format.js
+      format.json  { render :rabl => @appunto }
 
+      format.pdf do
+        @appunti = Array(@appunto)
+        pdf = AppuntoPdf.new(@appunti, view_context)
+        send_data pdf.render, filename: "appunto_#{@appunto.id}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline",
+
+      end
+    end
+    
     # respond_to do |format|
     #   format.html # show.html.erb
     #   format.json { render rabl: @appunto }
