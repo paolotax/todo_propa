@@ -3,8 +3,8 @@ module LayoutPdf
 
   def logo
     bounding_box([0, bounds.top], :width => bounds.width / 2.0, :height => 100) do
-      # giunti = asset_path "giunti_scuola.jpg"
-      # image giunti, :width => 200, :height => 35, :at => [-10, bounds.top]
+      giunti = "#{Rails.root}/public/images/giunti_scuola.jpg"
+      image giunti, :width => 200, :height => 35, :at => [-10, bounds.top]
     end
   end
   

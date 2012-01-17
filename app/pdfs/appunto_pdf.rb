@@ -61,16 +61,21 @@ class AppuntoPdf < Prawn::Document
   
   def line_items(appunto)
     move_down 10
-    # table line_item_rows, :border_style => :grid,
-    #                       :row_colors => ["FFFFFF","DDDDDD"],
-    #                       :headers => ["Titolo", "Quantità", "Pr.Copertina", "Prezzo", "Importo"],
-    #                       :align => { 0 => :left, 1 => :right, 2 => :right, 3 => :right, 4 => :right },
-    #                       :header => true
+    table line_item_rows do
+      row(0).font_style = :bold
+      columns(1..4).align = :right
+      columns(0).width = 210
+      columns(1).width = 60
+      columns(2..4).width = 80
+      self.row_colors = ["DDDDDD", "FFFFFF"]
+      self.header = true
+    end
   end
 
   def line_item_rows
+    [["Titolo", "Quantità", "Pr. copertina", "Prezzo unitario", "Importo"]] +
     @righe.per_libro_id.map do |item|
-      [item.titolo, item.quantita, price(item.prezzo_copertina), price(item.prezzo), price(item.prezzo) ]
+      [item.titolo, item.quantita, price(item.prezzo_copertina), price(item.prezzo), price(item.prezzo * item.quantita) ]
     end
   end
   
@@ -120,9 +125,5 @@ class AppuntoPdf < Prawn::Document
   def current_user
     @view.current_user
   end
-  
-  
-  
+
 end
-
-
