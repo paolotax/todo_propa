@@ -23,8 +23,8 @@ jQuery ->
     $('#appunto-small').fadeIn 'slow', () ->
       $("ul.tabs li.wiz").show()
       $('.nascondi').show()
-    $('#appunto_scuola_id_chzn').addClass('chzn-container-active');  
-    $('#appunto_scuola_id_chzn input').focus();
+    $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
+    $('#appunto_cliente_id_chzn input').focus();
       
     $("#appunto-small").expose
       color: '#789', 
@@ -69,10 +69,10 @@ jQuery ->
               # flash_notice "Appunto inserito!"
 
 
-  $('#appunto_scuola_id.chzn-select').live 'change', () ->
-    $.getJSON "/scuole/#{$('#appunto_scuola_id.chzn-select').val()}", (scuola) ->
-      $('#ordine h3').html scuola.nome
-      $('#appunto_scuola_id_chzn').removeClass 'validity-erroneous chzn-container-active'
+  $('#appunto_cliente_id.chzn-select').live 'change', () ->
+    $.getJSON "/clienti/#{$('#appunto_cliente_id.chzn-select').val()}", (cliente) ->
+      $('#ordine h3').html cliente.nome
+      $('#appunto_cliente_id_chzn').removeClass 'validity-erroneous chzn-container-active'
       $('#appunto_destinatario').focus().select()
    
 

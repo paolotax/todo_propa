@@ -1,9 +1,9 @@
-= form_for @scuola, html: {:class => "feedback #{params[:action]}_scuola"} do |f|
-  -if @scuola.errors.any?
+= form_for @cliente, html: {:class => "feedback #{params[:action]}_cliente"} do |f|
+  -if @cliente.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@scuola.errors.count, "error")} prohibited this scuola from being saved:"
+      %h2= "#{pluralize(@cliente.errors.count, "error")} prohibited this cliente from being saved:"
       %ul
-        - @scuola.errors.full_messages.each do |msg|
+        - @cliente.errors.full_messages.each do |msg|
           %li= msg
   = field f, :nome,      size: 50
   = field f, :citta,     size: 50, :label => "Città"
@@ -20,5 +20,5 @@
       = field indirizzo, :gmaps,        type: :check_box
       = field indirizzo, :latitude,     size: 25
       = field indirizzo, :longitude,    size: 25
-  .actions
+  .actionscliente
     = button_submit_tag 'Salva'

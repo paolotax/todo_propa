@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: MyString
+  data: 2012-01-17
+  scuola_id: 1
+
+two:
+  numero: MyString
+  data: 2012-01-17
+  scuola_id: 1

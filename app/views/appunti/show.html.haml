@@ -7,8 +7,8 @@
       .label Destinatario:
       .destinatario= on_the_spot_edit @appunto, :destinatario
     .field
-      .label Scuola:
-      .scuola_nome= @appunto.scuola_nome
+      .label Cliente:
+      .cliente_nome= @appunto.cliente_nome
     .field
       .label Note:
       .note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :display_text => markdown(@appunto.note), :loadurl => get_note_appunto_path(@appunto), :callback => "testCallback"

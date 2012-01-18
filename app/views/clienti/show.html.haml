@@ -1,0 +1,17 @@
+- title @cliente.nome
+
+.content-view
+  = render 'shared/title_bar', title: @cliente.to_s
+  #collapse
+    .field
+      %span.label Nome:
+      %span.nome= @cliente.nome
+    .field
+      %span.label Città:
+      %span.note= @cliente.citta
+    .field
+      %span.label Provincia:
+      %span.cliente_nome= @cliente.provincia
+    
+
+

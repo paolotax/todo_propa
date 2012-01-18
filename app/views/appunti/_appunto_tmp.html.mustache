@@ -3,7 +3,7 @@
   <div class="appunto-wrap">
     <div class="intestazione">
       <div class="destinatario">{{destinatario}}</a></div>
-      <div class="scuola_nome" >{{scuola_nome}}</a></div>
+      <div class="cliente_nome" >{{cliente_nome}}</a></div>
     </div>
     <div class="note"        >
       <span>{{{note}}}</span>
@@ -21,7 +21,7 @@
   </div>
   <div class="azioni">
     <a href="/appunti/new"         class="blue_button" title="Nuovo appunto" data-remote="true">Nuovo appunto</a>
-    <a href="/appunti/{{id}}.pdf"  class="blue_button" title="Stampa pdf">Stampa pdf</a>
+    <a href="/appunti/{{id}}.pdf"  class="blue_button" title="Stampa pdf" target="_blank">Stampa pdf</a>
     <a href="/appunti/{{id}}/edit" class="blue_button" title="Modifica" data-remote="true">Modifica appunto</a>
     <a href="/appunti/{{id}}" class="red_button" title="Elimina appunto" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a>
   </div>

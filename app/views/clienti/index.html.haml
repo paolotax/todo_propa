@@ -1,0 +1,24 @@
+- title "Clienti"
+
+.content
+  .side
+    = render :partial => 'shared/episode_views'
+    = render :partial => 'shared/search_options'
+
+  .links
+    = link_to "Nuovo", new_cliente_path
+  %h1 clienti
+    
+  - if params[:provincia].present? || params[:citta].present? || params[:search].present?
+    = render :partial => 'shared/filters'
+            
+  #clienti{ 'data-json-url' => "#{ clienti_url( params.merge(:format => :json)) }" }
+    - @clienti.each do |cliente|
+      = render "cliente", :mustache => cliente_for_mustache(cliente)
+
+%script{ type: "text/html", id: "cliente_template" }
+  = render "cliente"
+    
+
+
+

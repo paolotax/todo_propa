@@ -1,4 +1,4 @@
-class Scuola < ActiveRecord::Base
+class Cliente < ActiveRecord::Base
   
   extend FriendlyId
   friendly_id :nome
@@ -15,8 +15,8 @@ class Scuola < ActiveRecord::Base
   validates :citta,        :presence => true
   validates :provincia,    :presence => true, :length => { :is => 2 }
   
-  scope :select_provincia, select("distinct scuole.provincia").group("scuole.provincia")
-  scope :select_citta,     select("distinct scuole.citta").group("scuole.citta") 
+  scope :select_provincia, select("distinct clienti.provincia").group("clienti.provincia")
+  scope :select_citta,     select("distinct clienti.citta").group("clienti.citta") 
   
   scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")
   scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")
@@ -34,16 +34,16 @@ class Scuola < ActiveRecord::Base
   
   def self.filtra(params)
 
-    scuole = scoped
-    scuole = scuole.where("scuole.nome ilike ?  or scuole.citta ilike ?", 
+    clienti = scoped
+    clienti = clienti.where("clienti.nome ilike ?  or clienti.citta ilike ?", 
                           "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
-    scuole = scuole.where("scuole.provincia = ?", params[:provincia]) if params[:provincia].present?
-    scuole = scuole.where("scuole.citta = ?",     params[:citta])     if params[:citta].present?
-    scuole = scuole.joins(:appunti).con_appunti_in_corso   if params[:status].present? && params[:status] == 'in_corso'
-    scuole = scuole.joins(:appunti).con_appunti_completo   if params[:status].present? && params[:status] == "completati"
-    scuole = scuole.joins(:appunti).con_appunti_da_fare    if params[:status].present? && params[:status] == "da_fare"
-    scuole = scuole.joins(:appunti).con_appunti_in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
-    scuole
+    clienti = clienti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
+    clienti = clienti.where("clienti.citta = ?",     params[:citta])     if params[:citta].present?
+    clienti = clienti.joins(:appunti).con_appunti_in_corso   if params[:status].present? && params[:status] == 'in_corso'
+    clienti = clienti.joins(:appunti).con_appunti_completo   if params[:status].present? && params[:status] == "completati"
+    clienti = clienti.joins(:appunti).con_appunti_da_fare    if params[:status].present? && params[:status] == "da_fare"
+    clienti = clienti.joins(:appunti).con_appunti_in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
+    clienti
   end
   
 end

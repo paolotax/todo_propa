@@ -20,8 +20,8 @@
               %li= msg
 
       .field
-        = f.label :scuola_id, "Scuola:"
-        = f.collection_select :scuola_id, current_user.scuole.order(:nome), :id, :nome, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona la scuola..."} 
+        = f.label :cliente_id, "Cliente:"
+        = f.collection_select :cliente_id, current_user.clienti.order(:nome), :id, :nome, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona la cliente..."} 
       = field f, :destinatario
       = field f, :note, type: :text_area, rows: 6, cols: 50
       = field f, :telefono 
@@ -30,7 +30,7 @@
         = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"
         = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button next"
     %div#ordine
-      %h3.scuola_nome= @appunto.scuola_nome
+      %h3.cliente_nome= @appunto.cliente_nome
       .condizioni
         Condizioni di pagamento:
         = radio_button_tag 'prezzo', 'consigliato', true
@@ -54,7 +54,7 @@
         = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"
         = button_tag 'Completa ordine ->', class: "red_button next"
     %div#finale
-      %h3.scuola_nome= @appunto.scuola_nome
+      %h3.cliente_nome= @appunto.cliente_nome
       = field f, :stato 
       .actions
         = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"

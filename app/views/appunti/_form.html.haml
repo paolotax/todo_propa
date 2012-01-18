@@ -7,8 +7,8 @@
           %li= msg
 
   .field
-    = f.label :scuola_id, "Scuola:"
-    = f.select :scuola_id, current_user.scuole.order(:nome).collect {|s| [ s.nome, s.id ] }, {:include_blank => true}, { :class => 'chzn-select', 'data-placeholder' => "Seleziona la scuola..."} 
+    = f.label :cliente_id, "Cliente:"
+    = f.select :cliente_id, current_user.clienti.order(:nome).collect {|s| [ s.nome, s.id ] }, {:include_blank => true}, { :class => 'chzn-select', 'data-placeholder' => "Seleziona la cliente..."} 
   = field f, :destinatario
   = field f, :note, type: :text_area, rows: 6, cols: 50
   = field f, :telefono  

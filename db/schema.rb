@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114131156) do
+ActiveRecord::Schema.define(:version => 20120118141021) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
     t.text     "note"
     t.string   "stato",          :default => "",  :null => false
     t.date     "scadenza"
-    t.integer  "scuola_id"
+    t.integer  "cliente_id"
     t.integer  "position"
     t.string   "telefono"
     t.string   "email"
@@ -31,9 +31,44 @@ ActiveRecord::Schema.define(:version => 20120114131156) do
     t.datetime "updated_at"
   end
 
-  add_index "appunti", ["scuola_id"], :name => "index_appunti_on_scuola_id"
+  add_index "appunti", ["cliente_id"], :name => "index_appunti_on_scuola_id"
   add_index "appunti", ["stato"], :name => "index_appunti_on_stato"
   add_index "appunti", ["user_id"], :name => "index_appunti_on_user_id"
+
+  create_table "clienti", :force => true do |t|
+    t.string   "nome"
+    t.string   "citta"
+    t.string   "provincia"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  add_index "clienti", ["nome"], :name => "index_scuole_on_nome"
+  add_index "clienti", ["user_id"], :name => "index_scuole_on_user_id"
+
+  create_table "fatture", :force => true do |t|
+    t.integer  "numero"
+    t.date     "data"
+    t.integer  "scuola_id"
+    t.integer  "user_id"
+    t.integer  "causale_id"
+    t.string   "condizioni_pagamento"
+    t.string   "string"
+    t.boolean  "pagata"
+    t.integer  "totale_copie",                                       :default => 0
+    t.integer  "integer",                                            :default => 0
+    t.decimal  "importo_fattura",      :precision => 9, :scale => 2
+    t.decimal  "totale_iva",           :precision => 9, :scale => 2, :default => 0.0
+    t.decimal  "spese",                :precision => 9, :scale => 2, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fatture", ["causale_id"], :name => "index_fatture_on_causale_id"
+  add_index "fatture", ["scuola_id"], :name => "index_fatture_on_scuola_id"
+  add_index "fatture", ["user_id", "causale_id", "numero"], :name => "index_fatture_per_utente_and_causale", :unique => true
+  add_index "fatture", ["user_id"], :name => "index_fatture_on_user_id"
 
   create_table "indirizzi", :force => true do |t|
     t.string   "destinatario"
@@ -89,18 +124,6 @@ ActiveRecord::Schema.define(:version => 20120114131156) do
   add_index "righe", ["causale_id"], :name => "index_righe_on_causale_id"
   add_index "righe", ["fattura_id"], :name => "index_righe_on_fattura_id"
   add_index "righe", ["libro_id"], :name => "index_righe_on_libro_id"
-
-  create_table "scuole", :force => true do |t|
-    t.string   "nome"
-    t.string   "citta"
-    t.string   "provincia"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
-  add_index "scuole", ["nome"], :name => "index_scuole_on_nome"
-  add_index "scuole", ["user_id"], :name => "index_scuole_on_user_id"
 
   create_table "searches", :force => true do |t|
     t.string   "title"

@@ -21,15 +21,15 @@ class ListPager
 
 
 jQuery ->
-  if $('#scuole').length
-    scuole_pager = new ListPager(1, $("#scuole"), $('#scuola_template'), 'scuola')
+  if $('#clienti').length
+    clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente')
   if $('#appunti').length
     appunti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')
 
 
   $("[data-pjax-container]").bind 'pjax:start', () =>
     $(window).unbind('scroll', @check)
-    if $('#scuole').length == 0
+    if $('#clienti').length == 0
       @new_pager = true
     if $('#appunti').length == 0
       @new_pager = true
@@ -44,11 +44,11 @@ jQuery ->
       mousewheel: true,
       circular: true 
     $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
-    if $('#scuole').length
-      scuole_pager = new ListPager(1, $("#scuole"), $('#scuola_template'), 'scuola') if @new_pager == true else $(window).scroll(@check)
+    if $('#clienti').length
+      clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente') if @new_pager == true else $(window).scroll(@check)
       @new_pager = false
     if $('#appunti').length
-      scuole_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto') if @new_pager == true else $(window).scroll(@check)
+      clienti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto') if @new_pager == true else $(window).scroll(@check)
       @new_pager = false
 
 

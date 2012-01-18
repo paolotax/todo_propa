@@ -1,5 +1,7 @@
 TodoPropa::Application.routes.draw do
 
+  resources :fatture
+
   devise_for :users
 
   resources :appunti do
@@ -11,7 +13,7 @@ TodoPropa::Application.routes.draw do
     end
   end
   
-  resources :scuole do
+  resources :clienti do
     
     resources :indirizzi
     

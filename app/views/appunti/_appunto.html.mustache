@@ -3,7 +3,7 @@
   <div class="appunto-wrap">
     <div class="intestazione">
       <div class="destinatario"><a href="/appunti/{{id}}">{{destinatario}}</a></div>
-      <div class="scuola_nome" ><a href="/scuole/{{scuola_id}}">{{scuola_nome}}</a></div>
+      <div class="cliente_nome" ><a href="/clienti/{{cliente_id}}">{{cliente_nome}}</a></div>
     </div>
     <div class="note"        >
       <span class="on_the_spot_editing" data-auth="{{auth_token}}" data-cancel="Annulla" 
@@ -27,7 +27,7 @@
   </div>  
   <div class="azioni">
     <div class="show"  ><a href="/appunti/{{id}}" title="mostra dettagli">Mostra</a></div>
-    <div class="print" ><a href="/appunti/{{id}}.pdf" title="stampa pdf">Stampa</a></div>
+    <div class="print" ><a href="/appunti/{{id}}.pdf" title="stampa pdf" target="_blank">Stampa</a></div>
     <div class="edit"  ><a href="/appunti/{{id}}/edit" title="modifica" data-remote="true">Modifica</a></div>
     <div class="delete"><a href="/appunti/{{id}}" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a></div>
   </div>

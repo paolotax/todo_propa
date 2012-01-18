@@ -75,12 +75,15 @@ class AppuntoPdf < Prawn::Document
   def line_item_rows
     [["Titolo", "Quantità", "Pr. copertina", "Prezzo unitario", "Importo"]] +
     @righe.per_libro_id.map do |item|
-      [item.titolo, item.quantita, price(item.prezzo_copertina), price(item.prezzo), price(item.prezzo * item.quantita) ]
+      [item.titolo, item.quantita, price(item.prezzo_copertina), price(item.prezzo), price(item.importo) ]
     end
   end
   
   def price(num)
-    @view.number_to_currency(num, :locale => :it)
+    
+    (num * 100).modulo(2) == 0 ? precision = 2 : precision = 3
+    
+    @view.number_to_currency(num, :locale => :it, :format => "%n %u", :precision => precision)
   end
   
   def l(data)
@@ -106,18 +109,20 @@ class AppuntoPdf < Prawn::Document
   
     bounding_box [bounds.width / 2.0, bounds.top - 150], :width => bounds.width / 2.0, :height => 100 do
       #stroke_bounds
-      text appunto.destinatario, :size => 12, :style => :bold, :spacing => 4
+      text appunto.destinatario, :size => 14, :style => :bold, :spacing => 4
 
-      if !appunto.scuola.indirizzi.empty?
-        indirizzo = appunto.scuola.indirizzi.first
+      if !appunto.cliente.indirizzi.empty?
+        indirizzo = appunto.cliente.indirizzo
+        move_down(3)
         text indirizzo.destinatario,  :size => 14, :style => :bold, :spacing => 4
-        text indirizzo.indirizzo
-        text indirizzo.cap + ' ' + indirizzo.citta + ' ' + indirizzo.provincia
+        move_down(3)
+        text indirizzo.indirizzo,  :size => 12
+        text indirizzo.cap + ' ' + indirizzo.citta + ' ' + indirizzo.provincia,  :size => 12
         # non funziona to_s carriage return 
-        # pdf.text appunto.scuola.indirizzi.first.to_s unless appunto.scuola.indirizzi.empty? 
+        # pdf.text appunto.cliente.indirizzi.first.to_s unless appunto.cliente.indirizzi.empty? 
       else
-        text appunto.scuola.nome_scuola, :size => 14, :style => :bold, :spacing => 16
-        text appunto.scuola.citta + " " + appunto.scuola.provincia, :size => 12
+        text appunto.cliente.nome_cliente, :size => 14, :style => :bold, :spacing => 16
+        text appunto.cliente.citta + " " + appunto.cliente.provincia, :size => 12
       end
     end
   end

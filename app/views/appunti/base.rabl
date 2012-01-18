@@ -2,9 +2,9 @@ attributes :id, :destinatario, :note, :telefono, :email, :stato, :totale_copie, 
 
 code do |u|
   { 
-    scuola_id:    u.scuola_id,
+    cliente_id:    u.cliente_id,
     destinatario: u.destinatario.present? ? u.destinatario : "...",
-    scuola_nome:  u.scuola_nome,
+    cliente_nome:  u.cliente_nome,
     note:         markdown(u.note),
     stato:        stato_to_s(u),
     con_recapiti: u.telefono.present? || u.email.present? ? "con_recapiti" : "senza_recapiti",
@@ -25,4 +25,4 @@ child :righe do |u|
 end
 
 child(:user)   { attributes :username }
-child(:scuola) { attributes :id, :nome, :citta, :provincia }
+child(:cliente) { attributes :id, :nome, :citta, :provincia }

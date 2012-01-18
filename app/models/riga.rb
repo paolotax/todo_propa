@@ -10,10 +10,14 @@ class Riga < ActiveRecord::Base
   delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :to => :libro
 
   scope :per_libro_id, order("righe.libro_id")
-  
-    
+
+
   def prezzo
-    prezzo_unitario
+    if sconto == 0.0
+      prezzo_unitario
+    else
+      prezzo_unitario * (100 - sconto) / 100
+    end
   end
   
   def prezzo=(text)

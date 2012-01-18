@@ -1,0 +1,23 @@
+%h1 Listing fatture
+
+%table
+  %tr
+    %th Numero
+    %th Data
+    %th Cliente
+    %th
+    %th
+    %th
+
+  - @fatture.each do |fattura|
+    %tr
+      %td= fattura.numero
+      %td= fattura.data
+      %td= fattura.cliente_id
+      %td= link_to 'Show', fattura
+      %td= link_to 'Edit', edit_fattura_path(fattura)
+      %td= link_to 'Destroy', fattura, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Fattura', new_fattura_path

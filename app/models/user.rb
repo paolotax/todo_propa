@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :scuole
-  has_many :appunti, :through => :scuole
+  has_many :clienti
+  has_many :appunti, :through => :clienti
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

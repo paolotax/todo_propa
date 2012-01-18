@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Numero:
+  = @fattura.numero
+%p
+  %b Data:
+  = @fattura.data
+%p
+  %b Cliente:
+  = @fattura.cliente_id
+
+= link_to 'Edit', edit_fattura_path(@fattura)
+\|
+= link_to 'Back', fatture_path

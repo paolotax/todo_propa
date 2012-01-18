@@ -11,9 +11,9 @@ class window.AppuntoForm
   activateTabs: ->
     wizard = $("#appunto-small")
     $("ul.tabs", wizard).tabs "div.panes > div", (event, index) ->
-      allow = $('#appunto_scuola_id.chzn-select').val()
+      allow = $('#appunto_cliente_id.chzn-select').val()
       if index > 0 and allow == ""
-        $('#appunto_scuola_id_chzn').addClass 'validity-erroneous'
+        $('#appunto_cliente_id_chzn').addClass 'validity-erroneous'
         return false
       if index is 1 and validateAppunto() is true
           $('#new_libro_chzn input').focus()
@@ -29,12 +29,12 @@ class window.AppuntoForm
       if validateAppunto() is true
         myTabs = $("ul.tabs", wizard).data "tabs"
         myTabs.next()
-    $('#appunto_scuola_id.chzn-select').chosen();
+    $('#appunto_cliente_id.chzn-select').chosen();
     $('#new_libro.chzn-select').chosen();
   
   validateAppunto: ->
     $.validity.start();
-    $("#appunto_scuola_id.chzn-select")
+    $("#appunto_cliente_id.chzn-select")
       .require("Seleziona il cliente!")
     $(".riga_quantita")
       .require()
@@ -45,15 +45,15 @@ class window.AppuntoForm
     result = $.validity.end()
     console.log "Validation result " + result
     unless result.valid
-      $('#appunto_scuola_id_chzn').addClass 'validity-erroneous'
+      $('#appunto_cliente_id_chzn').addClass 'validity-erroneous'
     return result.valid
 
 window.activateTabs = () ->
   wizard = $("#appunto-small")
   $("ul.tabs", wizard).tabs "div.panes > div", (event, index) ->
-    allow = $('#appunto_scuola_id.chzn-select').val()
+    allow = $('#appunto_cliente_id.chzn-select').val()
     if index > 0 and allow == ""
-      $('#appunto_scuola_id_chzn').addClass 'validity-erroneous'
+      $('#appunto_cliente_id_chzn').addClass 'validity-erroneous'
       return false
     if index is 1 and validateAppunto() is true
         $('#new_libro_chzn input').focus()
@@ -69,13 +69,13 @@ window.activateTabs = () ->
     if validateAppunto() is true
       myTabs = $("ul.tabs", wizard).data "tabs"
       myTabs.next()
-  $('#appunto_scuola_id.chzn-select').chosen();
+  $('#appunto_cliente_id.chzn-select').chosen();
   $('#new_libro.chzn-select').chosen();
   
 
 window.validateAppunto = () ->
   $.validity.start();
-  $("#appunto_scuola_id.chzn-select")
+  $("#appunto_cliente_id.chzn-select")
     .require("Seleziona il cliente!")
   $(".riga_quantita")
     .require()
@@ -86,5 +86,5 @@ window.validateAppunto = () ->
   result = $.validity.end()
   console.log "Validation result " + result
   unless result.valid
-    $('#appunto_scuola_id_chzn').addClass 'validity-erroneous'
+    $('#appunto_cliente_id_chzn').addClass 'validity-erroneous'
   return result.valid

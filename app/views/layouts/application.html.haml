@@ -10,13 +10,13 @@
     = render "shared/header"
     %ul.subscribe.horizontal
   %div#wrapper(data-pjax-container)
-    - if ['scuole', 'appunti'].include?(params[:controller])
+    - if ['clienti', 'appunti'].include?(params[:controller])
       #nav_bar
         %ul.nav.horizontal
           %li= link_to_unless_current "Appunti",  appunti_url
-          %li= link_to_unless_current "Scuole",   scuole_url
+          %li= link_to_unless_current "Clienti",   clienti_url
           %li= link_to_unless_current "Fatture",  root_url
-          %li= link_to_unless_current "Giri",     scuole_url
+          %li= link_to_unless_current "Giri",     clienti_url
         = render partial: "shared/search"
     #main
       - flash.each do |name, msg|

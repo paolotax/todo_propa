@@ -4,13 +4,13 @@ class AppuntiController < ApplicationController
 
   def index
     
-    @search = current_user.appunti.includes(:scuola, :user).filtra(params)
+    @search = current_user.appunti.includes(:cliente, :user).filtra(params)
 
     @appunti = @search.recente.limit(20)
     @appunti = @appunti.offset((params[:page].to_i-1)*20) if params[:page].present?
 
-    @provincie = current_user.scuole.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
-    @citta     = current_user.scuole.select_citta.filtra(params.except(:citta)).order(:citta)
+    @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
+    @citta     = current_user.clienti.select_citta.filtra(params.except(:citta)).order(:citta)
     
     # respond_to do |format|
     #   format.html
@@ -27,7 +27,7 @@ class AppuntiController < ApplicationController
   end
 
   def show
-    @appunto = current_user.appunti.includes(:scuola, :user, :righe => [:libro]).find(params[:id])
+    @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:id])
     
     respond_to do |format|
       format.html  # show.html.erb
@@ -55,7 +55,7 @@ class AppuntiController < ApplicationController
   end
 
   def edit
-    @appunto = current_user.appunti.includes(:scuola, :user, :righe => [:libro]).find(params[:id])
+    @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:id])
   end
 
   def create
