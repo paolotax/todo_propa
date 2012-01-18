@@ -1,7 +1,9 @@
 - title @cliente.nome
 
-.content-view
+.cliente.show{ 'data-latitude' => @cliente.indirizzo.latitude, 'data-longitude' => @cliente.indirizzo.longitude }
   = render 'shared/title_bar', title: @cliente.to_s
+  #message
+  .map
   #collapse
     .field
       %span.label Nome:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120118141021) do
+ActiveRecord::Schema.define(:version => 20120118150247) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -42,6 +42,9 @@ ActiveRecord::Schema.define(:version => 20120118141021) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "cliente_tipo"
+    t.string   "codice_fiscale"
+    t.string   "partita_iva"
   end
 
   add_index "clienti", ["nome"], :name => "index_scuole_on_nome"

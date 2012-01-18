@@ -10,7 +10,7 @@ class Cliente < ActiveRecord::Base
   accepts_nested_attributes_for :indirizzi,     :reject_if => lambda { |a| a[:citta].blank? }, :allow_destroy => true  
   
   validates :nome,  :presence => true,
-                    :uniqueness => { :message => "gia' utilizzato!" } # { :scope => :user_id, :message => "gia' utilizzato!" }
+                    :uniqueness => { :scope => :user_id, :message => "gia' utilizzato!" }
   
   validates :citta,        :presence => true
   validates :provincia,    :presence => true, :length => { :is => 2 }

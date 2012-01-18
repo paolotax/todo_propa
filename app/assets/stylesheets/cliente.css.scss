@@ -1,0 +1,19 @@
+.cliente.show {
+  width: 650px;
+  margin: auto;
+  .map {
+    float: right;
+    margin: 10px;
+    width:300px; 
+    height:200px;
+  }
+  #message { 
+    display:none;
+    position:absolute; 
+    padding:10px; 
+    background:#555; 
+    color:#fff; 
+    min-width:75px; 
+  }
+}
+

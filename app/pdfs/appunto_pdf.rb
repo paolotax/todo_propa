@@ -121,7 +121,7 @@ class AppuntoPdf < Prawn::Document
         # non funziona to_s carriage return 
         # pdf.text appunto.cliente.indirizzi.first.to_s unless appunto.cliente.indirizzi.empty? 
       else
-        text appunto.cliente.nome_cliente, :size => 14, :style => :bold, :spacing => 16
+        text appunto.cliente.nome, :size => 14, :style => :bold, :spacing => 16
         text appunto.cliente.citta + " " + appunto.cliente.provincia, :size => 12
       end
     end

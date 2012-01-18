@@ -35,7 +35,7 @@ jQuery ->
       @new_pager = true
 
   $("[data-pjax-container]").bind 'pjax:end', () =>
-
+    console.log 'pjax end list pager'
     window.activateTabs() if $('#appunto-small').length
     
     $('.on_the_spot_editing').each initializeOnTheSpot
