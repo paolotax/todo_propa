@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120118150247) do
+ActiveRecord::Schema.define(:version => 20120119112950) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -49,6 +49,20 @@ ActiveRecord::Schema.define(:version => 20120118150247) do
 
   add_index "clienti", ["nome"], :name => "index_scuole_on_nome"
   add_index "clienti", ["user_id"], :name => "index_scuole_on_user_id"
+
+  create_table "comuni", :force => true do |t|
+    t.string   "istat"
+    t.string   "comune"
+    t.string   "provincia"
+    t.string   "regione"
+    t.string   "prefisso"
+    t.string   "cap"
+    t.string   "codfisco"
+    t.integer  "abitanti"
+    t.string   "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fatture", :force => true do |t|
     t.integer  "numero"

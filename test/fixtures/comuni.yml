@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  istat: MyString
+  comune: MyString
+  provincia: MyString
+  regione: MyString
+  prefisso: MyString
+  cap: MyString
+  codfisco: MyString
+  abitanti: 1
+  link: MyString
+
+two:
+  istat: MyString
+  comune: MyString
+  provincia: MyString
+  regione: MyString
+  prefisso: MyString
+  cap: MyString
+  codfisco: MyString
+  abitanti: 1
+  link: MyString

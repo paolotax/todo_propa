@@ -1,0 +1,35 @@
+%h1 Listing comuni
+
+%table
+  %tr
+    %th Istat
+    %th Comune
+    %th Provincia
+    %th Regione
+    %th Prefisso
+    %th Cap
+    %th Codfisco
+    %th Abitanti
+    %th Link
+    %th
+    %th
+    %th
+
+  - @comuni.each do |comune|
+    %tr
+      %td= comune.istat
+      %td= comune.comune
+      %td= comune.provincia
+      %td= comune.regione
+      %td= comune.prefisso
+      %td= comune.cap
+      %td= comune.codfisco
+      %td= comune.abitanti
+      %td= comune.link
+      %td= link_to 'Show', comune
+      %td= link_to 'Edit', edit_comune_path(comune)
+      %td= link_to 'Destroy', comune, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Comune', new_comune_path

@@ -1,0 +1,37 @@
+= form_for @comune do |f|
+  -if @comune.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@comune.errors.count, "error")} prohibited this comune from being saved:"
+      %ul
+        - @comune.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :istat
+    = f.text_field :istat
+  .field
+    = f.label :comune
+    = f.text_field :comune
+  .field
+    = f.label :provincia
+    = f.text_field :provincia
+  .field
+    = f.label :regione
+    = f.text_field :regione
+  .field
+    = f.label :prefisso
+    = f.text_field :prefisso
+  .field
+    = f.label :cap
+    = f.text_field :cap
+  .field
+    = f.label :codfisco
+    = f.text_field :codfisco
+  .field
+    = f.label :abitanti
+    = f.number_field :abitanti
+  .field
+    = f.label :link
+    = f.text_field :link
+  .actions
+    = f.submit 'Save'

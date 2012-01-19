@@ -6,15 +6,25 @@
         - @cliente.errors.full_messages.each do |msg|
           %li= msg
   = field f, :nome,      size: 50
-  = field f, :citta,     size: 50, :label => "Città"
-  = field f, :provincia, size:  2
+  .field
+    = f.label :provincia
+    = f.select :provincia, Comune.provincie.all.map(&:provincia), { :include_blank => true } , {:class => 'chzn-select'}
+  .field
+    = f.label :citta, "Comune"
+    / solo comuni della provincia
+    / = f.select :citta, Comune.per_provincia(@cliente.provincia).map(&:citta), { :include_blank => true }
+    / funziona ma carica 8000 record
+    = f.grouped_collection_select :citta, Comune.provincie, :bros, :provincia, :comune, :comune, {:include_blank => true}, {:class => 'chzn-select'}
 
   = f.fields_for :indirizzi do |indirizzo|
     %fieldset 
       %legend= indirizzo.object.tipo ||= 'Indirizzo fattura'
       = field indirizzo, :destinatario, size: 50, label: 'Ragione Sociale'
       = field indirizzo, :indirizzo,    size: 50
-      = field indirizzo, :cap,          size:  5
+      .field
+        = indirizzo.label :cap
+        = indirizzo.text_field :cap,    size:  5
+        = link_to 'non solo cap', "http://www.nonsolocap.it/cap?k=#{indirizzo.object.citta}&s=Cerca&c=", :target => '_blank'
       = field indirizzo, :citta,        size: 50
       = field indirizzo, :provincia,    size:  2
       = field indirizzo, :gmaps,        type: :check_box
@@ -22,3 +32,5 @@
       = field indirizzo, :longitude,    size: 25
   .actionscliente
     = button_submit_tag 'Salva'
+
+= render 'shared/non_solo_cap'

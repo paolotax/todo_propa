@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Istat:
+  = @comune.istat
+%p
+  %b Comune:
+  = @comune.comune
+%p
+  %b Provincia:
+  = @comune.provincia
+%p
+  %b Regione:
+  = @comune.regione
+%p
+  %b Prefisso:
+  = @comune.prefisso
+%p
+  %b Cap:
+  = @comune.cap
+%p
+  %b Codfisco:
+  = @comune.codfisco
+%p
+  %b Abitanti:
+  = @comune.abitanti
+%p
+  %b Link:
+  = @comune.link
+
+= link_to 'Edit', edit_comune_path(@comune)
+\|
+= link_to 'Back', comuni_path

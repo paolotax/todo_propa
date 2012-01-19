@@ -57,7 +57,7 @@ class ClientiController < ApplicationController
   # PUT /clienti/1
   # PUT /clienti/1.json
   def update
-    @cliente = cliente.find(params[:id])
+    @cliente = Cliente.find(params[:id])
     
     respond_to do |format|
       if @cliente.update_attributes(params[:cliente])

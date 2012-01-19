@@ -24,6 +24,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'tappa', 'tappe'
   inflect.irregular 'giro', 'giri'
   inflect.irregular 'copia', 'copie'
+  inflect.irregular 'comune', 'comuni'
   
   # inflect.plural /^([\w]*)a/i, '\1e'
   # inflect.singular /^([\w]*)e/i, '\1a'

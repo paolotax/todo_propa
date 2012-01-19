@@ -31,6 +31,13 @@ class Cliente < ActiveRecord::Base
     self.indirizzi.first
   end
   
+  def comune
+    citta
+  end
+  
+  def comune=(text)
+    self.citta = text
+  end
   
   def self.filtra(params)
 

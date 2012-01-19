@@ -1,5 +1,7 @@
 TodoPropa::Application.routes.draw do
 
+  resources :comuni
+
   resources :fatture
 
   devise_for :users
