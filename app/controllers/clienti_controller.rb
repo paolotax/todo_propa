@@ -45,7 +45,7 @@ class ClientiController < ApplicationController
 
     respond_to do |format|
       if @cliente.save
-        format.html { redirect_to @cliente, notice: 'cliente was successfully created.' }
+        format.html { redirect_to @cliente, notice: 'Cliente creato.' }
         format.json { render json: @cliente, status: :created, location: @cliente }
       else
         format.html { render action: "new" }
@@ -61,7 +61,7 @@ class ClientiController < ApplicationController
     
     respond_to do |format|
       if @cliente.update_attributes(params[:cliente])
-        format.html { redirect_to @cliente, notice: 'cliente was successfully updated.' }
+        format.html { redirect_to @cliente, notice: 'Cliente modificato.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

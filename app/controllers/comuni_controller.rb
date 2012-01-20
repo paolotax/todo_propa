@@ -1,50 +1,34 @@
-class ComuniController < ApplicationController
-  # GET /comuni
-  # GET /comuni.json
-  def index
-    @comuni = Comune.all
+# encoding: UTF-8
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @comuni }
+class ComuniController < ApplicationController
+
+  def index
+    
+    if params[:per_provincia].present?
+      @comuni = Comune.per_provincia(params[:per_provincia]).ordine_per_comune
+    else
+      @comuni = Comune.ordine_per_comune.all
     end
   end
 
-  # GET /comuni/1
-  # GET /comuni/1.json
   def show
     @comune = Comune.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @comune }
-    end
   end
 
-  # GET /comuni/new
-  # GET /comuni/new.json
   def new
     @comune = Comune.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @comune }
-    end
   end
 
-  # GET /comuni/1/edit
   def edit
     @comune = Comune.find(params[:id])
   end
 
-  # POST /comuni
-  # POST /comuni.json
   def create
     @comune = Comune.new(params[:comune])
 
     respond_to do |format|
       if @comune.save
-        format.html { redirect_to @comune, notice: 'Comune was successfully created.' }
+        format.html { redirect_to @comune, notice: 'Il Comune è stato creato.' }
         format.json { render json: @comune, status: :created, location: @comune }
       else
         format.html { render action: "new" }
@@ -53,14 +37,12 @@ class ComuniController < ApplicationController
     end
   end
 
-  # PUT /comuni/1
-  # PUT /comuni/1.json
   def update
     @comune = Comune.find(params[:id])
 
     respond_to do |format|
       if @comune.update_attributes(params[:comune])
-        format.html { redirect_to @comune, notice: 'Comune was successfully updated.' }
+        format.html { redirect_to @comune, notice: 'Il Comune è stato modificato.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -69,8 +51,6 @@ class ComuniController < ApplicationController
     end
   end
 
-  # DELETE /comuni/1
-  # DELETE /comuni/1.json
   def destroy
     @comune = Comune.find(params[:id])
     @comune.destroy

@@ -12,9 +12,9 @@
   .field
     = f.label :citta, "Comune"
     / solo comuni della provincia
-    / = f.select :citta, Comune.per_provincia(@cliente.provincia).map(&:citta), { :include_blank => true }
+    = f.select :citta, Comune.per_provincia(@cliente.provincia).map(&:citta), { :include_blank => true }, {:class => 'chzn-select'}
     / funziona ma carica 8000 record
-    = f.grouped_collection_select :citta, Comune.provincie, :bros, :provincia, :comune, :comune, {:include_blank => true}, {:class => 'chzn-select'}
+    / = f.grouped_collection_select :citta, Comune.provincie, :bros, :provincia, :comune, :comune, {:include_blank => true}, {:class => 'chzn-select'}
 
   = f.fields_for :indirizzi do |indirizzo|
     %fieldset 
@@ -34,3 +34,5 @@
     = button_submit_tag 'Salva'
 
 = render 'shared/non_solo_cap'
+
+
