@@ -29,6 +29,10 @@ gem 'fog'
 gem 'carrierwave'
 gem 'friendly_id'
 gem 'prawn'
+
+gem 'geocoder'
+gem 'gmaps4rails'
+
 gem 'pg'
 
 group :test do

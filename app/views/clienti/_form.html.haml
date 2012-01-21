@@ -1,3 +1,6 @@
+# encoding: utf-8
+
+
 = form_for @cliente, html: {:class => "feedback #{params[:action]}_cliente"} do |f|
   -if @cliente.errors.any?
     #error_explanation
@@ -5,32 +8,37 @@
       %ul
         - @cliente.errors.full_messages.each do |msg|
           %li= msg
-  = field f, :nome,      size: 50
   .field
-    = f.label :provincia
+    = f.label :provincia, "Provincia:"
     = f.select :provincia, Comune.provincie.all.map(&:provincia), { :include_blank => true } , {:class => 'chzn-select'}
   .field
-    = f.label :citta, "Comune"
+    = f.label :citta, "Comune:"
     / solo comuni della provincia
     = f.select :citta, Comune.per_provincia(@cliente.provincia).map(&:citta), { :include_blank => true }, {:class => 'chzn-select'}
-    / funziona ma carica 8000 record
-    / = f.grouped_collection_select :citta, Comune.provincie, :bros, :provincia, :comune, :comune, {:include_blank => true}, {:class => 'chzn-select'}
+
+  = field f, :nome,      size: 50
+  / funziona ma carica 8000 record
+  / = f.grouped_collection_select :citta, Comune.provincie, :bros, :provincia, :comune, :comune, {:include_blank => true}, {:class => 'chzn-select'}
 
   = f.fields_for :indirizzi do |indirizzo|
     %fieldset 
       %legend= indirizzo.object.tipo ||= 'Indirizzo fattura'
       = field indirizzo, :destinatario, size: 50, label: 'Ragione Sociale'
       = field indirizzo, :indirizzo,    size: 50
+      = field indirizzo, :citta, label: 'Località',      size: 50
       .field
-        = indirizzo.label :cap
+        = indirizzo.label :cap, label: 'CAP:'
         = indirizzo.text_field :cap,    size:  5
         = link_to 'non solo cap', "http://www.nonsolocap.it/cap?k=#{indirizzo.object.citta}&s=Cerca&c=", :target => '_blank'
-      = field indirizzo, :citta,        size: 50
       = field indirizzo, :provincia,    size:  2
       = field indirizzo, :gmaps,        type: :check_box
       = field indirizzo, :latitude,     size: 25
       = field indirizzo, :longitude,    size: 25
-  .actionscliente
+      
+      = @map = indirizzo.object.to_gmaps4rails
+      = gmaps4rails @map
+      
+  .actions
     = button_submit_tag 'Salva'
 
 = render 'shared/non_solo_cap'

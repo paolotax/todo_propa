@@ -1,37 +1,59 @@
 jQuery ->
-  $('#cliente_provincia').live 'change', ->
-    provincia = $('#cliente_provincia :selected').text()
-    comuni = new ListComuni(provincia)
+  initialize_comuni = ->
+    if $('#cliente_provincia').length
+      lista_comuni = new ListComuni()
+      
+  $("[data-pjax-container]").bind 'pjax:end', () =>
+    initialize_comuni()
+  
+  initialize_comuni()
 
 class ListComuni
   
-  constructor: (@provincia = '') ->
-    @list_provincie = $('#cliente_provincie')
+  constructor: () ->
+    @list_provincia = $('#cliente_provincia')
     @list_citta     = $('#cliente_citta')
-    @list_citta.live 'change', @fill_address
-    @get_comuni()
-        
+
+    @provincia      = $(':selected', @list_provincia).text()
+    @comune         = $(':selected', @list_citta).text()
+
+    @list_provincia.live 'change', @change
+    @list_citta.live     'change', @change_citta
+
   get_comuni: () =>
     $.getJSON "/comuni.json", { 'per_provincia': @provincia }, @render
-  
+
   render: (objs) =>
+    @list_citta.empty().append("<option></option")
     @comuni = objs
-    @list_citta.empty()
-    @list_citta.append("<option></option")
-    for c in objs
+    for c in @comuni
       @list_citta.append("<option>#{c.comune}</option")
     @list_citta.trigger("liszt:updated")
 
-  fill_address: () =>
-    @comune = $('#cliente_citta :selected').text()
-    console.log @comune
+  change: () =>
+    @provincia = $(':selected', @list_provincia).text()
+    @get_comuni()
+    $('#cliente_indirizzi_attributes_0_provincia').val ''
+    $('#cliente_indirizzi_attributes_0_citta').val     ''
+    $('#cliente_indirizzi_attributes_0_cap').val       ''
+
+  change_citta: () =>
+    @comune = $(':selected', @list_citta).text()
+    unless @comuni?
+      $.getJSON "/comuni.json", { 'per_provincia': @provincia }, (response) =>
+        @comuni = response
+        @fill_address()
+    else
+      @fill_address()
+    
+  fill_address:() =>  
     for c in @comuni
-      console.log c
       if c.provincia is @provincia and c.comune is  @comune
         $('#cliente_indirizzi_attributes_0_provincia').val @provincia
         $('#cliente_indirizzi_attributes_0_citta').val     @comune
         $('#cliente_indirizzi_attributes_0_cap').val       c.cap
 
+    
   # window.comuni = $('#cliente_citta').html()
   # 
   # $('#cliente_provincia').live 'change', ->
@@ -52,13 +74,6 @@ class ListComuni
   # 
   # $('#cliente_provincia').trigger 'change'
   # 
-  # if $('.cliente .map').length
-  #   @cliente = new Cliente()
-  # 
-  # $("[data-pjax-container]").bind 'pjax:end', () =>
-  #   window.comuni = $('#cliente_citta').html()
-  #   $('#cliente_provincia').trigger 'change'
-  #   if $('.cliente .map').length
-  #     @cliente = new Cliente()
+  
 
 

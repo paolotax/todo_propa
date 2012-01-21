@@ -25,9 +25,6 @@ class ClientiController < ApplicationController
 
   def new
     @cliente = current_user.clienti.build
-    @cliente.indirizzi.build
-    @cliente.indirizzi.build(tipo: 'Indirizzo spedizione')
-    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @cliente }
@@ -36,8 +33,6 @@ class ClientiController < ApplicationController
 
   def edit
     @cliente = current_user.clienti.find(params[:id])
-    @cliente.indirizzi.build unless @cliente.indirizzo.present?
-    @cliente.indirizzi.build(tipo: 'Indirizzo spedizione')
   end
 
   def create

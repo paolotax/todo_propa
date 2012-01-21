@@ -1,3 +1,11 @@
+jQuery ->
+  if $('.cliente .map').length
+    @cliente = new Cliente()
+
+  $("[data-pjax-container]").bind 'pjax:end', () =>
+    if $('.cliente .map').length
+      @cliente = new Cliente()
+
 class Cliente
 
   constructor: () ->
