@@ -38,19 +38,19 @@ jQuery ->
 
     $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
 
-    # window.activateTabs() if $('#appunto-small').length
-    
-    # $('.on_the_spot_editing').each initializeOnTheSpot
-    # $(".scrollable").scrollable  
-    #   vertical: true, 
-    #   mousewheel: true,
-    #   circular: true 
+    window.activateTabs() if $('#appunto-small').length
+        
+    $('.on_the_spot_editing').each initializeOnTheSpot
+    $(".scrollable").scrollable  
+      vertical: true, 
+      mousewheel: true,
+      circular: true 
 
 
-    # if $('#clienti').length
-    #   clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente') if @new_pager == true else $(window).scroll(@check)
-    #   @new_pager = false
-    # if $('#appunti').length
-    #   clienti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto') if @new_pager == true else $(window).scroll(@check)
-    #   @new_pager = false
+    if $('#clienti').length
+      clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente') if @new_pager == true else $(window).scroll(@check)
+      @new_pager = false
+    if $('#appunti').length
+      clienti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto') if @new_pager == true else $(window).scroll(@check)
+      @new_pager = false
 
