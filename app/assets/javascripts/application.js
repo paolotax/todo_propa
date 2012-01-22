@@ -13,7 +13,7 @@
 //= require jquery.pjax
 //= require showdown
 //= require jquery.validity
-//= require jquery.gomap-1.3.2.js
+
 //= require gmaps4rails/googlemaps.js
 //= require on_the_spot
 

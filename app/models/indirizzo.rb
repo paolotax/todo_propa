@@ -13,10 +13,10 @@ class Indirizzo < ActiveRecord::Base
     [self.indirizzo, self.cap, self.citta, self.indirizzable.citta, self.provincia].join(', ')
   end
 
-  acts_as_gmappable :process_geocoding => "before_save"
+  acts_as_gmappable
 
   def gmaps4rails_address
-    [self.indirizzo, self.cap, self.citta, self.indirizzable.citta, self.provincia].join(', ')
+    "#{self.indirizzo}, #{self.citta}, #{self.provincia}"
   end
 
   # def self.gmaps4rails_trusted_scopes

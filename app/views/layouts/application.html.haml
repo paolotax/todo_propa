@@ -12,7 +12,7 @@
     %ul.subscribe.horizontal
   %div#wrapper(data-pjax-container)
     - if ['clienti', 'appunti'].include?(params[:controller])
-      #nav_bar
+      #nav_bar.pjax
         %ul.nav.horizontal
           %li= link_to_unless_current "Appunti",  appunti_url
           %li= link_to_unless_current "Clienti",   clienti_url
@@ -22,4 +22,6 @@
     #main
       - flash.each do |name, msg|
         = content_tag(:div, raw(msg), :id => "flash_#{name}")
+      = yield :head
       = yield
+      = yield :scripts

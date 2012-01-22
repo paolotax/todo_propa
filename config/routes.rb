@@ -24,6 +24,8 @@ TodoPropa::Application.routes.draw do
     end
   end
   
+  resources :indirizzi
+  
   resources :righe
   
   resources :libri

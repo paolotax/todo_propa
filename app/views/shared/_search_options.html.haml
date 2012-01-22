@@ -1,5 +1,5 @@
 - if params[:controller] == "appunti"
-  .search_options
+  .search_options.pjax
     %h2 Stato
     %ul
       %li= link_to "tutti", params.except(:status)
@@ -7,18 +7,18 @@
       %li= link_to_unless( params[:status] == "da_fare",    "da fare",  params.merge(status: "da_fare"))
       %li= link_to_unless( params[:status] == "in_sospeso", "in sospeso",  params.merge(status: "in_sospeso"))
       %li= link_to_unless( params[:status] == "completati", "completati",  params.merge(status: "completati"))
-.search_options
+.search_options.pjax
   %h2 Provincie
   %ul
     - for p in @provincie
       %li= link_to_unless(params[:provincia] == p.provincia, p.provincia, params.except(:citta).merge(:provincia => p.provincia, :page => nil))
-.search_options
+.search_options.pjax
   %h2 Città
   / .scroll-actions
   /   .next Next
   /   .prev prior
   %div.scrollable.vertical
-    %div.items
+    %div.items.pjax
       - @cit = @citta.all.in_groups_of(14)
       - for group in @cit
         %div
