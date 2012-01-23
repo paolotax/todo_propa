@@ -1,9 +1,17 @@
 jQuery ->
-  $("[data-pjax-container]").bind 'pjax:end', () =>
-    
+  
+  initialize_maps = ->
     if $('#gmaps_page').length
-      console.log 'pageshow'
       Gmaps.loadMaps()
+  
+  $("[data-pjax-container]").bind 'pjax:end', () ->
+    initialize_maps()
+    
+  initialize_maps()    
+    
+    
+    
+      
 
 
     
