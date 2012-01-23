@@ -1,26 +1,32 @@
 - title @cliente.nome
 
-.cliente.show{ 'data-latitude' => @cliente.indirizzo.latitude, 'data-longitude' => @cliente.indirizzo.longitude }
-  = render 'shared/title_bar', title: @cliente.to_s
-  #message
-  .map
-  #collapse
-    .field
-      %span.label Nome:
-      %span.nome= @cliente.nome
-    .field
-      %span.label Città:
-      %span.note= @cliente.citta
-    .field
-      %span.label Provincia:
-      %span.cliente_nome= @cliente.provincia
-    .field
-      %span.label Indirizzo:
-      %span.full_address= @cliente.indirizzo.full_street_address
-    .field#gmaps_page 
-      - @mappa = @cliente.indirizzo.to_gmaps4rails
-      = gmaps({ :markers => {:data => @mappa}, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-    
+
+.content
+
+  .side
+    = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente.indirizzo}
+
+
+  .cliente.show
+    = render 'shared/title_bar', title: @cliente.to_s
+    #message
+    .map
+    #collapse
+      .field
+        %span.label Nome:
+        %span.nome= @cliente.nome
+      .field
+        %span.label Città:
+        %span.note= @cliente.citta
+      .field
+        %span.label Provincia:
+        %span.cliente_nome= @cliente.provincia
+      .field
+        %span.label Indirizzo:
+        %span.full_address= @cliente.indirizzo.full_street_address
+      .field#gmaps_page 
+        - @mappa = @cliente.indirizzo.to_gmaps4rails
+        = gmaps({ :markers => {:data => @mappa}, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
     
 
 

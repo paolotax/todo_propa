@@ -5,8 +5,9 @@ class Indirizzo < ActiveRecord::Base
   validates :citta,        :presence => true
   validates :provincia,    :presence => true, :length => { :is => 2 }
 
-  # geocoded_by :full_street_address
-  #   after_validation :geocode, 
+  geocoded_by :full_street_address
+  
+  # after_validation :geocode, 
   #                        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.citta_changed? || obj.cap_changed? || obj.indirizzable.cytta_changed? }
 
   def full_street_address
@@ -16,7 +17,7 @@ class Indirizzo < ActiveRecord::Base
   acts_as_gmappable
 
   def gmaps4rails_address
-    "#{self.indirizzo}, #{self.citta}, #{self.provincia}"
+    "#{self.indirizzo}, #{self.indirizzable.citta}, #{self.citta}, #{self.provincia}"
   end
 
   # def self.gmaps4rails_trusted_scopes
