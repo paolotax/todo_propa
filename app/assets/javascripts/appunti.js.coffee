@@ -19,7 +19,10 @@ jQuery ->
   $('#nuovo-appunto').live 'click', (e) ->
     e.preventDefault()
     $(this).fadeOut()
-    $("ul.tabs").data("tabs").click(0)
+
+    # $('#appunto-small').show()
+    # $("ul.tabs").data("tabs").click(0)
+
     $('#appunto-small').fadeIn 'slow', () ->
       $("ul.tabs li.wiz").show()
       $('.nascondi').show()

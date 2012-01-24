@@ -4,7 +4,7 @@ class AppuntiController < ApplicationController
 
   def index
     
-    @search = current_user.appunti.includes(:cliente, :user).filtra(params)
+    @search = current_user.appunti.includes(:cliente, :user, :righe => :libro).filtra(params)
 
     @appunti = @search.recente.limit(20)
     @appunti = @appunti.offset((params[:page].to_i-1)*20) if params[:page].present?

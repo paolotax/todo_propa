@@ -19,7 +19,7 @@ module AppuntiHelper
       cliente_id:      appunto.cliente_id,
       id:             appunto.id, 
       destinatario:   appunto.destinatario.present? ? appunto.destinatario : "...",
-      cliente_nome:    appunto.cliente_nome,
+      cliente_nome:   appunto.cliente_nome,
       note:           markdown(appunto.note),
       stato:          stato_to_s(appunto),
       telefono:       appunto.telefono,
