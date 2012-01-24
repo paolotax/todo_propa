@@ -22,11 +22,14 @@
         %span.label Provincia:
         %span.cliente_nome= @cliente.provincia
       .field
+        %span.label Provincia:
+        %span.cliente_nome= @cliente.cliente_tipo
+      .field
         %span.label Indirizzo:
         %span.full_address= @cliente.indirizzo.full_street_address
       .field#gmaps_page 
         - @mappa = @cliente.indirizzo.to_gmaps4rails
-        = gmaps({ :markers => {:data => @mappa}, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+        = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
     
 
 

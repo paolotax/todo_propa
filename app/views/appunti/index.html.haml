@@ -16,7 +16,7 @@
     
     #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
       - @appunti.each do |appunto|
-        = render "appunto", :locals => :mustache, :mustache => appunto_for_mustache(appunto)
+        = render "appunto", :mustache => appunto_for_mustache(appunto)
     
 %script{ type: "text/html", id: "appunto_template" }
   = render "appunto"
@@ -24,23 +24,3 @@
 %script{ type: "text/html", id: "appunto_tmp_template" }
   = render "appunto_tmp"
 
-:javascript
-  var appunti = "#{@appunti.to_json}")
-  
-  / $(document).ready(function() {
-  /   
-  /   
-  /   var obj, riga, _i, _len;
-  /   
-  /   for (_i = 0, _len = objs.length; _i < _len; _i++) {
-  /     obj = objs[_i];
-  /     _this.list.append(Mustache.to_html(_this.template.html(), obj));
-  /         riga = $("#" + _this.model + "_" + obj.id);
-  /         $(".on_the_spot_editing", riga).each(initializeOnTheSpot);
-  /       }
-  /       
-  /       
-  /   $('#appunti).prepend ()
-  /   
-  /   
-  / };

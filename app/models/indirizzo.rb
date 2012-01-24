@@ -19,7 +19,24 @@ class Indirizzo < ActiveRecord::Base
   def gmaps4rails_address
     "#{self.indirizzo}, #{self.indirizzable.citta}, #{self.citta}, #{self.provincia}"
   end
-
+  
+  def gmaps4rails_infowindow
+    "#{self.indirizzable.nome} </br> #{self.indirizzable.citta}"
+  end
+  
+  def gmaps4rails_marker_picture
+    {
+     "picture" => "/images/#{self.indirizzable.cliente_tipo.parameterize}.png",
+     "width" => "32",
+     "height" => "37",
+     "marker_anchor" => [ 16, 38],
+     "shadow_picture" => "/images/morgan.png" ,
+     "shadow_width" => "110",
+     "shadow_height" => "110",
+     "shadow_anchor" => [ 5, 10],
+    }
+  end
+  
   # def self.gmaps4rails_trusted_scopes
   #   ["find", 'max_qi', 'first']
   # end

@@ -21,11 +21,13 @@ jQuery ->
     $(this).fadeOut()
 
     # $('#appunto-small').show()
-    # $("ul.tabs").data("tabs").click(0)
+    $("ul.tabs").data("tabs").click(0)
 
     $('#appunto-small').fadeIn 'slow', () ->
       $("ul.tabs li.wiz").show()
       $('.nascondi').show()
+      
+      
     $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
     $('#appunto_cliente_id_chzn input').focus();
       
