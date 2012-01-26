@@ -53,27 +53,3 @@ class ListComuni
         $('#cliente_indirizzi_attributes_0_citta').val     @comune
         $('#cliente_indirizzi_attributes_0_cap').val       c.cap
 
-    
-  # window.comuni = $('#cliente_citta').html()
-  # 
-  # $('#cliente_provincia').live 'change', ->
-  #   provincia = $('#cliente_provincia :selected').text()
-  #   escaped_provincia = provincia.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
-  #   options = $(window.comuni).filter("optgroup[label='#{escaped_provincia}']").html()
-  #   if options
-  #     $('#cliente_citta').html(options)
-  #     $('#cliente_citta').prepend("<option value></option>")
-  #     $("#cliente_citta.chzn-select").trigger("liszt:updated");
-  #   else
-  #     $('#cliente_citta').empty()
-  #   $('#cliente_indirizzi_attributes_0_provincia').val provincia
-  #   $('#cliente_citta').trigger 'change'
-  #   
-  # $('#cliente_citta').live 'change', ->
-  #   $('#cliente_indirizzi_attributes_0_citta').val $('#cliente_citta :selected').text()
-  # 
-  # $('#cliente_provincia').trigger 'change'
-  # 
-  
-
-

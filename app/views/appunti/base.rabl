@@ -18,10 +18,19 @@ node :errors do |model|
 end
 
 child :righe do |u|
-   attributes :id, :libro_id, :quantita, :prezzo_unitario, :sconto, :importo
-   glue :libro do |l|
-     attributes :titolo, :prezzo_copertina
-   end
+  attributes :id, :libro_id, :quantita
+  node :prezzo_unitario do |u|
+    u.prezzo_unitario.round(2)
+  end
+  node :sconto do |u|
+    u.sconto.round(2)
+  end
+  node :importo do |u|
+    u.importo.round(2)
+  end 
+  glue :libro do |l|
+    attributes :titolo, :prezzo_copertina
+  end
 end
 
 child(:user)   { attributes :username }

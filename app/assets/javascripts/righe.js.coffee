@@ -11,7 +11,6 @@ jQuery ->
     $('#new_libro_chzn').removeClass 'validity-erroneous chzn-container-active'
     $.getJSON "/libri/#{$(this).val()}", 
       (libro) ->
-        console.log $('input#prezzo_consigliato').val()
         if $('input#prezzo_consigliato').is ':checked'
           $('#new_prezzo').val(libro.prezzo_consigliato)
         else

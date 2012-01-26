@@ -17,12 +17,14 @@
         <div class="telefono"    >{{telefono}}</div>
         <div class="email"       >{{email}}</div>
       </div>
-      <ul class="righe">
-        {{#righe}}
-        <li class="riga">{{titolo}} {{quantita}} x {{prezzo_unitario}} - {{sconto}}% = {{importo}} </li>
-        {{/righe}}  
-      </ul>
-      <div class="totali"><span class="tot_copie">{{totale_copie}}</span> <span class="tot_importo">{{totale_importo}}</span></div>
+      <div class="table-righe">      
+        <ul class="righe">
+          {{#righe}}
+          <li class="riga"><span>{{titolo}}</span> <span>{{quantita}}</span><span> x {{prezzo_unitario}}</span><span> - {{sconto}}% = </span><span>{{importo}}</span> </li>
+          {{/righe}}
+          <li class="totali"><span>.</span><span>{{totale_copie}}</span><span>.</span><span>.</span><span>{{totale_importo}}</span> </li>  
+        </ul>
+      </div>
     </div>
   </div>  
   <div class="azioni">

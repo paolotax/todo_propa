@@ -9,8 +9,9 @@ module AppuntiHelper
                         id:              r.id,
                         titolo:          r.libro.titolo,
                         quantita:        r.quantita,
-                        prezzo_unitario: r.prezzo_unitario,
-                        importo:         r.importo
+                        prezzo_unitario: r.prezzo_unitario.round(2),
+                        sconto:          r.sconto.round(2),
+                        importo:         r.importo.round(2)
              }
       righe << riga
     end
@@ -27,7 +28,7 @@ module AppuntiHelper
       con_recapiti:   appunto.telefono.present? || appunto.email.present? ? "con_recapiti" : "senza_recapiti",
       auth_token:     form_authenticity_token,
       totale_copie:   appunto.totale_copie,
-      totale_importo: appunto.totale_importo,
+      totale_importo: appunto.totale_importo.round(2),
       righe:        righe
     }
   end
