@@ -3,8 +3,9 @@
 
 .content
 
-  .side
-    = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente.indirizzo}
+  - unless @cliente.indirizzo.new_record?
+    .side
+      = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente.indirizzo}
 
 
   .cliente.show
@@ -24,12 +25,13 @@
       .field
         %span.label Tipo cliente:
         %span.cliente_nome= @cliente.cliente_tipo
-      .field
-        %span.label Indirizzo:
-        %span.full_address= @cliente.indirizzo.full_street_address
-      .field#gmaps_page 
-        - @mappa = @cliente.indirizzo.to_gmaps4rails
-        = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+      - unless @cliente.indirizzo.new_record?
+        .field
+          %span.label Indirizzo:
+          %span.full_address= @cliente.indirizzo.full_street_address
+        .field#gmaps_page 
+          - @mappa = @cliente.indirizzo.to_gmaps4rails
+          = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
     
 
 

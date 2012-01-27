@@ -19,25 +19,8 @@
 
 //= require_tree .
 
-// function testCallback(object, value, settings) {
-//   var converter = new Showdown.converter();
-//   var html = converter.makeHtml(value);
-//   $(object).html(html);
-// }
-// 
-// 
-// $(document).ready(function() {
-//  
-//  
-//  $(".scrollable").scrollable({ vertical: true, mousewheel: true, circular: true });  
-//  
-//  $(".on_the_spot_editing, .note_mark").live( 'mouseout', function() {
-//    $(this).css('background-color', 'inherit');
-//  });
-//  $('.on_the_spot_editing, .note_mark').live('mouseover', function() {
-//    $(this).css('background-color', '#EEF2A0');
-//  });
-// 
-// });
-
-
+function testCallback(object, value, settings) {
+  var converter = new Showdown.converter();
+  var html = converter.makeHtml(value);
+  $(object).html(html);
+}

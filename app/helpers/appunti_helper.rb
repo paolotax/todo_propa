@@ -25,10 +25,11 @@ module AppuntiHelper
       stato:          stato_to_s(appunto),
       telefono:       appunto.telefono,
       email:          appunto.email,
-      con_recapiti:   appunto.telefono.present? || appunto.email.present? ? "con_recapiti" : "senza_recapiti",
+      con_recapiti:   appunto.has_recapiti?,
       auth_token:     form_authenticity_token,
       totale_copie:   appunto.totale_copie,
       totale_importo: appunto.totale_importo.round(2),
+      con_righe:      appunto.has_righe?, 
       righe:        righe
     }
   end

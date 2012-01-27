@@ -3,31 +3,62 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "compass/utilities/lists/bullets";
+@import "compass/utilities/text/ellipsis";
+
 
 .table-righe {
   ul.righe {
     @include no-bullets;
     margin: 0;
     padding: 0;
-    span {
+    .riga span {
       display: block;
       float: left;
       text-align: right;
       &:first-child {
-        width: 35%;
+        width: 43.18%;
         text-align: left;
         font-style: italic;
+         @include ellipsis
       }
       &:nth-child(2) {
-        width: 10%;
+        width: 8.88%;
       }
-      &:nth-child(3) {
-        width: 15%;
+      &:nth-child(4) {
+        width: 11.1%;
       }
-      &:nth-child(4),
-      &:nth-child(5) {
-        width: 20%;
+      &:nth-child(6) {
+        width: 13.32%;
       }
+      &:nth-child(3),
+      &:nth-child(5),
+      &:nth-child(7) {
+        width: 2.22%;
+      }
+      &:nth-child(8) {
+        width: 17.76%;
+      }
+    }
+    li:last-child {
+      span:nth-child(2),
+      span:nth-child(8) {
+        border-bottom: 3px double black;
+      }
+    }
+  }
+  .totali {
+    width: 100%;
+  }
+  
+  
+  .totali div {
+    float: left;
+    text-align: right;
+    &:first-child {
+      width: 52.06%;
+    }
+    &:nth-child(2) {
+      width: 47.84%;
     }
   }
 }

@@ -29,6 +29,14 @@ class Appunto < ActiveRecord::Base
     cliente.nome if cliente.present?
   end
   
+  def has_righe?
+    !self.righe.empty?
+  end
+  
+  def has_recapiti?
+   !self.telefono.blank? || !self.email.blank?
+  end
+  
   def self.filtra(params)
     appunti = scoped
     appunti = appunti.where("appunti.destinatario ilike ? or clienti.nome ilike ?  or clienti.citta ilike ?  or appunti.note ilike ?", 

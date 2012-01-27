@@ -3,17 +3,40 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "compass/css3/transform";
+@import "mixins";
 
 .note form textarea {
 	font-size: 14px;
 }
-
 
 .content-list {
 	width: 75%;
 	min-width: 535px;
 }
 
+.group:before,
+.group:after {
+  content:"";
+  display:table;
+}
+
+.group:after {
+  clear:both;
+}
+
+.group {
+  zoom:1;
+}
+
+.telefono:before { 
+  content: "\2706"; 
+  padding-right: 5px;
+}
+
+a[href^="mailto:"]:before { 
+  content: "\2709";
+  padding-right: 5px;
+}
 
 #appunto-small {
   margin-top: 16px;
@@ -29,7 +52,7 @@
     border-bottom: solid 1px #999999;
     padding-top: 3px;
     padding-bottom: 3px;
-    &:first {
+    &:first-child {
       border-top: solid 1px #999999;
     }
     &:hover .azioni {
@@ -104,6 +127,9 @@
     .appunto-wrap {
       margin-left: 50px;
       margin-right: 110px;
+      div {
+        margin-top:2px;
+      }
       .intestazione {
         width: 30%;
         float: left;
@@ -114,10 +140,10 @@
         float: left;
       }
       .recapiti {
-        float: left;
-        background-color: green;
-        &.senza_recapito {
-          display: none
+
+        div {
+          float: left;
+          width: 50%;
         }
       }
       .cliente_nome {
@@ -145,26 +171,6 @@
   .label + div {
     font-size: 18px;
     margin-left: 170px;
-  }
-  h2.bar {
-    padding: 4px 20px;
-    margin: 0;
-    font-weight: normal;
-    color: #333;
-    font-size: 14px;
-    text-align: center;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    -webkit-border-top-left-radius: 6px;
-    -webkit-border-top-right-radius: 6px;
-    -moz-border-radius-topleft: 6px;
-    -moz-border-radius-topright: 6px;
-    border: solid 1px #BBB;
-    border-bottom-color: #AAA;
-    background-color: #DDD;
-    background: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3), to(#BBB));
-    background: -moz-linear-gradient(top,  #F3F3F3, #BBB);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F3F3F3', endColorstr='#BBB');
   }
 }
 

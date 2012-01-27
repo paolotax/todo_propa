@@ -2,12 +2,13 @@ attributes :id, :destinatario, :note, :telefono, :email, :stato, :totale_copie, 
 
 code do |u|
   { 
-    cliente_id:    u.cliente_id,
+    cliente_id:   u.cliente_id,
     destinatario: u.destinatario.present? ? u.destinatario : "...",
-    cliente_nome:  u.cliente_nome,
+    cliente_nome: u.cliente_nome,
     note:         markdown(u.note),
     stato:        stato_to_s(u),
-    con_recapiti: u.telefono.present? || u.email.present? ? "con_recapiti" : "senza_recapiti",
+    con_recapiti: u.has_recapiti?,
+    con_righe:    u.has_righe?,
     auth_token:   form_authenticity_token 
   }
 end
