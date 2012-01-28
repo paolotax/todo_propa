@@ -16,8 +16,8 @@ class Cliente < ActiveRecord::Base
   validates :citta,        :presence => true
   validates :provincia,    :presence => true, :length => { :is => 2 }
   
-  scope :select_provincia, select("distinct clienti.provincia").group("clienti.provincia")
-  scope :select_citta,     select("distinct clienti.citta").group("clienti.citta") 
+  scope :select_provincia, select(:provincia).uniq
+  scope :select_citta,     select(:citta).uniq
   
   scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")
   scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")

@@ -16,6 +16,7 @@ class Appunto < ActiveRecord::Base
   scope :da_fare,    includes(:cliente).where("appunti.stato = ''")
   scope :in_sospeso, includes(:cliente).where("appunti.stato = 'P'")
   
+  scope :uniq_cliente_id, select(:cliente_id).uniq
   
   def to_s
     "##{id} - #{destinatario} (#{cliente_nome})"

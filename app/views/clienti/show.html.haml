@@ -1,6 +1,5 @@
 - title @cliente.nome
 
-
 .content
 
   - unless @cliente.indirizzo.new_record?
@@ -25,6 +24,7 @@
       .field
         %span.label Tipo cliente:
         %span.cliente_nome= @cliente.cliente_tipo
+      
       - unless @cliente.indirizzo.new_record?
         .field
           %span.label Indirizzo:

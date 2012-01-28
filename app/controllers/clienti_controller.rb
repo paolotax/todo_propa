@@ -13,8 +13,6 @@ class ClientiController < ApplicationController
     @citta     = current_user.clienti.select_citta.filtra(params.except(:citta)).order(:citta)
   end
 
-
-
   def show
     @cliente = current_user.clienti.includes(:indirizzi).find(params[:id])
     respond_to do |format|
@@ -24,7 +22,10 @@ class ClientiController < ApplicationController
   end
 
   def new
-    @cliente = current_user.clienti.build
+    @cliente   = current_user.clienti.build
+    @indirizzo  = @cliente.indirizzo
+    # @spedizione = @cliente.indirizzo_spedizione
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @cliente }
@@ -49,8 +50,7 @@ class ClientiController < ApplicationController
     end
   end
 
-  # PUT /clienti/1
-  # PUT /clienti/1.json
+
   def update
     @cliente = Cliente.find(params[:id])
     
