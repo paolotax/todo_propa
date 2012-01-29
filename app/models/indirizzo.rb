@@ -29,11 +29,7 @@ class Indirizzo < ActiveRecord::Base
      "picture" => "/images/#{self.indirizzable.cliente_tipo.parameterize}.png",
      "width" => "32",
      "height" => "37",
-     "marker_anchor" => [ 16, 38],
-     "shadow_picture" => "/images/morgan.png" ,
-     "shadow_width" => "110",
-     "shadow_height" => "110",
-     "shadow_anchor" => [ 5, 10],
+     "marker_anchor" => [ 16, 38]
     }
   end
   

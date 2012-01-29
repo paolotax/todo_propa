@@ -32,6 +32,9 @@
         .field#gmaps_page 
           - @mappa = @cliente.indirizzo.to_gmaps4rails
           = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-    
+      .nav.pjax
+        = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'nome').first) 
+        = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'nome').first) 
+      
 
 
