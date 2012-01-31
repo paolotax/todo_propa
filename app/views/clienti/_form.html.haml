@@ -7,7 +7,10 @@
       %ul
         - @cliente.errors.full_messages.each do |msg|
           %li= msg
-
+  
+  .field
+    = f.label :cliente_tipo, "Tipo cliente:"
+    = f.select :cliente_tipo, Cliente::TIPI_CLIENTI
   = field f, :nome,      size: 50
   .field
     = f.label :provincia, "Provincia:"

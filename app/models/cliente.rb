@@ -1,18 +1,15 @@
 class Cliente < ActiveRecord::Base
-
+  
+  TIPI_CLIENTI = ['Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica', 'Cartolibreria', 'Persona Fisica', 'Ditta', 'Comune']
+  ABBR_TIPI    = ['E', 'IC', 'D', 'C', '', '', 'Com']
+  
   # extend FriendlyId
   # friendly_id :nome
-
-  scope :previous, lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} < ?", i.user_id, i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
-  scope :next,     lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} > ?", i.user_id, i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
-  
-  # named_scope :next, lambda { |i| {:conditions => ["#{self.table_name}.id > ?", i.id], :order => "#{self.table_name}.id ASC"} }
-
-
 
   belongs_to :user
 
   has_many :appunti
+  has_many :visite
   has_many :indirizzi, :as => :indirizzable, :dependent => :destroy
   
   accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:citta].nil? || a[:provincia].nil?}, :allow_destroy => true  
@@ -22,6 +19,7 @@ class Cliente < ActiveRecord::Base
   
   validates :citta,        :presence => true
   validates :provincia,    :presence => true, :length => { :is => 2 }
+  validates :cliente_tipo, :inclusion => {:in => TIPI_CLIENTI }
   
   scope :select_provincia, select(:provincia).uniq
   scope :select_citta,     select(:citta).uniq
@@ -31,8 +29,27 @@ class Cliente < ActiveRecord::Base
   scope :con_appunti_da_fare,    joins(:appunti).where("appunti.stato = ''")
   scope :con_appunti_in_sospeso, joins(:appunti).where("appunti.stato = 'P'")
   
+  scope :previous, lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} < ?", i.user_id, i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
+  scope :next,     lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} > ?", i.user_id, i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
+  
   
   #after_initialize :set_indirizzi
+  
+  before_save :set_nome
+  
+  # TIPI_CLIENTI.each do |tc|
+  #   define_method '#{cliente_tipo}?' do
+  #     self.cliente_tipo == tc
+  #   end
+  # end
+  # 
+  # class << self
+  #   TIPI_CLIENTI.each do |tc|
+  #     define_method '#{cliente_tipo}' do
+  #       cliente_tipo
+  #     end
+  #   end
+  # end  
   
   def to_s
     "##{id} - #{nome} #{citta} (#{provincia})"
@@ -85,4 +102,13 @@ private
     self.indirizzi.build(tipo: 'Indirizzo spedizione') unless self.indirizzo_spedizione.present?
   end
   
+  def set_nome
+    n = self.nome.split(' ')
+    suff = Cliente::ABBR_TIPI[Cliente::TIPI_CLIENTI.index(self.cliente_tipo)]
+    
+    unless n[0] == suff
+      self.nome = suff + " " + self.nome
+    end
+
+  end
 end

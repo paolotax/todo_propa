@@ -1,0 +1,2 @@
+module VisitaRigheHelper
+end

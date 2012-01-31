@@ -1,9 +1,16 @@
 <div class="appunto group {{stato}}" id="appunto_{{id}}">
+
   <div class="stato {{stato}}">{{stato}}</div>
   <div class="appunto-wrap">
     <div class="intestazione group">
       <div class="destinatario pjax"><a href="/appunti/{{id}}">{{destinatario}}</a></div>
       <div class="cliente_nome pjax" ><a href="/clienti/{{cliente_id}}">{{cliente_nome}}</a></div>
+      {{#con_recapiti}}        
+      <div class="recapiti group">
+        <span class="telefono">{{telefono}}</span>
+        <a href="mailto:{{email}}" class="email">{{email}}</a>
+      </div>
+      {{/con_recapiti}}      
     </div>
     <div class="note" >
       <div>
@@ -15,12 +22,7 @@
               data-callback="testCallback"
               title="...">{{{note}}}</span>
       </div>
-      {{#con_recapiti}}        
-      <div class="recapiti group">
-        <div class="telefono">{{telefono}}</div>
-        <div class="email"   ><a href="mailto:{{email}}">{{email}}</a></div>
-      </div>
-      {{/con_recapiti}}
+      
       {{#con_righe}}
       <div class="table-righe">      
         <ul class="righe">

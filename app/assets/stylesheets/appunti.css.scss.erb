@@ -3,6 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "compass/css3/transform";
+@import "compass/utilities/text/ellipsis";
+@import "compass/css3/border-radius";
 @import "mixins";
 
 .note form textarea {
@@ -28,17 +30,10 @@
   zoom:1;
 }
 
-.telefono:before { 
-  content: "\2706"; 
-  padding-right: 5px;
-}
 
-a[href^="mailto:"]:before { 
-  content: "\2709";
-  padding-right: 5px;
-}
 
 #appunto-small {
+  
   margin-top: 16px;
   .condizioni label {
     display: inline;
@@ -112,7 +107,6 @@ a[href^="mailto:"]:before {
       width: 32px;
       height: 32px;
       text-indent: -9999px;
-      margin-right: 10px;
       cursor: pointer;
       &.da_fare {
         background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px 0 transparent;
@@ -124,8 +118,64 @@ a[href^="mailto:"]:before {
         background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -68px transparent;
       }
     }
+
+    .recapiti {
+ 
+      margin-right: 10px;
+      z-index: 2;
+      
+      font-size: 11px;
+      span, a {
+        text-align: center;
+        border: 1px solid #ccc;
+        float: left;
+        @include ellipsis;
+        @include border-radius(5px);
+        padding: 3px 5px 3px 5px;
+        display: block;
+      }
+      a[href="mailto:"] {
+        display: none;
+      }
+      span:empty {
+        display: none;
+      }
+      div {
+        text-align: center;
+        border: 1px solid #ccc;
+        
+        @include ellipsis;
+        @include border-radius(5px);
+        padding: 3px 5px 3px 5px;
+        &:empty {
+          display: none;
+        }
+        
+      }
+    }
+    
+    .telefono:before { 
+      content: "\2706"; 
+      padding-right: 5px;
+    }
+    .telefono:after { 
+      content: ""; 
+      clear: both;
+    }
+
+    a[href^="mailto:"]:before { 
+      content: "\2709";
+      padding-right: 5px;
+    }
+    
+    .recapiti:before {
+      content: "";
+      height: 20px;
+    }
+    
+
     .appunto-wrap {
-      margin-left: 50px;
+      margin-left: 40px;
       margin-right: 110px;
       div {
         margin-top:2px;
@@ -133,18 +183,11 @@ a[href^="mailto:"]:before {
       .intestazione {
         width: 30%;
         float: left;
-        overflow: hidden;
+
       }
       .note {
         width: 65%;
         float: left;
-      }
-      .recapiti {
-
-        div {
-          float: left;
-          width: 50%;
-        }
       }
       .cliente_nome {
         margin-top:2px;

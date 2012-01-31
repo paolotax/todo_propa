@@ -8,7 +8,7 @@ class Indirizzo < ActiveRecord::Base
   geocoded_by :full_street_address
   
   # after_validation :geocode, 
-  #                        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.citta_changed? || obj.cap_changed? || obj.indirizzable.cytta_changed? }
+  #                        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.citta_changed? || obj.cap_changed? || obj.indirizzable.citta_changed? }
 
   def full_street_address
     [self.indirizzo, self.cap, self.citta, self.indirizzable.citta, self.provincia].join(', ')
@@ -17,7 +17,7 @@ class Indirizzo < ActiveRecord::Base
   acts_as_gmappable
 
   def gmaps4rails_address
-    "#{self.indirizzo}, #{self.indirizzable.citta}, #{self.citta}, #{self.provincia}"
+    "#{self.indirizzo}, #{self.try(:indirizzable).try(:citta)}, #{self.citta}, #{self.provincia}"
   end
   
   def gmaps4rails_infowindow

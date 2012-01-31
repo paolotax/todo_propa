@@ -7,6 +7,7 @@
 
 
 .table-righe {
+  font-size: 13px;
   ul.righe {
     @include no-bullets;
     margin: 0;
@@ -19,7 +20,7 @@
         width: 43.18%;
         text-align: left;
         font-style: italic;
-         @include ellipsis
+        @include ellipsis
       }
       &:nth-child(2) {
         width: 8.88%;

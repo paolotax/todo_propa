@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120119112950) do
+ActiveRecord::Schema.define(:version => 20120130134136) do
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -178,5 +178,29 @@ ActiveRecord::Schema.define(:version => 20120119112950) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  create_table "visita_righe", :force => true do |t|
+    t.integer "visita_id"
+    t.integer "visitable_id"
+    t.string  "visitable_type"
+  end
+
+  add_index "visita_righe", ["visita_id"], :name => "index_visita_righe_on_visita_id"
+  add_index "visita_righe", ["visitable_id", "visitable_type"], :name => "index_visita_righe_on_visitable_id_and_visitable_type"
+
+  create_table "visite", :force => true do |t|
+    t.integer  "cliente_id"
+    t.string   "titolo"
+    t.datetime "start"
+    t.datetime "end"
+    t.boolean  "all_day"
+    t.boolean  "baule"
+    t.string   "scopo"
+    t.integer  "giro_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "visite", ["cliente_id"], :name => "index_visite_on_cliente_id"
 
 end
