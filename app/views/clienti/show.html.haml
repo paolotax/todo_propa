@@ -26,9 +26,9 @@
       #gmaps_page 
         - @mappa = @cliente.indirizzo.to_gmaps4rails
         = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-    %footer
-      = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'nome').first), :class => 'pjax' 
-      = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'nome').first), :class => 'pjax'
+    %footer.pjax
+      = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'nome').first)
+      = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'nome').first)
 
   - unless @cliente.indirizzo.new_record?
     .side
