@@ -1,12 +1,8 @@
-.search_options.pjax
+.search_options.pjax.search-nearbys
   %h2 Nelle vicinanze...
-  - @nearbys = indirizzo.nearbys().includes(:indirizzable).limit(50).in_groups_of(10)
-  %div.scrollable.vertical
-    %div.items
-      - for group in @nearbys
-        %div
-          - for c in group
-            = link_to c.try(:indirizzable).try(:nome), cliente_path(c.try(:indirizzable_id))
-            .clear
+  - @nearbys = indirizzo.nearbys().includes(:indirizzable).limit(30)
+  %ul.vertical
+    - for c in @nearbys
+      %li= link_to c.try(:indirizzable).try(:nome), cliente_path(c.try(:indirizzable_id))
         
         

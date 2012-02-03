@@ -9,11 +9,6 @@ jQuery ->
   $('#flash_notice, #flash_alert').delay(2000).slideUp('slow')
   window.activateTabs() if $('#appunto-small').length
 
-  $(".scrollable").scrollable
-    vertical: true
-    mousewheel: true
-    circular: true
-  
   $(".on_the_spot_editing, .note_mark").live 'mouseout', ->
     $(@).css 'background-color', 'inherit'
   

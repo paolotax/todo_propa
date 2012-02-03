@@ -5,15 +5,11 @@
 @import "compass/css3/transform";
 @import "compass/utilities/text/ellipsis";
 @import "compass/css3/border-radius";
+@import "compass/css3/box";
 @import "mixins";
 
 .note form textarea {
 	font-size: 14px;
-}
-
-.content-list {
-	width: 75%;
-	min-width: 535px;
 }
 
 .group:before,
@@ -30,10 +26,20 @@
   zoom:1;
 }
 
-
+.telefono:before { 
+  content: "\2706"; 
+  padding-right: 5px;
+}
+.telefono:after { 
+  content: ""; 
+  clear: both;
+}
+a[href^="mailto:"]:before { 
+  content: "\2709";
+  padding-right: 5px;
+}
 
 #appunto-small {
-  
   margin-top: 16px;
   .condizioni label {
     display: inline;
@@ -43,18 +49,93 @@
 
 #appunti {
   background-color: #FFFFFF;
+  @include box-flex(1);
+  overflow-y: scroll;
   .appunto {
+    @include display-box;
+    @include box-orient(horizontal);
+    @include box-align(stretch);
     border-bottom: solid 1px #999999;
     padding-top: 3px;
     padding-bottom: 3px;
     &:first-child {
       border-top: solid 1px #999999;
     }
-    &:hover .azioni {
+    &:nth-child(odd) {
+      background-color: #EEE;
+    }
+    &:hover {
+      
+
+    }
+
+    &.selected {
+      background-color: yellow;
+    }
+    .stato {
       display: block;
+      width: 32px;
+      height: 32px;
+      text-indent: -9999px;
+      cursor: pointer;
+      &.da_fare {
+        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px 0 transparent;
+      }
+      &.completato{
+        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -34px transparent;
+      }
+      &.in_sospeso {
+        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -68px transparent;
+      }
+    }
+    .appunto-wrap {
+      @include box-flex(1);
+      @include hbox();
+      padding: 5px;
+      .intestazione {
+        width: 40%;
+        @include vbox();
+        .cliente_nome {
+          margin-top: 2px;
+          @include box-flex(1);
+        }
+        .recapiti {
+          font-size: 11px;
+          margin-top: 20px;
+         span, a {
+            text-align: center;
+            border: 1px solid #ccc;
+            @include ellipsis;
+            @include border-radius(5px);
+            padding: 3px 5px 3px 5px;
+            margin-top: 3px;
+          }
+          a[href="mailto:"] {
+            display: none;
+          }
+          span:empty {
+            display: none;
+          }
+          div {
+            text-align: center;
+            border: 1px solid #ccc;
+            @include ellipsis;
+            @include border-radius(5px);
+            padding: 3px 5px 3px 5px;
+            &:empty {
+              display: none;
+            }
+          }
+        }
+      }
+      .note {
+        width: 60%;
+      }
+    }
+    .info {
+      width: 120px;
     }
     .azioni {
-      float: right;
       display: none;
       div {
         background-image:url( <%= asset_path "btn-strip.png" %>);
@@ -69,8 +150,8 @@
         opacity: 0.6;
         &:hover {
           cursor:pointer;
-          @include scale(1.5);
-          opacity: 1;
+          // @include scale(1.5);
+          // opacity: 1;
         }
         &.show {
           background-position:0 0;
@@ -101,101 +182,7 @@
         }
       }
     }
-    .stato {
-      display: block;
-      float: left;
-      width: 32px;
-      height: 32px;
-      text-indent: -9999px;
-      cursor: pointer;
-      &.da_fare {
-        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px 0 transparent;
-      }
-      &.completato{
-        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -34px transparent;
-      }
-      &.in_sospeso {
-        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -68px transparent;
-      }
-    }
-
-    .recapiti {
- 
-      margin-right: 10px;
-      z-index: 2;
-      
-      font-size: 11px;
-      span, a {
-        text-align: center;
-        border: 1px solid #ccc;
-        float: left;
-        @include ellipsis;
-        @include border-radius(5px);
-        padding: 3px 5px 3px 5px;
-        display: block;
-      }
-      a[href="mailto:"] {
-        display: none;
-      }
-      span:empty {
-        display: none;
-      }
-      div {
-        text-align: center;
-        border: 1px solid #ccc;
-        
-        @include ellipsis;
-        @include border-radius(5px);
-        padding: 3px 5px 3px 5px;
-        &:empty {
-          display: none;
-        }
-        
-      }
-    }
-    
-    .telefono:before { 
-      content: "\2706"; 
-      padding-right: 5px;
-    }
-    .telefono:after { 
-      content: ""; 
-      clear: both;
-    }
-
-    a[href^="mailto:"]:before { 
-      content: "\2709";
-      padding-right: 5px;
-    }
-    
-    .recapiti:before {
-      content: "";
-      height: 20px;
-    }
-    
-
-    .appunto-wrap {
-      margin-left: 40px;
-      margin-right: 110px;
-      div {
-        margin-top:2px;
-      }
-      .intestazione {
-        width: 30%;
-        float: left;
-
-      }
-      .note {
-        width: 65%;
-        float: left;
-      }
-      .cliente_nome {
-        margin-top:2px;
-      }
-      .destinatario {
-      }
-    }
-	}
+  }
 }
 
 

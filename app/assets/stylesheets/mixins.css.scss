@@ -1,3 +1,5 @@
+@import "compass/css3/box";
+
 @mixin bar($position) {
   padding: 4px 20px;
   margin: 0;
@@ -17,8 +19,23 @@
   background: -webkit-gradient(linear, left top, left bottom, from(#EEE), to(#CCC));
   background: -moz-linear-gradient(top,  #EEE, #CCC);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEE', endColorstr='#CCC');
+  a {
+    color: #444;
+  }
 }
 
+@mixin hbox() {
+  @include display-box;
+  @include box-orient(horizontal);
+  @include box-align(stretch);
+  @include box-pack(start);
+}  
+
+@mixin vbox() {
+  @include display-box;
+  @include box-orient(vertical);
+  @include box-align(stretch);
+}
 
 // color: #333;
 

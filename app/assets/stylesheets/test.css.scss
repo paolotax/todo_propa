@@ -1,0 +1,14 @@
+@import "compass/css3/box";
+
+#div1 {
+  @include display-box;
+  @include box-orient(vertical);
+  width: 300px;
+  span {
+    @include box-flex(1);
+    display: block;
+    background-color: red;
+  }
+}
+
+

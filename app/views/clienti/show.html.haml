@@ -1,40 +1,39 @@
 - title @cliente.nome
 
 .content
-
+  .content-list
+    .cliente.show
+      = render 'shared/title_bar', title: @cliente.to_s
+      #message
+      .map
+      #collapse
+        .field
+          %span.label Nome:
+          %span.nome= @cliente.nome
+        .field
+          %span.label Città:
+          %span.note= @cliente.citta
+        .field
+          %span.label Provincia:
+          %span.cliente_nome= @cliente.provincia
+        .field
+          %span.label Tipo cliente:
+          %span.cliente_nome= @cliente.cliente_tipo
+      
+        - unless @cliente.indirizzo.new_record?
+          .field
+            %span.label Indirizzo:
+            %span.full_address= @cliente.indirizzo.full_street_address
+          .field#gmaps_page 
+            - @mappa = @cliente.indirizzo.to_gmaps4rails
+            = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+        .nav.pjax
+          = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'nome').first) 
+          = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'nome').first)
   - unless @cliente.indirizzo.new_record?
     .side
       = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente.indirizzo}
-
-
-  .cliente.show
-    = render 'shared/title_bar', title: @cliente.to_s
-    #message
-    .map
-    #collapse
-      .field
-        %span.label Nome:
-        %span.nome= @cliente.nome
-      .field
-        %span.label Città:
-        %span.note= @cliente.citta
-      .field
-        %span.label Provincia:
-        %span.cliente_nome= @cliente.provincia
-      .field
-        %span.label Tipo cliente:
-        %span.cliente_nome= @cliente.cliente_tipo
-      
-      - unless @cliente.indirizzo.new_record?
-        .field
-          %span.label Indirizzo:
-          %span.full_address= @cliente.indirizzo.full_street_address
-        .field#gmaps_page 
-          - @mappa = @cliente.indirizzo.to_gmaps4rails
-          = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-      .nav.pjax
-        = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'nome').first) 
-        = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'nome').first) 
+   
       
 
 

@@ -4,9 +4,31 @@
 
 
 jQuery ->
-  #$('.appunto a').pjax('[data-pjax-container]', { timeout: 10000 })
+
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
-  $('.chzn-select-bis').chosen({no_results_text: "Nessuna corrispondenza trovata"})
+  
+  @selected_appunti = []
+  
+  count_selected = (last_clicked) =>
+
+    if last_clicked.hasClass('selected')
+      @selected_appunti.push last_clicked.attr('id')
+    else
+      for item in @selected_appunti
+        if item is last_clicked.attr('id')
+          @selected_appunti.splice(@selected_appunti.indexOf(item), 1)
+          
+    $('#footer').html @selected_appunti.length 
+    console.log @selected_appunti
+    
+
+  $('.appunto').live 'click', (e) ->
+    e.preventDefault()
+    $(@).toggleClass("selected")
+    pos = $('#appunti').scrollTop();
+    count_selected $(@)
+    #$('#footer').html $('.appunto.selected').length
+    $('#appunti').scrollTop(pos);
 
   $('.nascondi').live 'click', (e) ->
     e.preventDefault()
@@ -17,7 +39,13 @@ jQuery ->
     reset_appunto()
 
   $('#nuovo-appunto').live 'click', (e) ->
+
+    pos = $('#appunti').scrollTop()
+    console.log pos
     e.preventDefault()
+    
+
+    
     $(this).fadeOut()
 
     # $('#appunto-small').show()
@@ -26,15 +54,17 @@ jQuery ->
     $('#appunto-small').fadeIn 'slow', () ->
       $("ul.tabs li.wiz").show()
       $('.nascondi').show()
-      
-      
+    
     $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
     $('#appunto_cliente_id_chzn input').focus();
       
     $("#appunto-small").expose
       color: '#789', 
       lazy: true
-  
+
+    $('#appunti').scrollTop(pos)  
+    console.log pos, $('#appunti').scrollTop()
+    
   $('.appunto .stato').live 'click', (e) ->
     alert 'gino'
 

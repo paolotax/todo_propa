@@ -1,23 +1,24 @@
 class ListPager
   constructor: (@page = 1, @list, @template, @model) ->
-    $(window).scroll(@check)
+    @list.scroll(@check)
 
   check: =>
+    # console.log @list.scrollTop(), @list.offset().top + @list.height(), $(".#{@model}:last-child").position().top + $(".#{@model}:last-child").height(), $(".#{@model}:last-child").offset().top
     if @nearBottom()
       @page++
-      $(window).unbind('scroll', @check)
+      @list.unbind('scroll', @check)
+      @pos = @list.scrollTop();
       $.getJSON(@list.data('json-url'), {page: @page}, @render)
-
+      
   nearBottom: =>
-    $(window).scrollTop() > $(document).height() - $(window).height() - 50  or $(window).scrollTop() + $(window).height() + 50 > @list.offset().top + @list.height() 
+    @list.offset().top + @list.height() > $(".#{@model}:last-child").position().top + $(".#{@model}:last-child").height() - 10
 
   render: (objs) =>
     for obj in objs
       @list.append Mustache.to_html(@template.html(), obj)
-      riga =  $("##{@model}_#{obj.id}")
-      $(".on_the_spot_editing", riga).each initializeOnTheSpot
-    $.mask.fit()
-    $(window).scroll(@check) if objs.length > 0 else @new_pager = true
+      
+    @list.scrollTop(@pos)
+    @list.bind('scroll', @check) if objs.length > 0
 
 
 jQuery ->
@@ -29,11 +30,8 @@ jQuery ->
 
   $("[data-pjax-container]").bind 'pjax:start', () =>
     $(window).unbind('scroll', @check)
-    if $('#clienti').length == 0
-      @new_pager = true
-    if $('#appunti').length == 0
-      @new_pager = true
-
+    
+    
   $("[data-pjax-container]").bind 'pjax:end', () =>
 
     $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
@@ -41,16 +39,8 @@ jQuery ->
     window.activateTabs() if $('#appunto-small').length
         
     $('.on_the_spot_editing').each initializeOnTheSpot
-    $(".scrollable").scrollable  
-      vertical: true, 
-      mousewheel: true,
-      circular: true 
-
 
     if $('#clienti').length
-      clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente') if @new_pager == true else $(window).scroll(@check)
-      @new_pager = false
+      clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente')
     if $('#appunti').length
-      clienti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto') if @new_pager == true else $(window).scroll(@check)
-      @new_pager = false
-
+      clienti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')

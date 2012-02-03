@@ -26,9 +26,10 @@
           %li= link_to_unless_current "Fatture",  root_url
           %li= link_to_unless_current "Giri",     clienti_url
         = render partial: "shared/search"
-    #main
-      - flash.each do |name, msg|
-        = content_tag(:div, raw(msg), :id => "flash_#{name}")
-      = yield :head
-      = yield
-      = yield :scripts
+    / = render partial: "shared/test"
+    - flash.each do |name, msg|
+      = content_tag(:div, raw(msg), :id => "flash_#{name}")
+    = yield :head
+    = yield
+    = yield :scripts
+  #footer

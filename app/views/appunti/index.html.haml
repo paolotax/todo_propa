@@ -1,11 +1,8 @@
 - title "Appunti"
 
 .content
-  .side
-    = render :partial => 'shared/episode_views'
-    = render :partial => 'shared/search_options'
   .content-list
-    = link_to "Nuovo appunto", new_appunto_path, style: "float: right;", id: "nuovo-appunto", :class => 'blue_button'
+    = link_to "Nuovo appunto", new_appunto_path, id: "nuovo-appunto", :class => 'blue_button'
     #appunto-small.form{style: 'display:none;'}
       - @appunto = Appunto.new
       = render "form_appunto_small"
@@ -17,6 +14,9 @@
     #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
       - @appunti.each do |appunto|
         = render "appunto", :mustache => appunto_for_mustache(appunto)
+  .side
+    = render :partial => 'shared/episode_views'
+    = render :partial => 'shared/search_options'
     
 %script{ type: "text/html", id: "appunto_template" }
   = render "appunto"

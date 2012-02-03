@@ -1,9 +1,13 @@
-.filters
+.filters.pjax
   %strong Filtri: 
   - if params[:search].present?
     %span.filter
       = params[:search]
       = link_to "x", params.merge(:search => nil, :page => nil)
+  - if params[:tipo].present?
+    %span.filter
+      = params[:tipo].humanize.downcase
+      = link_to "x", params.merge(:tipo => nil, :page => nil)
   - if params[:status].present?
     %span.filter
       = params[:status].humanize.downcase
