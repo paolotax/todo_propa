@@ -4,6 +4,7 @@
 
 @import "compass/css3/box";
 @import "mixins";
+@import "compass/css3/border-radius";
 
 body, html {
   margin: 0;
@@ -47,7 +48,6 @@ body {
       max-width: 1500px;
       @include box-flex(1);
       @include hbox();
-
       .content-list {
         margin-left:  100px;
         margin-right: 50px;
@@ -86,6 +86,52 @@ body {
     font-size: 11px;
     padding: 5px 100px;
   }
+}
+
+footer {
+  @include hbox();
+  @include box-pack(justify);
+  @include border-bottom-radius(5px);  
+  border: solid 1px #BBB;
+  padding: 4px 20px;
+  a {
+    display: block;
+  }  
+}
+
+
+section {
+  margin-left:  100px;
+  margin-right: 50px;
+  @include box-flex(1);
+  @include vbox();
+  article {
+    @include box-flex(1);
+    @include hbox();
+    border-left: solid 1px #BBB;
+    border-right: solid 1px #BBB;
+    .cliente {
+      padding: 20px;
+      @include box-flex(1);
+    }
+    #gmaps_page {
+      @include box-flex(1);
+      padding: 20px;
+      .map_container {
+        float: right;
+      }
+    }            
+  }
+}
+
+
+#message { 
+  display:none;
+  position:absolute; 
+  padding:10px; 
+  background:#555; 
+  color:#fff; 
+  min-width:75px; 
 }
 
 .actions {

@@ -1,12 +1,12 @@
 - title @cliente.nome
 
 .content
-  .content-list
-    .cliente.show
+  %section
+    %header
       = render 'shared/title_bar', title: @cliente.to_s
-      #message
-      .map
-      #collapse
+    #message
+    %article
+      .cliente
         .field
           %span.label Nome:
           %span.nome= @cliente.nome
@@ -19,17 +19,17 @@
         .field
           %span.label Tipo cliente:
           %span.cliente_nome= @cliente.cliente_tipo
-      
         - unless @cliente.indirizzo.new_record?
           .field
             %span.label Indirizzo:
             %span.full_address= @cliente.indirizzo.full_street_address
-          .field#gmaps_page 
-            - @mappa = @cliente.indirizzo.to_gmaps4rails
-            = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-        .nav.pjax
-          = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'nome').first) 
-          = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'nome').first)
+      #gmaps_page 
+        - @mappa = @cliente.indirizzo.to_gmaps4rails
+        = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+    %footer
+      = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'nome').first), :class => 'pjax' 
+      = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'nome').first), :class => 'pjax'
+
   - unless @cliente.indirizzo.new_record?
     .side
       = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente.indirizzo}

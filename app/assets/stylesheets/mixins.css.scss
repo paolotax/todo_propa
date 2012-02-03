@@ -19,9 +19,9 @@
   background: -webkit-gradient(linear, left top, left bottom, from(#EEE), to(#CCC));
   background: -moz-linear-gradient(top,  #EEE, #CCC);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEE', endColorstr='#CCC');
-  a {
-    color: #444;
-  }
+  // a {
+  //   color: #444;
+  // }
 }
 
 @mixin hbox() {
