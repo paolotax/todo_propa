@@ -16,11 +16,9 @@ module ApplicationHelper
     Redcarpet.new(text, *options).to_html.html_safe
   end
 
-  def title_bar(*links)    
-  
+  def manifest_attribute
+    Rails.env.production? ? 'manifest="/production.appcache"'.html_safe : ''
   end
-
-
 
   def gravatar(user, options = {})
     email_address = user.email.downcase

@@ -1,21 +1,12 @@
 TodoPropa::Application.routes.draw do
 
-  get "visita_righe/index"
-
-  get "visita_righe/create"
-
-  get "visita_righe/update"
-
-  get "visita_righe/destroy"
-
-  get "visite/index"
-
-  get "visite/create"
-
-  get "visite/update"
-
-  get "visite/destroy"
-
+  match '/:action.appcache', :controller => 'appcache', :format => :appcache
+  
+  
+  resources :visite do
+    resources :visita_righe
+  end
+  
   resources :comuni
 
   resources :fatture
