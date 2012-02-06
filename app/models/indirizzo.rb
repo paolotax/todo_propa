@@ -26,7 +26,7 @@ class Indirizzo < ActiveRecord::Base
   
   def gmaps4rails_marker_picture
     {
-     "picture" => "/images/#{self.indirizzable.cliente_tipo.parameterize}.png",
+     "picture" => ActionController::Base.helpers.asset_path("markers/#{self.indirizzable.cliente_tipo.parameterize}.png"),
      "width" => "32",
      "height" => "37",
      "marker_anchor" => [ 16, 38]
