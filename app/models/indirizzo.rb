@@ -36,12 +36,7 @@ class Indirizzo < ActiveRecord::Base
   # def self.gmaps4rails_trusted_scopes
   #   ["find", 'max_qi', 'first']
   # end
-  # 
-  # def gmaps4rails_infowindow
-  #   name = self.citta.nil? ? "default" : self.citta
-  #   "<em>" + self.citta + "</em>"
-  # end
-  # 
+
   # def to_gomap_marker
   #   data = []
   #   data << { :latitude => self.latitude, :longitude => self.longitude, :title => self.citta, :draggable => true, :id => 'baseMarker', :html => { :content => self.label_indirizzo, :popup => true  } }    
