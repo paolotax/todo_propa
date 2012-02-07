@@ -113,7 +113,7 @@ jQuery ->
 window.sbocci = ->
   alert "Sbocci!"
 
-reset_appunto = ->
+window.reset_appunto = ->
   console.log 'reset'
   $(".chzn-select").val('').trigger("liszt:updated");
   $("#appunto-small input[type=text], #appunto-small textarea").each ->

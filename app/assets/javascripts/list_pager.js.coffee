@@ -14,23 +14,17 @@ jQuery ->
         $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
       # $("#appunti").html($("#item_template").tmpl(data.concat(pendingItems)));
 
-
     $("#new_appunto").submit (e) ->
       pendingItems = $.parseJSON localStorage["pendingItems"];
-      
-      # item = {[data]($(this).serialize(),) [appunto]({"cliente_id":$("#appunto_cliente_id").val()}};)
-
+      item = {"data": $(this).serialize(), "appunto": {"cliente_id": $("#appunto_cliente_id").val(), "destinatario": $("#appunto_destinatario").val()}}
       console.log item
-              
-      # pendingItems.push(item);
-      # localStorage["pendingItems"] = JSON.stringify(pendingItems)
-      # $("#item_name").val("");
-      # sendPending();
+
+      pendingItems.push(item);
+      localStorage["pendingItems"] = JSON.stringify(pendingItems)
+      window.reset_appunto()
+      sendPending();
       
       e.preventDefault();
-
-
-
 
     sendPending = ->
       if window.navigator.onLine
