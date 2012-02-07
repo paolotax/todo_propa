@@ -3,8 +3,8 @@ jQuery ->
     if $('#cliente_provincia').length
       lista_comuni = new ListComuni()
       
-  $("[data-pjax-container]").bind 'pjax:end', () =>
-    initialize_comuni()
+  # $("[data-pjax-container]").bind 'pjax:end', () =>
+  #   initialize_comuni()
   
   initialize_comuni()
 

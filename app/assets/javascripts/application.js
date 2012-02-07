@@ -6,11 +6,13 @@
 //
 //= require jquery
 //= require jquery-ui
+//= require jquery-offline
 //= require jquery.tools.min
 //= require jquery_ujs
 //= require chosen.jquery
 //= require mustache
-//= require jquery.pjax
+
+
 //= require showdown
 //= require jquery.validity
 
@@ -24,3 +26,4 @@ function testCallback(object, value, settings) {
   var html = converter.makeHtml(value);
   $(object).html(html);
 }
+
