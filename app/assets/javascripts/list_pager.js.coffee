@@ -17,6 +17,7 @@ jQuery ->
 
     $("#new_appunto").submit (e) ->
       pendingItems = $.parseJSON localStorage["pendingItems"];
+      
       # item = {[data]($(this).serialize(),) [appunto]({"cliente_id":$("#appunto_cliente_id").val()}};)
 
       console.log item
