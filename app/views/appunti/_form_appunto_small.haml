@@ -27,7 +27,7 @@
       = field f, :telefono 
       = field f, :email 
       .actions
-        = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+        = f.submit 'Salva Appunto', id: "new_appunto_submit", class: "blue_button"
         = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button next"
     %div#ordine
       %h3.cliente_nome= @appunto.cliente_nome
