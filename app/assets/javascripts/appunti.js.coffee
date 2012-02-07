@@ -5,6 +5,8 @@
 
 jQuery ->
 
+
+
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
   
   @selected_appunti = []
@@ -38,7 +40,29 @@ jQuery ->
     $.mask.close()
     reset_appunto()
 
+  $('#nuovo-appunto').live 'click', (e) ->
   
+      pos = $('#appunti').scrollTop()
+      console.log pos
+      e.preventDefault()
+      $(this).fadeOut()
+  
+      # $('#appunto-small').show()
+      $("ul.tabs").data("tabs").click(0)
+  
+      $('#appunto-small').fadeIn 'slow', () ->
+        $("ul.tabs li.wiz").show()
+        $('.nascondi').show()
+      
+      $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
+      $('#appunto_cliente_id_chzn input').focus();
+        
+      $("#appunto-small").expose
+        color: '#789', 
+        lazy: true
+  
+      $('#appunti').scrollTop(pos)  
+      console.log pos, $('#appunti').scrollTop()
     
   $('.appunto .stato').live 'click', (e) ->
     alert 'gino'

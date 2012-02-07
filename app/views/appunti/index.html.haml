@@ -12,8 +12,9 @@
       = render :partial => 'shared/filters'
     
     #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
-      - @appunti.each do |appunto|
-        = render "appunto", :mustache => appunto_for_mustache(appunto)
+      / - @appunti.each do |appunto|
+      /   = render "appunto", :mustache => appunto_for_mustache(appunto)
+
   .side
     = render :partial => 'shared/episode_views'
     = render :partial => 'shared/search_options'

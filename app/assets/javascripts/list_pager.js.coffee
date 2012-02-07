@@ -1,9 +1,9 @@
 class ListPager
   constructor: (@page = 1, @list, @template, @model) ->
-    @list.scroll(@check)
+    if @page is 1
+      $.getJSON(@list.data('json-url'), {page: @page}, @render)
 
   check: =>
-    # console.log @list.scrollTop(), @list.offset().top + @list.height(), $(".#{@model}:last-child").position().top + $(".#{@model}:last-child").height(), $(".#{@model}:last-child").offset().top
     if @nearBottom()
       @page++
       @list.unbind('scroll', @check)
@@ -24,6 +24,7 @@ class ListPager
 jQuery ->
   if $('#clienti').length
     clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente')
+
   if $('#appunti').length
     appunti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')
 
@@ -43,4 +44,4 @@ jQuery ->
     if $('#clienti').length
       clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente')
     if $('#appunti').length
-      clienti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')
+      appunti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')

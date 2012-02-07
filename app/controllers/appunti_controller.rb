@@ -12,6 +12,8 @@ class AppuntiController < ApplicationController
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
     @citta     = current_user.clienti.select_citta.filtra(params.except(:citta)).order(:citta)
     
+    @status = "ok"
+    
     # respond_to do |format|
     #   format.html
     #   format.json do
