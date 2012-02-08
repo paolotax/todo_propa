@@ -7,8 +7,8 @@ jQuery ->
       localStorage["pendingItems"] = JSON.stringify []
 
     $.retrieveJSON "/appunti.json" + window.location.search, (data) ->
-      pendingItems = $.parseJSON localStorage["pendingItems"]
-      appunti = data.concat(pendingItems)
+      pendingItems = $.parseJSON localStorage["pendingItems"]["appunto"]
+      appunti = pendingItems.concat(data)
       console.log pendingItems
       console.log appunti
       
