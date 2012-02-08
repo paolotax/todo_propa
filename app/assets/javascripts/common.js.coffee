@@ -4,7 +4,6 @@
 #   $(object).html html
 
 jQuery ->
-  # $('.pjax a').pjax('[data-pjax-container]', { timeout: 10000 })
 
   $('#flash_notice, #flash_alert').delay(2000).slideUp('slow')
   window.activateTabs() if $('#appunto-small').length
@@ -14,3 +13,22 @@ jQuery ->
   
   $('.on_the_spot_editing, .note_mark').live 'mouseover', ->
     $(@).css 'background-color', '#EEF2A0'
+  
+  $(".search_options a").live 'click', (e) ->
+    e.preventDefault()
+    
+    if !localStorage["pendingItems"]
+      localStorage["pendingItems"] = JSON.stringify []
+      
+    $.retrieveJSON $(this).attr("href"), (data) ->
+      pendingItems = $.parseJSON localStorage["pendingItems"]
+      appunti = pendingItems.concat(data)
+      $("#appunti").empty()
+      for obj in appunti
+        if obj.data?
+          $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj.appunto)
+        else
+          $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
+
+
+    $('#appunti').empty()
