@@ -22,7 +22,7 @@ gem 'rack-pjax'
 gem 'devise'
 gem 'on_the_spot'
 gem 'redcarpet', '1.17.2'
-gem 'css3buttons', :git => 'git://github.com/johnrees/css3buttons_rails_helpers.git'
+
 gem 'rabl'
 gem 'yajl-ruby'
 gem 'fog'

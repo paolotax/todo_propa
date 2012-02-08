@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/johnrees/css3buttons_rails_helpers.git
-  revision: e88e8353006c1d9fcd077a06c9cff43d032baf01
-  specs:
-    css3buttons (1.0.1)
-      actionpack (>= 3.0.0)
-
-GIT
   remote: https://github.com/chriseppstein/compass.git
   revision: 8c84869b0b6bc5396e264fea15c71d4e346ac5d0
   specs:
@@ -191,7 +184,6 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 3.2.1)
   compass!
-  css3buttons!
   devise
   fog
   friendly_id
