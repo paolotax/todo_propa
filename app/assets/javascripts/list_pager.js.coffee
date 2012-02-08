@@ -7,14 +7,21 @@ jQuery ->
       localStorage["pendingItems"] = JSON.stringify []
 
     $.retrieveJSON "/appunti.json" + window.location.search, (data) ->
-      pendingItems = $.parseJSON localStorage["pendingItems"]["appunto"]
+      pendingItems = $.parseJSON localStorage["pendingItems"]
+      
       appunti = pendingItems.concat(data)
       console.log pendingItems
       console.log appunti
       
       $("#appunti").empty()
       for obj in appunti
-        $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
+        if obj.data?
+          console.log "pending"
+          $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj.appunto)
+        else
+          console.log "cached"
+          $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
+      
       # $("#appunti").html($("#item_template").tmpl(data.concat(pendingItems)));
 
     $("#new_appunto").submit (e) ->
