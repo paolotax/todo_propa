@@ -9,6 +9,9 @@ jQuery ->
     $.retrieveJSON "/appunti.json" + window.location.search, (data) ->
       pendingItems = $.parseJSON localStorage["pendingItems"]
       appunti = data.concat(pendingItems)
+      console.log pendingItems
+      console.log appunti
+      
       $("#appunti").empty()
       for obj in appunti
         $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
