@@ -8,27 +8,36 @@ jQuery ->
 
     $.retrieveJSON "/appunti.json" + window.location.search, (data) ->
       pendingItems = $.parseJSON localStorage["pendingItems"]
-      
       appunti = pendingItems.concat(data)
-      console.log pendingItems
-      console.log appunti
-      
       $("#appunti").empty()
       for obj in appunti
         if obj.data?
-          console.log "pending"
           $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj.appunto)
         else
-          console.log "cached"
           $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
-      
-      # $("#appunti").html($("#item_template").tmpl(data.concat(pendingItems)));
 
     $("#new_appunto").submit (e) ->
       pendingItems = $.parseJSON localStorage["pendingItems"];
-      item = {"data": $(this).serialize(), "appunto": {"cliente_id": $("#appunto_cliente_id").val(), "destinatario": $("#appunto_destinatario").val()}}
-      console.log item
-
+      item = 
+        "data": $(this).serialize()
+        "appunto": 
+          "cliente_id":   $("#appunto_cliente_id").val()
+          "cliente_nome": $("#appunto_cliente_id_chzn a span").text()
+          "id":           "pending_#{pendingItems.length}"
+          "destinatario": $("#appunto_destinatario").val()
+          "note":         $("#appunto_note").val()
+          "telefono":     $("#appunto_telefono").val()
+          "email":        $("#appunto_email").val()
+          "stato":        "pending"
+          "con_recapiti": true
+          "con_righe":    false
+          
+      
+      console.log item.appunto
+      
+      $("#appunti").prepend Mustache.to_html($("#appunto_template").html(), item.appunto)
+      
+      
       pendingItems.push(item);
       localStorage["pendingItems"] = JSON.stringify(pendingItems)
       window.reset_appunto()

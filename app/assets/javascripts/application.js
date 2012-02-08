@@ -8,8 +8,7 @@
 //= require jquery-ui
 
 //= require jquery-offline
-//= require jquery.tmpl
-//= require json
+
 
 //= require jquery.tools.min
 //= require jquery_ujs
