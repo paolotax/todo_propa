@@ -73,8 +73,10 @@ a[href^="mailto:"]:before {
     }
     &.pending {
       background-color: #A6C2E5;
+      &:nth-child(even) {
+        opacity: 0.8;        
+      }
     }
-
     .stato {
       display: block;
       width: 32px;
