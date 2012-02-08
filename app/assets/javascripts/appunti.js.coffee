@@ -24,42 +24,37 @@ jQuery ->
     console.log @selected_appunti
     
 
-  $('.appunto').live 'click', (e) ->
-    e.preventDefault()
-    $(@).toggleClass("selected")
-    pos = $('#appunti').scrollTop();
-    count_selected $(@)
-    #$('#footer').html $('.appunto.selected').length
-    $('#appunti').scrollTop(pos);
+  # $('.appunto').live 'click', (e) ->
+  #   e.preventDefault()
+  #   $(@).toggleClass("selected")
+  #   pos = $('#appunti').scrollTop();
+  #   count_selected $(@)
+  #   #$('#footer').html $('.appunto.selected').length
+  #   $('#appunti').scrollTop(pos);
 
   $('.nascondi').live 'click', (e) ->
     e.preventDefault()
-    $(this).hide()
-    $('#appunto-small').fadeOut()
-    $('#nuovo-appunto').fadeIn('slow')
-    $.mask.close()
+    $('#appunto-small').slideUp()
     reset_appunto()
 
-  $('#nuovo-appunto').live 'click', (e) ->
+  $('#new_appunto_button').live 'click', (e) ->
   
       pos = $('#appunti').scrollTop()
-      console.log pos
+
       e.preventDefault()
-      $(this).fadeOut()
-  
       # $('#appunto-small').show()
+
       $("ul.tabs").data("tabs").click(0)
   
-      $('#appunto-small').fadeIn 'slow', () ->
+      $('#appunto-small').slideDown 'slow', () ->
         $("ul.tabs li.wiz").show()
-        $('.nascondi').show()
       
       $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
       $('#appunto_cliente_id_chzn input').focus();
         
-      $("#appunto-small").expose
-        color: '#789', 
-        lazy: true
+      # $("#appunto-small").expose
+      #   color: '#789', 
+      #   lazy: true
   
       $('#appunti').scrollTop(pos)  
       console.log pos, $('#appunti').scrollTop()

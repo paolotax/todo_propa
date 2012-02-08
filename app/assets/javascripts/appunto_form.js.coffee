@@ -20,10 +20,6 @@ class window.AppuntoForm
           $("#new_libro_chzn").addClass 'chzn-container-active'
       if index is 2 and validateAppunto() is false
         return false
-    wizard.click ->
-      wizard.expose
-        color: '#789', 
-        lazy: true
     $("button.next", wizard).click (e) ->
       e.preventDefault()
       if validateAppunto() is true
@@ -60,10 +56,6 @@ window.activateTabs = () ->
         $("#new_libro_chzn").addClass 'chzn-container-active'
     if index is 2 and validateAppunto() is false
       return false
-  wizard.click ->
-    wizard.expose
-      color: '#789', 
-      lazy: true
   $("button.next", wizard).click (e) ->
     e.preventDefault()
     if validateAppunto() is true

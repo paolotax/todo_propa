@@ -53,6 +53,17 @@ body {
         margin-right: 50px;
         @include box-flex(1);
         @include vbox();
+
+        header{
+          h1 {
+            float:left;
+          }
+          a {
+            margin-top: 1.2em;
+            float: right;
+          }
+        }
+          
         #appunti,
         #clienti {
           @include box-flex(1);
