@@ -1,0 +1,20 @@
+<div data-role="header">
+  <h1>Appunti</h1>
+  <%= link_to 'Nuovo', new_appunto_path %>
+</div>
+<div data-role="content">
+  <ul data-role="listview">
+  <% @appunti.each do |appunto| %>
+    <li>
+    <%= link_to appunto do %>
+      <h2><%= appunto.cliente_nome %></h2>
+      <%= appunto.destinatario %>
+      <%= truncate(appunto.note, :length => 25) %>
+    <% end %>
+    </li>
+  <% end %>
+  </ul>
+</div>
+<div data-role="footer">
+  
+</div>

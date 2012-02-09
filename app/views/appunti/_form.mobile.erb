@@ -1,0 +1,38 @@
+<div data-role="content">
+  <%= form_for(@appunto) do |f| %>
+    <% if @appunto.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@appunto.errors.count, "error") %> prohibited this note from being saved:</h2>
+        <ul>
+        <% @appunto.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :cliente_id, "Cliente" %>
+      <%= f.select :cliente_id, current_user.clienti.order(:nome).collect {|s| [ s.nome, s.id ] }, {:include_blank => true}  %>
+    </div>
+    <div class="field">
+      <%= f.label :destinatario %>
+      <%= f.text_field :destinatario %>
+    </div>
+
+    <div class="field">
+      <%= f.label :note %>
+      <%= f.text_area :note %>
+    </div>
+    <div class="field">
+      <%= f.label :telefono %>
+      <%= f.phone_field :telefono %>
+    </div>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>

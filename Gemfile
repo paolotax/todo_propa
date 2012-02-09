@@ -33,6 +33,10 @@ gem 'prawn'
 gem 'geocoder'
 gem 'gmaps4rails'
 
+gem 'mobylette'
+gem 'jquery_mobile_rails'
+
+
 gem 'pg'
 
 group :test do
