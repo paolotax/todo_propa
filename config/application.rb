@@ -50,7 +50,7 @@ module TodoPropa
     
     config.assets.initialize_on_precompile = false
     
-    config.assets.precompile += ['mobile.js']
+    config.assets.precompile += ['mobile.js', 'mobile.css']
     
     config.generators do |g|
       g.template_engine :haml

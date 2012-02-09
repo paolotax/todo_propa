@@ -1,5 +1,9 @@
-%div{"data-role" => "header"}
-  %h1 Inserisci appunto
+
+
+
+%div{ "data-role" => "header",  "data-position" => "inline" }
+  = link_to "Indietro", appunti_url,  "data-icon" => "delete"
+  %h1 Nuovo Appunto
 
 = render 'form'
 
