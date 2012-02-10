@@ -17,6 +17,7 @@ jQuery ->
           $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
 
     $("#new_appunto").submit (e) ->
+      e.preventDefault();
       pendingItems = $.parseJSON localStorage["pendingItems"];
       item = 
         "data": $(this).serialize()
