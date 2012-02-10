@@ -51,13 +51,13 @@
             = riga.text_field :prezzo,   class: 'qta riga_prezzo'
             = riga.text_field :sconto,   class: 'qta riga_sconto'
       .actions
-        = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+        = f.submit 'Salva Appunto', id: "new_appunto_submit", class: "blue_button"
         = button_tag 'Completa ordine ->', class: "red_button next"
     %div#finale
       %h3.cliente_nome= @appunto.cliente_nome
       = field f, :stato 
       .actions
-        = f.submit 'Salva Appunto', id: "btn-appunto", class: "blue_button"
+        = f.submit 'Salva Appunto', id: "new_appunto_submit", class: "blue_button"
     %div#salvato
       .appunto_flash
         - unless @appunto.new_record?

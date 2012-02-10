@@ -16,11 +16,10 @@ jQuery ->
         else
           $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
 
-    $("#new_appunto").submit (e) ->
-      e.preventDefault();
+    $("#new_appunto_submit").live 'click', (e) ->
       pendingItems = $.parseJSON localStorage["pendingItems"];
       item = 
-        "data": $(this).serialize()
+        "data": $("#new_appunto").serialize()
         "appunto": 
           "cliente_id":   $("#appunto_cliente_id").val()
           "cliente_nome": $("#appunto_cliente_id_chzn a span").text()
@@ -82,14 +81,17 @@ class ListPager
       
     @list.scrollTop(@pos)
     @list.bind('scroll', @check) if objs.length > 0
-
+  
+  reset: ->
+    @page = 1
 
 jQuery ->
+  
   if $('#clienti').length
-    clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente')
+    window.clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente')
       
   if $('#appunti').length
-    appunti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')
+    window.appunti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')
       
   # $("[data-pjax-container]").bind 'pjax:start', () =>
   #   $(window).unbind('scroll', @check)

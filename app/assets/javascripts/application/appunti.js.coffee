@@ -5,8 +5,6 @@
 
 jQuery ->
 
-
-
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
   
   @selected_appunti = []
@@ -38,75 +36,21 @@ jQuery ->
     reset_appunto()
 
   $('#new_appunto_button').live 'click', (e) ->
-  
-      pos = $('#appunti').scrollTop()
-
-      e.preventDefault()
-      # $('#appunto-small').show()
-
-      $("ul.tabs").data("tabs").click(0)
-  
-      $('#appunto-small').slideDown 'slow', () ->
-        $("ul.tabs li.wiz").show()
-      
-      $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
-      $('#appunto_cliente_id_chzn input').focus();
-        
-      # $("#appunto-small").expose
-      #   color: '#789', 
-      #   lazy: true
-  
-      $('#appunti').scrollTop(pos)  
-      console.log pos, $('#appunti').scrollTop()
-    
-  $('.appunto .stato').live 'click', (e) ->
-    alert 'gino'
-
-  $('#btn-appunto').live 'click', (e) ->
+    pos = $('#appunti').scrollTop()
     e.preventDefault()
-    if validateAppunto()
-      $.ajax
-        data: $('#appunto-small > form').serialize()
-        dataType: 'json'
-        url: $('#appunto-small > form').attr 'action'
-        type: $('#appunto-small > form').attr 'method'
-        error: (xhr, status, error) ->
-          flash_error xhr.responseText
-        success: (response) ->
-          $('#error_explanation').remove()
-          # richiamo l'appunto inserito per avere i totali' da CORREGGERE
-          id = response.id
-          $.getJSON "appunti/#{id}.json",
-            (appunto) ->
-              $('.appunto_flash').replaceWith Mustache.to_html($('#appunto_tmp_template').html(), appunto)
-
-              $("ul.tabs li").hide()
-              $("ul.tabs").data("tabs").click(3)
-               
-              item =  $("#appunto_#{id}")
-              if item.length
-                item.replaceWith Mustache.to_html $('#appunto_template').html(), appunto
-              else  
-                $("#appunti").prepend Mustache.to_html $("#appunto_template").html(), appunto
- 
-              ri =  $("#appunto_#{id}")
-              $('.on_the_spot_editing', ri ).each initializeOnTheSpot   
-              ri.effect("highlight", {}, 3000)
-              
-              reset_appunto()
-              
-              # flash_notice "Appunto inserito!"
-
-
+    $("ul.tabs").data("tabs").click(0)
+    $('#appunto-small').slideDown 'slow', () ->
+      $("ul.tabs li.wiz").show()
+    $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
+    $('#appunto_cliente_id_chzn input').focus();
+    $('#appunti').scrollTop(pos)  
+    
   $('#appunto_cliente_id.chzn-select').live 'change', () ->
     $.getJSON "/clienti/#{$('#appunto_cliente_id.chzn-select').val()}", (cliente) ->
       $('#ordine h3').html cliente.nome
       $('#appunto_cliente_id_chzn').removeClass 'validity-erroneous chzn-container-active'
       $('#appunto_destinatario').focus().select()
    
-
-window.sbocci = ->
-  alert "Sbocci!"
 
 window.reset_appunto = ->
   console.log 'reset'

@@ -14,13 +14,16 @@ jQuery ->
   $('.on_the_spot_editing, .note_mark').live 'mouseover', ->
     $(@).css 'background-color', '#EEF2A0'
   
-  $(".search_options a").live 'click', (e) ->
+  $(".search_options a, .filters a").live 'click', (e) ->
     e.preventDefault()
     
     if !localStorage["pendingItems"]
       localStorage["pendingItems"] = JSON.stringify []
-      
-    $.retrieveJSON $(this).attr("href"), (data) ->
+    
+    params = $(@).attr('href').split('?')[1] ||= ""
+    console.log params
+    
+    $.getJSON $(@).attr('href'), (data) ->
       pendingItems = $.parseJSON localStorage["pendingItems"]
       appunti = pendingItems.concat(data)
       $("#appunti").empty()
@@ -28,7 +31,9 @@ jQuery ->
         if obj.data?
           $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj.appunto)
         else
-          $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
-
+          $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)     
+      
+      $.get "\get_appunti_filters.js", params, (data) ->
+        console.log "data"
 
     $('#appunti').empty()

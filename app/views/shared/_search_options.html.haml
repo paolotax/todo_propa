@@ -1,36 +1,36 @@
-- if params[:controller] == "appunti"
+- if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
   .search_options.search-stato
     %h2
-      = link_to "Stato", params.except(:status)
+      = link_to "Stato", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:status)
     %ul
-      %li= link_to_unless( params[:status] == "in_corso",   "in corso", params.merge(status: "in_corso"))
-      %li= link_to_unless( params[:status] == "da_fare",    "da fare",  params.merge(status: "da_fare"))
-      %li= link_to_unless( params[:status] == "in_sospeso", "in sospeso",  params.merge(status: "in_sospeso"))
-      %li= link_to_unless( params[:status] == "completati", "completati",  params.merge(status: "completati"))
+      %li= link_to_unless( params[:status] == "in_corso",   "in corso", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_corso"))
+      %li= link_to_unless( params[:status] == "da_fare",    "da fare",  params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "da_fare"))
+      %li= link_to_unless( params[:status] == "in_sospeso", "in sospeso",  params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_sospeso"))
+      %li= link_to_unless( params[:status] == "completati", "completati",  params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "completati"))
 
 - if params[:controller] == "clienti"
   .search_options.search-cliente_tipo
     %h2 
-      = link_to "Tipo cliente", params.except(:tipo)
+      = link_to "Tipo cliente", params.merge(:format => 'json').except(:tipo)
     %ul
-      %li= link_to_unless( params[:tipo] == "scuole",     "Tutte le scuole",  params.merge(tipo: "scuole"))
-      %li= link_to_unless( params[:tipo] == "primarie",   "Scuole Primarie",  params.merge(tipo: "primarie"))
-      %li= link_to_unless( params[:tipo] == "cartolerie", "Cartolerie",       params.merge(tipo: "cartolerie"))
-      %li= link_to_unless( params[:tipo] == "direzioni",  "Direzioni",        params.merge(tipo: "direzioni"))
-      %li= link_to_unless( params[:tipo] == "privati",    "Privati",          params.merge(tipo: "privati"))
-      %li= link_to_unless( params[:tipo] == "altri",      "altri",            params.merge(tipo: "altri"))
+      %li= link_to_unless( params[:tipo] == "scuole",     "Tutte le scuole",  params.merge(:format => 'json').merge(tipo: "scuole"))
+      %li= link_to_unless( params[:tipo] == "primarie",   "Scuole Primarie",  params.merge(:format => 'json').merge(tipo: "primarie"))
+      %li= link_to_unless( params[:tipo] == "cartolerie", "Cartolerie",       params.merge(:format => 'json').merge(tipo: "cartolerie"))
+      %li= link_to_unless( params[:tipo] == "direzioni",  "Direzioni",        params.merge(:format => 'json').merge(tipo: "direzioni"))
+      %li= link_to_unless( params[:tipo] == "privati",    "Privati",          params.merge(:format => 'json').merge(tipo: "privati"))
+      %li= link_to_unless( params[:tipo] == "altri",      "altri",            params.merge(:format => 'json').merge(tipo: "altri"))
       
 .search_options.search-provincia
   %h2
-    = link_to "Provincie", params.except(:provincia)
+    = link_to "Provincie", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:provincia)
   %ul
     - for p in @provincie
-      %li= link_to_unless(params[:provincia] == p.provincia, p.provincia, params.except(:citta).merge(:provincia => p.provincia, :page => nil))
+      %li= link_to_unless(params[:provincia] == p.provincia, p.provincia, params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:citta).merge(:provincia => p.provincia, :page => nil))
 
 .search_options.search-citta
   %h2
-    = link_to "Comuni", params.except(:citta)
+    = link_to "Comuni", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:citta)
   %ul.vertical
     - for c in @citta
-      %li= link_to_unless(params[:citta] == c.citta, c.citta, params.merge(:citta => c.citta, :page => nil))   unless c.nil?
+      %li= link_to_unless(params[:citta] == c.citta, c.citta, params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:citta => c.citta, :page => nil))   unless c.nil?
         
