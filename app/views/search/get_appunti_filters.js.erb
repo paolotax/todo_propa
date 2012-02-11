@@ -1,4 +1,6 @@
-$(".side").html(("<%= escape_javascript(render partial: "shared/search_options") %>"));
+
+
+$(".side").html(("<%= escape_javascript(render :partial => 'shared/episode_views')  %><%= escape_javascript(render partial: "shared/search_options") %>"));
 
 if ($('.filters').length) {
   $('.filters').replaceWith("<%= escape_javascript(render partial: "shared/filters") %>");

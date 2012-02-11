@@ -23,7 +23,7 @@ jQuery ->
         "appunto": 
           "cliente_id":   $("#appunto_cliente_id").val()
           "cliente_nome": $("#appunto_cliente_id_chzn a span").text()
-          "id":           "pending_#{pendingItems.length}"
+          "id":           "pending_#{new Date().getTime()}"
           "destinatario": $("#appunto_destinatario").val()
           "note":         $("#appunto_note").val()
           "telefono":     $("#appunto_telefono").val()
@@ -49,6 +49,13 @@ jQuery ->
             pendingItems = $.parseJSON localStorage["pendingItems"]
             pendingItems.shift()
             localStorage["pendingItems"] = JSON.stringify(pendingItems)
+
+            $("#appunto_#{item.appunto.id}").replaceWith( Mustache.to_html($("#appunto_template").html(), data))            
+            
+            #             $("#appunto_#{item[appunto].id}")
+            #             
+
+            
             setTimeout(sendPending, 100)
 
     sendPending()

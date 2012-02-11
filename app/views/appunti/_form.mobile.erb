@@ -10,28 +10,23 @@
         </ul>
       </div>
     <% end %>
-    <div class="field">
+    <div data-role="fieldcontain">
       <%= f.label :cliente_id, "Cliente" %>
       <%= f.select :cliente_id, current_user.clienti.order(:nome).collect {|s| [ s.nome, s.id ] }, {:include_blank => true}  %>
-    </div>
-    <div class="field">
       <%= f.label :destinatario %>
       <%= f.text_field :destinatario %>
     </div>
-
-    <div class="field">
+    <div data-role="fieldcontain">
       <%= f.label :note %>
       <%= f.text_area :note %>
     </div>
-    <div class="field">
+    <div data-role="fieldcontain">
       <%= f.label :telefono %>
       <%= f.phone_field :telefono %>
-    </div>
-    <div class="field">
       <%= f.label :email %>
       <%= f.email_field :email %>
     </div>
-    <div class="actions">
+    <div data-role="fieldcontain">
       <%= f.submit %>
     </div>
   <% end %>
