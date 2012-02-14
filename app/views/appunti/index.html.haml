@@ -2,17 +2,16 @@
 
 .content
   .content-list
-    #appunto-small.form{style: 'display:none;'}
-      - @appunto = Appunto.new
-      = render "form_appunto_small"
-    
+    - @appunto = Appunto.new
+    = render "form"
+
     %header
       %h1 Appunti
       = link_to "Nuovo appunto", new_appunto_path, id: "new_appunto_button", :class => 'blue_button'
 
     - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
       = render :partial => 'shared/filters'
-    
+
     #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
       / - @appunti.each do |appunto|
       /   = render "appunto", :mustache => appunto_for_mustache(appunto)

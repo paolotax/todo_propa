@@ -40,7 +40,7 @@ jQuery ->
     e.preventDefault()
     $("ul.tabs").data("tabs").click(0)
     $('#appunto-small').slideDown 'slow', () ->
-      $("ul.tabs li.wiz").show()
+      $("ul.tabs").show()
     $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
     $('#appunto_cliente_id_chzn input').focus();
     $('#appunti').scrollTop(pos)  

@@ -8,6 +8,7 @@ jQuery ->
   $.validity.setup outputMode: 'summary'
 
   $('#new_libro.chzn-select').live 'change', () ->
+    console.log 'change'
     $('#new_libro_chzn').removeClass 'validity-erroneous chzn-container-active'
     $.getJSON "/libri/#{$(this).val()}", 
       (libro) ->

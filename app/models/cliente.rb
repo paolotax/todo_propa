@@ -8,8 +8,8 @@ class Cliente < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :appunti
-  has_many :visite
+  has_many :appunti, dependent: :destroy
+  has_many :visite,  dependent: :destroy
   has_many :indirizzi, :as => :indirizzable, :dependent => :destroy
   
   accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:citta].nil? || a[:provincia].nil?}, :allow_destroy => true  
@@ -122,6 +122,6 @@ private
     unless n[0] == suff
       self.nome = suff + " " + self.nome
     end
-
   end
+
 end

@@ -55,7 +55,7 @@ class AppuntiController < ApplicationController
 
     respond_to do |format|
       if @appunto.save
-        # format.html { redirect_to @appunto, notice: 'Appunto creato!' }
+        format.html { redirect_to @appunto, notice: 'Appunto creato!' }
         format.json
       else
         format.html { render action: "new" }

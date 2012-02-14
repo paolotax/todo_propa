@@ -24,14 +24,14 @@ class Indirizzo < ActiveRecord::Base
     "#{self.indirizzable.nome} </br> #{self.indirizzable.citta}"
   end
   
-  def gmaps4rails_marker_picture
-    {
-     "picture" => ActionController::Base.helpers.asset_path("markers/#{self.indirizzable.cliente_tipo.parameterize}.png"),
-     "width" => "32",
-     "height" => "37",
-     "marker_anchor" => [ 16, 38]
-    }
-  end
+  # def gmaps4rails_marker_picture
+  #   {
+  #    "picture" => ActionController::Base.helpers.asset_path("markers/#{self.indirizzable.cliente_tipo.parameterize}.png"),
+  #    "width" => "32",
+  #    "height" => "37",
+  #    "marker_anchor" => [ 16, 38]
+  #   }
+  # end
   
   # def self.gmaps4rails_trusted_scopes
   #   ["find", 'max_qi', 'first']

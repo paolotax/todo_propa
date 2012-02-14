@@ -1,17 +1,68 @@
-= form_for @appunto do |f|
-  -if @appunto.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@appunto.errors.count, "error")} prohibited this appunto from being saved:"
-      %ul
-        - @appunto.errors.full_messages.each do |msg|
-          %li= msg
+#appunto-small.form
+  = form_for @appunto do |f|
+    %ul.tabs{style: "display:none"}
+      %li.wiz
+        %a Info appunto...
+      %li.wiz
+        %a Inserisci dettaglio...
+      %li.wiz
+        %a Completa ordine...
+      %li.wiz_finish{style: "display:none"}
+        %a Appunto Salvato!!!...
+      %span.nascondi
+        Chiudi
+    .panes
+      %div#info
+        -if @appunto.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@appunto.errors.count, "error")} prohibited this appunto from being saved:"
+            %ul
+              - @appunto.errors.full_messages.each do |msg|
+                %li= msg
 
-  .field
-    = f.label :cliente_id, "Cliente:"
-    = f.select :cliente_id, current_user.clienti.order(:nome).collect {|s| [ s.nome, s.id ] }, {:include_blank => true}, { :class => 'chzn-select', 'data-placeholder' => "Seleziona la cliente..."} 
-  = field f, :destinatario
-  = field f, :note, type: :text_area, rows: 6, cols: 50
-  = field f, :telefono  
-  = field f, :email
-  .actions
-    = submit_tag 'Salva'
+        .field
+          = f.label :cliente_id, "Cliente:"
+          = f.collection_select :cliente_id, current_user.clienti.order(:nome), :id, :nome, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona la cliente..."} 
+        = field f, :destinatario
+        = field f, :note, type: :text_area, rows: 6, cols: 50
+        = field f, :telefono 
+        = field f, :email 
+        .actions
+          = f.submit 'Salva Appunto', id: "new_appunto_submit", class: "blue_button"
+          = button_tag 'Inserisci dettagli ordine ->', id: "btn-ordine", class: "red_button next"
+      %div#ordine
+        %h3.cliente_nome= @appunto.cliente_nome
+        .condizioni
+          Condizioni di pagamento:
+          = radio_button_tag 'prezzo', 'consigliato', true
+          = label_tag 'prezzo_consigliato', 'prezzo consigliato oppure'
+          = radio_button_tag 'prezzo', 'con_sconto', false
+          = label_tag 'prezzo_con_sconto', 'sconto'
+          = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43])
+        = render 'righe/form'
+        #righe
+          .empty
+            Nessuna riga in questo ordine...
+          = f.fields_for :righe do |riga|
+            = div_for riga.object do
+              = riga.hidden_field :id
+              = riga.hidden_field :libro_id
+              .titolo= riga.object.libro.titolo
+              = riga.text_field :quantita, class: 'qta riga_quantita'
+              = riga.text_field :prezzo,   class: 'qta riga_prezzo'
+              = riga.text_field :sconto,   class: 'qta riga_sconto'
+        .actions
+          = f.submit 'Salva Appunto', id: "new_appunto_submit", class: "blue_button"
+          = button_tag 'Completa ordine ->', class: "red_button next"
+      %div#finale
+        %h3.cliente_nome= @appunto.cliente_nome
+        = field f, :stato 
+        .actions
+          = f.submit 'Salva Appunto', id: "new_appunto_submit", class: "blue_button"
+      %div#salvato
+        .appunto_flash
+          / - unless @appunto.new_record?
+          /   = render "appunto_tmp", :mustache => appunto_for_mustache(@appunto)
+        .actions
+        /  = link_to 'Nuovo appunto', new_appunto_path, id: "nuovo_appunto", class: "blue_button", remote: true
+        /   = button_tag 'Moifica appunto', id: "modifica_appunto", class: "blue_button"

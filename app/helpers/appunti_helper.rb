@@ -33,16 +33,7 @@ module AppuntiHelper
       righe:        righe
     }
   end
-  
-  def appunto_rabl_for_mustache(appunto)
-    
-    source = File.read('appunto_json.rabl')
-    rabl_engine = Rabl::Engine.new(source, :format => 'json')
-    output = rabl_engine.render(self, {})
-    
-    # render :file => 'appunti/appunto_json', :object => appunto
-  end
-  
+
   def stato_to_s(appunto)
     if appunto.stato == "P"
       "in_sospeso"
@@ -52,6 +43,5 @@ module AppuntiHelper
       "da_fare"
     end   
   end
-  
-  
+
 end

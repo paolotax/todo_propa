@@ -65,10 +65,8 @@ class ClientiController < ApplicationController
     end
   end
 
-  # DELETE /clienti/1
-  # DELETE /clienti/1.json
   def destroy
-    @cliente = cliente.find(params[:id])
+    @cliente = Cliente.find(params[:id])
     @cliente.destroy
 
     respond_to do |format|
