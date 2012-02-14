@@ -45,11 +45,11 @@ jQuery ->
         pendingItems = $.parseJSON localStorage["pendingItems"]
         if pendingItems.length > 0
           item = pendingItems[0]
-          $.post "/appunti", item.data, (data) ->
+          $.post "/appunti.json", item.data, (data) ->
             pendingItems = $.parseJSON localStorage["pendingItems"]
             pendingItems.shift()
             localStorage["pendingItems"] = JSON.stringify(pendingItems)
-
+            console.log data
             $("#appunto_#{item.appunto.id}").replaceWith( Mustache.to_html($("#appunto_template").html(), data))            
             
             #             $("#appunto_#{item[appunto].id}")
@@ -99,6 +99,7 @@ jQuery ->
       
   if $('#appunti').length
     window.appunti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')
+    $('#appunto-small').hide()
       
   # $("[data-pjax-container]").bind 'pjax:start', () =>
   #   $(window).unbind('scroll', @check)

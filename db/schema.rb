@@ -71,7 +71,6 @@ ActiveRecord::Schema.define(:version => 20120130134136) do
     t.integer  "user_id"
     t.integer  "causale_id"
     t.string   "condizioni_pagamento"
-    t.string   "string"
     t.boolean  "pagata"
     t.integer  "totale_copie",                                       :default => 0
     t.integer  "integer",                                            :default => 0
