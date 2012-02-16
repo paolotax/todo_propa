@@ -18,6 +18,10 @@ class Appunto < ActiveRecord::Base
   
   scope :uniq_cliente_id, select(:cliente_id).uniq
   
+  scope :recente_da_data, lambda { |data| includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?", data)  }
+  scope :un_anno, lambda {  includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?",  1.year.ago)  }
+  
+  
   def to_s
     "##{id} - #{destinatario} (#{cliente_nome})"
   end
