@@ -20,6 +20,21 @@ module ApplicationHelper
     Rails.env.production? ? 'manifest="/production.appcache"'.html_safe : ''
   end
 
+  def episode_video_tag(episode)
+    video_tag episode.asset_url("videos"), :poster => "/assets/episodes/posters/loading#{800 if episode.legacy?}.png", :width => (episode.legacy? ? 800 : 960), :height => 600
+  end
+
+  def video_tag(path, options = {})
+    xml = Builder::XmlMarkup.new
+    xml.video :width => options[:width], :height => options[:height], :poster => options[:poster], :controls => "controls", :preload => "none" do
+      xml.source :src => "#{path}.mp4", :type => "video/mp4"
+      xml.source :src => "#{path}.m4v", :type => "video/mp4"
+      xml.source :src => "#{path}.webm", :type => "video/webm"
+      xml.source :src => "#{path}.ogv", :type => "video/ogg"
+    end.html_safe
+  end
+
+  
   def gravatar(user, options = {})
     email_address = user.email.downcase
     hash = Digest::MD5.hexdigest(email_address)
