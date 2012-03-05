@@ -1,0 +1,30 @@
+- title "Libri"
+
+.row
+  .side-bar.span3
+    = render :partial => 'shared/episode_views'
+    / = render :partial => 'shared/search_options'
+    
+
+      
+  .span9
+    %header
+      %h1 Libri
+    - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
+      = render :partial => 'shared/filters'
+
+    #libri{ 'data-json-url' => "#{ libri_url( params.merge(:format => :json)) }" }
+    / - @appunti.each do |appunto|
+    /   = render "appunto", :mustache => appunto_for_mustache(appunto)
+
+
+- @libro = Libro.new
+.modal.fade
+  = render "form"
+
+
+/ %script{ type: "text/html", id: "appunto_template" }
+/   = render "appunto"
+/ 
+/ %script{ type: "text/html", id: "appunto_tmp_template" }
+/   = render "appunto_tmp"

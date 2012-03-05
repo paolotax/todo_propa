@@ -1,0 +1,19 @@
+.devise-form.well
+  %h2 Accesso a todo-propa
+
+  %hr
+  %br
+    
+  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| 
+    
+    = f.input :username
+    = f.input :password
+    
+    - if devise_mapping.rememberable?
+      = f.input :remember_me, as: :boolean, label: "Ricordami"
+    
+    .control-group
+      .controls
+        = f.button :submit, "Accedi"
+
+  = render :partial => "devise/shared/links"

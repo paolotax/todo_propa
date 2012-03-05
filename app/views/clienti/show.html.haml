@@ -1,5 +1,8 @@
 - title @cliente.nome
 
+- @appunto = Appunto.new(cliente: @cliente)
+= render "appunti/form"
+
 .content
   %section
     %header
@@ -9,10 +12,10 @@
       .cliente
         .field
           %span.label Nome:
-          %span.nome= @cliente.nome
+          %span.nome= @cliente.titolo
         .field
           %span.label Città:
-          %span.note= @cliente.citta
+          %span.note= @cliente.comune
         .field
           %span.label Provincia:
           %span.cliente_nome= @cliente.provincia
@@ -22,19 +25,19 @@
         - unless @cliente.indirizzo.new_record?
           .field
             %span.label Indirizzo:
-            %span.full_address= @cliente.indirizzo.full_street_address
+            / %span.full_address= @cliente.indirizzo.full_street_address
       
       - unless @cliente.latitude.nil?
         #gmaps_page 
-          - @mappa = @cliente.indirizzo.to_gmaps4rails
+          - @mappa = @cliente.to_gmaps4rails
           = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
     %footer.pjax
-      = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'nome').first)
-      = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'nome').first)
+      = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first)
+      = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
 
   - unless @cliente.indirizzo.new_record?
     .side
-      = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente.indirizzo}
+      / = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente.indirizzo}
    
       
 

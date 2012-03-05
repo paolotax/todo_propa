@@ -12,11 +12,13 @@
 	font-size: 14px;
 }
 
+
 .group:before,
 .group:after {
   content:"";
   display:table;
 }
+
 
 .group:after {
   clear:both;
@@ -34,10 +36,12 @@
   content: ""; 
   clear: both;
 }
+
 a[href^="mailto:"]:before { 
   content: "\2709";
   padding-right: 5px;
 }
+
 
 #appunto-small {
   margin-top: 16px;
@@ -49,12 +53,7 @@ a[href^="mailto:"]:before {
 
 #appunti {
   background-color: #FFFFFF;
-  @include box-flex(1);
-  overflow-y: scroll;
   .appunto {
-    @include display-box;
-    @include box-orient(horizontal);
-    @include box-align(stretch);
     border-bottom: solid 1px #999999;
     padding-top: 3px;
     padding-bottom: 3px;
@@ -94,15 +93,11 @@ a[href^="mailto:"]:before {
       }
     }
     .appunto-wrap {
-      @include box-flex(1);
-      @include hbox();
       padding: 5px;
       .intestazione {
         width: 40%;
-        @include vbox();
         .cliente_nome {
           margin-top: 2px;
-          @include box-flex(1);
         }
         .recapiti {
           font-size: 11px;

@@ -1,1 +1,1 @@
-attributes :id, :titolo, :cm, :type, :prezzo_copertina, :prezzo_consigliato, :image
+attributes :id, :titolo, :sigla, :cm, :ean, :settore, :prezzo_copertina, :prezzo_consigliato, :coefficente, :image

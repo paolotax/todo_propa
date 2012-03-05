@@ -7,7 +7,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery-offline
-//= require jquery.tools.min
+
 //= require jquery_ujs
 //= require chosen.jquery
 //= require mustache
@@ -15,7 +15,10 @@
 //= require jquery.validity
 //= require gmaps4rails/googlemaps.js
 //= require on_the_spot
+//= require bootstrap
+//= require bootstrap-transition
 //= require_tree ./application
+
 
 function testCallback(object, value, settings) {
   var converter = new Showdown.converter();

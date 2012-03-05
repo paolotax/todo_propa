@@ -5,12 +5,12 @@ class ClientiController < ApplicationController
   def index
 
     @search = current_user.clienti.filtra(params)
-    @clienti = @search.limit(20)
+    @clienti = @search.limit(50)
 
-    @clienti = @clienti.offset((params[:page].to_i-1)*20) if params[:page].present?
+    @clienti = @clienti.offset((params[:page].to_i-1)*50) if params[:page].present?
 
-    @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:citta)).order(:provincia)
-    @citta     = current_user.clienti.select_citta.filtra(params.except(:citta)).order(:citta)
+    @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
+    @citta     = current_user.clienti.select_citta.filtra(params.except(:comunesearch)).order(:comune)
   end
 
   def show

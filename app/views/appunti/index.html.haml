@@ -1,25 +1,24 @@
 - title "Appunti"
 
-.content
-  .content-list
-    - @appunto = Appunto.new
-    = render "form"
-
+.row
+  .side-bar.span3
+    = render :partial => 'shared/episode_views'
+    = render :partial => 'shared/search_options'
+  .span9
     %header
       %h1 Appunti
-      = link_to "Nuovo appunto", new_appunto_path, id: "new_appunto_button", :class => 'blue_button'
-
     - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
       = render :partial => 'shared/filters'
 
     #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
-      / - @appunti.each do |appunto|
-      /   = render "appunto", :mustache => appunto_for_mustache(appunto)
+    / - @appunti.each do |appunto|
+    /   = render "appunto", :mustache => appunto_for_mustache(appunto)
 
-  .side
-    = render :partial => 'shared/episode_views'
-    = render :partial => 'shared/search_options'
-    
+- @appunto = Appunto.new
+= render "modal"
+
+
+
 %script{ type: "text/html", id: "appunto_template" }
   = render "appunto"
 

@@ -12,17 +12,17 @@ class Cliente < ActiveRecord::Base
   has_many :visite,  dependent: :destroy
   has_many :indirizzi, :as => :indirizzable, :dependent => :destroy
   
-  accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:citta].nil? || a[:provincia].nil?}, :allow_destroy => true  
+  accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:comune].nil? || a[:provincia].nil?}, :allow_destroy => true  
   
-  validates :nome,  :presence => true,
-                    :uniqueness => { :scope => :user_id, :message => "gia' utilizzato!" }
-  
-  validates :citta,        :presence => true
+  validates :titolo,  :presence => true,
+                      :uniqueness => { :scope => :user_id, :message => "gia' utilizzato" }
+
+  validates :comune,       :presence => true
   validates :provincia,    :presence => true, :length => { :is => 2 }
-  validates :cliente_tipo, :inclusion => {:in => TIPI_CLIENTI }
+  validates :cliente_tipo, :inclusion => {:in => TIPI_CLIENTI, :message => "non hai scelto il tipo cliente" }
   
   scope :select_provincia, select(:provincia).uniq
-  scope :select_citta,     select(:citta).uniq
+  scope :select_citta,     select(:comune).uniq
   
   scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")
   scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")
@@ -41,24 +41,24 @@ class Cliente < ActiveRecord::Base
   
   #after_initialize :set_indirizzi
   
-  before_save :set_nome
+  before_save :set_titolo
   
-  # TIPI_CLIENTI.each do |tc|
-  #   define_method '#{cliente_tipo}?' do
-  #     self.cliente_tipo == tc
-  #   end
-  # end
-  # 
-  # class << self
-  #   TIPI_CLIENTI.each do |tc|
-  #     define_method '#{cliente_tipo}' do
-  #       cliente_tipo
-  #     end
-  #   end
-  # end  
+  TIPI_CLIENTI.each do |tc|
+    define_method '#{cliente_tipo}?' do
+      self.cliente_tipo == tc
+    end
+  end
+  
+  class << self
+    TIPI_CLIENTI.each do |tc|
+      define_method '#{cliente_tipo}' do
+        cliente_tipo
+      end
+    end
+  end  
   
   def to_s
-    "##{id} - #{nome} #{citta} (#{provincia})"
+    "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end
   
   def indirizzo
@@ -70,30 +70,19 @@ class Cliente < ActiveRecord::Base
     ind = self.indirizzi.where(tipo: "Indirizzo spedizione").last
     ind ||= self.indirizzo
   end
-  
-  def latitude
-    self.indirizzo.latitude
+
+  def set_indirizzi
+    # self.indirizzi.build(tipo: 'Indirizzo fattura') unless self.indirizzo.present?
+    # self.indirizzi.build(tipo: 'Indirizzo spedizione') unless self.indirizzo_spedizione.present?
   end
-  
-  def longitude
-    self.indirizzo.longitude
-  end
-  
-  def comune
-    citta
-  end
-  
-  def comune=(text)
-    self.citta = text
-  end
-  
+
   def self.filtra(params)
 
     clienti = scoped
-    clienti = clienti.where("clienti.nome ilike ?  or clienti.citta ilike ?", 
-                          "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
+    clienti = clienti.where("clienti.nome ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ?", 
+                          "%#{params[:search]}%", "%#{params[:search]}%", "#{params[:search]}%") if params[:search].present?
     clienti = clienti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
-    clienti = clienti.where("clienti.citta = ?",     params[:citta])     if params[:citta].present?
+    clienti = clienti.where("clienti.comune = ?",     params[:comune])     if params[:comune].present?
 
     clienti = clienti.scuole     if params[:tipo].present? && params[:tipo] == 'scuole'
     clienti = clienti.primarie   if params[:tipo].present? && params[:tipo] == "primarie"
@@ -108,20 +97,44 @@ class Cliente < ActiveRecord::Base
     clienti
   end
   
-private
-
-  def set_indirizzi
-    self.indirizzi.build(tipo: 'Indirizzo fattura') unless self.indirizzo.present?
-    self.indirizzi.build(tipo: 'Indirizzo spedizione') unless self.indirizzo_spedizione.present?
+  acts_as_gmappable
+  
+  def gmaps4rails_address
+    "#{self.indirizzo}, #{self.frazione}, #{self.comune}, #{self.cap}, #{self.provincia}"
   end
   
-  def set_nome
-    n = self.nome.split(' ')
-    suff = Cliente::ABBR_TIPI[Cliente::TIPI_CLIENTI.index(self.cliente_tipo)]
-    
-    unless n[0] == suff
-      self.nome = suff + " " + self.nome
-    end
+  def gmaps4rails_infowindow
+    "#{self.titolo} </br> #{self.frazione} #{self.comune}"
   end
+  
+  def calculate_tipo_from_titolo
+    if ( self.titolo =~ /^E\s.+/)
+      self.cliente_tipo = "Scuola Primaria"
+    elsif ( self.titolo =~ /^D\s.+/ )
+      self.cliente_tipo = "Direzione Didattica"
+    elsif ( self.titolo =~ /^C\s.+/ )
+      self.cliente_tipo = "Cartolibreria"
+    elsif ( self.titolo =~ /^IC\s.+/ )
+      self.cliente_tipo = "Istituto Comprensivo"
+    elsif ( self.titolo =~ /(^G\s.+)|(^P\s.+)/ )
+      self.cliente_tipo = "Persona Fisica"
+    elsif ( self.titolo =~ /^Z\s.+/ )
+      self.cliente_tipo = "Ditta"
+    end
+    self.save
+  end
+  
+  private
+  
+    def set_titolo
+      n = self.titolo.split(' ')
+      suff = Cliente::ABBR_TIPI[Cliente::TIPI_CLIENTI.index(self.cliente_tipo)]
+      
+      unless n[0] == suff
+        self.titolo = suff + " " + self.titolo
+      end
+    end
 
 end
+
+

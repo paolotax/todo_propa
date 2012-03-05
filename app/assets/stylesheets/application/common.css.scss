@@ -1,18 +1,5 @@
 @import "mixins";
 
-.content-view {
-	width: 680px;
-	margin: auto;
-}
-
-.field {
-  margin: 10px 0;
-}
-
-.links {
-	float: right;
-	text-align: right;
-}
 
 /*** FILTERS ***/
 
@@ -55,6 +42,8 @@
 	  list-style: none;
 	  margin: 0;
 	  padding: 0;
+    max-height: 200px;
+    overflow: scroll-y;
 	  border: solid 1px #BBB;
 	  border-top: none;
 	  padding: 5px 20px;

@@ -1,0 +1,105 @@
+// Set the correct sprite paths
+$iconSpritePath: image-path('glyphicons-halflings.png');
+$iconWhiteSpritePath: image-path('glyphicons-halflings-white.png');
+
+$navbarBackground: #555;
+$navbarBackgroundHighlight: #888;
+$navbarText: #eee;
+$navbarLinkColor: #eee;
+
+@import "bootstrap";
+
+body { padding-top: 60px; }
+
+@import "bootstrap-responsive";
+
+body {
+  // background-position: left 40px
+  // background-attachment: fixed
+  // background-image: url(<%= asset_path "bg.png" %>)
+  // background-repeat: repeat
+  // background-repeat: no-repeat
+  // background-color: $purple
+}
+
+.size19 {
+  width: 22px;
+  height: 22px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;  
+}
+
+#appunti,
+#clienti {
+  .appunto {
+  }
+  &:hover {
+  }
+}
+
+.search_options {
+  &.search-citta,
+  &.search-nearbys {
+    .vertical {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      overflow-y: scroll;
+    }
+  }
+}
+
+.modal {
+  overflow: hidden;
+  form {
+    padding: 0 10px 0 10px;
+    margin: 0;
+    .chzn-select,
+    .chzn-drop,
+    .chzn-results {
+      z-index: 99999;
+    }
+  }
+}
+
+.topbar-tweet-btn {
+  float: right;
+  margin-right: 13px;
+}
+
+.icon-tweet {
+  background-image: url(<%= asset_path "twitter_web_sprite_icons.png" %>);
+  background-repeat: no-repeat;
+  background-position: -160px -50px;
+  width: 18px;
+  height: 22px;
+}
+
+
+// Landscape phones and down
+@media (max-width: 480px) {
+
+}
+
+// Landscape phone to portrait tablet
+@media (max-width: 768px) {
+
+}
+ 
+// Portrait tablet to landscape and desktop
+@media (min-width: 768px) and (max-width: 980px) {
+
+}
+ 
+// Large desktop
+@media (min-width: 980px) { 
+  
+  // .modal {
+  //   width: 70%; 
+  //   max-height: 700px; 
+  //   top: 40%; 
+  //   left: 30%;
+  // }
+
+
+}

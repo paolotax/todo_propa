@@ -15,3 +15,4 @@ class Comune < ActiveRecord::Base
     comune
   end
 end
+

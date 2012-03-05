@@ -1,6 +1,9 @@
 - title "Clienti"
 
-.content
+.container.page
+  .side
+    = render :partial => 'shared/episode_views'
+    = render :partial => 'shared/search_options'
   .content-list
     .links
       = link_to "Nuovo", new_cliente_path
@@ -12,9 +15,8 @@
     #clienti{ 'data-json-url' => "#{ clienti_url( params.merge(:format => :json)) }" }
       / - @clienti.each do |cliente|
       /   = render "cliente", :mustache => cliente_for_mustache(cliente)
-  .side
-    = render :partial => 'shared/episode_views'
-    = render :partial => 'shared/search_options'
+        
+
 
 %script{ type: "text/html", id: "cliente_template" }
   = render "cliente"

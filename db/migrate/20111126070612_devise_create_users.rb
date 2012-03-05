@@ -3,6 +3,14 @@ class DeviseCreateUsers < ActiveRecord::Migration
     create_table(:users) do |t|
       t.database_authenticatable :null => false
       t.string :username
+
+      t.string :avatar
+      t.string :telefono
+      t.string :web_site
+      t.string :nome_completo
+      t.string :codice_fiscale
+      t.string :partita_iva    
+
       t.recoverable
       t.rememberable
       t.trackable
@@ -11,7 +19,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.confirmable
       # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both
       # t.token_authenticatable
-
 
       t.timestamps
     end

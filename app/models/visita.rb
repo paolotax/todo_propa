@@ -7,3 +7,5 @@ class Visita < ActiveRecord::Base
                        :conditions => ['appunti.stato <> ?', 'X']
 
 end
+
+

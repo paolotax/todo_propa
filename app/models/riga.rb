@@ -3,7 +3,7 @@ class Riga < ActiveRecord::Base
   belongs_to :libro
 
   after_initialize :init
-  after_save :ricalcola_totali
+  # after_save :ricalcola_totali
   after_destroy :ricalcola_totali
 
 
@@ -28,9 +28,9 @@ class Riga < ActiveRecord::Base
     sconto.nil? ? sc = 0.0 : sc = sconto
     prezzo_unitario * quantita * (100.0 - sc) / 100
   end
-
+  
   private
-
+  
     def init
       self.sconto ||= 0.0           #will set the default value only if it's nil
     end  
@@ -42,3 +42,5 @@ class Riga < ActiveRecord::Base
     end
 
 end
+
+

@@ -11,7 +11,7 @@ class Indirizzo < ActiveRecord::Base
   #                        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.citta_changed? || obj.cap_changed? || obj.indirizzable.citta_changed? }
 
   def full_street_address
-    [self.indirizzo, self.cap, self.citta, self.indirizzable.citta, self.provincia].join(', ')
+    [self.indirizzo, self.cap, self.citta, self.indirizzable.comune, self.provincia].join(', ')
   end
 
   acts_as_gmappable
@@ -43,3 +43,5 @@ class Indirizzo < ActiveRecord::Base
   # end
 
 end
+
+

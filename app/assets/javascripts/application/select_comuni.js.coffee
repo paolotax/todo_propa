@@ -3,20 +3,17 @@ jQuery ->
     if $('#cliente_provincia').length
       lista_comuni = new ListComuni()
       
-  # $("[data-pjax-container]").bind 'pjax:end', () =>
-  #   initialize_comuni()
-  
   initialize_comuni()
 
 class ListComuni
   
   constructor: () ->
     @list_provincia = $('#cliente_provincia')
-    @list_citta     = $('#cliente_citta')
+    @list_citta     = $('#cliente_comune')
 
     @provincia      = $(':selected', @list_provincia).text()
     @comune         = $(':selected', @list_citta).text()
-
+    
     @list_provincia.live 'change', @change
     @list_citta.live     'change', @change_citta
 

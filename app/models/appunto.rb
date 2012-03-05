@@ -22,6 +22,8 @@ class Appunto < ActiveRecord::Base
   scope :un_anno, lambda {  includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?",  1.year.ago)  }
   
   
+  before_save :leggi
+  
   def to_s
     "##{id} - #{destinatario} (#{cliente_nome})"
   end
@@ -31,7 +33,7 @@ class Appunto < ActiveRecord::Base
   end
   
   def cliente_nome
-    cliente.nome if cliente.present?
+    self.cliente.titolo if cliente.present?
   end
   
   def has_righe?
@@ -44,10 +46,10 @@ class Appunto < ActiveRecord::Base
   
   def self.filtra(params)
     appunti = scoped
-    appunti = appunti.where("appunti.destinatario ilike ? or clienti.nome ilike ?  or clienti.citta ilike ?  or appunti.note ilike ?", 
-               "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
+    appunti = appunti.where("appunti.destinatario ilike ? or clienti.nome ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ? or appunti.note ilike ?", 
+               "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
     appunti = appunti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
-    appunti = appunti.where("clienti.citta = ?",     params[:citta])     if params[:citta].present?
+    appunti = appunti.where("clienti.comune = ?",    params[:comune])    if params[:comune].present?
     appunti = appunti.in_corso   if params[:status].present? && params[:status] == 'in_corso'
     appunti = appunti.completo   if params[:status].present? && params[:status] == "completati"
     appunti = appunti.da_fare    if params[:status].present? && params[:status] == "da_fare"
@@ -56,4 +58,22 @@ class Appunto < ActiveRecord::Base
     appunti
   end
 
+  private
+
+  def leggi
+    
+    new_righe = self.note.lines.to_a
+    for r in self.note.lines do
+      riga = r.squish.split
+      if /\d{5}[A-Z]/.match riga.first
+        libro = Libro.find_or_create_by_cm( cm: riga.first, titolo: riga[1..-2].join(" "), prezzo_consigliato: 0, prezzo_copertina: 0 )
+        new_riga = self.righe.build( libro: libro, quantita:  riga.last, prezzo_unitario: libro.prezzo_copertina )
+        new_righe.delete(r)
+      end
+      self.note = new_righe.join() 
+    end
+  end
 end
+
+
+

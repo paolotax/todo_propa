@@ -1,0 +1,39 @@
+.devise-form.well
+  %h2 Modifica profilo
+  
+  %hr
+  
+  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put , :multipart => true}) do |f|
+    = devise_error_messages!
+
+    = f.input :username
+    = f.input :email
+    = f.input :nome_completo
+    = f.input :telefono
+    = f.input :codice_fiscale
+    = f.input :partita_iva
+    
+    / = f.input :password, :hint => "lasciare in bianco se non si vuole modificare"
+    / = f.input :password_confirmation
+    
+    .control-group
+      %label
+        = image_tag f.object.avatar, alt: f.object.username unless f.object.avatar.blank?
+      .controls
+        = f.file_field :avatar
+
+
+    = f.input :current_password, :hint => "inserisci la password se desideri salvare le modifiche", labe: "Password"
+
+    .control-group
+      .controls
+        = f.button :submit, "Salva modifiche"
+    
+  
+  %hr
+  
+  %p
+    Non sei felice? 
+    = link_to "Elimina questo account", registration_path(resource_name), :confirm => "Sei sicuro?", :method => :delete
+  
+

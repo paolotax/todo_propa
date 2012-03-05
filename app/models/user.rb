@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
+  attr_accessible  :nome_completo, :telefono, :codice_fiscale, :partita_iva
   
   validates :username, presence: true
   
@@ -27,3 +28,5 @@ class User < ActiveRecord::Base
   
   
 end
+
+

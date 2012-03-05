@@ -1,33 +1,31 @@
-= form_for @libro, :html => { :multipart => true } do |f|
-  .fields
-    = f.label :titolo
-    = f.text_field :titolo
-  .fields
-    = f.label :type, "Settore"
-    = f.text_field :type
-  .fields
-    = f.label :cm
-    = f.text_field :cm
-  .fields
-    = f.label :prezzo_copertina
-    = f.text_field :prezzo_copertina
-  .fields
-    = f.label :prezzo_consigliato
-    = f.text_field :prezzo_consigliato
-  - if @libro.image?
-    .fields
-      %label Copertina
-      = image_tag(@libro.image_url)
-      = f.check_box :remove_image
-      Elimina copertina
-    .clear    
-  .fields
-    %label Nuova copertina
-    = f.file_field :image
-    .clear
-  .fields
-    = f.label :remote_image_url, "oppure inserisci URL"
-    = f.text_field :remote_image_url
+= simple_form_for @libro, :html => { :multipart => true } do |f|
+  
+  = f.input :titolo
+  = f.input :settore, collection:  ["Scolastico", "Parascolastico", "Vacanze", "Varia", "Eventuale", "Concorrenza", "Scorrimento"] 
+
+  = f.input :cm, label: "Codice Giunti"
+  = f.input :sigla
+  = f.input :ean
+
+  = f.input :prezzo_copertina
+  = f.input :prezzo_consigliato
+  = f.input :coefficente
+  
+  / - if @libro.image?
+  /   .fields
+  /     %label Copertina
+  /     = image_tag(@libro.image_url)
+  /     = f.check_box :remove_image
+  /     Elimina copertina
+  /   .clear    
+  / .fields
+  /   %label Nuova copertina
+  /   = f.file_field :image
+  /   .clear
+  / .fields
+  /   = f.label :remote_image_url, "oppure inserisci URL"
+  /   = f.text_field :remote_image_url
     
-  .actions
-    = f.submit "Salva", :class => "blue_button"
+  .control-group
+    .controls
+      = f.button :submit, :class => "btn-primary"

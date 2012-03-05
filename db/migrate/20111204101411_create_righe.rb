@@ -12,7 +12,7 @@ class CreateRighe < ActiveRecord::Migration
       t.integer  :fattura_id
       t.integer  :magazzino_id
       t.integer  :causale_id
-      t.integer  :movimento      
+      t.integer  :movimento
       t.timestamps
     end
     

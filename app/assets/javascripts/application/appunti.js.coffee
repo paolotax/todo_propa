@@ -4,7 +4,7 @@
 
 
 jQuery ->
-
+  
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
   
   @selected_appunti = []
@@ -30,17 +30,10 @@ jQuery ->
   #   #$('#footer').html $('.appunto.selected').length
   #   $('#appunti').scrollTop(pos);
 
-  $('.nascondi').live 'click', (e) ->
-    e.preventDefault()
-    $('#appunto-small').slideUp()
-    reset_appunto()
 
   $('#new_appunto_button').live 'click', (e) ->
-    pos = $('#appunti').scrollTop()
+
     e.preventDefault()
-    $("ul.tabs").data("tabs").click(0)
-    $('#appunto-small').slideDown 'slow', () ->
-      $("ul.tabs").show()
     $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
     $('#appunto_cliente_id_chzn input').focus();
     $('#appunti').scrollTop(pos)  

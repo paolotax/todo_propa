@@ -1,5 +1,6 @@
 !!!
-%html{ :manifest => "production.appcache" }
+%html
+  / %html{ :manifest => "production.appcache" }
   %head
     %title= yield :title || "Untitled"
     
@@ -16,23 +17,19 @@
     = javascript_include_tag "application"
 
     = csrf_meta_tags
-%body
-  #top
+  %body
     = render "shared/header"
-    %ul.subscribe.horizontal
-  %div#wrapper(data-pjax-container)
-    - if ['clienti', 'appunti'].include?(params[:controller])
-      #nav_bar.pjax
-        %ul.nav.horizontal
-          %li= link_to_unless_current "Appunti",  appunti_url
-          %li= link_to_unless_current "Clienti",   clienti_url
-          %li= link_to_unless_current "Fatture",  root_url
-          %li= link_to_unless_current "Giri",     clienti_url
-        = render partial: "shared/search"
-    / = render partial: "shared/test"
-    - flash.each do |name, msg|
-      = content_tag(:div, raw(msg), :id => "flash_#{name}")
-    = yield :head
-    = yield
-    = yield :scripts
+  
+    %div#wrapper(data-pjax-container)
+      / = render partial: "shared/test"
+
+      
+      .container.page
+        - flash.each do |name, msg|
+          = content_tag(:div, raw(msg), :id => "flash_#{name}")
+
+        = yield :head
+        = yield
+        = yield :scripts
+  
   #footer

@@ -1,1 +1,1 @@
-attributes :id, :nome, :citta, :provincia
+attributes :id, :titolo, :frazione, :comune, :provincia

@@ -25,12 +25,12 @@
     = link_to "Provincie", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:provincia)
   %ul
     - for p in @provincie
-      %li= link_to_unless(params[:provincia] == p.provincia, p.provincia, params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:citta).merge(:provincia => p.provincia, :page => nil))
+      %li= link_to_unless(params[:provincia] == p.provincia, p.provincia, params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:comune).merge(:provincia => p.provincia, :page => nil))
 
 .search_options.search-citta
   %h2
-    = link_to "Comuni", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:citta)
+    = link_to "Comuni", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:comune)
   %ul.vertical
     - for c in @citta
-      %li= link_to_unless(params[:citta] == c.citta, c.citta, params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:citta => c.citta, :page => nil))   unless c.nil?
+      %li= link_to_unless(params[:comune] == c.comune, c.comune, params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:comune => c.comune, :page => nil))   unless c.nil?
         

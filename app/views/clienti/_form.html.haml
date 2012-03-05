@@ -1,48 +1,62 @@
 # encoding: utf-8
 
-= form_for @cliente, html: {:class => "feedback #{params[:action]}_cliente"} do |f|
-  -if @cliente.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@cliente.errors.count, "error")} prohibited this cliente from being saved:"
-      %ul
-        - @cliente.errors.full_messages.each do |msg|
-          %li= msg
+
+= simple_form_for @cliente do |f|
+
+  = f.error_notification
   
-  .field
-    = f.label :cliente_tipo, "Tipo cliente:"
-    = f.select :cliente_tipo, Cliente::TIPI_CLIENTI
-  = field f, :nome,      size: 50
-  .field
-    = f.label :provincia, "Provincia:"
-    = f.select :provincia, Comune.provincie.all.map(&:provincia), { :include_blank => true } , {:class => 'chzn-select'}
-  .field
-    = f.label :citta, "Comune:"
-    = f.select :citta, Comune.per_provincia(@cliente.provincia).map(&:citta), { :include_blank => true }, {:class => 'chzn-select'}
+  %fieldset
+    = f.input   :cliente_tipo, collection: Cliente::TIPI_CLIENTI, label: "Tipo Cliente",  input_html: { :class => 'chzn-select' }
+    = f.input   :titolo, label: "Nome Cliente", hint: "Scegliere un nome univoco per indicare il cliente. Verrà aggiunto automaticamente il prefisso che ne indica il tipo"
 
-  = f.fields_for :indirizzi do |indirizzo|
-    %fieldset#gmaps_page 
-      %legend= indirizzo.object.tipo ||= 'Indirizzo fattura'
-      = field indirizzo, :destinatario, size: 50, label: 'Ragione Sociale'
-      = field indirizzo, :indirizzo,    size: 50
-      = field indirizzo, :citta, label: 'Località',      size: 50
-      .field
-        = indirizzo.label :cap, 'CAP:'
-        = indirizzo.text_field :cap,    size:  5
-        = link_to 'non solo cap', "http://www.nonsolocap.it/cap?k=#{indirizzo.object.citta}&s=Cerca&c=", :target => '_blank'
-      = field indirizzo, :provincia,    size:  2
-      .field
-        %label Mappa:
-        - @mappa = indirizzo.object.to_gmaps4rails
+  %fieldset
+    %legend Dati anagrafici
+    .control-group.form-inline
+      %label{ for: :nome, :class => 'string required control-label'} Nome e Cognome
+      .controls
+        = f.text_field :nome
+        = f.text_field :cognome
+      
+    = f.input   :ragione_sociale
+  
+  %fieldset
+    = f.input   :codice_fiscale
+    = f.input   :partita_iva
+  / = f.input   :avatar
+  
+  
+  
+  %fieldset
+    %legend Indirizzo
+    = f.input   :provincia,    collection: Comune.provincie.all.map(&:provincia),                  input_html: { :class => 'chzn-select' }  
+    = f.input   :comune,       collection: Comune.per_provincia(@cliente.provincia).map(&:comune), input_html: { :class => 'chzn-select' }
+    = f.input   :frazione
+    = f.input   :indirizzo
+    = f.input   :cap
+
+  = f.error :base
+
+  %fieldset
+    %legend Recapiti
+    = f.input :telefono
+    = f.input :telefono_2
+    = f.input :fax
+    = f.input :cellulare
+    = f.input :email
+    = f.input :url
+  
+  %fieldset
+    %legend Mappa
+    .control-group
+      .controls
+        - @mappa = f.object.to_gmaps4rails
         = gmaps( {:markers => {:data => @mappa, :options => { :draggable => true  }}, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-        
-      .clear
-      = field indirizzo, :gmaps,        type: :check_box
-      = field indirizzo, :latitude,     size: 25
-      = field indirizzo, :longitude,    size: 25      
-
-  .actions
-    = submit_tag 'Salva'
-
-= render 'shared/non_solo_cap'
-
-
+    
+    = f.input :gmaps
+    = f.input :latitude
+    = f.input :longitude
+    
+      
+  .control-group
+    .controls
+      = f.button :submit

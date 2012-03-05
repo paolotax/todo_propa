@@ -6,7 +6,6 @@
 jQuery ->
 
   $('#flash_notice, #flash_alert').delay(2000).slideUp('slow')
-  window.activateTabs() if $('#appunto-small').length
 
   $(".on_the_spot_editing, .note_mark").live 'mouseout', ->
     $(@).css 'background-color', 'inherit'
@@ -17,15 +16,17 @@ jQuery ->
   $(".search_options a, .filters a").live 'click', (e) ->
     e.preventDefault()
     
-    if !localStorage["pendingItems"]
-      localStorage["pendingItems"] = JSON.stringify []
+    if !localStorage["pendingAppunti"]
+      localStorage["pendingAppunti"] = JSON.stringify []
     
     params = $(@).attr('href').split('?')[1] ||= ""
     console.log params
     
+    $('#appunti').empty()
+    
     $.getJSON $(@).attr('href'), (data) ->
-      pendingItems = $.parseJSON localStorage["pendingItems"]
-      appunti = pendingItems.concat(data)
+      pendingAppunti = $.parseJSON localStorage["pendingAppunti"]
+      appunti = pendingAppunti.concat(data)
       $("#appunti").empty()
       for obj in appunti
         if obj.data?
@@ -33,7 +34,7 @@ jQuery ->
         else
           $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)     
       
-      $.get "\get_appunti_filters.js", params, (data) ->
+      $.get "/get_appunti_filters.js", params, (data) ->
         console.log "data"
 
-    $('#appunti').empty()
+
