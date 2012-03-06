@@ -1,5 +1,17 @@
 class Libro < ActiveRecord::Base
-  
+
+
+  SETTORI     = ["Scolastico", "Parascolastico", "Vacanze", "Varia", "Eventuale", "Concorrenza", "Scorrimento"]
+  SETTORI_OPT = [
+                  ["Scolastico", "Scolastico"], 
+                  ["Parascolastico", "Parascolastico"], 
+                  ["Vacanze", "Vacanze"], 
+                  ["Varia", "Varia"], 
+                  ["Eventuale", "Eventuale"], 
+                  ["Concorrenza", "Concorrenza"], 
+                  ["Scorrimento", "Scorrimento"]
+                ]
+
   extend FriendlyId
   friendly_id :titolo
   

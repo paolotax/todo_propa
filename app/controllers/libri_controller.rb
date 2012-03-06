@@ -2,6 +2,8 @@ class LibriController < ApplicationController
   
   respond_to :html, :js, :json 
   
+  can_edit_on_the_spot
+  
   def index
     @libri = Libro.order("id")
     respond_with @libri

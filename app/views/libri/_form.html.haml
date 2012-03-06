@@ -1,7 +1,7 @@
 = simple_form_for @libro, :html => { :multipart => true } do |f|
   
   = f.input :titolo
-  = f.input :settore, collection:  ["Scolastico", "Parascolastico", "Vacanze", "Varia", "Eventuale", "Concorrenza", "Scorrimento"] 
+  = f.input :settore, collection:  ::Libro::SETTORI
 
   = f.input :cm, label: "Codice Giunti"
   = f.input :sigla
