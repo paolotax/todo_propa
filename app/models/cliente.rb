@@ -61,15 +61,15 @@ class Cliente < ActiveRecord::Base
     "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end
   
-  def indirizzo
-    ind = self.indirizzi.where(tipo: "Indirizzo fattura").last
-    ind ||= self.indirizzi.build(tipo: 'Indirizzo fattura')
-  end
-  
-  def indirizzo_spedizione
-    ind = self.indirizzi.where(tipo: "Indirizzo spedizione").last
-    ind ||= self.indirizzo
-  end
+  # def indirizzo
+  #   ind = self.indirizzi.where(tipo: "Indirizzo fattura").last
+  #   ind ||= self.indirizzi.build(tipo: 'Indirizzo fattura')
+  # end
+  # 
+  # def indirizzo_spedizione
+  #   ind = self.indirizzi.where(tipo: "Indirizzo spedizione").last
+  #   ind ||= self.indirizzo
+  # end
 
   def set_indirizzi
     # self.indirizzi.build(tipo: 'Indirizzo fattura') unless self.indirizzo.present?

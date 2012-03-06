@@ -25,15 +25,15 @@ class AppuntoPdf < Prawn::Document
       
       @righe = a.righe
       intestazione
-      # destinatario(a)
-      # pieghi_di_libri?(a)
-      # 
-      # note(a)
-      # unless @righe.blank?
-      #   appunto_number(a)
-      #   line_items(a) 
-      #   totali(a)
-      # end
+      destinatario(a)
+      pieghi_di_libri?(a)
+      
+      note(a)
+      unless @righe.blank?
+        appunto_number(a)
+        line_items(a) 
+        totali(a)
+      end
       
       start_new_page unless a == @appunti.last
     end
@@ -110,20 +110,12 @@ class AppuntoPdf < Prawn::Document
     bounding_box [bounds.width / 2.0, bounds.top - 150], :width => bounds.width / 2.0, :height => 100 do
       #stroke_bounds
       text appunto.destinatario, :size => 14, :style => :bold, :spacing => 4
+      #move_down(3)
+      text "#{appunto.cliente.cognome} #{appunto.cliente.nome}",  :size => 14, :style => :bold, :spacing => 4      
+      text appunto.cliente.ragione_sociale,  :size => 14, :style => :bold, :spacing => 4
+      text appunto.cliente.indirizzo,  :size => 12
+      text appunto.cliente.cap + ' ' + appunto.cliente.frazione  + ' ' + appunto.cliente.comune  + ' ' + appunto.cliente.provincia,  :size => 12
 
-      if !appunto.cliente.indirizzi.empty?
-        indirizzo = appunto.cliente.indirizzo
-        move_down(3)
-        text indirizzo.destinatario,  :size => 14, :style => :bold, :spacing => 4
-        move_down(3)
-        text indirizzo.indirizzo,  :size => 12
-        text indirizzo.cap + ' ' + indirizzo.citta + ' ' + indirizzo.provincia,  :size => 12
-        # non funziona to_s carriage return 
-        # pdf.text appunto.cliente.indirizzi.first.to_s unless appunto.cliente.indirizzi.empty? 
-      else
-        text appunto.cliente.nome, :size => 14, :style => :bold, :spacing => 16
-        text appunto.cliente.citta + " " + appunto.cliente.provincia, :size => 12
-      end
     end
   end
   
