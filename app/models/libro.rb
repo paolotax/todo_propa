@@ -19,7 +19,9 @@ class Libro < ActiveRecord::Base
   
   mount_uploader :image, ImageUploader
   
+  scope :per_settore, unscoped.order(:settore)
   scope :per_titolo, unscoped.order(:titolo)
+  
   scope :vendibili, where("libri.settore <> 'Concorrenza'").where("libri.settore <> 'Scorrimento'")
   
   #fratelli usato per option group

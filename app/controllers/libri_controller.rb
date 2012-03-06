@@ -5,7 +5,7 @@ class LibriController < ApplicationController
   can_edit_on_the_spot
   
   def index
-    @libri = Libro.order("id")
+    @libri = Libro.per_settore.per_titolo
     respond_with @libri
   end
 
