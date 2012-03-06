@@ -14,12 +14,18 @@ body { padding-top: 60px; }
 @import "bootstrap-responsive";
 
 body {
-  // background-position: left 40px
-  // background-attachment: fixed
-  // background-image: url(<%= asset_path "bg.png" %>)
-  // background-repeat: repeat
-  // background-repeat: no-repeat
-  // background-color: $purple
+  background-position: left 40px;
+  background-attachment: fixed;
+  background-image: url(<%= asset_path "bg.png" %>);
+  background-repeat: repeat;
+  background-repeat: no-repeat;
+  background-color: #C0DEED;
+}
+
+.container.page {
+  background-image: url(<%= asset_path "wash-white-30.png" %>);
+  padding: 20px 15px 10px 15px;
+  margin-top: -20px
 }
 
 .size19 {
@@ -30,23 +36,15 @@ body {
   border-radius: 4px;  
 }
 
-#appunti,
-#clienti {
-  .appunto {
-  }
-  &:hover {
-  }
-}
-
 .search_options {
-  &.search-citta,
-  &.search-nearbys {
-    .vertical {
-      padding-bottom: 20px;
-      margin-bottom: 20px;
-      overflow-y: scroll;
-    }
-  }
+  // &.search-citta,
+  // &.search-nearbys {
+  //   .vertical {
+  //     padding-bottom: 20px;
+  //     margin-bottom: 20px;
+  //     overflow-y: scroll;
+  //   }
+  // }
 }
 
 .modal {
@@ -61,6 +59,155 @@ body {
     }
   }
 }
+
+.content-main {
+  // margin: 0;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.content-header,
+#appunti {
+  margin: 0 -15px 0 -15px;
+}
+
+#appunti,
+#clienti {
+  .appunto {
+    .content {
+      margin-left: 46px;
+    }
+    
+    span[data-value="0"] {
+      display: none;
+    }
+    
+    .importo {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      
+    }
+    .more {
+      display: none;
+    }
+    .nav-appunto {
+      display: none;
+    }
+    &:hover .time {
+      display:none;
+    }
+    &:hover .nav-appunto {
+      display:block;
+    }
+    
+    .stato {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      text-indent: -9999px;
+      cursor: pointer;
+      &.da_fare {
+        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px 0 transparent;
+      }
+      &.completato{
+        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -34px transparent;
+      }
+      &.in_sospeso {
+        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -68px transparent;
+      }
+    }
+
+    .full_name {
+      font-weight: bold;
+      color: #333;
+    }
+
+    a:hover .full_name {
+      color: #999;
+      text-decoration: none;
+    }
+  }
+}
+
+.content-header {
+  
+  
+  border-left: 1px solid #EEE;
+  border-left: 1px solid rgba(0, 0, 0, .1);
+  border-right: 1px solid #EEE;
+  border-right: 1px solid rgba(0, 0, 0, .1);
+  border-top: 1px solid #EEE;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 0 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.content-header .header-inner {
+  min-height: 20px;
+  padding: 12px;
+  background-color: white;
+  border-bottom: 1px solid #E8E8E8;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+}
+
+.appunto {
+  position: relative;
+  .actions {
+    position: absolute;
+    top: 9px;
+    right: 12px;
+  }
+}
+
+#appunti > div {
+
+  position: relative;
+  min-height: 51px;
+  padding: 9px 12px 9px;
+  border-bottom: 1px solid #E8E8E8;
+  
+  background: white;
+  border-left: 1px solid #E8E8E8;
+  border-left: 1px solid rgba(0, 0, 0, .1);
+  border-right: 1px solid #E8E8E8;
+  border-right: 1px solid rgba(0, 0, 0, .1);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+
+}
+
+
+.time {
+  position: absolute;
+  right: 12px;
+}
+
+.select-check {
+  position: absolute;
+  right: 12px;
+  bottom: 3px;
+}
+
+.destinatario {
+  font-size: 12px;
+  color: #999;
+}
+
+
+
+
 
 @import "compass/utilities/lists/inline-list";
   
@@ -81,6 +228,8 @@ body {
   width: 18px;
   height: 22px;
 }
+
+
 
 
 // Landscape phones and down

@@ -1,36 +1,53 @@
 - if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
-  .search_options.search-stato
-    %h2
-      = link_to "Stato", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:status)
-    %ul
-      %li= link_to_unless( params[:status] == "in_corso",   "in corso", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_corso"))
-      %li= link_to_unless( params[:status] == "da_fare",    "da fare",  params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "da_fare"))
-      %li= link_to_unless( params[:status] == "in_sospeso", "in sospeso",  params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_sospeso"))
-      %li= link_to_unless( params[:status] == "completati", "completati",  params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "completati"))
+  
+  .search_options.search-stato.well{ style: "padding: 8px; 0"}
+    %ul.nav.nav-list
+      
+      %li.nav-header= link_to "Stato", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:status)
+      
+      %li{ class: "#{ params[:status] == 'in_corso' ? 'active' : '' }" }
+        = link_to "in corso",  params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_corso")
+      
+      %li{ class: "#{ params[:status] == "da_fare" ? 'active' : ''}" }
+        = link_to "da fare",    params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "da_fare")
+          
+      %li{ class: "#{ params[:status] == "in_sospeso" ? 'active' : ''}" }
+        = link_to "in sospeso", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_sospeso")
+          
+      %li{ class: "#{ params[:status] == "completati" ? 'active' : ''}" }
+        = link_to "completati", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "completati")
 
 - if params[:controller] == "clienti"
-  .search_options.search-cliente_tipo
-    %h2 
-      = link_to "Tipo cliente", params.merge(:format => 'json').except(:tipo)
-    %ul
-      %li= link_to_unless( params[:tipo] == "scuole",     "Tutte le scuole",  params.merge(:format => 'json').merge(tipo: "scuole"))
-      %li= link_to_unless( params[:tipo] == "primarie",   "Scuole Primarie",  params.merge(:format => 'json').merge(tipo: "primarie"))
-      %li= link_to_unless( params[:tipo] == "cartolerie", "Cartolerie",       params.merge(:format => 'json').merge(tipo: "cartolerie"))
-      %li= link_to_unless( params[:tipo] == "direzioni",  "Direzioni",        params.merge(:format => 'json').merge(tipo: "direzioni"))
-      %li= link_to_unless( params[:tipo] == "privati",    "Privati",          params.merge(:format => 'json').merge(tipo: "privati"))
-      %li= link_to_unless( params[:tipo] == "altri",      "altri",            params.merge(:format => 'json').merge(tipo: "altri"))
+  .search_options.search-cliente_tipo.well{ style: "padding: 8px; 0"}
+    %ul.nav.nav-list
+      %li.nav-header= link_to "Tipo cliente", params.merge(:format => 'json').except(:tipo)
       
-.search_options.search-provincia
-  %h2
-    = link_to "Provincie", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:provincia)
-  %ul
+      %li{ class: "#{ params[:tipo] == "scuole" ? 'active' : ''}" }
+        = link_to "Tutte le scuole",  params.merge(:format => 'json').merge(tipo: "scuole")
+      %li{ class: "#{ params[:tipo] == "primarie" ? 'active' : ''}" }
+        = link_to "Scuole Primarie",  params.merge(:format => 'json').merge(tipo: "primarie")
+      %li{ class: "#{ params[:tipo] == "cartolerie" ? 'active' : ''}" }
+        = link_to "Cartolerie",       params.merge(:format => 'json').merge(tipo: "cartolerie")
+      %li{ class: "#{ params[:tipo] == "direzioni" ? 'active' : ''}" }
+        = link_to "Direzioni",        params.merge(:format => 'json').merge(tipo: "direzioni")
+      %li{ class: "#{ params[:tipo] == "privati" ? 'active' : ''}" }
+        = link_to "Privati",          params.merge(:format => 'json').merge(tipo: "privati")
+      %li{ class: "#{ params[:tipo] == "altri" ? 'active' : ''}" }
+        = link_to "altri",            params.merge(:format => 'json').merge(tipo: "altri")
+      
+.search_options.search-provincia.well{ style: "padding: 8px; 0"}
+  %ul.nav.nav-list
+    %li.nav-header= link_to "Provincie", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:provincia)
+    
     - for p in @provincie
-      %li= link_to_unless(params[:provincia] == p.provincia, p.provincia, params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:comune).merge(:provincia => p.provincia, :page => nil))
+      %li{ class: "#{ params[:provincia] == p.provincia ? 'active' : ''}" }
+        = link_to p.provincia, params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:comune).merge(:provincia => p.provincia, :page => nil)
 
-.search_options.search-citta
-  %h2
-    = link_to "Comuni", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:comune)
-  %ul.vertical
+.search_options.search-citta.well{ style: "padding: 8px; 0"}
+  %ul.nav.nav-list.vertical
+    %li.nav-header= link_to "Comuni", params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:comune)
+    
     - for c in @citta
-      %li= link_to_unless(params[:comune] == c.comune, c.comune, params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:comune => c.comune, :page => nil))   unless c.nil?
+      %li{ class: "#{ params[:comune] == c.comune ? 'active' : ''}"}
+        = link_to c.comune, params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:comune => c.comune, :page => nil)  unless c.nil?
         

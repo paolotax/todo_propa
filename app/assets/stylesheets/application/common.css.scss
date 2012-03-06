@@ -29,40 +29,6 @@
   padding-left: 5px;
 }
 
-
-
-/*** SEARCH_OPTIONS ***/
-
-.search_options {
-  margin-bottom:15px;
-  &:last-child {
-    margin-bottom:0;
-  }
-	ul {
-	  list-style: none;
-	  margin: 0;
-	  padding: 0;
-    max-height: 200px;
-    overflow: scroll-y;
-	  border: solid 1px #BBB;
-	  border-top: none;
-	  padding: 5px 20px;
-	  border-bottom-left-radius: 5px;
-	  border-bottom-right-radius: 5px;
-	  -webkit-border-bottom-left-radius: 5px;
-	  -webkit-border-bottom-right-radius: 5px;
-	  -moz-border-radius-bottomleft: 5px;
-	  -moz-border-radius-bottomright: 5px;
-		li {
-		  margin: 5px 0;
-		  font-size: 14px;
-		}
-	}
-	h2 {
-    @include bar(center);
-  }
-}
-
 .title-bar {
   @include bar(left);
 }

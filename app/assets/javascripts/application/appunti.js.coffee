@@ -5,6 +5,15 @@
 
 jQuery ->
   
+  $('.show a').live 'click', (e) ->
+    e.preventDefault()
+    appunto = $(@).parent().parent().parent().parent().parent()
+    console.log appunto
+    $(".importo", appunto).fadeOut();
+    $('.more', appunto).slideDown();
+    appunto.css "margin-top", "10px"
+    appunto.css "margin-bottom", "10px"
+    
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
   
   @selected_appunti = []

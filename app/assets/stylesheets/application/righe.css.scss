@@ -5,16 +5,15 @@
 @import "compass/utilities/lists/bullets";
 @import "compass/utilities/text/ellipsis";
 
-
 .table-righe {
-  font-size: 13px;
-  ul.righe {
+  font-size: 90%;
+  padding: 0 10px 0 0;
+  table.righe {
     @include no-bullets;
-    margin: 0;
     padding: 0;
-    .riga span {
-      display: block;
-      float: left;
+    margin: 0;
+    
+    td {
       text-align: right;
       &:first-child {
         width: 43.18%;
@@ -39,27 +38,6 @@
       &:nth-child(8) {
         width: 17%;
       }
-    }
-    li:last-child {
-      span:nth-child(2),
-      span:nth-child(8) {
-        border-bottom: 3px double black;
-      }
-    }
-  }
-  .totali {
-    width: 100%;
-  }
-  
-  
-  .totali div {
-    float: left;
-    text-align: right;
-    &:first-child {
-      width: 52.06%;
-    }
-    &:nth-child(2) {
-      width: 47.84%;
     }
   }
 }

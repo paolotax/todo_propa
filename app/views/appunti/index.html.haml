@@ -1,12 +1,17 @@
 - title "Appunti"
 
+
 .row
   .side-bar.span3
     = render :partial => 'shared/episode_views'
     = render :partial => 'shared/search_options'
-  .span9
-    %header
-      %h1 Appunti
+  
+  
+  .content-main.span6
+    %header.content-header
+      .header-inner
+        %h2 Appunti
+    
     - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
       = render :partial => 'shared/filters'
 

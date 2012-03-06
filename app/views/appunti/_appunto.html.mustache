@@ -1,98 +1,97 @@
+
 <div class="appunto {{stato}}" id="appunto_{{id}}">
-
-  <div class="row">
-
-    <div class="span1">
-
-      <div class="stato {{stato}}">{{stato}}</div>
-
-    </div>
-
-    <div class="span4">
-
-      <div class="intestazione">
-        <div class="destinatario"><a href="/appunti/{{id}}">{{destinatario}}</a></div>
-        <div class="cliente_nome" ><a href="/clienti/{{cliente_id}}">{{cliente_nome}}</a></div>
-  
-      </div>
-
-      <div class="note" >
-        <div>
-          {{{note}}}
-          <!-- <span class="on_the_spot_editing" data-auth="{{auth_token}}" data-cancel="Annulla" 
-                data-columns="40" data-edittype="textarea" data-ok="Ok" data-rows="3" 
-                data-tooltip="Click per modificare ..."
-                data-url="/appunti/update_attribute_on_the_spot?raw=true" id="appunto__note__{{id}}" 
-                data-loadurl="/appunti/{{id}}/get_note"
-                data-callback="testCallback"
-                title="...">{{{note}}}</span> -->
-        </div>
-
-        {{#con_righe}}
-        <div class="table-righe">      
-          <ul class="righe">
-            {{#righe}}
-            <li class="riga">
-              <span>{{titolo}}</span>
-              <span>{{quantita}}</span>
-              <span>x</span>
-              <span>{{prezzo_unitario}}</span>
-              <span>-</span>
-              <span>{{sconto}}%</span>
-              <span>=</span>
-              <span>{{importo}}</span> 
-            </li>
-            {{/righe}}
-          </ul>
-          <div class="totali">
-            <div>{{totale_copie}}</div>
-            <div>{{totale_importo}}</div>
-          </div>
-        </div>
-        {{/con_righe}}
-      </div>
-
-
-
-
-    </div>
-    <div class="span4">
+  <div class="content">
     
-      <ul class="nav-appunto pull-right">
+    <small class="time"><time class="timeago">3 min</time></small>
 
-          <li class="delete">
-            <a href="/appunti/{{id}}" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">
-              <i class="icon-trash"></i>
-              Elimina</a>
-          </li>
-          <li class="print" >
-            <a href="/appunti/{{id}}.pdf" title="stampa pdf" target="_blank">
-              <i class="icon-tag"></i>
-              Stampa</a>
-          </li>
-          <li class="edit"  >
-            <a href="/appunti/{{id}}/edit" title="modifica" data-remote="true">
-              <i class="icon-pencil"></i>
-              Modifica</a>
-          </li>
-          <li>.</li>
-          <li class="show"  >
-            <a href="/appunti/{{id}}" title="mostra dettagli">
-              <i></i>
-              Apri
-            </a>
-          </li>
+    <div class="actions">
+      <ul class="nav-appunto">
+        <li class="delete">
+          <a href="/appunti/{{id}}" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">
+            <i class="icon-trash"></i>
+            Elimina</a>
+        </li>
+        <li class="print" >
+          <a href="/appunti/{{id}}.pdf" title="stampa pdf" target="_blank">
+            <i class="icon-tag"></i>
+            Stampa</a>
+        </li>
+        <li class="edit"  >
+          <a href="/appunti/{{id}}/edit" title="modifica" data-remote="true">
+            <i class="icon-pencil"></i>
+            Modifica</a>
+        </li>
+        <li>.</li>
+        <li class="show"  >
+          <a href="/appunti/{{id}}" title="mostra dettagli">
+            <i></i>
+            Apri
+          </a>
+        </li>
       </ul>  
-      
-      
-      {{#con_recapiti}}        
-      <div class="recapiti">
-        <span class="telefono">{{telefono}}</span>
-        <address><a href="mailto:{{email}}" class="email">{{email}}</a></address>
-      </div>
-      {{/con_recapiti}}
-    
     </div>
+
+    <div class="stato {{stato}}">{{stato}}</div>
+
+    <a href="/clienti/{{cliente_id}}">
+      <strong class="full_name" >{{cliente_nome}}</strong>
+    </a>      
+
+    <span class="destinatario">
+      <i>@</i>
+      {{destinatario}}
+    </span>
+
+    <p>{{{note}}}</p>
+    <span class="label label-info importo" data-value="{{totale_importo}}">${{totale_importo}}</span>
+
+
+    <div class="more">      
+      <div class="table-righe">
+        {{#con_righe}}      
+        <table class="righe table table-striped table-condensed">
+          {{#righe}}
+          <tr class="riga">
+              <td>{{titolo}}</td>
+              <td>{{quantita}}</td>
+              <td>x</td>
+              <td>{{prezzo_unitario}}</td>
+              <td>-</td>
+              <td>{{sconto}}%</td>
+              <td>=</td>
+              <td>{{importo}}</td> 
+          </tr>
+          {{/righe}}
+          <tr class="riga">
+              <td></td>
+              <td><span class="label label-info">{{totale_copie}}</span></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><span class="label label-info">${{totale_importo}}</span></td> 
+          </tr>
+        </table>
+        {{/con_righe}}      
+      </div>
+    
+    </div>  
+          
+    
+    
   </div>
+  
+
+
+
+      
+        <!-- {{#con_recapiti}}        
+        <div class="recapiti">
+          <span class="telefono">{{telefono}}</span>
+          <address><a href="mailto:{{email}}" class="email">{{email}}</a></address>
+        </div>
+        {{/con_recapiti}} -->
+
 
 </div>

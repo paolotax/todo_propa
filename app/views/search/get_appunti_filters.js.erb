@@ -1,16 +1,13 @@
-
-
-$(".side-bar").html(("<%= escape_javascript(render :partial => 'shared/episode_views')  %><%= escape_javascript(render partial: "shared/search_options") %>"));
+$(".side-bar").html("<%= escape_javascript(render :partial => 'shared/episode_views')  %><%= escape_javascript(render partial: 'shared/search_options') %>");
 
 if ($('.filters').length) {
-  $('.filters').replaceWith("<%= escape_javascript(render partial: "shared/filters") %>");
+  $('.filters').replaceWith("<%= escape_javascript(render partial: 'shared/filters') %>");
 } else {
-  $("<%= escape_javascript(render partial: "shared/filters") %>").insertAfter($('.content-list header'));
+  $("<%= escape_javascript(render partial: 'shared/filters') %>").insertAfter($('.span9 header'));
 }
-
-
 
 window.appunti_pager.reset();
 
 $('#appunti').data('json-url', "<%= url_for params.merge(controller: 'appunti', action: 'index', format: 'json') %>");
+
 

@@ -17,6 +17,7 @@
 //= require on_the_spot
 //= require bootstrap
 //= require bootstrap-transition
+
 //= require_tree ./application
 
 

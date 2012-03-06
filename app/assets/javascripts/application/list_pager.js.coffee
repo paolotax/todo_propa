@@ -17,6 +17,9 @@ class ListPager
       
     $(window).bind('scroll', @check) if objs.length > 0
 
+  reset: ->
+    @page = 1
+    $(window).bind('scroll', @check)
 
 jQuery ->
 
