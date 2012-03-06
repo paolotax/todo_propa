@@ -1,9 +1,5 @@
 = simple_form_for @appunto do |f|
   
-  .control-group
-    %label.control-label{ for: :cliente_id } Cliente: 
-    .controls
-      = f.collection_select :cliente_id, current_user.clienti.order(:titolo), :id, :titolo, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..."} 
 
   %ul.nav.nav-pills.tab
     %li
@@ -12,6 +8,12 @@
       %a{ href: "#dettaglio", "data-toggle" => "pill"} Inserisci dettaglio...
     %li
       %a{ href: "#completa",  "data-toggle" => "pill"} Completa ordine...
+
+  .control-group
+    %label.control-label{ for: :cliente_id } Cliente: 
+    .controls
+      = f.collection_select :cliente_id, current_user.clienti.order(:titolo), :id, :titolo, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..."} 
+
 
   .tab-content
 

@@ -1,13 +1,14 @@
 - title "Clienti"
 
-.container.page
-  .side
+.row
+  .side-bar.span3
     = render :partial => 'shared/episode_views'
     = render :partial => 'shared/search_options'
-  .content-list
+  .span9
     .links
       = link_to "Nuovo", new_cliente_path
-    %h1 Clienti
+    %header
+      %h1 Clienti
     
     - if params[:tipo].present? || params[:provincia].present? || params[:citta].present? || params[:search].present?
       = render :partial => 'shared/filters'

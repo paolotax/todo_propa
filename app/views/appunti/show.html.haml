@@ -1,20 +1,25 @@
 - title @appunto.to_s
 
-.content-view
+
+.span7
   = render 'shared/title_bar', title: @appunto.to_s
   #appunto-show
-    .field
+    .field.row
       .label Destinatario:
       .destinatario= on_the_spot_edit @appunto, :destinatario
-    .field
+    .field.row
       .label Cliente:
       .cliente_nome= @appunto.cliente_nome
-    .field
+    .field.row
       .label Note:
       .note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :display_text => markdown(@appunto.note), :loadurl => get_note_appunto_path(@appunto), :callback => "testCallback"
-    .field
+    .field.row
       .label Telefono:
       .telefono= on_the_spot_edit @appunto, :telefono
-    .field
+    .field.row
       .label Email:
       .telefono= on_the_spot_edit @appunto, :email
+
+
+- @appunto = Appunto.new(cliente: @appunto.cliente)
+= render "modal"

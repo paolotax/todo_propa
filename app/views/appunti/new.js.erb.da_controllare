@@ -1,4 +1,0 @@
-$('form#new_appunto').replaceWith("<%= escape_javascript(render 'form_appunto_small') %>");
-// $('#appunto-small').fadeIn();
-activateTabs();
-$('.nascondi').fadeIn();

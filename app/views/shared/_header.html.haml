@@ -19,9 +19,11 @@
         - if user_signed_in?
           .pull-right
             %ul.nav
-              %li
-                = render partial: "shared/search"
-              %li.divider-vertical
+              
+              - if ['clienti', 'appunti'].include?(params[:controller])
+                %li
+                  = render partial: "shared/search"
+                %li.divider-vertical
               %li.dropdown
                 %a{ class: "dropdown-toggle", href: "#", "data-toggle" => "dropdown" }
                   = image_tag gravatar_url(current_user.email, :size => 80, :default => "mm"), :class => "avatar size19"
