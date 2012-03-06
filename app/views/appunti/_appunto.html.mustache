@@ -57,6 +57,33 @@
 
     </div>
     <div class="span4">
+    
+      <ul class="nav-appunto pull-right">
+
+          <li class="delete">
+            <a href="/appunti/{{id}}" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">
+              <i class="icon-trash"></i>
+              Elimina</a>
+          </li>
+          <li class="print" >
+            <a href="/appunti/{{id}}.pdf" title="stampa pdf" target="_blank">
+              <i class="icon-tag"></i>
+              Stampa</a>
+          </li>
+          <li class="edit"  >
+            <a href="/appunti/{{id}}/edit" title="modifica" data-remote="true">
+              <i class="icon-pencil"></i>
+              Modifica</a>
+          </li>
+          <li>.</li>
+          <li class="show"  >
+            <a href="/appunti/{{id}}" title="mostra dettagli">
+              <i></i>
+              Apri
+            </a>
+          </li>
+      </ul>  
+      
       
       {{#con_recapiti}}        
       <div class="recapiti">
@@ -64,18 +91,8 @@
         <address><a href="mailto:{{email}}" class="email">{{email}}</a></address>
       </div>
       {{/con_recapiti}}
-      
     
     </div>
   </div>
 
-  <!-- <div class="info">
-    {{id}}
-    <div class="azioni">
-      <div class="show"  ><a href="/appunti/{{id}}" title="mostra dettagli">Mostra</a></div>
-      <div class="print" ><a href="/appunti/{{id}}.pdf" title="stampa pdf" target="_blank">Stampa</a></div>
-      <div class="edit"  ><a href="/appunti/{{id}}/edit" title="modifica" data-remote="true">Modifica</a></div>
-      <div class="delete"><a href="/appunti/{{id}}" title="elimina" data-confirm="Sei sicuro?" data-method="delete" data-remote="true">Elimina</a></div>
-    </div>
-  </div> -->
 </div>

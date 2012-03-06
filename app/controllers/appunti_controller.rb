@@ -31,7 +31,7 @@ class AppuntiController < ApplicationController
         send_data pdf.render, filename: "appunto_#{@appunto.id}.pdf",
                               type: "application/pdf",
                               disposition: "inline",
-
+      
       end
     end
     

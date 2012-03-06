@@ -25,15 +25,15 @@ class AppuntoPdf < Prawn::Document
       
       @righe = a.righe
       intestazione
-      destinatario(a)
-      pieghi_di_libri?(a)
-      
-      note(a)
-      unless @righe.blank?
-        appunto_number(a)
-        line_items(a) 
-        totali(a)
-      end
+      # destinatario(a)
+      # pieghi_di_libri?(a)
+      # 
+      # note(a)
+      # unless @righe.blank?
+      #   appunto_number(a)
+      #   line_items(a) 
+      #   totali(a)
+      # end
       
       start_new_page unless a == @appunti.last
     end
