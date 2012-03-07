@@ -1,44 +1,44 @@
 - title @cliente.nome
 
-- @appunto = Appunto.new(cliente: @cliente)
-= render "appunti/form"
-
 .content
-  %section
-    %header
-      = render 'shared/title_bar', title: @cliente.to_s
-    #message
-    %article
-      .cliente
-        .field
-          %span.label Nome:
-          %span.nome= @cliente.titolo
-        .field
-          %span.label Città:
-          %span.note= @cliente.comune
-        .field
-          %span.label Provincia:
-          %span.cliente_nome= @cliente.provincia
-        .field
-          %span.label Tipo cliente:
-          %span.cliente_nome= @cliente.cliente_tipo
-        - unless @cliente.indirizzo.new_record?
+  .row
+    %section.span9
+      %header
+        = render 'shared/title_bar', title: @cliente.to_s
+      #message
+      %article.row
+        .cliente.span4
+          .field
+            %span.label Nome:
+            %span.nome= @cliente.titolo
+          .field
+            %span.label Città:
+            %span.note= @cliente.comune
+          .field
+            %span.label Provincia:
+            %span.cliente_nome= @cliente.provincia
+          .field
+            %span.label Tipo cliente:
+            %span.cliente_nome= @cliente.cliente_tipo
           .field
             %span.label Indirizzo:
-            / %span.full_address= @cliente.indirizzo.full_street_address
+            %span.full_address= @cliente.full_street_address
       
-      - unless @cliente.latitude.nil?
-        #gmaps_page 
-          - @mappa = @cliente.to_gmaps4rails
-          = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-    %footer.pjax
-      = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first)
-      = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
+        - unless @cliente.latitude.nil?
+          #gmaps_page.span5 
+            - @mappa = @cliente.to_gmaps4rails
+            = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
 
-  - unless @cliente.indirizzo.new_record?
-    .side
-      / = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente.indirizzo}
+
+      %footer
+        = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first)
+        = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
+
+    - unless @cliente.new_record?
+      .side-bar.span3
+        = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente}
    
       
-
+- @appunto = Appunto.new(cliente: @cliente)
+= render "appunti/modal"
 

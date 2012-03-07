@@ -3,7 +3,7 @@ $(".side-bar").html("<%= escape_javascript(render :partial => 'shared/episode_vi
 if ($('.filters').length) {
   $('.filters').replaceWith("<%= escape_javascript(render partial: 'shared/filters') %>");
 } else {
-  $("<%= escape_javascript(render partial: 'shared/filters') %>").insertAfter($('.span9 header'));
+  $("<%= escape_javascript(render partial: 'shared/filters') %>").insertAfter($('.content-header'));
 }
 
 window.appunti_pager.reset();

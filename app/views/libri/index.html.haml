@@ -28,7 +28,10 @@
             .pull-right= on_the_spot_edit libro, :prezzo_consigliato, selected: true
 
 
-
+- @libro = Libro.new
+.modal.fade
+  = render "libri/modal"
+  
 / .row
 /   .side-bar.span3
 /     = render :partial => 'shared/episode_views'
@@ -47,9 +50,7 @@
 /     /   = render "appunto", :mustache => appunto_for_mustache(appunto)
 
 
-- @libro = Libro.new
-.modal.fade
-  = render "appunti/modal"
+
 
 
 / %script{ type: "text/html", id: "appunto_template" }

@@ -1,6 +1,6 @@
-.search_options.search-nearbys.well{ style: "padding: 8px; 0"}
+.search-nearbys.well{ style: "padding: 8px; 0"}
   %ul.nav.nav-list.vertical
-    %li.nav-header= Nelle vicinanze...
+    %li.nav-header Nelle vicinanze...
     - @nearbys = @cliente.nearbys().limit(10)
     - for c in @nearbys
       %li= link_to c.titolo, cliente_path(c)

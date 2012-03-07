@@ -16,7 +16,7 @@
     %span.filter
       = params[:provincia] 
       = link_to "x", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:provincia => nil, :page => nil)
-  - if params[:citta].present?
+  - if params[:comune].present?
     %span.filter
-      = params[:citta] 
-      = link_to "x", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:citta => nil, :page => nil)
+      = params[:comune] 
+      = link_to "x", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:comune => nil, :page => nil)

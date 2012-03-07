@@ -1,9 +1,8 @@
-
-.modal.fade{ style: "max-height: 700px;" }
+.modal.fade{ }
   .modal-header
     %a.close{ "data-dismiss" => 'modal'}
       x
-    %h3 Nuovo appunto
+    %h3= "Nuovo appunto"
   .modal-body
-    = render 'form'
+    = render "appunti/form"
   

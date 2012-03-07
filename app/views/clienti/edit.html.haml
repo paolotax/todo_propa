@@ -1,7 +1,13 @@
 - title "Modifica cliente"
 
-.content-view
-  = render 'shared/title_bar', title: "Modifica cliente"
-  #feedback
-    = render 'form'
-  
+.container
+  .row
+    .span7.well
+      / = render 'shared/title_bar', title: "Modifica cliente"
+      %h2 Modifica Cliente
+      %hr
+      = render 'form'
+    .span3
+      .well
+        = render 'shared/non_solo_cap'
+
