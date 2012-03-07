@@ -1,0 +1,7 @@
+.modal.fade{ style: "max-height: 700px;" }
+  .modal-header
+    %a.close{ "data-dismiss" => 'modal'}
+      x
+    %h3= "Nuovo libro"
+  .modal-body
+    = render "libri/form"
