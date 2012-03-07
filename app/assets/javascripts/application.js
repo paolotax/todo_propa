@@ -17,6 +17,8 @@
 //= require on_the_spot
 //= require bootstrap
 //= require bootstrap-transition
+//= require hamlcoffee
+//= require_tree ../templates
 
 //= require_tree ./application
 

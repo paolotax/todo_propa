@@ -3,7 +3,10 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.0'
 
 group :assets do
-  gem 'stylus'
+
+  gem 'haml_coffee_assets'
+  gem 'execjs'
+  
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
@@ -38,6 +41,8 @@ gem 'mobylette'
 gem 'jquery_mobile_rails'
 
 gem 'simple_form'
+
+
 
 gem 'pg'
 

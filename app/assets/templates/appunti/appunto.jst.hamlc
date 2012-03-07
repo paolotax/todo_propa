@@ -1,0 +1,71 @@
+%div{ class: "appunto #{@stato}", id: "appunto_#{@id}"}
+  .content
+    %small.time
+      %time.timeago 3 min
+    .actions
+      %ul.nav-appunto
+        %li.delete
+          %a{ href: "appunti/#{@id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+            %i.icon-trash
+            Elimina
+        %li.print
+          %a{ href: "appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
+            %i.icon-tag
+            Stampa
+        %li.edit
+          %a{ href: "appunti/#{@id}/edit", title: 'modifica appunto'}
+            %i.icon-pencil
+            Modifica
+        %li.baule
+          %a{ href: "appunti/#{@id}/edit", title: 'metti nel baule!', "data-remote" => true}
+            %i.icon-shopping-cart
+            Nel baule
+        %li
+          = " | "
+        %li.show
+          %a{ title: 'mostra dettagli'}
+            Apri
+
+    %div{ class: "stato #{@stato}"}
+      = @stato
+    
+    %a{ href: "/clienti/#{@cliente_id}" }
+      %strong.full_name
+        = @cliente_nome
+
+    - if @destinatario?
+      %span.destinatario
+        = @destinatario
+    
+    %p
+      != @note
+      
+    %span.label.label-info.importo{ "data-value" => "#{@totale_importo}" }
+      = @totale_importo
+      
+    .more
+      - if @righe?
+        .table-righe
+          %table.righe.table.table-striped.table-condensed
+            - for r in @righe
+              %tr.riga
+                %td= r.titolo
+                %td= r.quantita
+                %td x
+                %td= r.prezzo_unitario
+                %td
+                %td= "- #{r.sconto}%" if r.sconto isnt "0.0"
+                %td =
+                %td= r.importo 
+            %tr.riga
+              %td=
+              %td=
+                %span.label.label-info= @totale_copie
+              %td=
+              %td
+              %td
+              %td
+              %td
+              %td
+                %span.label.label-info
+                  = "$ #{@totale_importo}" 

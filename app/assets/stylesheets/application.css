@@ -8,5 +8,5 @@
  *= require jquery.validity	
  *= require_tree ./application
  *= require bootstrap_and_overrides 
- 
+ *= require font-awesome
 */

@@ -21,20 +21,26 @@ jQuery ->
     
     params = $(@).attr('href').split('?')[1] ||= ""
     console.log params
-    
-    $('#appunti').empty()
+
+    $.get "/get_appunti_filters.js", params, (data) ->
+      console.log "data"
+      $('#appunti').empty()
     
     $.getJSON $(@).attr('href'), (data) ->
       pendingAppunti = $.parseJSON localStorage["pendingAppunti"]
       appunti = pendingAppunti.concat(data)
+
       $("#appunti").empty()
       for obj in appunti
         if obj.data?
-          $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj.appunto)
+          # $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj.appunto)
+          item = JST['appunti/appunto'](obj)
+          $(item).hide().appendTo("#appunti").fadeIn()   
         else
-          $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)     
+          # item = Mustache.to_html($("#appunto_template").html(), obj) 
+          item = JST['appunti/appunto'](obj)
+          $(item).hide().appendTo("#appunti").fadeIn()   
       
-      $.get "/get_appunti_filters.js", params, (data) ->
-        console.log "data"
+
 
 
