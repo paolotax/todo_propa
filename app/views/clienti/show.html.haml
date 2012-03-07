@@ -2,7 +2,7 @@
 
 .content
   .row
-    %section.span9
+    %section.span7
       %header
         = render 'shared/title_bar', title: @cliente.to_s
       #message
@@ -24,10 +24,7 @@
             %span.label Indirizzo:
             %span.full_address= @cliente.full_street_address
       
-        - unless @cliente.latitude.nil?
-          #gmaps_page.span5 
-            - @mappa = @cliente.to_gmaps4rails
-            = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+
 
 
       %footer
@@ -35,7 +32,12 @@
         = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
 
     - unless @cliente.new_record?
-      .side-bar.span3
+      .side-bar.span5
+        - unless @cliente.latitude.nil?
+          #gmaps_page.well 
+            - @mappa = @cliente.to_gmaps4rails
+            = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+      
         = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente}
    
       
