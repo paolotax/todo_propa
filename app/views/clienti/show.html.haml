@@ -2,12 +2,13 @@
 
 .content
   .row
-    %section.span7
-      %header
-        = render 'shared/title_bar', title: @cliente.to_s
-      #message
-      %article.row
-        .cliente.span4
+    .span7
+    
+      %section.well
+        %header
+          = render 'shared/title_bar', title: @cliente.to_s
+        #message
+        %article.cliente
           .field
             %span.label Nome:
             %span.nome= @cliente.titolo
@@ -23,13 +24,9 @@
           .field
             %span.label Indirizzo:
             %span.full_address= @cliente.full_street_address
-      
-
-
-
-      %footer
-        = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first)
-        = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
+        %footer
+          = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first)
+          = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
 
     - unless @cliente.new_record?
       .side-bar.span5
