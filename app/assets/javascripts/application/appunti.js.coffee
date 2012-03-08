@@ -4,7 +4,7 @@
 
 
 jQuery ->
-  
+
   $('.show a').live 'click', (e) ->
     e.preventDefault()
     appunto = $(@).parent().parent().parent().parent().parent()

@@ -1,4 +1,4 @@
-attributes :id, :destinatario, :note, :telefono, :email, :stato, :totale_copie, :totale_importo
+attributes :id, :destinatario, :note, :telefono, :email, :stato, :totale_copie, :totale_importo, :updated_at, :created_at
 
 code do |u|
   { 

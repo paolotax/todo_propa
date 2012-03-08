@@ -17,7 +17,7 @@
 
     #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
     / - @appunti.each do |appunto|
-    /   = render "appunto", :mustache => appunto_for_mustache(appunto)
+    /   = render "appunto"
 
   .side-right.span3
     .well
@@ -26,10 +26,4 @@
 
 - @appunto = Appunto.new
 = render "modal"
-
-
-
-%script{ type: "text/html", id: "appunto_template" }
-  = render "appunto"
-
 

@@ -24,7 +24,6 @@ jQuery ->
 
     $.get "/get_appunti_filters.js", params, (data) ->
       console.log "data"
-      $('#appunti').empty()
     
     $.getJSON $(@).attr('href'), (data) ->
       pendingAppunti = $.parseJSON localStorage["pendingAppunti"]
@@ -39,8 +38,9 @@ jQuery ->
         else
           # item = Mustache.to_html($("#appunto_template").html(), obj) 
           item = JST['appunti/appunto'](obj)
-          $(item).hide().appendTo("#appunti").fadeIn()   
-      
+          $(item).hide().appendTo("#appunti").fadeIn('slow')   
+     
+      $('time.timeago').timeago();
 
 
 

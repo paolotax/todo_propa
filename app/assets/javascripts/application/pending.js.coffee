@@ -6,6 +6,7 @@ jQuery ->
     if !localStorage["pendingAppunti"]
       localStorage["pendingAppunti"] = JSON.stringify []
 
+
     if $('#appunti').length
       $.retrieveJSON "/appunti.json" + window.location.search, (data) ->
         pendingAppunti = $.parseJSON localStorage["pendingAppunti"]
@@ -13,10 +14,10 @@ jQuery ->
         $("#appunti").empty()
         for obj in appunti
           if obj.data?
-            $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj.appunto)
+            $("#appunti").append JST['appunti/appunto'](obj.appunto)
           else
-            $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj)       
-
+            $("#appunti").append JST['appunti/appunto'](obj)       
+        $('time.timeago').timeago();
 
     if !localStorage["pendingClienti"]
       localStorage["pendingClienti"] = JSON.stringify []
@@ -68,7 +69,8 @@ jQuery ->
             pendingItems.shift()
             localStorage["pendingItems"] = JSON.stringify(pendingItems)
             console.log data
-            $("#appunto_#{item.appunto.id}").replaceWith( Mustache.to_html($("#appunto_template").html(), data))            
+            $("#appunto_#{item.appunto.id}").replaceWith JST['appunti/appunto'](data)             
+            $('time.timeago').timeago();
             setTimeout(sendPending, 100)
 
     sendPending()

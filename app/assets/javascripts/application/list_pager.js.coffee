@@ -13,8 +13,9 @@ class ListPager
   
   render: (objs) =>
     for obj in objs
-      @list.append Mustache.to_html(@template.html(), obj)
-      
+      @list.append @template(obj)
+    
+    $('time.timeago').timeago();  
     $(window).bind('scroll', @check) if objs.length > 0
 
   reset: ->
@@ -27,5 +28,5 @@ jQuery ->
     window.clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente')
 
   if $('#appunti').length
-    window.appunti_pager = new ListPager(1, $("#appunti"), $('#appunto_template'), 'appunto')
+    window.appunti_pager = new ListPager(1, $("#appunti"), JST['appunti/appunto'], 'appunto')
       

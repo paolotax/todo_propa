@@ -18,8 +18,8 @@
 //= require bootstrap
 //= require bootstrap-transition
 //= require hamlcoffee
+//= require jquery.timeago
 //= require_tree ../templates
-
 //= require_tree ./application
 
 

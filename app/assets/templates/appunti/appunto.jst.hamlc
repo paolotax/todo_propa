@@ -1,7 +1,7 @@
 %div{ class: "appunto #{@stato}", id: "appunto_#{@id}"}
   .content
     %small.time
-      %time.timeago 3 min
+      %time.timeago{ datetime: "#{@updated_at || @created_at}" }
     .actions
       %ul.nav-appunto
         %li.delete
@@ -35,13 +35,13 @@
 
     - if @destinatario?
       %span.destinatario
-        = @destinatario
+        = "@#{@destinatario}"
     
     %p
       != @note
       
     %span.label.label-info.importo{ "data-value" => "#{@totale_importo}" }
-      = @totale_importo
+      = "€ #{@totale_importo}"
       
     .more
       - if @righe?
@@ -68,4 +68,4 @@
               %td
               %td
                 %span.label.label-info
-                  = "$ #{@totale_importo}" 
+                  = "€ #{@totale_importo}" 
