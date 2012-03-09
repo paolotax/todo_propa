@@ -1,0 +1,2 @@
+class VisitaAppuntiController < ApplicationController
+end

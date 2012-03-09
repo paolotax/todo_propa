@@ -17,7 +17,7 @@
             %i.icon-pencil
             Modifica
         %li.baule
-          %a{ href: "appunti/#{@id}/edit", title: 'metti nel baule!', "data-remote" => true}
+          %a{ title: 'metti nel baule!'}
             %i.icon-shopping-cart
             Nel baule
         %li

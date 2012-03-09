@@ -17,7 +17,18 @@ jQuery ->
             $("#appunti").append JST['appunti/appunto'](obj.appunto)
           else
             $("#appunti").append JST['appunti/appunto'](obj)       
+        
         $('time.timeago').timeago();
+        
+        $('.actions .baule a').bind 'click', (e) ->
+          e.preventDefault()
+          console.log 'baule'
+          container = $(@).parent().parent().parent().parent().parent()
+          appunto = 
+              id: container.attr('id')
+              cliente_titolo: $('.full_name', container).text()
+          $('.side-right .well').append JST['appunti/baule'](appunto)
+
 
     if !localStorage["pendingClienti"]
       localStorage["pendingClienti"] = JSON.stringify []
@@ -30,9 +41,9 @@ jQuery ->
         $("#clienti").empty()
         for obj in clienti
           if obj.data?
-            $("#clienti").append Mustache.to_html($("#cliente_template").html(), obj.cliente)
+            $("#clienti").append JST['clienti/cliente'](obj.cliente)
           else
-            $("#clienti").append Mustache.to_html($("#cliente_template").html(), obj)
+            $("#clienti").append JST['clienti/cliente'](obj)
 
 
     $("#new_appunto_submit").live 'click', (e) ->

@@ -147,3 +147,37 @@ class Cliente < ActiveRecord::Base
 end
 
 
+# == Schema Information
+#
+# Table name: clienti
+#
+#  id              :integer         not null, primary key
+#  titolo          :string(255)
+#  cliente_tipo    :string(255)
+#  nome            :string(255)
+#  cognome         :string(255)
+#  ragione_sociale :string(255)
+#  abbr            :string(255)
+#  codice_fiscale  :string(255)
+#  partita_iva     :string(255)
+#  indirizzo       :string(255)
+#  cap             :string(255)
+#  frazione        :string(255)
+#  comune          :string(255)
+#  provincia       :string(255)
+#  telefono        :string(255)
+#  telefono_2      :string(255)
+#  fax             :string(255)
+#  cellulare       :string(255)
+#  email           :string(255)
+#  url             :string(255)
+#  gmaps           :boolean
+#  longitude       :float
+#  latitude        :float
+#  user_id         :integer
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#  ancestry        :string(255)
+#  slug            :string(255)
+#
+

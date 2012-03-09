@@ -10,7 +10,6 @@
 
 //= require jquery_ujs
 //= require chosen.jquery
-//= require mustache
 //= require showdown
 //= require jquery.validity
 //= require gmaps4rails/googlemaps.js

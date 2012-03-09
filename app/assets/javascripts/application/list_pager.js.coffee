@@ -25,7 +25,7 @@ class ListPager
 jQuery ->
 
   if $('#clienti').length
-    window.clienti_pager = new ListPager(1, $("#clienti"), $('#cliente_template'), 'cliente')
+    window.clienti_pager = new ListPager(1, $("#clienti"), JST['clienti/cliente'], 'cliente')
 
   if $('#appunti').length
     window.appunti_pager = new ListPager(1, $("#appunti"), JST['appunti/appunto'], 'appunto')

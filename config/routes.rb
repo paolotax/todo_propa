@@ -1,5 +1,7 @@
 TodoPropa::Application.routes.draw do
 
+  resources :visita_appunti
+
   match '/:action.appcache', :controller => 'appcache', :format => :appcache
   match '/get_appunti_filters', :controller => :search, :action  => :get_appunti_filters, :format => :js
   

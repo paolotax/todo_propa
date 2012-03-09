@@ -22,10 +22,11 @@ two: {}
 #  coefficente        :decimal(2, 1)
 #  cm                 :string(255)
 #  ean                :string(255)
-#  type               :string(255)
+#  old_id             :string(255)
+#  settore            :string(255)
 #  materia_id         :integer
-#  created_at         :datetime
-#  updated_at         :datetime
 #  image              :string(255)
+#  created_at         :datetime        not null
+#  updated_at         :datetime        not null
 #
 

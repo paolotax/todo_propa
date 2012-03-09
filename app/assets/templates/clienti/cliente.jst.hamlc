@@ -1,0 +1,9 @@
+%div{ class: "cliente ", id: "cliente_#{@id}" }
+  %address
+    %strong
+      %a{ href: "/clienti/#{@id}"}
+        = @titolo
+    %br
+    = @indirizzo
+    %br
+    = "#{@cap} #{@frazione} #{@comune} #{@provincia}"
