@@ -5,6 +5,8 @@ class Visita < ActiveRecord::Base
                        :class_name => "Appunto", 
                        :source => :appunti, 
                        :conditions => ['appunti.stato <> ?', 'X']
+  
+  has_many :visita_appunti
 
 end
 

@@ -5,6 +5,8 @@ class Appunto < ActiveRecord::Base
   
   has_many :righe, :dependent => :destroy
   
+  has_many :visite, :through => :visita_appunti
+  
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => true
   
   #  validates :user_id,  :presence => true

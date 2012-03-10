@@ -15,7 +15,6 @@ group :assets do
 end
 
 
-gem "mustache"
 gem 'haml-rails'
 gem 'jquery-rails'
 

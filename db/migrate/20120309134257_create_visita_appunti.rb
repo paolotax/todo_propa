@@ -6,11 +6,11 @@ class CreateVisitaAppunti < ActiveRecord::Migration
 
       t.timestamps
     end
-  end
-  
-  def up 
+    
+    add_index :visita_appunti, [:visita_id, :appunto_id], :uniq => true
+    
     drop_table :visita_righe
   end
-  
-  
+
+
 end

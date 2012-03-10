@@ -107,7 +107,6 @@ GEM
     mobylette (1.6.0)
       actionpack (>= 3.0)
     multi_json (1.0.4)
-    mustache (0.99.4)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.3.0)
@@ -206,7 +205,6 @@ DEPENDENCIES
   jquery-rails
   jquery_mobile_rails
   mobylette
-  mustache
   on_the_spot
   pg
   prawn
