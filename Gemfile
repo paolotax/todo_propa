@@ -18,10 +18,6 @@ end
 gem 'haml-rails'
 gem 'jquery-rails'
 
-# gem 'spine-rails'
-# gem 'eco'
-
-gem 'rack-pjax'
 gem 'devise'
 gem 'on_the_spot'
 gem 'redcarpet', '1.17.2'
