@@ -34,8 +34,6 @@
     = f.input   :indirizzo
     = f.input   :cap
 
-  = f.error :base
-
   %fieldset
     %legend Recapiti
     = f.input :telefono
@@ -56,7 +54,8 @@
     = f.input :latitude
     = f.input :longitude
     
-      
+  = f.error :base
+        
   .control-group
     .controls
       = f.button :submit

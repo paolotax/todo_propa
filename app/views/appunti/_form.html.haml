@@ -1,6 +1,8 @@
 = simple_nested_form_for @appunto do |f|
   
 
+  = f.error_notification
+
   %ul.nav.nav-tabs.tab
     %li
       %a{ href: "#info",      "data-toggle" => "tab"} Appunto...
@@ -9,10 +11,9 @@
     %li
       %a{ href: "#completa",  "data-toggle" => "tab"} Completa ordine...
 
-  .control-group
-    %label.control-label{ for: :cliente_id } Cliente: 
-    .controls
-      = f.collection_select :cliente_id, current_user.clienti.order(:titolo), :id, :titolo, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..."} 
+  
+  = f.input :cliente_id, :collection => current_user.clienti.order(:titolo), :label_method => :titolo, :value_method => :id, :input_html => { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
+    
   %hr
 
   .tab-content
@@ -58,7 +59,9 @@
         
     #completa.tab-pane.fade
       = f.input :stato
-  
+
+  = f.error :base
+
   .control-group
     .controls
       %button{:class => "btn btn-primary", :type => "submit", id: "new_appunto_submit"} Salva

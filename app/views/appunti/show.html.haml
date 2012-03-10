@@ -1,22 +1,22 @@
 - title @appunto.to_s
 
-
-.span7
-  = render 'shared/title_bar', title: @appunto.to_s
-  #appunto-show
-    .field.row
-      .label Destinatario:
-      .destinatario= on_the_spot_edit @appunto, :destinatario
-    .field.row
-      .label Cliente:
-      .cliente_nome= @appunto.cliente_nome
-    .field.row
-      .label Note:
-      .note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :display_text => markdown(@appunto.note), :loadurl => get_note_appunto_path(@appunto), :callback => "testCallback"
-    .field.row
-      .label Telefono:
-      .telefono= on_the_spot_edit @appunto, :telefono
-    .field.row
-      .label Email:
-      .telefono= on_the_spot_edit @appunto, :email
+.row
+  .span7
+    = render 'shared/title_bar', title: @appunto.to_s
+    .well
+      .field
+        .label Destinatario:
+        .destinatario= on_the_spot_edit @appunto, :destinatario
+      .field
+        .label Cliente:
+        .cliente_nome= @appunto.cliente_nome
+      .field
+        .label Note:
+        .note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :display_text => markdown(@appunto.note), :loadurl => get_note_appunto_path(@appunto), :callback => "testCallback"
+      .field
+        .label Telefono:
+        .telefono= on_the_spot_edit @appunto, :telefono
+      .field
+        .label Email:
+        .telefono= on_the_spot_edit @appunto, :email
 

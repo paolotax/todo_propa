@@ -10,7 +10,8 @@ class Appunto < ActiveRecord::Base
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => true
   
   #  validates :user_id,  :presence => true
-  validates :cliente_nome,  :presence => true
+  validates :cliente_id,    :presence => true
+
 
   scope :recente,  order("appunti.id desc")
   scope :in_corso,   includes(:cliente).where("appunti.stato <> 'X'")
