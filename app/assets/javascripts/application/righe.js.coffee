@@ -47,13 +47,14 @@ appendRiga = (riga) ->
   new_id   = new Date().getTime()
   if $("#righe").length == 0
     $('#create-riga').after("<div id='righe'></div>")
-  new_riga = $("<div id='riga_#{new_id}' class='riga form-inline'></div>")
-  new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_libro_id' name='appunto[righe_attributes][new_#{new_id}][libro_id]' value='#{riga.libro_id}' type='hidden'/>")
-  new_riga.append("<div class='titolo'>#{riga.titolo}</div>")
-  new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_quantita' name='appunto[righe_attributes][new_#{new_id}][quantita]' value='#{riga.quantita}' class='input-mini riga_quantita'/>")
-  new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_prezzo'   name='appunto[righe_attributes][new_#{new_id}][prezzo]'   value='#{riga.prezzo}'   class='input-mini  riga_prezzo'/>")
-  new_riga.append("<input id='appunto_righe_attributes_new_#{new_id}_sconto'   name='appunto[righe_attributes][new_#{new_id}][sconto]'   value='#{riga.sconto}'   class='input-mini  riga_sconto'/>")
-  new_riga.append("<a href='javascript:void(0)' class='btn btn-danger btn-mini'>-</a>")
+  # item =
+  #   id:       new_id
+  #   titolo:   riga.titolo
+  #   quantita: riga.quantita  
+  #   prezzo:   riga.prezzo
+  #   sconto:   riga.sconto
+  riga.id = new_id  
+  new_riga = JST['righe/riga'](riga)
   $("#righe").prepend(new_riga).fadeIn()
   new_riga.stop().effect("highlight", {}, 1000)
 

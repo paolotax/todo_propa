@@ -1,19 +1,19 @@
-= simple_form_for @appunto do |f|
+= simple_nested_form_for @appunto do |f|
   
 
-  %ul.nav.nav-pills.tab
+  %ul.nav.nav-tabs.tab
     %li
-      %a{ href: "#info",      "data-toggle" => "pill"} Appunto...
+      %a{ href: "#info",      "data-toggle" => "tab"} Appunto...
     %li
-      %a{ href: "#dettaglio", "data-toggle" => "pill"} Inserisci dettaglio...
+      %a{ href: "#dettaglio", "data-toggle" => "tab"} Inserisci dettaglio...
     %li
-      %a{ href: "#completa",  "data-toggle" => "pill"} Completa ordine...
+      %a{ href: "#completa",  "data-toggle" => "tab"} Completa ordine...
 
   .control-group
     %label.control-label{ for: :cliente_id } Cliente: 
     .controls
       = f.collection_select :cliente_id, current_user.clienti.order(:titolo), :id, :titolo, {:include_blank => true}, {:class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..."} 
-
+  %hr
 
   .tab-content
 
@@ -24,31 +24,38 @@
       = f.input :email
 
     #dettaglio.tab-pane.fade
+      
       .control-group
         %label.control-label Condizioni di pagamento:
         .controls
-          %label.checkbox
+          %label.radio
             = radio_button_tag 'prezzo', 'consigliato', true
             prezzo consigliato
-          %label.checkbox.form-inline
+          %label.radio.form-inline
             = radio_button_tag 'prezzo', 'con_sconto', false
             sconto
             = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43]), class: 'input-small'
       
       .control-group
         = render 'righe/form'
+        
         #righe
-          .empty
-            Nessuna riga in questo ordine...
-          = f.fields_for :righe do |riga|
-            = div_for riga.object, class: 'form-inline' do
-              = riga.hidden_field :id
-              = riga.hidden_field :libro_id
-              .titolo= riga.object.libro.titolo
-              = riga.text_field :quantita, class: 'input-mini riga_quantita'
-              = riga.text_field :prezzo,   class: 'input-mini riga_prezzo'
-              = riga.text_field :sconto,   class: 'input-mini riga_sconto'
-
+          - if f.object.righe.empty?
+            .empty
+              Nessuna riga in questo ordine...
+          - else
+            = f.simple_fields_for :righe do |riga|
+              = div_for riga.object, class: 'form-inline' do
+                = riga.hidden_field :id
+                = riga.hidden_field :libro_id
+                .titolo= riga.object.libro.titolo
+                .pull-right
+                  = riga.text_field :quantita, class: 'input-mini riga_quantita'
+                  = riga.text_field :prezzo,   class: 'input-mini riga_prezzo'
+                  = riga.text_field :sconto,   class: 'input-mini riga_sconto'
+                  = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"
+        
+        
     #completa.tab-pane.fade
       = f.input :stato
   

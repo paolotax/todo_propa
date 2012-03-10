@@ -42,7 +42,7 @@ class AppuntiController < ApplicationController
   end
 
   def new
-    @appunto = current_user.appunti.build
+    @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).build
   end
 
   def edit
