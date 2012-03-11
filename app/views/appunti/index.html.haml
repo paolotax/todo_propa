@@ -18,6 +18,8 @@
     #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
     / - @appunti.each do |appunto|
     /   = render "appunto"
+    .stream-loader
+      
 
   .side-right.span3
     .well

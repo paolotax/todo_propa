@@ -19,4 +19,30 @@
       .field
         .label Email:
         .telefono= on_the_spot_edit @appunto, :email
+    
+        - unless @appunto.righe.empty?
+          .table-righe
+            %table.righe.table.table-striped.table-condensed
+              - for r in @appunto.righe do
+                %tr.riga
+                  %td= r.titolo
+                  %td= r.quantita
+                  %td x
+                  %td= r.prezzo_unitario
+                  %td
+                  %td= "- #{r.sconto}%" if r.sconto != 0.0
+                  %td =
+                  %td= r.importo 
+              %tr.riga
+                %td
+                %td
+                  %span.label.label-info= @appunto.totale_copie
+                %td
+                %td
+                %td
+                %td
+                %td
+                %td
+                  %span.label.label-info
+                    = "€ #{@appunto.totale_importo}"
 

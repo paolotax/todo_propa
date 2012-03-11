@@ -4,26 +4,21 @@
   .row
     .span7
     
-      %section.well
+      %section
         %header
           = render 'shared/title_bar', title: @cliente.to_s
-        #message
-        %article.cliente
-          .field
-            %span.label Nome:
-            %span.nome= @cliente.titolo
-          .field
-            %span.label Città:
-            %span.note= @cliente.comune
-          .field
-            %span.label Provincia:
-            %span.cliente_nome= @cliente.provincia
-          .field
-            %span.label Tipo cliente:
-            %span.cliente_nome= @cliente.cliente_tipo
-          .field
-            %span.label Indirizzo:
-            %span.full_address= @cliente.full_street_address
+        %article.cliente.well
+          %dl
+            %dt Cliente:
+            %dd= @cliente.titolo
+            %dt Città:
+            %dd= @cliente.comune
+            %dt Provincia:
+            %dd= @cliente.provincia
+            %dt Tipo cliente:
+            %dd= @cliente.cliente_tipo
+            %dt Indirizzo:
+            %dd.full_address= @cliente.full_street_address
         %footer
           = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first)
           = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
