@@ -3,7 +3,7 @@ class Riga < ActiveRecord::Base
   belongs_to :libro
 
   after_initialize :init
-  # after_save :ricalcola_totali
+  after_save :ricalcola_totali
   after_destroy :ricalcola_totali
 
 
@@ -16,7 +16,7 @@ class Riga < ActiveRecord::Base
     if sconto == 0.0
       prezzo_unitario
     else
-      prezzo_unitario * (100 - sconto) / 100
+      prezzo_copertina * (100 - sconto) / 100
     end
   end
   
