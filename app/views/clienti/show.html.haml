@@ -2,7 +2,7 @@
 
 .content
   .row
-    %section.span12
+    %section.span11
       %header
         / = render 'shared/title_bar', title: @cliente.to_s
       %article.cliente.well
@@ -41,15 +41,21 @@
           = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
             
   .row
-    .span7
-    
-      
-
     - unless @cliente.new_record?
-      .side-bar.span5
-        
-      
+      .side-bar.span5      
         = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente}
+      .span6
+        %header.content-header
+          .header-inner
+            %h2 Appunti
+
+        - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
+          = render :partial => 'shared/filters'
+
+        #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
+        / - @appunti.each do |appunto|
+        /   = render "appunto"
+        .stream-loader
    
       
 - @appunto = Appunto.new(cliente: @cliente)

@@ -35,7 +35,7 @@ gem 'gmaps4rails'
 gem 'mobylette'
 gem 'jquery_mobile_rails'
 
-gem 'nested_form', :git => 'https://github.com/ryanb/nested_form.git'
+gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
 gem 'simple_form'
 
 

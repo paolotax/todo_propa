@@ -161,6 +161,22 @@ ActiveRecord::Schema.define(:version => 20120309134257) do
   add_index "righe", ["fattura_id"], :name => "index_righe_on_fattura_id"
   add_index "righe", ["libro_id"], :name => "index_righe_on_libro_id"
 
+  create_table "searches", :force => true do |t|
+    t.string   "title"
+    t.string   "model"
+    t.string   "keywords"
+    t.string   "destinatario"
+    t.string   "note"
+    t.string   "stato"
+    t.string   "scuola"
+    t.string   "citta"
+    t.string   "provincia"
+    t.string   "zona"
+    t.string   "tag_list"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
