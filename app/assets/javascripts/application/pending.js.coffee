@@ -71,14 +71,15 @@ jQuery ->
       window.reset_appunto()
 
     sendPending = ->
+      console.log('send pending')
       if window.navigator.onLine
-        pendingItems = $.parseJSON localStorage["pendingItems"]
-        if pendingItems.length > 0
-          item = pendingItems[0]
+        pendingAppunti = $.parseJSON localStorage["pendingAppunti"]
+        if pendingAppunti.length > 0
+          item = pendingAppunti[0]
           $.post "/appunti.json", item.data, (data) ->
-            pendingItems = $.parseJSON localStorage["pendingItems"]
-            pendingItems.shift()
-            localStorage["pendingItems"] = JSON.stringify(pendingItems)
+            pendingAppunti = $.parseJSON localStorage["pendingAppunti"]
+            pendingAppunti.shift()
+            localStorage["pendingAppunti"] = JSON.stringify(pendingAppunti)
             console.log data
             $("#appunto_#{item.appunto.id}").replaceWith JST['appunti/appunto'](data)             
             $('time.timeago').timeago();

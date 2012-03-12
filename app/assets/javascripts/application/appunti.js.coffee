@@ -8,9 +8,11 @@ jQuery ->
   $('.show a').live 'click', (e) ->
     e.preventDefault()
     appunto = $(@).parent().parent().parent().parent().parent()
-    console.log appunto
-    $(".importo", appunto).fadeOut();
-    $('.more', appunto).slideDown();
+    $(".importo", appunto).fadeOut()
+    $('.more', appunto).slideDown()
+    $('.time', appunto).hide()
+    $('.actions', appunto).fadeOut  ->
+      $('.chiudi', appunto).fadeIn()
     appunto.css "margin-top", "10px"
     appunto.css "margin-bottom", "10px"
     

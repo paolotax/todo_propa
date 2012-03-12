@@ -7,7 +7,7 @@ jQuery ->
 
   $.validity.setup outputMode: 'summary'
 
-  $('#new_libro.chzn-select').live 'change', () ->
+  $('#new_libro.chzn-select').bind 'change', () ->
     console.log 'change'
     $('#new_libro_chzn').removeClass 'validity-erroneous chzn-container-active'
     $.getJSON "/libri/#{$(this).val()}", 
@@ -56,7 +56,7 @@ appendRiga = (riga) ->
   riga.id = new_id  
   new_riga = JST['righe/riga'](riga)
   $("#righe").prepend(new_riga).fadeIn()
-  new_riga.stop().effect("highlight", {}, 1000)
+  # $(new_riga).stop().effect("highlight", {}, 1000)
 
   
 window.validateRiga = () ->

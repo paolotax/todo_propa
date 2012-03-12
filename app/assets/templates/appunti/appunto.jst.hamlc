@@ -4,10 +4,6 @@
       %time.timeago{ datetime: "#{@updated_at || @created_at}" }
     .actions
       %ul.nav-appunto
-        %li.delete
-          %a{ href: "appunti/#{@id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-            %i.icon-trash
-            Elimina
         %li.print
           %a{ href: "appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
             %i.icon-tag
@@ -25,6 +21,10 @@
         %li.show
           %a{ title: 'mostra dettagli'}
             Apri
+    .chiudi{ style: "display: none; float: right;"}
+      %a
+        Chiudi
+          
 
     %div{ class: "stato #{@stato}"}
       = @stato
@@ -68,4 +68,28 @@
               %td
               %td
                 %span.label.label-info
-                  = "€ #{@totale_importo}" 
+                  = "€ #{@totale_importo}"  
+      .more-actions
+        %ul.nav-appunto
+          %li.delete
+            %a{ href: "appunti/#{@id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+              %i.icon-trash
+              Elimina
+          %li.print
+            %a{ href: "appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
+              %i.icon-tag
+              Stampa
+          %li.edit
+            %a{ href: "appunti/#{@id}/edit", title: 'modifica appunto'}
+              %i.icon-pencil
+              Modifica
+          %li.baule
+            %a{ title: 'metti nel baule!'}
+              %i.icon-shopping-cart
+              Nel baule
+          %li
+            = " | "
+          %li.show
+            %a{ title: 'mostra dettagli'}
+              Apri
+        
