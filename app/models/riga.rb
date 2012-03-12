@@ -16,7 +16,7 @@ class Riga < ActiveRecord::Base
     if sconto == 0.0
       prezzo_unitario
     else
-      prezzo_copertina * (100 - sconto) / 100
+      prezzo_copertina
     end
   end
   
