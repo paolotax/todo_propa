@@ -2,33 +2,52 @@
 
 .content
   .row
-    .span7
-    
-      %section
-        %header
-          = render 'shared/title_bar', title: @cliente.to_s
-        %article.cliente.well
-          %dl
-            %dt Cliente:
-            %dd= @cliente.titolo
-            %dt Città:
-            %dd= @cliente.comune
-            %dt Provincia:
-            %dd= @cliente.provincia
-            %dt Tipo cliente:
-            %dd= @cliente.cliente_tipo
-            %dt Indirizzo:
-            %dd.full_address= @cliente.full_street_address
+    %section.span12
+      %header
+        / = render 'shared/title_bar', title: @cliente.to_s
+      %article.cliente.well
+      
+        - unless @cliente.latitude.nil?
+          #gmap_page.pull-left
+            - @mappa = @cliente.to_gmaps4rails
+            = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+        %div{ style: "margin-left: 330px"}  
+          %h1= @cliente.titolo
+          %address
+            %strong
+              = "@#{@cliente.ragione_sociale || [@cliente.nome, @cliente.cognome].join(' ')}"
+            %br
+            = @cliente.indirizzo
+            %br
+            = "#{@cliente.cap} #{@cliente.frazione} #{@cliente.comune} #{@cliente.provincia}"
+          %div.pull-left
+            Partita IVA:
+            = @cliente.partita_iva
+            %br
+            Codice Fiscale:
+            = @cliente.codice_fiscale
+          %div.pull-right
+            %i{ class: 'icon-user'}
+            = @cliente.telefono
+            %br
+            %i{ class: 'icon-envelope'}
+            = @cliente.email
+          
+          .clearfix
+          
+          
         %footer
           = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first)
           = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
+            
+  .row
+    .span7
+    
+      
 
     - unless @cliente.new_record?
       .side-bar.span5
-        - unless @cliente.latitude.nil?
-          #gmaps_page.well 
-            - @mappa = @cliente.to_gmaps4rails
-            = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+        
       
         = render :partial => 'shared/nearbys', locals: {:indirizzo => @cliente}
    
