@@ -309,6 +309,138 @@ body {
 
 
 
+
+
+.module {
+  text-shadow: 0 1px 0 white;
+  border: 1px solid #EEE;
+  border: 1px solid rgba(0, 0, 0, .1);
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    
+  }
+}
+
+.module ul:first-child li:first-child .list-link,
+ul.stats {
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+
+
+
+.module, .promptbird {
+  position: relative;
+  margin-bottom: 10px;
+  line-height: 16px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.module .list-link {
+  position: relative;
+  display: block;
+  padding: 8px 12px;
+  
+  font-family: HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  
+  background-color: #F9F9F9;
+  border-top: 1px solid #E8E8E8;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+.module .active .list-link {
+  font-weight: bold;
+}
+
+.module .chev-right {
+  position: absolute;
+  top: 9px;
+  right: 12px;
+}
+
+.module .list-link:hover, .module .active .list-link {
+  background-color: white;
+  color: #333;
+  text-decoration: none;
+}
+
+.chev-right {
+  background-image: url(<%= asset_path "twitter_web_sprite_icons.png" %>);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  display: inline-block;
+  zoom: 1;
+  vertical-align: text-top;
+  
+  background-position: 0 -140px;
+  width: 9px;
+  height: 13px;
+}
+
+
+
+ul.stats {
+  background-color: #F9F9F9;
+  overflow: hidden;
+  border-top: 1px solid #E8E8E8;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.stats {
+  padding: 0;
+  #form {
+    padding: 0 19px 10px 19px
+  }
+}
+.stats a {
+  float: left;
+  padding: 7px 12px;
+  color: #999;
+  font-size: 10px;
+  line-height: 16px;
+  text-transform: uppercase;
+  strong {
+    display: block;
+    color: #333;
+    font-size: 14px;
+  } 
+  &:hover {
+    text-decoration: none;
+    strong {
+      color: #999;
+    }
+  } 
+}
+
+.stats li {
+  border-left: 1px solid #E8E8E8;
+  display: inline;
+}
+
+
+
 // Landscape phones and down
 @media (max-width: 480px) {
 

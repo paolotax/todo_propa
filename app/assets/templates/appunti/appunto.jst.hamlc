@@ -64,8 +64,7 @@
               %td=
               %td
               %td
-              %td
-              %td
+              %td †
               %td
                 %span.label.label-info
                   = "€ #{@totale_importo}"
@@ -75,7 +74,7 @@
         %small
           %span creato il
           %span= "#{c.getDay()}-#{c.getMonth()+1}-#{c.getFullYear()}"
-          %span modificato il 
+          %span † modificato il 
           %span= "#{u.getDay()}-#{u.getMonth()+1}-#{u.getFullYear()}"
       
       .more-actions

@@ -13,7 +13,7 @@ jQuery ->
   $('.on_the_spot_editing, .note_mark').live 'mouseover', ->
     $(@).css 'background-color', '#EEF2A0'
   
-  $(".search_options a, .filters a").live 'click', (e) ->
+  $(".search_options a, .filters a, .module a").live 'click', (e) ->
     e.preventDefault()
     
     if !localStorage["pendingAppunti"]
