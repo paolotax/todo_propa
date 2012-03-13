@@ -6,18 +6,45 @@
 jQuery ->
 
   $('.show a').live 'click', (e) ->
+    
     e.preventDefault()
-    appunto = $(@).parent().parent().parent().parent().parent()
+    appunto = $(@).closest($('.appunto'))
+    
     $(".importo", appunto).fadeOut()
-    $('.more', appunto).slideDown()
+    #  $('.more', appunto).slideDown()
     $('.time', appunto).hide()
     $('.actions', appunto).fadeOut  ->
       $('.chiudi', appunto).fadeIn()
+
+    appunto.addClass('opened')
     appunto.css "margin-top", "10px"
     appunto.css "margin-bottom", "10px"
+  
+  $('.chiudi a').live 'click', (e) ->
+
+    e.preventDefault()
+    appunto = $(@).closest($('.appunto'))
+
+    appunto.css "margin-top", "0"
+    appunto.css "margin-bottom", "0"
+    
+    appunto.removeClass('opened')
+    
+    # $('.more', appunto).slideUp()
+    
+    $(".importo", appunto).fadeIn()
+
+    $('.chiudi', appunto).fadeOut()
+    $('.actions', appunto).fadeIn()
+
+    $('.time', appunto).show()
+
     
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
-  
+
+
+
+
   @selected_appunti = []
   
   count_selected = (last_clicked) =>

@@ -5,11 +5,11 @@
     .actions
       %ul.nav-appunto
         %li.print
-          %a{ href: "appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
+          %a{ href: "/appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
             %i.icon-tag
             Stampa
         %li.edit
-          %a{ href: "appunti/#{@id}/edit", title: 'modifica appunto'}
+          %a{ href: "/appunti/#{@id}/edit", title: 'modifica appunto'}
             %i.icon-pencil
             Modifica
         %li.baule
@@ -68,19 +68,28 @@
               %td
               %td
                 %span.label.label-info
-                  = "€ #{@totale_importo}"  
+                  = "€ #{@totale_importo}"
+      %div{ style: "color: gray;"}
+        - c = new Date(@created_at)
+        - u = new Date(@updated_at)
+        %small
+          %span creato il
+          %span= "#{c.getDay()}-#{c.getMonth()+1}-#{c.getFullYear()}"
+          %span modificato il 
+          %span= "#{u.getDay()}-#{u.getMonth()+1}-#{u.getFullYear()}"
+      
       .more-actions
         %ul.nav-appunto
           %li.delete
-            %a{ href: "appunti/#{@id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+            %a{ href: "/appunti/#{@id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
               %i.icon-trash
               Elimina
           %li.print
-            %a{ href: "appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
+            %a{ href: "/appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
               %i.icon-tag
               Stampa
           %li.edit
-            %a{ href: "appunti/#{@id}/edit", title: 'modifica appunto'}
+            %a{ href: "/appunti/#{@id}/edit", title: 'modifica appunto'}
               %i.icon-pencil
               Modifica
           %li.baule
