@@ -19,6 +19,9 @@ jQuery ->
       type:  "PUT"
       success: (data)->
         $("#appunto_#{data.id}").replaceWith JST["appunti/appunto"](data)
+        params = $("#appunti").data('json-url').split('?')[1] ||= ""
+        $.get "/get_appunti_filters.js", params, (data) ->
+          console.log "data"
           
       
 

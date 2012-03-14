@@ -61,13 +61,13 @@ jQuery ->
           "stato":        "pending"
           "con_recapiti": true
           "con_righe":    false
-  
-      $("#appunti").prepend Mustache.to_html($("#appunto_template").html(), item.appunto)
+      
+      $("#appunti").prepend JST['appunti/appunto'](item.appunto)
       pendingItems.push(item);
       localStorage["pendingItems"] = JSON.stringify(pendingItems)
       sendPending();
       e.preventDefault();
-
+    
       window.reset_appunto()
 
     sendPending = ->
