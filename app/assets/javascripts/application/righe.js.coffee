@@ -47,12 +47,6 @@ appendRiga = (riga) ->
   new_id   = new Date().getTime()
   if $("#righe").length == 0
     $('#create-riga').after("<div id='righe'></div>")
-  # item =
-  #   id:       new_id
-  #   titolo:   riga.titolo
-  #   quantita: riga.quantita  
-  #   prezzo:   riga.prezzo
-  #   sconto:   riga.sconto
   riga.id = new_id  
   new_riga = JST['righe/riga'](riga)
   $("#righe").prepend(new_riga).fadeIn()

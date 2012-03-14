@@ -26,8 +26,17 @@
         Chiudi
           
 
-    %div{ class: "stato #{@stato}"}
-      = @stato
+    .stato.dropdown
+      %a{ class: "dropdown-toggle #{@stato}", "data-toggle" => "dropdown" }
+        .icon-status{ class: "#{@stato}" }
+      %ul.dropdown-menu
+        %li
+          %a.change-status{ "data-status" => "",  "data-id" => "#{@id}"} da fare                      
+        %li
+          %a.change-status{ "data-status" => "P", "data-id" => "#{@id}"} in sospeso
+        %li
+          %a.change-status{ "data-status" => "X", "data-id" => "#{@id}"} completato
+
     
     %a{ href: "/clienti/#{@cliente_id}" }
       %strong.full_name

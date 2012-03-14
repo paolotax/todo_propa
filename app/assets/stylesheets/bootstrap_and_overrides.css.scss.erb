@@ -175,19 +175,33 @@ body {
       top: 12px;
       left: 12px;
       display: inline-block;
-      width: 32px;
-      height: 32px;
-      text-indent: -9999px;
-      cursor: pointer;
-      &.da_fare {
-        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px 0 transparent;
+      
+      > a {
+        line-height: 32px;
+        text-indent: -9999px;
+        cursor: pointer;
       }
-      &.completato{
-        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -34px transparent;
+            
+      .icon-status {
+        
+        width: 40px;
+        height: 32px;
+
+        text-indent: -9999px;
+        cursor: pointer;
+        &.da_fare {
+          background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px 0 transparent;
+        }
+        &.completato{
+          background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -34px transparent;
+        }
+        &.in_sospeso {
+          background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -68px transparent;
+        }
+        
       }
-      &.in_sospeso {
-        background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -68px transparent;
-      }
+      
+
     }
 
     .full_name {
@@ -328,7 +342,7 @@ body {
 }
 
 .module ul:first-child li:first-child .list-link,
-ul.stats {
+.module .flex-module:first-child {
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
   -moz-border-radius-topleft: 5px;
@@ -399,7 +413,11 @@ ul.stats {
   height: 13px;
 }
 
-
+.module .flex-module {
+  background-color: #F9F9F9;
+  padding: 12px;
+  line-height: 16px;
+}
 
 ul.stats {
   background-color: #F9F9F9;

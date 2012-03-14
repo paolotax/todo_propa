@@ -32,11 +32,9 @@ jQuery ->
       $("#appunti").empty()
       for obj in appunti
         if obj.data?
-          # $("#appunti").append Mustache.to_html($("#appunto_template").html(), obj.appunto)
           item = JST['appunti/appunto'](obj)
           $(item).hide().appendTo("#appunti").fadeIn()   
         else
-          # item = Mustache.to_html($("#appunto_template").html(), obj) 
           item = JST['appunti/appunto'](obj)
           $(item).hide().appendTo("#appunti").fadeIn('slow')   
      

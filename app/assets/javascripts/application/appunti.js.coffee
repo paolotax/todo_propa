@@ -4,6 +4,23 @@
 
 
 jQuery ->
+  
+  $('a.change-status').live 'click', (e) ->
+    e.preventDefault()
+    id = $(@).data('id')
+
+    appunto =
+      stato: $(@).data('status')
+    
+    $.ajax 
+      url: "/appunti/#{id}.json"  
+      data:
+        appunto: appunto
+      type:  "PUT"
+      success: (data)->
+        $("#appunto_#{data.id}").replaceWith JST["appunti/appunto"](data)
+          
+      
 
   $('.show a').live 'click', (e) ->
     
