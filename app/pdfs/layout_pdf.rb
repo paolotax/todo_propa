@@ -12,7 +12,7 @@ module LayoutPdf
     bounding_box([bounds.width / 2.0, bounds.top], :width => bounds.width / 2.0, :height => 100) do
       #stroke_bounds
       font_size 9
-      text "Agente di Zona - #{user.username}", :size => 11, :align => :right
+      text "Agente di Zona - #{user.nome_completo}", :size => 11, :align => :right
       text "Via Zanardi 376/2",  :align => :right
       text "40131 Bologna BO",   :align => :right
       move_down 5

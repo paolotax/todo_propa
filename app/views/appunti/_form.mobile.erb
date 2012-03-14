@@ -12,7 +12,7 @@
     <% end %>
     <div data-role="fieldcontain">
       <%= f.label :cliente_id, "Cliente" %>
-      <%= f.select :cliente_id, current_user.clienti.order(:nome).collect {|s| [ s.nome, s.id ] }, {:include_blank => true}  %>
+      <%= f.select :cliente_id, current_user.clienti.order(:titolo).collect {|s| [ s.titolo, s.id ] }, {:include_blank => true}  %>
       <%= f.label :destinatario %>
       <%= f.text_field :destinatario %>
     </div>

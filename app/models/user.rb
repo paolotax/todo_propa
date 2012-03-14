@@ -7,12 +7,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  attr_accessible  :nome_completo, :telefono, :codice_fiscale, :partita_iva
   
   validates :username, presence: true
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me, :avatar
+  attr_accessible  :nome_completo, :telefono, :codice_fiscale, :partita_iva
+  
   mount_uploader :avatar, AvatarUploader
   
   require 'controlla_c_f'
