@@ -1,0 +1,6 @@
+.pretty-prezzo
+  %strong
+    = "€ #{parseInt(@prezzo)},"
+    %sup
+      - dec = Math.round((@prezzo - Math.floor(@prezzo)) * 100)
+      = dec.toString().rpad('0', 2)
