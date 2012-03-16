@@ -4,66 +4,8 @@
 
 
 jQuery ->
-  
-  $('a.change-status').live 'click', (e) ->
-    e.preventDefault()
-    id = $(@).data('id')
 
-    appunto =
-      stato: $(@).data('status')
-    
-    $.ajax 
-      url: "/appunti/#{id}.json"  
-      data:
-        appunto: appunto
-      type:  "PUT"
-      success: (data)->
-        $("#appunto_#{data.id}").replaceWith JST["appunti/appunto"](data)
-        params = $("#appunti").data('json-url').split('?')[1] ||= ""
-        $.get "/get_appunti_filters.js", params, (data) ->
-          console.log "data"
-          
-      
-
-  $('.show a').live 'click', (e) ->
-    
-    e.preventDefault()
-    appunto = $(@).closest($('.appunto'))
-    
-    $(".importo", appunto).fadeOut()
-    #  $('.more', appunto).slideDown()
-    $('.time', appunto).hide()
-    $('.actions', appunto).fadeOut  ->
-      $('.chiudi', appunto).fadeIn()
-
-    appunto.addClass('opened')
-    appunto.css "margin-top", "10px"
-    appunto.css "margin-bottom", "10px"
-  
-  $('.chiudi a').live 'click', (e) ->
-
-    e.preventDefault()
-    appunto = $(@).closest($('.appunto'))
-
-    appunto.css "margin-top", "0"
-    appunto.css "margin-bottom", "0"
-    
-    appunto.removeClass('opened')
-    
-    # $('.more', appunto).slideUp()
-    
-    $(".importo", appunto).fadeIn()
-
-    $('.chiudi', appunto).fadeOut()
-    $('.actions', appunto).fadeIn()
-
-    $('.time', appunto).show()
-
-    
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
-
-
-
 
   @selected_appunti = []
   
@@ -115,7 +57,6 @@ window.reset_appunto = ->
   $('#new_sconto').val ''
   $('#ordine h3').text ''
  
-  # $('.nascondi').trigger 'click'
 
 
 flash_notice = (message) ->

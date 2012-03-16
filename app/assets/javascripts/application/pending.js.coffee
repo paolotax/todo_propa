@@ -1,4 +1,63 @@
 jQuery ->
+  
+  initializeAppunto = (appunto) ->
+
+    $('time.timeago', appunto).timeago();
+    
+    appunto.bind 'click', (e) ->
+      $(@).toggleClass 'opened'
+
+    $('.stato', appunto).bind 'click', (e) ->
+      e.stopPropagation()
+      $('.dropdown-toggle', appunto).dropdown().trigger 'click'
+
+    $('a.change-status', appunto).bind 'click', (e) ->
+      e.stopPropagation()
+      id = $(@).data('id')
+      stato = $(@).data('status')
+      $.ajax 
+        url: "/appunti/#{id}.json"  
+        data: { appunto: { stato: stato } }
+        type:  "PUT"
+        success: (data)->
+          $("#appunto_#{data.id}").replaceWith JST["appunti/appunto"](data)
+          initializeAppunto($("#appunto_#{data.id}"))
+          params = $("#appunti").data('json-url').split('?')[1] ||= ""
+          $.get "/get_appunti_filters.js", params, (data) ->
+            console.log "data"
+
+    $('.show a', appunto).bind 'click', (e) ->
+      e.stopPropagation()
+      e.preventDefault()
+      appunto = $(@).closest($('.appunto'))
+      appunto.addClass('opened')
+    
+    $('.chiudi a', appunto).bind 'click', (e) ->
+      e.stopPropagation()
+      e.preventDefault()
+      appunto = $(@).closest($('.appunto'))
+      appunto.removeClass('opened')
+      
+    $('.edit a, .print a', appunto).bind 'click', (e) ->
+      e.stopPropagation()
+
+    # non funzia
+    # $('.delete a', appunto).bind 'click', (e) ->
+    # appunto = $(@).closest($('.appunto'))
+    # appunto.addClass('opened')
+    
+    $('.baule a', appunto).bind 'click', (e) ->
+      e.stopPropagation()
+      e.preventDefault()
+      container = $(@).closest($('.appunto'))
+      $(container).toggleClass 'favorited'
+
+      appunto = 
+          id: container.attr('id')
+          cliente_titolo: $('.full_name', container).text()
+
+      $('.side-right .well').append JST['appunti/baule'](appunto)
+
   if $.support.localStorage
     $(window.applicationCache).bind "error", () ->
       console.log("Errore nel caricamento del cache manifest file.");
@@ -11,23 +70,19 @@ jQuery ->
       $.retrieveJSON "/appunti.json" + window.location.search, (data) ->
         pendingAppunti = $.parseJSON localStorage["pendingAppunti"]
         appunti = pendingAppunti.concat(data)
+        
         $("#appunti").empty()
         for obj in appunti
           if obj.data?
-            $("#appunti").append JST['appunti/appunto'](obj.appunto)
+            appunto = JST['appunti/appunto'](obj.appunto)
+            $("#appunti").append appunto
           else
-            $("#appunti").append JST['appunti/appunto'](obj)       
-        
-        $('time.timeago').timeago();
-        
-        $('.actions .baule a').bind 'click', (e) ->
-          e.preventDefault()
-          console.log 'baule'
-          container = $(@).parent().parent().parent().parent().parent()
-          appunto = 
-              id: container.attr('id')
-              cliente_titolo: $('.full_name', container).text()
-          $('.side-right .well').append JST['appunti/baule'](appunto)
+            appunto = JST['appunti/appunto'](obj)
+            $("#appunti").append appunto
+          
+          initializeAppunto($(".appunto:last-child"))
+            
+            
 
 
     if !localStorage["pendingClienti"]

@@ -2,8 +2,10 @@
 
 %div{ class: "appunto #{@stato}", id: "appunto_#{@id}"}
   .content
+    .dogear
     %small.time
       %time.timeago{ datetime: "#{@updated_at || @created_at}" }
+    
     .actions
       %ul.nav-appunto
         %li.print
@@ -23,7 +25,7 @@
         %li.show
           %a{ title: 'mostra dettagli'}
             Apri
-    .chiudi{ style: "display: none; float: right;"}
+    .chiudi{ style: "float: right;"}
       %a
         Chiudi
           
@@ -50,9 +52,10 @@
     
     %p
       != @note
-      
-    %span.badge.badge-info.importo{ "data-value" => "#{@totale_importo}" }
+    
+    .badge.badge-warning.importo{ "data-value" => "#{@totale_importo}" }
       !=  JST['shared/prezzo']( prezzo: @totale_importo ) 
+    .clearfix
       
     .more
       - if @righe?
@@ -61,29 +64,33 @@
             - for r in @righe
               %tr.riga
                 %td= r.titolo
-                %td= r.quantita
+                %td.quantita
+                  %strong
+                    = r.quantita
                 %td x
                 - if r.prezzo_unitario isnt "0.0"
                   %td
                     !=  JST['shared/prezzo']( prezzo: r.prezzo_unitario )
                 - else
-                  %td
-                    .badge.badge-info gratis
+                  %td.gratis 
+                    %span.badge.badge-info gratis
                 %td
-                %td= "- #{r.sconto}%" if r.sconto isnt "0.0"
+                %td.sconto
+                  = "- #{r.sconto}%" if r.sconto isnt "0.0"
+                
                 %td =
                 %td
                 - if r.importo isnt 0
                   %td
                     !=  JST['shared/prezzo']( prezzo: r.importo )
                 - else
-                  %td
-                    .badge.badge-info gratis
+                  %td.gratis
+                    %span.badge.badge-info. gratis
 
             - if @righe.length > 1
               %tr.riga
                 %td
-                %td
+                %td.quantita
                   %span.badge.badge-error= @totale_copie
                 %td
                 %td

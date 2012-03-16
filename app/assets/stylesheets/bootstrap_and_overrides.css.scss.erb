@@ -136,16 +136,14 @@ body {
     .content {
       margin-left: 46px;
     }
-    
-    span[data-value="0"] {
+    .importo[data-value="0"] {
       display: none;
     }
-    
     .importo {
-      position: absolute;
-      bottom: 12px;
-      right: 12px;
-      
+      float: left;
+      // position: absolute;
+      //       bottom: 12px;
+      //       right: 12px;
     }
     .more {
       display: none;
@@ -160,12 +158,26 @@ body {
       display:block;
     }
     
-    &.opened {
+    .chiudi {
       
+      display: none;
+    }
+    
+    &.opened:hover .chiudi {
+      display: block;
+    }
+    
+    
+    &.opened {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .importo,
+      .time,
+      .actions {
+        display: none;
+      }
       .more {
-        
         display:block;
-        
       }
       
     }
@@ -287,6 +299,11 @@ body {
 .time {
   position: absolute;
   right: 12px;
+  font-size: 12px;
+  color: #999;
+  -webkit-transition: opacity .15s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  transition: opacity .15s ease-in-out;
 }
 
 .select-check {
@@ -463,10 +480,29 @@ ul.stats {
 }
 
 
+td .pretty-prezzo {
+  min-width: 65px;
+}
+
+td.quantita {
+  text-align: center;
+}
+
+td.sconto {
+  min-width: 55px;
+  text-align: right;
+  
+}
+
+td.gratis {
+  text-align: right;
+}
+
 .pretty-prezzo {
   // line-height: 25px;
   text-align: right;
   padding-left: 3px;
+  
   strong {
     // font-size: 120%;    
   }
@@ -476,6 +512,47 @@ ul.stats {
     // top: -3px; 
   }
 }
+
+.more .more-actions {
+  margin-top: 3px;
+  .nav-appunto {
+    margin-left: -3px;
+  }
+}
+
+.retweeted .dogear, .favorited .dogear, .retweeted.favorited .dogear {
+  display: block;
+}
+
+.favorited .dogear {
+  background-position: -30px -450px;
+}
+
+.retweeted .time, 
+.favorited .time, 
+.favorited .actions, 
+.retweeted .actions,
+.favorited .chiudi {
+  margin-right: 5px;
+}
+
+.dogear {
+  background-image: url(<%= asset_path "twitter_web_sprite_icons.png" %>);
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+  width: 24px;
+  height: 24px;
+}
+
+
+// corregge quadratino orrendo grigio
+.dropdown.open .dropdown-toggle {
+  background: white;
+}
+
+
 
 
 // Landscape phones and down
