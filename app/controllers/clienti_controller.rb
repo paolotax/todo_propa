@@ -5,6 +5,14 @@ class ClientiController < ApplicationController
   def index
 
     @search = current_user.clienti.filtra(params)
+    
+    @search_appunti = current_user.appunti.filtra(params.except(:status))
+    
+    @in_corso   = Cliente.con_appunti(@search_appunti.in_corso).size
+    @da_fare    = Cliente.con_appunti(@search_appunti.da_fare).size
+    @in_sospeso = Cliente.con_appunti(@search_appunti.in_sospeso).size    
+    @tutti      = @search.size
+
     @clienti = @search.limit(50)
 
     @clienti = @clienti.offset((params[:page].to_i-1)*50) if params[:page].present?

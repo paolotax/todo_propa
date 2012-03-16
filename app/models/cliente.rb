@@ -39,6 +39,11 @@ class Cliente < ActiveRecord::Base
   scope :next,     lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} > ?", i.user_id, i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
   
   
+  def self.con_appunti(relation)
+    ids = relation.pluck(:cliente_id).uniq
+    Cliente.where('id in (?)', ids)
+  end
+  
   #after_initialize :set_indirizzi
   
   before_save :set_titolo
@@ -79,7 +84,7 @@ class Cliente < ActiveRecord::Base
   def self.filtra(params)
 
     clienti = scoped
-    clienti = clienti.where("clienti.nome ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ?", 
+    clienti = clienti.where("clienti.titolo ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ?", 
                           "%#{params[:search]}%", "%#{params[:search]}%", "#{params[:search]}%") if params[:search].present?
     clienti = clienti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
     clienti = clienti.where("clienti.comune = ?",     params[:comune])     if params[:comune].present?

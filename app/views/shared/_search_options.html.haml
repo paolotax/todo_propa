@@ -1,19 +1,36 @@
-.module
-  %ul.stats
-    %li
-      = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:status) do
-        %strong= @tutti
-        appunti
+- if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
+  .module
+    %ul.stats
+      %li
+        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:status) do
+          %strong= @tutti
+          appunti
 
-    %li
-      = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "da_fare") do
-        %strong= @da_fare
-        da fare
-    %li
-      = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_sospeso") do
-        %strong= @in_sospeso
-        in sospeso
+      %li
+        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "da_fare") do
+          %strong= @da_fare
+          da fare
+      %li
+        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_sospeso") do
+          %strong= @in_sospeso
+          in sospeso
 
+- if params[:action] == "get_clienti_filters" || params[:controller] == 'clienti'
+  .module
+    %ul.stats
+      %li
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').except(:status) do
+          %strong= @tutti
+          clienti
+
+      %li
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').merge(status: "da_fare") do
+          %strong= @da_fare
+          da visitare
+      %li
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').merge(status: "in_sospeso") do
+          %strong= @in_sospeso
+          in sospeso
 
 
 / vecchio stile
