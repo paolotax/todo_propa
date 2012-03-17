@@ -35,15 +35,12 @@ it:
       send_instructions: "Riceverai un messaggio email con le istruzioni per confermare il tuo account entro qualche minuto."
       send_paranoid_instructions: "Se la tua e-mail esiste nel nostro database, riceverai un messaggio email con le istruzioni per confermare il tuo account entro qualche minuto."
       confirmed: "Il tuo account è stato correttamente confermato. Ora sei collegato."
+
     registrations:
-      signed_up: "Iscrizione correttamente eseguita. Se abilitata, una conferma è stata inviata al tuo indirizzo email."
-      inactive_signed_up: "Ti sei registrato correttamente. Tuttavia non puoi effettuare l'accesso perchè il tuo account è %{reason}."
-      updated: "Il tuo account è stato aggiornato."
-      destroyed: "Arrivederci! L'account è stato cancellato. Speriamo di rivederci presto."
-      reasons:
-        inactive: 'disattivato'
-        unconfirmed: 'da confermare'
-        locked: 'bloccato'
+      signed_up_but_unconfirmed: 'Iscrizione correttamente eseguita. Se abilitata, una conferma è stata inviata al tuo indirizzo email.'
+      signed_up_but_inactive: "Ti sei registrato correttamente. Tuttavia non puoi effettuare l'accesso perchè il tuo account non è ancora stato attivato."
+      signed_up_but_locked: "Ti sei registrato correttamente. Tuttavia non puoi effettuare l'accesso perchè il tuo account è bloccato"
+
     unlocks:
       send_instructions: "Riceverai un messaggio email con le istruzioni per sbloccare il tuo account entro qualche minuto."
       unlocked: "Il tuo account è stato correttamente sbloccato. Ora sei collegato."

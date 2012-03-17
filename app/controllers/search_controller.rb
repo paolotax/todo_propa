@@ -17,12 +17,12 @@ class SearchController < ApplicationController
   
   def get_clienti_filters
     
-    @search = current_user.appunti.filtra(params.except(:status))
+    @search = current_user.clienti.filtra(params.except(:status))
     
-    @in_corso   = Cliente.con_appunto(@search.in_corso).size
-    @da_fare    = Cliente.con_appunto(@search.da_fare).size
-    @in_sospeso = Cliente.con_appunto(@search.in_sospeso).size    
-    @tutti      = Cliente.con_appunto(@search).size 
+    @in_corso   = Cliente.con_appunti(@search.in_corso).size
+    @da_fare    = Cliente.con_appunti(@search.da_fare).size
+    @in_sospeso = Cliente.con_appunti(@search.in_sospeso).size    
+    @tutti      = Cliente.con_appunti(@search).size 
     
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
     @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)

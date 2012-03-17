@@ -1,0 +1,11 @@
+$(".side-bar").html("<%= escape_javascript(render :partial => 'shared/episode_views')  %><%= escape_javascript(render partial: 'shared/search_options') %>");
+
+if ($('.filters').length) {
+  $('.filters').replaceWith("<%= escape_javascript(render partial: 'shared/filters') %>");
+} else {
+  $("<%= escape_javascript(render partial: 'shared/filters') %>").insertAfter($('.content-header'));
+}
+
+window.clienti_pager.reset();
+
+$('#clienti').data('json-url', "<%= url_for params.merge(controller: 'clienti', action: 'index', format: 'json') %>");

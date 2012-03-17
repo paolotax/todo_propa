@@ -33,56 +33,38 @@
           in sospeso
 
 
-/ vecchio stile
-/ - if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
-/   
-/   .module
-/     %ul
-/ 
-/       %li{ class: "#{ params[:status].present? ? '': 'active' }" }
-/         = link_to(params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:status), class: "list-link") do
-/           Appunti
-/           %i.chev-right
-/       
-/       %li{ class: "#{ params[:status] == 'in_corso' ? 'active' : '' }" }
-/         = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_corso"), class: "list-link" do
-/           in corso
-/           %i.chev-right          
-/       
-/       %li{ class: "#{ params[:status] == "da_fare" ? 'active' : ''}" }
-/         = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "da_fare"), class: "list-link" do
-/           da fare
-/           %i.chev-right
-/       
-/       %li{ class: "#{ params[:status] == "in_sospeso" ? 'active' : ''}" }
-/         = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_sospeso"), class: "list-link" do
-/           in sospeso
-/           %i.chev-right
-/           
-/       %li{ class: "#{ params[:status] == "completati" ? 'active' : ''}" }
-/         = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "completati"), class: "list-link" do
-/           completati
-/           %i.chev-right
+- if params[:action] == "get_clienti_filters" || params[:controller] == "clienti"
+  .module
+    %ul
+      %li{ class: "#{ params[:tipo].present? ? '': 'active' }" }
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').except(:tipo), class: "list-link"  do
+          Tutti 
+          %i.chev-right
 
-     
+      %li{ class: "#{ params[:tipo] == "scuole" ? 'active': '' }" }
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').merge(tipo: "scuole"), class: "list-link"  do
+          Scuole
+          %i.chev-right
 
-- if params[:controller] == "clienti"
-  .search_options.search-cliente_tipo.well{ style: "padding: 8px; 0"}
-    %ul.nav.nav-list
-      %li.nav-header= link_to "Tipo cliente", params.merge(:format => 'json').except(:tipo)
-      
-      %li{ class: "#{ params[:tipo] == "scuole" ? 'active' : ''}" }
-        = link_to "Tutte le scuole",  params.merge(:format => 'json').merge(tipo: "scuole")
-      %li{ class: "#{ params[:tipo] == "primarie" ? 'active' : ''}" }
-        = link_to "Scuole Primarie",  params.merge(:format => 'json').merge(tipo: "primarie")
-      %li{ class: "#{ params[:tipo] == "cartolerie" ? 'active' : ''}" }
-        = link_to "Cartolerie",       params.merge(:format => 'json').merge(tipo: "cartolerie")
-      %li{ class: "#{ params[:tipo] == "direzioni" ? 'active' : ''}" }
-        = link_to "Direzioni",        params.merge(:format => 'json').merge(tipo: "direzioni")
-      %li{ class: "#{ params[:tipo] == "privati" ? 'active' : ''}" }
-        = link_to "Privati",          params.merge(:format => 'json').merge(tipo: "privati")
-      %li{ class: "#{ params[:tipo] == "altri" ? 'active' : ''}" }
-        = link_to "altri",            params.merge(:format => 'json').merge(tipo: "altri")
+      %li{ class: "#{ params[:tipo] == "scuole" ? 'active': '' }" }
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').merge(tipo: "primarie"), class: "list-link"  do
+          Primarie
+          %i.chev-right
+
+      %li{ class: "#{ params[:tipo] == "direzioni" ? 'active': '' }" }
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').merge(tipo: "direzioni"), class: "list-link"  do
+          Direzioni
+          %i.chev-right
+
+      %li{ class: "#{ params[:tipo] == "cartolerie" ? 'active': '' }" }
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').merge(tipo: "cartolerie"), class: "list-link"  do
+          Cartolerie
+          %i.chev-right
+
+      %li{ class: "#{ params[:tipo] == "altri" ? 'active': '' }" }
+        = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').merge(tipo: "altri"), class: "list-link"  do
+          Altri
+          %i.chev-right
 
     
 .module

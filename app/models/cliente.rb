@@ -41,7 +41,7 @@ class Cliente < ActiveRecord::Base
   
   def self.con_appunti(relation)
     ids = relation.pluck(:cliente_id).uniq
-    Cliente.where('id in (?)', ids)
+    Cliente.where('clienti.id in (?)', ids)
   end
   
   #after_initialize :set_indirizzi
@@ -82,12 +82,15 @@ class Cliente < ActiveRecord::Base
   end
 
   def self.filtra(params)
-
+    
+    # user = User.find(params[:user_id])
+    
     clienti = scoped
     clienti = clienti.where("clienti.titolo ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ?", 
                           "%#{params[:search]}%", "%#{params[:search]}%", "#{params[:search]}%") if params[:search].present?
-    clienti = clienti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
-    clienti = clienti.where("clienti.comune = ?",     params[:comune])     if params[:comune].present?
+    
+    clienti = clienti.where("clienti.provincia = ?", params[:provincia])  if params[:provincia].present?
+    clienti = clienti.where("clienti.comune = ?",    params[:comune])     if params[:comune].present?
 
     clienti = clienti.scuole     if params[:tipo].present? && params[:tipo] == 'scuole'
     clienti = clienti.primarie   if params[:tipo].present? && params[:tipo] == "primarie"
@@ -95,10 +98,10 @@ class Cliente < ActiveRecord::Base
     clienti = clienti.direzioni  if params[:tipo].present? && params[:tipo] == "direzioni"
     clienti = clienti.altri      if params[:tipo].present? && params[:tipo] == "altri"
 
-    clienti = clienti.joins(:appunti).con_appunti_in_corso   if params[:status].present? && params[:status] == 'in_corso'
-    clienti = clienti.joins(:appunti).con_appunti_completo   if params[:status].present? && params[:status] == "completati"
-    clienti = clienti.joins(:appunti).con_appunti_da_fare    if params[:status].present? && params[:status] == "da_fare"
-    clienti = clienti.joins(:appunti).con_appunti_in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
+    clienti = clienti.con_appunti(Appunto.in_corso)   if params[:status].present? && params[:status] == 'in_corso'
+    clienti = clienti.con_appunti(Appunto.completo)   if params[:status].present? && params[:status] == "completati"
+    clienti = clienti.con_appunti(Appunto.da_fare)    if params[:status].present? && params[:status] == "da_fare"
+    clienti = clienti.con_appunti(Appunto.in_sospeso) if params[:status].present? && params[:status] == "in_sospeso"
     clienti
   end
   

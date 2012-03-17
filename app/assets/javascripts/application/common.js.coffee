@@ -13,30 +13,48 @@ jQuery ->
   $('.on_the_spot_editing, .note_mark').live 'mouseover', ->
     $(@).css 'background-color', '#EEF2A0'
   
+  String.prototype.capitalize = () ->
+    this.charAt(0).toUpperCase() + this.slice(1)
+  
   $(".search_options a, .filters a, .module a").live 'click', (e) ->
     e.preventDefault()
-    
-    if !localStorage["pendingAppunti"]
-      localStorage["pendingAppunti"] = JSON.stringify []
-    
-    params = $(@).attr('href').split('?')[1] ||= ""
-    console.log params
 
-    $.get "/get_appunti_filters.js", params, (data) ->
+    
+    
+    cont = $(@).attr('href').split('?')[0] ||= ""
+    params = $(@).attr('href').split('?')[1] ||= ""
+    
+    if cont == '/clienti.json'
+      controller = 'clienti'
+      template = JST['clienti/cliente']
+    else
+      controller = 'appunti'
+      template = JST['appunti/appunto']    
+
+    console.log params
+  
+    storageName = "pending#{controller.capitalize()}"
+    console.log storageName
+    if !localStorage[storageName]
+      localStorage[storageName] = JSON.stringify []
+
+
+
+    $.get "/get_#{controller}_filters.js", params, (data) ->
       console.log "data"
     
     $.getJSON $(@).attr('href'), (data) ->
-      pendingAppunti = $.parseJSON localStorage["pendingAppunti"]
-      appunti = pendingAppunti.concat(data)
+      pending = $.parseJSON localStorage[storageName]
+      appunti = pending.concat(data)
 
-      $("#appunti").empty()
+      $("##{controller}").empty()
       for obj in appunti
         if obj.data?
-          item = JST['appunti/appunto'](obj)
-          $(item).hide().appendTo("#appunti").fadeIn()   
+          item = template(obj)
+          $(item).hide().appendTo("##{controller}").fadeIn()   
         else
-          item = JST['appunti/appunto'](obj)
-          $(item).hide().appendTo("#appunti").fadeIn('slow')   
+          item = template(obj)
+          $(item).hide().appendTo("##{controller}").fadeIn('slow')   
      
       $('time.timeago').timeago();
 
