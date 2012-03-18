@@ -14,8 +14,9 @@ class ListPager
   render: (objs) =>
     for obj in objs
       @list.append @template(obj)
+      if @model is 'appunto'
+        window.initializeAppunto($(".appunto:last-child"))
     
-    $('time.timeago').timeago();  
     $(window).bind('scroll', @check) if objs.length > 0
 
   reset: ->

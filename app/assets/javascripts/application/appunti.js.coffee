@@ -2,6 +2,65 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+window.initializeAppunto = (appunto) ->
+
+  $('time.timeago', appunto).timeago();
+  
+  appunto.bind 'click', (e) ->
+    $(@).toggleClass 'opened'
+
+  $('.stato', appunto).bind 'click', (e) ->
+    e.stopPropagation()
+    $('.dropdown-toggle', appunto).dropdown().trigger 'click'
+
+  $('a.change-status', appunto).bind 'click', (e) ->
+    e.stopPropagation()
+    id = $(@).data('id')
+    stato = $(@).data('status')
+    $.ajax 
+      url: "/appunti/#{id}.json"  
+      data: { appunto: { stato: stato } }
+      type:  "PUT"
+      success: (data)->
+        $("#appunto_#{data.id}").replaceWith JST["appunti/appunto"](data)
+        window.initializeAppunto($("#appunto_#{data.id}"))
+        params = $("#appunti").data('json-url').split('?')[1] ||= ""
+        $.get "/get_appunti_filters.js", params, (data) ->
+          console.log "data"
+
+  $('.show a', appunto).bind 'click', (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    appunto = $(@).closest($('.appunto'))
+    appunto.addClass('opened')
+  
+  $('.chiudi a', appunto).bind 'click', (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    appunto = $(@).closest($('.appunto'))
+    appunto.removeClass('opened')
+    
+  $('.edit a, .print a', appunto).bind 'click', (e) ->
+    e.stopPropagation()
+
+  # non funzia
+  # $('.delete a', appunto).bind 'click', (e) ->
+  # appunto = $(@).closest($('.appunto'))
+  # appunto.addClass('opened')
+  
+  $('.baule a', appunto).bind 'click', (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    container = $(@).closest($('.appunto'))
+    $(container).toggleClass 'favorited'
+
+    appunto = 
+        id: container.attr('id')
+        cliente_titolo: $('.full_name', container).text()
+
+    $('.side-right .well').append JST['appunti/baule'](appunto)
+
+
 
 jQuery ->
 

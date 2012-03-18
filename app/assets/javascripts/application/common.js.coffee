@@ -19,8 +19,6 @@ jQuery ->
   $(".search_options a, .filters a, .module a").live 'click', (e) ->
     e.preventDefault()
 
-    
-    
     cont = $(@).attr('href').split('?')[0] ||= ""
     params = $(@).attr('href').split('?')[1] ||= ""
     
@@ -31,17 +29,12 @@ jQuery ->
       controller = 'appunti'
       template = JST['appunti/appunto']    
 
-    console.log params
-  
     storageName = "pending#{controller.capitalize()}"
-    console.log storageName
     if !localStorage[storageName]
       localStorage[storageName] = JSON.stringify []
 
-
-
     $.get "/get_#{controller}_filters.js", params, (data) ->
-      console.log "data"
+      console.log data
     
     $.getJSON $(@).attr('href'), (data) ->
       pending = $.parseJSON localStorage[storageName]
@@ -55,8 +48,6 @@ jQuery ->
         else
           item = template(obj)
           $(item).hide().appendTo("##{controller}").fadeIn('slow')   
-     
-      $('time.timeago').timeago();
-
-
+        
+        window.initializeAppunto($(".appunto:last-child"))
 
