@@ -1,4 +1,6 @@
 - if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
+  - @controller = 'appunti'
+
   .module
     %ul.stats
       %li
@@ -34,6 +36,7 @@
 
 
 - if params[:action] == "get_clienti_filters" || params[:controller] == "clienti"
+  - @controller = 'clienti'
   .module
     %ul
       %li{ class: "#{ params[:tipo].present? ? '': 'active' }" }
@@ -70,13 +73,13 @@
 .module
   %ul
     %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
-      = link_to params.merge(:controller => params[:controller], :action => :index, :format => 'json').except(:provincia), class: "list-link" do
+      = link_to params.merge(:controller => @controller, :action => :index, :format => 'json').except(:provincia), class: "list-link" do
         Provincie
         %i.chev-right
 
     - for p in @provincie
       %li{ class: "#{ params[:provincia] == p.provincia ? 'active' : ''}" }
-        = link_to params.merge(:controller => params[:controller], :action => :index, :format => 'json').except(:comune).merge(:provincia => p.provincia, :page => nil), class: "list-link" do
+        = link_to params.merge(:controller => @controller, :action => :index, :format => 'json').except(:comune).merge(:provincia => p.provincia, :page => nil), class: "list-link" do
           = p.provincia
           %i.chev-right
           
@@ -84,14 +87,14 @@
 .module
   %ul
     %li{ class: "#{ params[:comune].present? ? '': 'active' }" }
-      = link_to params.merge(:controller => params[:controller], :action => :index, :format => 'json').except(:comune), class: "list-link"  do
+      = link_to params.merge(:controller => @controller, :action => :index, :format => 'json').except(:comune), class: "list-link"  do
         Comuni
         %i.chev-right
     
     - for c in @citta
       - unless c.nil? 
         %li{ class: "#{ params[:comune] == c.comune ? 'active' : ''}"}
-          = link_to params.merge(:controller => params[:controller], :action => :index, :format => 'json').merge(:comune => c.comune, :page => nil), class: "list-link"  do
+          = link_to params.merge(:controller => @controller, :action => :index, :format => 'json').merge(:comune => c.comune, :page => nil), class: "list-link"  do
             = c.comune
             %i.chev-right
         
