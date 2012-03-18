@@ -1,21 +1,34 @@
 - title "Clienti"
 
+
 .row
   .side-bar.span3
     = render :partial => 'shared/episode_views'
     = render :partial => 'shared/search_options'
-  .span9
-    .links
-      = link_to "Nuovo", new_cliente_path
-    %header
-      %h1 Clienti
+
+  .content-main.span6
+    %header.content-header
+      .header-inner
+        %h2 Clienti
     
     - if params[:tipo].present? || params[:provincia].present? || params[:citta].present? || params[:search].present?
       = render :partial => 'shared/filters'
-            
+
     #clienti{ 'data-json-url' => "#{ clienti_url( params.merge(:format => :json)) }" }
-      / - @clienti.each do |cliente|
-      /   = render "cliente", :mustache => cliente_for_mustache(cliente)
+    / - @appunti.each do |appunto|
+    /   = render "appunto"
+    .stream-loader
+      
+
+  .side-right.span3
+    .well
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+- @appunto = Appunto.new
+= render "appunti/modal"
+
+
         
 
     
