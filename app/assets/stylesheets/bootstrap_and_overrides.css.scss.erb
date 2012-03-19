@@ -113,6 +113,7 @@ body {
 .content-header,
 .filters,
 #appunti,
+#clienti,
 .stream-loader  {
   margin: 0 -15px 0 -15px;
 }
@@ -132,7 +133,7 @@ body {
 
 #appunti,
 #clienti {
-  .appunto {
+  .appunto, .cliente {
     .content {
       margin-left: 46px;
     }
@@ -257,7 +258,7 @@ body {
 
 @import "compass/utilities/lists/inline-list";
 
-.appunto {
+.appunto, .cliente {
   position: relative;
   .actions {
     position: absolute;
@@ -277,7 +278,7 @@ body {
 }
 
 
-#appunti > div {
+#appunti, #clienti > div {
 
   position: relative;
   min-height: 51px;

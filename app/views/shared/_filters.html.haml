@@ -1,27 +1,32 @@
 - if params[:search].present? || params[:tipo].present? || params[:status].present? || params[:provincia].present? ||  params[:comune].present?
-   .filters
-
+  
+  - if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
+    - @controller = 'appunti'
+  - elsif params[:action] == "get_clienti_filters" || params[:controller] == 'clienti'
+    - @controller = 'clienti'
+      
+  .filters
     .pull-right
-      %a.close{ href: '/appunti.json' } 
+      %a.close{ href: "/#{@controller}.json" } 
         x
     %strong Filtri: 
     - if params[:search].present?
       %span.filter
         = params[:search]
-        = link_to "x", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:search => nil, :page => nil)
+        = link_to "x", params.merge(:controller => @controller, :action => :index, :format => 'json').merge(:search => nil, :page => nil)
     - if params[:tipo].present?
       %span.filter
         = params[:tipo].humanize.downcase
-        = link_to "x", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:tipo => nil, :page => nil)
+        = link_to "x", params.merge(:controller => @controller, :action => :index, :format => 'json').merge(:tipo => nil, :page => nil)
     - if params[:status].present?
       %span.filter
         = params[:status].humanize.downcase
-        = link_to "x", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:status => nil, :page => nil)
+        = link_to "x", params.merge(:controller => @controller, :action => :index, :format => 'json').merge(:status => nil, :page => nil)
     - if params[:provincia].present?
       %span.filter
         = params[:provincia] 
-        = link_to "x", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:provincia => nil, :page => nil)
+        = link_to "x", params.merge(:controller => @controller, :action => :index, :format => 'json').merge(:provincia => nil, :page => nil)
     - if params[:comune].present?
       %span.filter
         = params[:comune] 
-        = link_to "x", params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(:comune => nil, :page => nil)
+        = link_to "x", params.merge(:controller => @controller, :action => :index, :format => 'json').merge(:comune => nil, :page => nil)
