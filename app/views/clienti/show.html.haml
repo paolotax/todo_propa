@@ -8,7 +8,7 @@
       %article.cliente.well
       
         - unless @cliente.latitude.nil?
-          #gmap_page.pull-left
+          .map-avatar.pull-left
             - @mappa = @cliente.to_gmaps4rails
             = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
         %div{ style: "margin-left: 330px"}  
@@ -32,8 +32,22 @@
             %br
             %i{ class: 'icon-envelope'}
             = @cliente.email
-          
           .clearfix
+
+        .pull-right
+          %button.btn.btn-danger 
+            %i.icon-trash
+            Elimina
+          %button.btn 
+            %i.icon-print
+            Stampa
+          = link_to edit_cliente_path(@cliente), class: "btn btn-primary" do
+            %i.icon-pencil
+            Modifica
+          
+
+ 
+          
           
           
         %footer

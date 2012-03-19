@@ -2,12 +2,18 @@
 
 
 .row
-  .span7.well
+  .span7
     / = render 'shared/title_bar', title: "Modifica cliente"
-    %h2 Modifica Cliente
-    %hr
-    = render 'form'
-  .span3
     .well
-      = render 'shared/non_solo_cap'
+      %h2 Modifica Cliente
+      %hr
+      = render 'form'
+  .span5
+    .well
+      #gmaps_page.map-editable
+        - @mappa = @cliente.to_gmaps4rails
+        = gmaps( {:markers => {:data => @mappa, :options => { :draggable => true  }}, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+        %p.help-block Trascina il puntatore sul punto esatto e salva le modifiche.
 
+    .well
+      = render 'shared/non_solo_cap'      

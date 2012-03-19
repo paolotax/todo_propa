@@ -109,15 +109,15 @@ class Cliente < ActiveRecord::Base
   
   # after_validation :geocode, 
   #                        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.citta_changed? || obj.cap_changed? || obj.indirizzable.citta_changed? }
-
+  
   def full_street_address
-    [self.indirizzo, self.cap, self.frazione, self.comune, self.provincia].join(', ')
+    # [self.indirizzo, self.cap, self.frazione, self.comune, self.provincia].join(', ')
   end
   
   acts_as_gmappable
   
   def gmaps4rails_address
-    "#{self.indirizzo}, #{self.frazione}, #{self.comune}, #{self.cap}, #{self.provincia}"
+    "#{self.indirizzo}, #{self.frazione}, #{self.comune}, #{self.provincia}"
   end
   
   def gmaps4rails_infowindow

@@ -45,17 +45,13 @@
   
   %fieldset
     %legend Mappa
-    .control-group
-      .controls
-        - @mappa = f.object.to_gmaps4rails
-        = gmaps( {:markers => {:data => @mappa, :options => { :draggable => true  }}, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-    
     = f.input :gmaps
     = f.input :latitude
     = f.input :longitude
     
   = f.error :base
         
+  %fieldset
   .control-group
     .controls
-      = f.button :submit
+      = f.button :submit, :class => 'btn-primary'
