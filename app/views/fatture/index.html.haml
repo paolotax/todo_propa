@@ -14,7 +14,7 @@
       %td= fattura.numero
       %td= fattura.data
       %td= fattura.cliente_id
-      %td= link_to 'Show', fattura
+      %td= link_to 'Show', fattura_path(fattura, format: 'pdf')
       %td= link_to 'Edit', edit_fattura_path(fattura)
       %td= link_to 'Destroy', fattura, :confirm => 'Are you sure?', :method => :delete
 

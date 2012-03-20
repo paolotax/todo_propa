@@ -1,6 +1,5 @@
 class FattureController < ApplicationController
-  # GET /fatture
-  # GET /fatture.json
+
   def index
     @fatture = Fattura.all
 
@@ -10,14 +9,22 @@ class FattureController < ApplicationController
     end
   end
 
-  # GET /fatture/1
-  # GET /fatture/1.json
   def show
-    @fattura = Fattura.find(params[:id])
+    @fattura = Fattura.includes(:cliente, :user, :righe => [:libro]).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @fattura }
+      
+      format.pdf do
+        # @fattura = Array(@fattura)
+        pdf = FatturaPdf.new(@fattura, view_context)
+        send_data pdf.render, filename: "fattura_#{@fattura.id}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline",
+      
+      end
+      
     end
   end
 

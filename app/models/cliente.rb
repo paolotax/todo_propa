@@ -38,6 +38,7 @@ class Cliente < ActiveRecord::Base
   scope :previous, lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} < ?", i.user_id, i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
   scope :next,     lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} > ?", i.user_id, i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
   
+  scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
   
   def self.con_appunti(relation)
     ids = relation.pluck(:cliente_id).uniq

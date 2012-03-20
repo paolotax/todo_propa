@@ -1,4 +1,16 @@
 class Fattura < ActiveRecord::Base
+
+  belongs_to :cliente
+  belongs_to :user
+  
+  has_many :righe, :dependent => :nullify
+  has_many :appunti, :through => :righe
+  
+  validates :data, :presence => true
+  validates :numero, :presence => true
+  
+  scope :per_numero, order('fatture.numero desc')
+
 end
 
 # == Schema Information

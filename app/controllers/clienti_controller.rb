@@ -4,7 +4,7 @@ class ClientiController < ApplicationController
   
   def index
 
-    @search = current_user.clienti.order('clienti.provincia, clienti.comune, clienti.id').filtra(params)
+    @search = current_user.clienti.per_localita.filtra(params)
     @search_appunti = current_user.appunti.filtra(params.except(:status))
     
     @in_corso   = Cliente.con_appunti(@search_appunti.in_corso).size
