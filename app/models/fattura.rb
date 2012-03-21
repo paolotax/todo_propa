@@ -9,7 +9,7 @@ class Fattura < ActiveRecord::Base
   validates :data, :presence => true
   validates :numero, :presence => true
   
-  scope :per_numero, order('fatture.numero desc')
+  scope :per_numero, order('fatture.data desc, fatture.numero desc')
 
 end
 

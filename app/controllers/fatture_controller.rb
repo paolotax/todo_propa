@@ -1,8 +1,9 @@
 class FattureController < ApplicationController
 
   def index
-    @fatture = Fattura.all
-
+    @fatture = Fattura.per_numero
+    @fatture_per_anno = @fatture.group_by { |t| t.data.beginning_of_year }
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @fatture }

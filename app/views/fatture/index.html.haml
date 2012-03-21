@@ -1,23 +1,51 @@
-%h1 Listing fatture
+.row
+  .side-bar.span3
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  
+  .content-main.span6
+    %header.content-header
+      .header-inner
+        %h2 Fatture
+    
+    
+    #fatture.list
+      - @fatture_per_anno.each do |a, fatture|
+        .appunto.item 
+          %h3= a.strftime("%Y")
+        %table.table
+          %thead
+            %tr
+              %th
+                .pull-right #
+              %th Data
+              %th Cliente
+              %th
+                .pull-right Copie
+              %th
+                .pull-right Importo
+              %th
+              %th
+              %th
+          %tbody
+            - fatture.each do |fattura|
+              %tr.item
+                %td
+                  .pull-right= fattura.numero
+                %td= l fattura.data, format: :only_date
+                %td= link_to fattura.cliente.titolo, cliente_path(fattura.cliente)
+                %td
+                  .pull-right
+                    %strong= fattura.totale_copie
+                %td= pretty_prezzo fattura.importo_fattura
+                %td= link_to 'pdf', fattura_path(fattura, format: 'pdf')
+                %td= link_to 'modifica', edit_fattura_path(fattura)
+                %td= link_to 'elimina', fattura, :confirm => 'Are you sure?', :method => :delete
+            
+            
+            
 
-%table
-  %tr
-    %th Numero
-    %th Data
-    %th Cliente
-    %th
-    %th
-    %th
+          
+          
 
-  - @fatture.each do |fattura|
-    %tr
-      %td= fattura.numero
-      %td= fattura.data
-      %td= fattura.cliente_id
-      %td= link_to 'Show', fattura_path(fattura, format: 'pdf')
-      %td= link_to 'Edit', edit_fattura_path(fattura)
-      %td= link_to 'Destroy', fattura, :confirm => 'Are you sure?', :method => :delete
 
-%br
 
-= link_to 'New Fattura', new_fattura_path

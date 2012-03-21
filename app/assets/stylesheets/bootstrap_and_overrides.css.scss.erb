@@ -127,7 +127,8 @@ body {
 .content-header,
 .filters,
 #appunti,
-#clienti, 
+#clienti,
+.list, 
 .stream-loader  {
   margin: 0 -15px 0 -15px;
 }
@@ -144,6 +145,24 @@ body {
   border-radius: 0 0 5px 5px;
 }
 
+
+.list {
+  .item {
+    position: relative;
+    min-height: 51px;
+    padding: 9px 12px 9px;
+    border-bottom: 1px solid #E8E8E8;
+
+    background: white;
+    border-left: 1px solid #E8E8E8;
+    border-left: 1px solid rgba(0, 0, 0, .1);
+    border-right: 1px solid #E8E8E8;
+    border-right: 1px solid rgba(0, 0, 0, .1);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+  }
+}
 
 #appunti,
 #clienti {
