@@ -6,7 +6,7 @@
   <ul data-role="listview">
   <% @appunti.each do |appunto| %>
     <li>
-    <%= link_to appunto do %>
+    <%= link_to edit_appunto_path(appunto) do %>
       <h2><%= appunto.cliente_nome %></h2>
       <%= appunto.destinatario %>
       <%= truncate(appunto.note, :length => 25) %>
