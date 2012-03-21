@@ -4,4 +4,17 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
 
  *= require jquery.mobile
+ *= require_self
 */
+
+.logo-mobile {
+  
+  text-align: center;
+  font-size: 25px;
+}
+
+.logo-mobile img {
+  
+  
+  
+}
