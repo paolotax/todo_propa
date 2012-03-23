@@ -29,18 +29,27 @@ class FattureController < ApplicationController
     end
   end
 
-  # GET /fatture/new
-  # GET /fatture/new.json
+
   def new
     @fattura = Fattura.new
-
+    
+    if params[:appunto].present?
+      @appunto = Appunto.includes([:cliente, :righe]).find(params[:appunto])
+      @fattura.cliente = @appunto.cliente
+      @fattura.add_righe_from_appunto(@appunto)      
+    end  
+    
+    @fattura.numero = @fattura.get_new_id(current_user)
+    @fattura.data   = Time.now
+    @fattura.user   = current_user
+    # @appunto_righe = AppuntoRiga.includes([:appunto, :libro]).per_scuola(@scuola).da_fatturare.per_appunto
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @fattura }
     end
   end
 
-  # GET /fatture/1/edit
   def edit
     @fattura = Fattura.find(params[:id])
   end

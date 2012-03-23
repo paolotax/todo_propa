@@ -126,6 +126,11 @@
             %a{ href: "/appunti/#{@id}/edit", title: 'modifica appunto'}
               %i.icon-pencil
               Modifica
+          %li.fattura
+            %a{ href: "/fatture/new?appunto=#{@id}", title: 'fattura appunto'}
+              %i.icon-pencil
+              Fattura
+              
           %li.baule
             %a{ title: 'metti nel baule!'}
               %i.icon-shopping-cart
