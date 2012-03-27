@@ -63,19 +63,27 @@ class AppuntoPdf < Prawn::Document
     move_down 10
     table line_item_rows do
       row(0).font_style = :bold
-      columns(1..4).align = :right
-      columns(0).width = 210
+      columns(1..5).align = :right
+      columns(0).width = 200
       columns(1).width = 60
-      columns(2..4).width = 80
+      # columns(2..3).width = 70
+      # columns(5).width = 80
       self.row_colors = ["DDDDDD", "FFFFFF"]
       self.header = true
     end
   end
 
   def line_item_rows
-    [["Titolo", "Quantità", "Pr. copertina", "Prezzo unitario", "Importo"]] +
+    [["Titolo", "Quantità", "Pr. copertina", "Sconto", "Prezzo unitario", "Importo"]] +
     @righe.per_libro_id.map do |item|
-      [item.titolo, item.quantita, price(item.prezzo_copertina), price(item.prezzo), price(item.importo) ]
+      [
+        item.titolo, 
+        item.quantita, 
+        price(item.prezzo_copertina), 
+        
+        item.sconto == 0.0 ? price(item.prezzo_copertina - item.prezzo) : item.sconto, 
+        price(item.prezzo), 
+        price(item.importo) ]
     end
   end
   
