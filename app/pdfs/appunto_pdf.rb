@@ -82,7 +82,7 @@ class AppuntoPdf < Prawn::Document
         price(item.prezzo_copertina), 
         
         item.sconto == 0.0 ? price(item.prezzo_copertina - item.prezzo) : item.sconto, 
-        price(item.prezzo), 
+        price(item.prezzo_unitario), 
         price(item.importo) ]
     end
   end
