@@ -5,6 +5,7 @@ class Appunto < ActiveRecord::Base
   
   has_many :righe, :dependent => :destroy
   
+  has_many :visita_appunti, dependent: :destroy
   has_many :visite, :through => :visita_appunti
   
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => true
@@ -26,6 +27,14 @@ class Appunto < ActiveRecord::Base
   
   
   before_save :leggi
+  
+  def nel_baule
+    if self.visite.nel_baule.empty?
+      return false
+    else
+      self.visite.nel_baule.uniq[0].id
+    end
+  end
   
   def to_s
     "##{id} - #{destinatario} (#{cliente_nome})"

@@ -1,6 +1,6 @@
 / encoding: utf-8
 
-%div{ class: "appunto #{@stato}", id: "appunto_#{@id}"}
+%div{ class: "appunto #{@stato} #{if @nel_baule isnt false then 'favorited' else ''}", id: "appunto_#{@id}"}
   .content
     .dogear
     %small.time
@@ -17,9 +17,17 @@
             %i.icon-pencil
             Modifica
         %li.baule
-          %a{ title: 'metti nel baule!'}
-            %i.icon-shopping-cart
-            Nel baule
+          - if @nel_baule isnt false
+            %a{ href: "/visite/#{@nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+              %i.icon-shopping-cart
+              Scarica baule
+          - else
+            %form{ action: '/visite', method: 'post', 'data-remote' => true }
+              %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{@cliente_id}"}
+              %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
+              %button{ title: 'metti nel baule!'}
+                %i.icon-shopping-cart
+                Nel baule
         %li
           = " | "
         %li.show
@@ -132,12 +140,15 @@
               Fattura
               
           %li.baule
-            %a{ title: 'metti nel baule!'}
-              %i.icon-shopping-cart
-              Nel baule
-          %li
-            = " | "
-          %li.show
-            %a{ title: 'mostra dettagli'}
-              Apri
-        
+            - if @nel_baule isnt false
+              %a{ href: "/visite/#{@nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+                %i.icon-shopping-cart
+                Scarica baule
+            - else
+              %form{ action: '/visite', method: 'post', 'data-remote' => true }
+                %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{@cliente_id}"}
+                %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
+                %button{ title: 'metti nel baule!'}
+                  %i.icon-shopping-cart
+                  Nel baule
+  

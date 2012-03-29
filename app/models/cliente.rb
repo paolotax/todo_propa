@@ -142,6 +142,11 @@ class Cliente < ActiveRecord::Base
     self.save
   end
   
+  
+  def nel_baule?
+    !self.visite.nel_baule.empty?
+  end
+  
   private
   
     def set_titolo

@@ -7,8 +7,9 @@ TodoPropa::Application.routes.draw do
   match '/get_clienti_filters', :controller => :search, :action  => :get_clienti_filters, :format => :js
   
   resources :visite do
-    resources :visita_righe
+    resources :visita_appunti
   end
+
   
   resources :comuni
 
@@ -28,7 +29,7 @@ TodoPropa::Application.routes.draw do
   resources :clienti do
     
     resources :indirizzi
-    
+
     collection do
       put :update_attribute_on_the_spot
     end

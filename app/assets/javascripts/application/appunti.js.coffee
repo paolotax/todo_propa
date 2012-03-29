@@ -6,8 +6,10 @@ window.initializeAppunto = (appunto) ->
 
   $('time.timeago', appunto).timeago();
   
-  appunto.bind 'click', (e) ->
-    $(@).toggleClass 'opened'
+  # appunto.bind 'dblclick', (e) ->
+  #   e.stopPropagation()
+  #   e.preventDefault()
+  #   $(@).toggleClass 'opened'
 
   $('.stato', appunto).bind 'click', (e) ->
     e.stopPropagation()
@@ -48,17 +50,17 @@ window.initializeAppunto = (appunto) ->
   # appunto = $(@).closest($('.appunto'))
   # appunto.addClass('opened')
   
-  $('.baule a', appunto).bind 'click', (e) ->
-    e.stopPropagation()
-    e.preventDefault()
-    container = $(@).closest($('.appunto'))
-    $(container).toggleClass 'favorited'
-
-    appunto = 
-        id: container.attr('id')
-        cliente_titolo: $('.full_name', container).text()
-
-    $('.side-right .well').append JST['appunti/baule'](appunto)
+  # $('.baule a', appunto).bind 'click', (e) ->
+  #   e.stopPropagation()
+  #   e.preventDefault()
+  #   container = $(@).closest($('.appunto'))
+  #   $(container).toggleClass 'favorited'
+  # 
+  #   appunto = 
+  #     id: container.attr('id')
+  #     cliente_titolo: $('.full_name', container).text()
+  #     
+  #   $('.side-right .well').append JST['appunti/baule'](appunto)
 
 
 

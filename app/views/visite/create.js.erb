@@ -1,0 +1,9 @@
+<%- @visita.appunti.each do |a|  %>
+  console.log("#<%= dom_id(@visita) %>")
+  
+  appunto = $("#<%= dom_id(a) %>")
+  appunto.toggleClass('favorited');
+  $('.baule', appunto).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
+
+
+<% end %>

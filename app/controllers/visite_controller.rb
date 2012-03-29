@@ -16,8 +16,11 @@ class VisiteController < ApplicationController
 
   def destroy
     @visita = Visita.find(params[:id])
+    @cliente = @visita.cliente
     @visita.destroy
-    flash[:notice] = 'Visita eliminata.'
+    respond_to do |format|
+      format.js
+    end
     # respond_to do |format|
     #   format.html { redirect_to visite_url }
     #   format.js

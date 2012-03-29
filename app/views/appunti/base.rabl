@@ -9,6 +9,7 @@ code do |u|
     stato:        stato_to_s(u),
     con_recapiti: u.has_recapiti?,
     con_righe:    u.has_righe?,
+    nel_baule:    u.nel_baule, 
     auth_token:   form_authenticity_token 
   }
 end
