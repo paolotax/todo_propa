@@ -1,5 +1,7 @@
 TodoPropa::Application.routes.draw do
 
+  match '/baule', controller: 'baule', action: 'show'
+
   resources :visita_appunti
 
   match '/:action.appcache', :controller => 'appcache', :format => :appcache

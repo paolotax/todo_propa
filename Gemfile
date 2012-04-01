@@ -15,7 +15,7 @@ end
 gem 'bootstrap-sass', git: "https://github.com/thomas-mcdonald/bootstrap-sass.git", branch: '2.0.2'
 gem "compass-rails", ">= 0.12"
 gem 'sass'
-gem "haml", ">= 3.1.4"
+gem "haml-rails"
 
 # gem 'haml-rails'
 gem 'jquery-rails'
