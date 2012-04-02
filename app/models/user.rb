@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :clienti
   has_many :appunti, :through => :clienti
+  has_many :visite, :through => :clienti
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

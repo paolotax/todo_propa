@@ -1,2 +1,20 @@
-%h1 Baule#show
-%p Find me in app/views/baule/show.html.haml
+.well
+  .map-baule
+    - @mappa = @clienti.to_gmaps4rails
+    = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
+
+.well
+  %ul
+    - for v in @visite do
+      %li= v.cliente.titolo
+      %ul
+        - for a in v.appunti do
+          %li= a.note
+          %ul 
+            - for r in a.righe do
+              %li
+                = r.libro.titolo
+                = r.quantita
+                = r.importo
+              
+    
