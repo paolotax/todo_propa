@@ -2,7 +2,9 @@
   .map-baule
     - @mappa = @clienti.to_gmaps4rails
     = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
-
+    
+  = link_to "Svuota baule", baule_rimuovi_path
+  
 .well
   %ul
     - for v in @visite do
