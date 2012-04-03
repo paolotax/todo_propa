@@ -23,6 +23,8 @@
 //= require_tree ../templates
 //= require_tree ./application
 
+//= require stuff
+
 //pads left
 String.prototype.lpad = function(padString, length) {
 	var str = this;
