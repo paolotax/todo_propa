@@ -4,12 +4,18 @@
 
 window.initializeAppunto = (appunto) ->
 
-  $('time.timeago', appunto).timeago();
+  # $('time.timeago', appunto).timeago();
   
   # appunto.bind 'dblclick', (e) ->
   #   e.stopPropagation()
   #   e.preventDefault()
   #   $(@).toggleClass 'opened'
+  
+  $('a.giunti-url').bind 'click', (e) ->
+    e.preventDefault()
+    alert 'clicked'
+    $('input[name=remote_image_url]').val "http://catalogo.giunti.it/librig/#{ $('input[name=cm]').val()}.jpg"
+    
 
   $('.stato', appunto).bind 'click', (e) ->
     e.stopPropagation()
