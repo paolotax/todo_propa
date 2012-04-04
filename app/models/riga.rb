@@ -10,7 +10,7 @@ class Riga < ActiveRecord::Base
   delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :to => :libro
 
   scope :per_libro_id, order("righe.libro_id")
-
+  scope :da_consegnare, joins(:appunto).where("appunti.stato is null or appunti.stato = ''")
 
   def prezzo
     if sconto == 0.0

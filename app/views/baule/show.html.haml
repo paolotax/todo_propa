@@ -4,7 +4,7 @@
     = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
     
   = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning'
-  
+
 .well
   %ul
     - for v in @visite do
@@ -19,4 +19,10 @@
                 = r.quantita
                 = r.importo
               
-    
+.well
+  %table.table.libri-nel-baule
+    - for libro in @libri_nel_baule do
+      %tr
+        %td= libro[:titolo]
+        %td
+          .pull-right= libro[:copie]
