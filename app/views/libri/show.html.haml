@@ -35,4 +35,7 @@
             %i.icon-pencil
             Modifica
         .clearfix
+      %footer
+        = link_to '< previous', Libro.previous(@libro, 'titolo').first
+        = link_to 'next >',     Libro.next(@libro, 'titolo').first
           
