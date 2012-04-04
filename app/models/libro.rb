@@ -34,6 +34,8 @@ class Libro < ActiveRecord::Base
   def carica_image_da_giunti
     self.remote_image_url = "http://catalogo.giunti.it/librig/#{self.cm}.jpg"
   end
+  
+
 end
 
 

@@ -9,7 +9,8 @@
       %article.libro.well
       
         .copertina{ style: "float: left;"}  
-          / = image_tag @libro.image_url
+          / = image_tag copertina(@libro)
+          = image_tag @libro.image_url
         
         %div{ style: "margin-left: 150px"}  
           %h1= @libro.titolo

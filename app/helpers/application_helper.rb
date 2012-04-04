@@ -48,6 +48,10 @@ module ApplicationHelper
     end
   end
   
+  def copertina(libro)
+    libro.image ||= asset_path('default-copertina.gif')
+  end
+  
   
   def gravatar(user, options = {})
     email_address = user.email.downcase
