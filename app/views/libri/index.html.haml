@@ -14,7 +14,7 @@
     %tbody
       - for libro in @libri do
         %tr
-          %td= link_to libro.id, libro
+          %td= link_to image_tag(libro.image_url(:small_thumb)), libro
           %td= on_the_spot_edit libro, :titolo
           %td= on_the_spot_edit libro, :settore, type: :select, data: ::Libro::SETTORI_OPT
           %td= on_the_spot_edit libro, :cm,      selected: true

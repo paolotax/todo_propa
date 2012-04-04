@@ -3,7 +3,7 @@
 class ImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
+  include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
@@ -19,7 +19,18 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
-    [version_name, "default-copertina.jpeg"].compact.join('_')
+    [version_name, "default-copertina.jpg"].compact.join('_')
+  end
+
+
+  process :resize_to_fit => [120, 176]
+
+  version :small_thumb do
+    process :resize_to_limit => [32, 47]
+  end
+  
+  version :thumb do
+    process :resize_to_limit => [50, 74]
   end
 
   # Process files as they are uploaded:

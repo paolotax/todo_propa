@@ -26,8 +26,12 @@ gem 'redcarpet', '1.17.2'
 
 gem 'rabl'
 gem 'yajl-ruby'
+
+gem 'rmagick'
 gem 'fog'
 gem 'carrierwave'
+
+
 gem 'friendly_id'
 gem 'prawn'
 
