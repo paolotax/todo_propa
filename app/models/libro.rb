@@ -15,7 +15,7 @@ class Libro < ActiveRecord::Base
                 ]
 
   extend FriendlyId
-  friendly_id :titolo
+  friendly_id :titolo, use: [:slugged, :history]
   
   has_many :righe
   

@@ -3,8 +3,8 @@ class Cliente < ActiveRecord::Base
   TIPI_CLIENTI = ['Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica', 'Cartolibreria', 'Persona Fisica', 'Ditta', 'Comune']
   ABBR_TIPI    = ['E', 'IC', 'D', 'C', '', '', 'Com']
   
-  # extend FriendlyId
-  # friendly_id :nome
+  extend FriendlyId
+  friendly_id :titolo, use: [:slugged, :history]
 
   belongs_to :user
 

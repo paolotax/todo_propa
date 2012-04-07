@@ -22,9 +22,8 @@ class ClientiController < ApplicationController
 
   def show
     @cliente = current_user.clienti.includes(:indirizzi).find(params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @cliente }
+    if request.path != cliente_path(@cliente)
+      redirect_to @cliente, status: :moved_permanently
     end
   end
 

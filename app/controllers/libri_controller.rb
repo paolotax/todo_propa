@@ -11,7 +11,9 @@ class LibriController < ApplicationController
 
   def show
     @libro = Libro.find(params[:id])
-    respond_with @libro
+    if request.path != libro_path(@libro)
+      redirect_to @libro, status: :moved_permanently
+    end
   end
 
   def new
