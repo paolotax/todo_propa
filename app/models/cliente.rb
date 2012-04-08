@@ -11,7 +11,12 @@ class Cliente < ActiveRecord::Base
   has_many :appunti, dependent: :destroy
   has_many :visite,  dependent: :destroy
   has_many :indirizzi, :as => :indirizzable, :dependent => :destroy
+
+  has_many :classi,      :dependent => :destroy
+  has_many :adozioni, :through => :classi, :include => :libro
+  has_many :mie_adozioni, :through => :classi, :source => :adozioni, :include => :libro, :conditions => "libri.settore = 'Scolastico'"
   
+
   accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:comune].nil? || a[:provincia].nil?}, :allow_destroy => true  
   
   validates :titolo,  :presence => true,
@@ -66,6 +71,22 @@ class Cliente < ActiveRecord::Base
   def to_s
     "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end
+  
+  def mie_adozioni_grouped
+    adozioni = self.mie_adozioni.
+                    includes(:libro, :classe, :materia).
+                    order('classi.classe, adozioni.materia_id, classi.sezione, libri.id').
+                    group_by {|c| { :classe => c.classe.classe, :materia => c.materia.materia, :titolo => c.libro.titolo, :settore => c.libro.settore }}
+  end
+  
+  def classi_grouped
+    classi = self.classi.
+                    order('classi.classe, classi.sezione').
+                    group_by(&:classe)
+  end
+  
+  
+  
   
   # def indirizzo
   #   ind = self.indirizzi.where(tipo: "Indirizzo fattura").last

@@ -1,0 +1,19 @@
+%h1 Listing materie
+
+%table
+  %tr
+    %th Materia
+    %th
+    %th
+    %th
+
+  - @materie.each do |materia|
+    %tr
+      %td= materia.materia
+      %td= link_to 'Show', materia
+      %td= link_to 'Edit', edit_materia_path(materia)
+      %td= link_to 'Destroy', materia, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Materia', new_materia_path

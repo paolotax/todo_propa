@@ -8,7 +8,17 @@
 .well
   %ul
     - for v in @visite do
-      %li= v.cliente.titolo
+      %li
+        %h2= v.cliente.titolo
+      
+      
+      .row
+        .span5
+          = render 'classi/classi', cliente: v.cliente
+        .span6
+          = render 'adozioni/adozioni', cliente: v.cliente
+
+      
       %ul
         - for a in v.appunti do
           %li= a.note

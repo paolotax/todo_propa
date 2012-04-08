@@ -1,0 +1,17 @@
+%h1 Listing classi
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @classi.each do |classe|
+    %tr
+      %td= link_to 'Show', classe
+      %td= link_to 'Edit', edit_classe_path(classe)
+      %td= link_to 'Destroy', classe, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Classe', new_classe_path

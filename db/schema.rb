@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120407055016) do
+ActiveRecord::Schema.define(:version => 20120408064626) do
+
+  create_table "adozioni", :force => true do |t|
+    t.integer  "classe_id"
+    t.integer  "libro_id"
+    t.integer  "materia_id"
+    t.integer  "nr_copie",   :default => 0
+    t.integer  "nr_sezioni", :default => 0
+    t.string   "anno"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "adozioni", ["classe_id"], :name => "index_adozioni_on_classe_id"
+  add_index "adozioni", ["libro_id"], :name => "index_adozioni_on_libro_id"
+  add_index "adozioni", ["materia_id"], :name => "index_adozioni_on_materia_id"
 
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
@@ -34,6 +49,20 @@ ActiveRecord::Schema.define(:version => 20120407055016) do
   add_index "appunti", ["cliente_id"], :name => "index_appunti_on_cliente_id"
   add_index "appunti", ["stato"], :name => "index_appunti_on_stato"
   add_index "appunti", ["user_id"], :name => "index_appunti_on_user_id"
+
+  create_table "classi", :force => true do |t|
+    t.integer  "classe"
+    t.string   "sezione"
+    t.integer  "nr_alunni",  :default => 0
+    t.integer  "cliente_id"
+    t.string   "spec_id"
+    t.string   "sper_id"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "classi", ["cliente_id", "classe", "sezione"], :name => "index_classi_on_scuola_id_and_classe_and_sezione", :unique => true
+  add_index "classi", ["cliente_id"], :name => "index_classi_on_cliente_id"
 
   create_table "clienti", :force => true do |t|
     t.string   "titolo"
@@ -152,6 +181,10 @@ ActiveRecord::Schema.define(:version => 20120407055016) do
   add_index "libri", ["settore"], :name => "index_libri_on_settore"
   add_index "libri", ["slug"], :name => "index_libri_on_slug"
   add_index "libri", ["titolo"], :name => "index_libri_on_titolo"
+
+  create_table "materie", :force => true do |t|
+    t.string "materia"
+  end
 
   create_table "righe", :force => true do |t|
     t.integer  "libro_id"

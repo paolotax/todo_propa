@@ -18,6 +18,14 @@ class Libro < ActiveRecord::Base
   friendly_id :titolo, use: [:slugged, :history]
   
   has_many :righe
+  has_many :adozioni, dependent: :nullify
+  
+  #default_scope order("libri.id")  
+  scope :per_classe_e_materia, lambda {
+                                  |cl,mat| joins(:adozioni => :classe).
+                                           select('distinct libri.*').
+                                           where('classi.classe = ?', cl).
+                                           where('adozioni.materia_id = ?', mat) }
   
   mount_uploader :image, ImageUploader
   

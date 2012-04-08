@@ -1,0 +1,21 @@
+%table#scuola_classi.table
+  %thead
+    %tr
+      %th= "classe"
+      %th= "sezioni"
+      %th= "alunni"
+      / %th
+      /   = form_tag  edit_individual_scuola_classi_path(@scuola) do
+      /     = submit_tag "Modifica"
+  %tbody
+    - cliente.classi_grouped.each do |k, v|
+      %tr
+        %td= k.to_s
+        %td= v.map {|c| c.sezione}.sort.join
+        %td= v.sum(&:nr_alunni)
+        / %td
+        /   = form_tag  edit_individual_scuola_classi_path(@scuola) do
+        /     - ids = v.map(&:id)
+        /     - for i in ids
+        /       = hidden_field_tag 'classe_ids[]', i
+        /     = submit_tag 'Modifica'

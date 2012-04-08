@@ -9,7 +9,9 @@ class Visita < ActiveRecord::Base
   
   has_many :visita_appunti, dependent: :destroy
   has_many :appunti, :through => :visita_appunti
-
+  
+  has_many :adozioni, :through => :cliente
+  
   scope :nel_baule, where(baule: true)
   
   after_create :add_appunti
@@ -17,6 +19,11 @@ class Visita < ActiveRecord::Base
   def nel_baule?
     self.baule == true
   end
+  
+  def mie_adozioni_grouped_titolo
+    self.cliente.mie_adozioni.group_by(&:libro_id).sum(:nr_copie) || []
+  end
+  
   
   def add_appunti
     self.da_fare.each do |appunto|

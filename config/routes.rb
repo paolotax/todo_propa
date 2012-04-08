@@ -1,5 +1,11 @@
 TodoPropa::Application.routes.draw do
 
+  resources :materie
+
+  resources :classi
+
+  resources :adozioni
+
   match '/baule', controller: 'baule', action: 'show'
   match '/baule/rimuovi', controller: 'baule', action: 'destroy'
   
