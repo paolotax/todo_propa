@@ -187,13 +187,15 @@ body {
     .more {
       display: none;
     }
-    .content .actions .nav-appunto {
+    .content .actions .nav-appunto,
+    .content .actions .nav-cliente, {
       display: none;
     }
     &:hover .time {
       display:none;
     }
-    &:hover .content .actions .nav-appunto {
+    &:hover .content .actions .nav-appunto,
+    &:hover .content .actions .nav-cliente {
       display:block;
     }
     
@@ -332,7 +334,8 @@ body {
 
 
 
-.nav-appunto {
+.nav-appunto,
+.nav-cliente {
   @include inline-list;
 }
 

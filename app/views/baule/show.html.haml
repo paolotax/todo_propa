@@ -11,14 +11,12 @@
       %li
         %h2= v.cliente.titolo
       
-      
       .row
         .span5
           = render 'classi/classi', cliente: v.cliente
         .span6
           = render 'adozioni/adozioni', cliente: v.cliente
 
-      
       %ul
         - for a in v.appunti do
           %li= a.note
@@ -28,11 +26,21 @@
                 = r.libro.titolo
                 = r.quantita
                 = r.importo
-              
-.well
-  %table.table.libri-nel-baule
-    - for libro in @libri_nel_baule do
-      %tr
-        %td= libro[:titolo]
-        %td
-          .pull-right= libro[:copie]
+.row              
+  .well.span5
+    %h2 Ordini nel baule
+    %table.table.libri-nel-baule
+      - for libro in @libri_nel_baule do
+        %tr
+          %td= libro[:titolo]
+          %td
+            .pull-right= libro[:quantita]
+
+  .well.span5
+    %h2 Adozioni nel baule
+    %table.table.adozioni-nel-baule
+      - for libro in @adozioni_nel_baule do
+        %tr
+          %td= libro[:titolo]
+          %td
+            .pull-right= libro[:quantita]

@@ -1,9 +1,20 @@
-<%- @visita.appunti.each do |a|  %>
-  console.log("#<%= dom_id(@visita) %>")
-  
-  appunto = $("#<%= dom_id(a) %>")
-  appunto.toggleClass('favorited');
-  $('.baule', appunto).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
+if ($('#appunti').length > 0) {
+  <%- @visita.appunti.each do |a|  %>
+    appunto = $("#<%= dom_id(a) %>")
+    appunto.toggleClass('favorited');
+    $('.baule', appunto).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
+  <% end %>  
+};
+
+if ($('#clienti').length > 0) {
+  cliente = $("#<%= dom_id(@visita.cliente) %>")
+  cliente.toggleClass('favorited');
+  $('.baule', cliente).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
+};
+
+var new_navbar = $("<%= escape_javascript(render 'shared/header') %>")
+var new_toolbar = $(".toolbar-buttons.pull-right", new_navbar)
+$(".navbar.navbar-fixed-top .toolbar-buttons.pull-right").replaceWith(new_toolbar)
 
 
-<% end %>
+

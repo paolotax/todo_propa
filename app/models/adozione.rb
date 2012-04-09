@@ -9,7 +9,7 @@ class Adozione < ActiveRecord::Base
                                         :message => "e' gia' stata utilizzata"}  
                                         
                                         
-  scope :scolastico, joins(:libro).where("libri.type = 'Scolastico'")
+  scope :scolastico, joins(:libro).where("libri.settore = 'Scolastico'")
   # scope :per_scuola, lambda {|s| }
   
   scope :per_classe_e_sezione, joins(:classe).order("classi.classe, classi.sezione, adozioni.materia_id")

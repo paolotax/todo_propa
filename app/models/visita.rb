@@ -21,7 +21,7 @@ class Visita < ActiveRecord::Base
   end
   
   def mie_adozioni_grouped_titolo
-    self.cliente.mie_adozioni.group_by(&:libro_id).sum(:nr_copie) || []
+    self.cliente.mie_adozioni.group_by(&:libro_id) || []
   end
   
   

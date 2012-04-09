@@ -1,4 +1,37 @@
-%div{ class: "cliente ", id: "cliente_#{@id}" }
+%div{ class: "cliente #{if @nel_baule isnt false then 'favorited' else ''}", id: "cliente_#{@id}" }
+  .content
+    .dogear
+    .actions
+      %ul.nav-cliente
+        %li.print
+          %a{ href: "/clienti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
+            %i.icon-tag
+            Stampa
+        %li.edit
+          %a{ href: "/clienti/#{@id}/edit", title: 'modifica cliente'}
+            %i.icon-pencil
+            Modifica
+        %li.baule
+          - if @nel_baule isnt false
+            %a{ href: "/visite/#{@nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+              %i.icon-shopping-cart
+              Scarica baule
+          - else
+            %form{ action: '/visite', method: 'post', 'data-remote' => true }
+              %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{@id}"}
+              %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
+              %button{ title: 'metti nel baule!'}
+                %i.icon-shopping-cart
+                Nel baule
+        %li
+          = " | "
+        %li.show
+          %a{ title: 'mostra dettagli'}
+            Apri
+    .chiudi{ style: "float: right;"}
+      %a
+        Chiudi
+  
   %address
     %strong
       %a{ href: "/clienti/#{@id}"}

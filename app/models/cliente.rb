@@ -72,6 +72,14 @@ class Cliente < ActiveRecord::Base
     "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end
   
+  def nel_baule
+    if self.visite.nel_baule.empty?
+      return false
+    else
+      self.visite.nel_baule.uniq[0].id
+    end
+  end
+  
   def mie_adozioni_grouped
     adozioni = self.mie_adozioni.
                     includes(:libro, :classe, :materia).

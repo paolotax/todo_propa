@@ -1,10 +1,13 @@
-console.log("Ciao <%= dom_id(@visita) %>")
-
 <%- @cliente.appunti.each do |a|  %>
-
   appunto = $("#<%= dom_id(a) %>")
   appunto.toggleClass('favorited');
   $('.baule', appunto).html("<%= escape_javascript(render 'visite/nel_baule') %>")
-
 <% end %>
 
+cliente = $("#<%= dom_id(@cliente) %>")
+cliente.toggleClass('favorited');
+$('.baule', cliente).html("<%= escape_javascript(render 'visite/nel_baule') %>")
+
+var new_navbar = $("<%= escape_javascript(render 'shared/header') %>")
+var new_toolbar = $(".toolbar-buttons.pull-right", new_navbar)
+$(".navbar.navbar-fixed-top .toolbar-buttons.pull-right").replaceWith(new_toolbar)

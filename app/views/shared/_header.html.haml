@@ -14,7 +14,7 @@
             %li= link_to "Libri",    libri_url
             %li= link_to "Fatture",  fatture_url
             %li= link_to "Giri",     visite_url
-
+            %li= link_to "Adozioni", adozioni_url
 
         - if user_signed_in?
           .pull-right
@@ -35,8 +35,14 @@
                       = link_to "Profilo di #{current_user.username}", edit_user_registration_path, :class => 'tab' 
                   %li
                     = link_to "Esci", destroy_user_session_path, {:method => :delete, :class => 'tab'}
-                  
-            .topbar-tweet-btn
-              %button.btn.btn-primary{ "data-toggle" => "modal", "data-target" => ".modal" }
-                .icon-tweet
+            .toolbar-buttons.pull-right
+              - if current_user.visite.nel_baule.size > 0
+                = link_to baule_url, class: "btn btn-warning topbar-tweet-btn", style: "font-size: 24px" do
+                  %i.icon-road
+                  %sup= current_user.visite.nel_baule.size
+          
+              .topbar-tweet-btn
+                %button.btn.btn-primary{ "data-toggle" => "modal", "data-target" => ".modal" }
+                  .icon-tweet
+
           

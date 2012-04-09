@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   has_many :righe,  :through => :appunti
   has_many :visite,  :through => :clienti
   has_many :fatture, :through => :clienti
-
+  has_many :adozioni, :through => :clienti
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
