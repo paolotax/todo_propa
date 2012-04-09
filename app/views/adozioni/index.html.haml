@@ -3,6 +3,7 @@
   %table.table.adozioni-nel-baule
     - for libro in @adozioni do
       %tr
+        %td= image_tag(libro[:image]) unless libro[:image].blank?
         %td= libro[:materia_id]
         %td= libro[:titolo]
         %td

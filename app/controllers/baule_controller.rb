@@ -10,7 +10,7 @@ class BauleController < ApplicationController
     
     @adozioni = Adozione.scolastico.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", @visite.map(&:cliente_id)).order("libri.materia_id")
     @adozioni_nel_baule =  @adozioni.group_by(&:libro).map do |libro,adozioni|
-      { id: libro.id, titolo: libro.titolo, image: libro.image, quantita: adozioni.count(&:classe) }
+      { image: libro.image_url(:small_thumb), titolo: libro.titolo, image: libro.image, quantita: adozioni.count(&:classe) }
     end
   end
   
