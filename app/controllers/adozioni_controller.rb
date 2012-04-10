@@ -3,7 +3,12 @@ class AdozioniController < ApplicationController
   def index
     
     @adozioni =  current_user.adozioni.scolastico.includes(:libro).joins(:classe).order("libri.titolo").all.group_by(&:libro).map do |libro,adozioni|
-      { materia_id: libro.materia_id, id: libro.id, titolo: libro.titolo, image: libro.image, quantita: adozioni.count(&:classe) }
+      { 
+        materia_id: libro.materia_id, 
+        id: libro.id, 
+        titolo: libro.titolo, 
+        image: libro.image_url(:small_thumb), 
+        quantita: adozioni.count(&:classe) }
     end
     
   end

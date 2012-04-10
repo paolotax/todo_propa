@@ -3,21 +3,35 @@
     - @mappa = @clienti.to_gmaps4rails
     = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
     
-  = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning'
+  = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
 
 .well
-  %ul
+  %ol
     - for v in @visite do
-      %li
+      %li[v]
         %h2= v.cliente.titolo
       
-      .row
-        .span5
-          = render 'classi/classi', cliente: v.cliente
-        .span6
-          = render 'adozioni/adozioni', cliente: v.cliente
+        %table.table.classi-adozioni
+          - v.cliente.classi_adozioni_grouped.each do |k, classi|
+            %tr
+              %td.classe-group
+                .badge.badge-primary= k
+              - classi.each do |c|
+                %td[c]
+                  = c[:sezione]
+                  - unless c.adozioni.scolastico.empty?
+                    %ul
+                      - for a in c.adozioni.scolastico do
+                        %li[a]= a.libro.titolo
+                    
+          
 
-      %ul
+        / .span5
+        /   = render 'classi/classi', cliente: v.cliente
+        / .span6
+        /   = render 'adozioni/adozioni', cliente: v.cliente
+
+      %ol
         - for a in v.appunti do
           %li= a.note
           %ul 

@@ -93,7 +93,41 @@ class Cliente < ActiveRecord::Base
                     group_by(&:classe)
   end
   
-  
+  def classi_adozioni_grouped
+    
+    classi = self.classi.includes(:adozioni).order("classi.classe, classi.sezione").all.group_by(&:classe)
+    
+
+      
+    
+    # adozioni = self.mie_adozioni.
+    #                    includes(:libro, :classe, :materia).
+    #                    order('classi.classe, adozioni.materia_id, classi.sezione, libri.id').
+    #                    group_by(&:classe)  
+    #    
+    #    a = []
+    #    classi.each do |key, classi|
+    #      p classi
+    #      classi.each do |c|
+    #        p c.adozioni.scolastico
+    #      end  
+    #      # a << { 
+    #      #         key => classi.map do |x|
+    #      #           
+    #      #           if x.adozioni.scolastico.empty?
+    #      #             x
+    #      #           else  
+    #      #             x => x.adozioni.map(&:adozione)
+    #      #           end
+    #      #         
+    #      #         end  
+    #      #      }
+    #    end
+    #    
+    #    p a    
+        
+  end
+    
   
   
   # def indirizzo

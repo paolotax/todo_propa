@@ -1,0 +1,16 @@
+.navbar.navbar-fixed-top {
+  display: none;
+}
+
+.map_container {
+  margin-bottom: 20px;
+  .gmaps4rails_map {
+    margin: auto;
+    width: 600px;
+    height: 300px;
+  }
+} 
+
+.baule-rimuovi {
+  display: none;
+}
