@@ -1,3 +1,6 @@
+// @import "bootstrap";
+@import "compass/utilities/lists/inline-list";
+
 .navbar.navbar-fixed-top {
   display: none;
 }
@@ -13,4 +16,32 @@
 
 .baule-rimuovi {
   display: none;
+}
+
+.classi-adozioni {
+  
+  width: 100%;
+  
+  td {
+    border: solid 1px black;
+  }
+  
+  td.classe-group {
+    width: 60px;
+    .badge {
+      text-align: center;
+      font-size: 130%;
+      margin: auto;
+    }
+
+  }
+  .adozioni-list {
+    @include inline-list;
+    li span {
+      font-size: 10px;
+    }
+  }
+  .sezione {
+    margin-bottom: 10px
+  }  
 }

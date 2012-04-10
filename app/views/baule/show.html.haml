@@ -11,18 +11,22 @@
       %li[v]
         %h2= v.cliente.titolo
       
-        %table.table.classi-adozioni
+        %table.table.table-bordered.classi-adozioni
           - v.cliente.classi_adozioni_grouped.each do |k, classi|
             %tr
               %td.classe-group
-                .badge.badge-primary= k
+                .badge.badge-primary.pull-left= k
               - classi.each do |c|
                 %td[c]
-                  = c[:sezione]
+                  .pull-left
+                    .badge.badge-info.sezione
+                      =c[:sezione]
+                  .clearfix  
                   - unless c.adozioni.scolastico.empty?
-                    %ul
+                    %ul.adozioni-list
                       - for a in c.adozioni.scolastico do
-                        %li[a]= a.libro.titolo
+                        %li[a]
+                          %span.label.label-important= a.libro.titolo
                     
           
 
@@ -41,20 +45,22 @@
                 = r.quantita
                 = r.importo
 .row              
-  .well.span5
-    %h2 Ordini nel baule
-    %table.table.libri-nel-baule
-      - for libro in @libri_nel_baule do
-        %tr
-          %td= libro[:titolo]
-          %td
-            .pull-right= libro[:quantita]
-
-  .well.span5
-    %h2 Adozioni nel baule
-    %table.table.adozioni-nel-baule
-      - for libro in @adozioni_nel_baule do
-        %tr
-          %td= libro[:titolo]
-          %td
-            .pull-right= libro[:quantita]
+  - unless @libri_nel_baule.empty?
+    .well.span5
+      %h2 Ordini nel baule
+      %table.table.libri-nel-baule
+        - for libro in @libri_nel_baule do
+          %tr
+            %td= libro[:titolo]
+            %td
+              .pull-right= libro[:quantita]
+  
+  - unless @adozioni_nel_baule.empty?
+    .well.span5
+      %h2 Adozioni nel baule
+      %table.table.adozioni-nel-baule
+        - for libro in @adozioni_nel_baule do
+          %tr
+            %td= libro[:titolo]
+            %td
+              .pull-right= libro[:quantita]
