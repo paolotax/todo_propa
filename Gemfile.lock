@@ -113,8 +113,6 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.17.2)
-    mobylette (1.6.0)
-      actionpack (>= 3.0)
     multi_json (1.1.0)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -211,7 +209,6 @@ DEPENDENCIES
   haml_coffee_assets
   jquery-rails
   jquery_mobile_rails
-  mobylette
   nested_form!
   on_the_spot
   pg

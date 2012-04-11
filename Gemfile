@@ -38,7 +38,7 @@ gem 'prawn'
 gem 'geocoder'
 gem 'gmaps4rails'
 
-gem 'mobylette'
+# gem 'mobylette'
 gem 'jquery_mobile_rails'
 
 gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
