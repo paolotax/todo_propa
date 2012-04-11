@@ -6,18 +6,17 @@
       %tr
         %th Id
         %th Titolo
-        %th start
-        %th end
+        %th giorno
         %th cliente
     %tbody
+      - i = 0
       - for visita in @visite do
         %tr
-          %td= visita.id
+          %td= i += 1
           %td= visita.titolo
-          %td= visita.start
-          %td= visita.end
+          %td= l visita.start, format: :only_date
           %td= visita.cliente.titolo
-
+          %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
 / - @libro = Libro.new
 / .modal.fade
 /   = render "libri/modal"

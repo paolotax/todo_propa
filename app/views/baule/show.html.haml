@@ -5,11 +5,10 @@
   
   
   = form_tag 'baule/update', method: :put do
-    %input{ type: 'text', name: 'visita[titolo]'}
-    %input{ type: 'text', name: 'visita[data]', value: Time.now }
-    %input{ type: 'hidden', name: 'visita[baule]', value: 'f' }
+    = text_field_tag 'visita[titolo]'
+    = text_field_tag 'visita[data]', Time.now
+    = hidden_field_tag 'visita[baule]', 'f'
     %input{ type: 'submit' }
-      Salva
     
   = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
 

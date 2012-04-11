@@ -26,6 +26,7 @@ class VisiteController < ApplicationController
     @cliente = @visita.cliente
     @visita.destroy
     respond_to do |format|
+      format.html { redirect_to :back, :notice => 'Visita eliminata.' }
       format.js
     end
     # respond_to do |format|
