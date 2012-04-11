@@ -8,6 +8,7 @@ TodoPropa::Application.routes.draw do
 
   match '/baule', controller: 'baule', action: 'show'
   match '/baule/rimuovi', controller: 'baule', action: 'destroy'
+  match '/baule/update',  controller: 'baule', action: 'update', :via => :put
   
   resources :visita_appunti
 

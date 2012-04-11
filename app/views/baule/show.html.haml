@@ -2,6 +2,14 @@
   .map-baule
     - @mappa = @clienti.to_gmaps4rails
     = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
+  
+  
+  = form_tag 'baule/update', method: :put do
+    %input{ type: 'text', name: 'visita[titolo]'}
+    %input{ type: 'text', name: 'visita[data]', value: Time.now }
+    %input{ type: 'hidden', name: 'visita[baule]', value: 'f' }
+    %input{ type: 'submit' }
+      Salva
     
   = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
 

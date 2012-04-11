@@ -22,8 +22,24 @@ class BauleController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to appunti_path }
+      format.html { redirect_to baule_path }
     end
       
   end
+  
+  def update
+    #raise params.inspect
+    @visite = current_user.visite.nel_baule
+   
+    @visite.each do |a|
+      a.update_attributes!(params[:visita].reject { |k,v| v.blank? })  #  unless k == 'stato'
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to baule_path, notice: "Baule aggiornato" }
+      format.json { render :json => @appunti }
+    end
+  end
+  
+  
 end

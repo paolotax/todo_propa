@@ -1,2 +1,23 @@
-%h1 Visite#index
-%p Find me in app/views/visite/index.html.haml
+- title "Giri"
+
+#giri.well
+  %table.table
+    %thead
+      %tr
+        %th Id
+        %th Titolo
+        %th start
+        %th end
+        %th cliente
+    %tbody
+      - for visita in @visite do
+        %tr
+          %td= visita.id
+          %td= visita.titolo
+          %td= visita.start
+          %td= visita.end
+          %td= visita.cliente.titolo
+
+/ - @libro = Libro.new
+/ .modal.fade
+/   = render "libri/modal"

@@ -20,6 +20,15 @@ class Visita < ActiveRecord::Base
     self.baule == true
   end
   
+  def data
+    self.start
+  end
+  
+  def data=(data)
+    self.start = Date.parse(data).beginning_of_day
+    self.end   = Date.parse(data).end_of_day
+  end
+  
   def mie_adozioni_grouped_titolo
     self.cliente.mie_adozioni.group_by(&:libro_id) || []
   end

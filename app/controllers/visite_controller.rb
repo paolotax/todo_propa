@@ -1,4 +1,11 @@
 class VisiteController < ApplicationController
+  
+  
+  def index
+    @visite = current_user.visite.includes(:cliente)
+  end
+  
+  
   def create
     @visita = Visita.new(params[:visita])
 
