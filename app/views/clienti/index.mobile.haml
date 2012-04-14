@@ -3,18 +3,28 @@
   
 %div{ data: { role: 'content' } }
   %ul{ data: { role: 'listview', inset: 'true' } }
-    %li{ data: { theme: 'c' } }
+    %li{ data: { theme: 'b', icon: "false" } }
       = link_to "Nuovo Cliente", new_cliente_url, "data-transition" => "slide"
-    %li{ data: { theme: 'c' } }
+    %li{ data: { theme: 'e', icon: "false" } }
       = link_to "nel baule", baule_url(skip_mobile: true), "data-transition" => "slide"
-    %li{ data: { theme: 'c' } }
+    %li{ data: { theme: 'b', icon: "false" } }
       = link_to "Appunti", appunti_url, "data-transition" => "slide"
-    %li{ data: { theme: 'c' } }
-      = link_to "RA", clienti_url(provincia: 'RA'), "data-transition" => "slide"
-    %li{ data: { theme: 'c' } }
-      = link_to "RE", clienti_url(provincia: 'RE'), "data-transition" => "slide"
 
   %ul{ data: { role: 'listview', inset: 'true' } }
-    - @clienti.each do |cliente|
+    - current_user.clienti.select_provincia.each do |provincia|
       %li
-        %h2= cliente.titolo
+        %h2= provincia.provincia
+        %ul
+          - current_user.clienti.where(provincia: provincia.provincia).select_citta.order(:comune).each do |citta|
+            %li
+              %h2= citta.comune
+              %ul
+                - current_user.clienti.where(comune: citta.comune).order("clienti.id").each do |cliente|
+                  %li
+                    = link_to cliente, "data-transition" => "pop" do
+                      %h2= cliente.titolo
+  
+  
+  = form_tag url_for( controller: params[:controller], action: 'index'), method: "get", class: "navbar-search pull-right" do
+    = search_field_tag :search, params[:search], class: "search-query", placeholder: "Cerca #{params[:controller].capitalize}"    
+

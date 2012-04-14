@@ -48,7 +48,13 @@ class AppuntiController < ApplicationController
   end
 
   def new
+    if params[:cliente].present?
+      @cliente = Cliente.find(params[:cliente])
+    else
+      @cliente = nil
+    end 
     @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).build
+    @appunto.cliente = @cliente
   end
 
   def edit
