@@ -1,0 +1,20 @@
+%div{ data: { role: 'header' } }
+  %h1 Clienti
+  
+%div{ data: { role: 'content' } }
+  %ul{ data: { role: 'listview', inset: 'true' } }
+    %li{ data: { theme: 'c' } }
+      = link_to "Nuovo Cliente", new_cliente_url, "data-transition" => "slide"
+    %li{ data: { theme: 'c' } }
+      = link_to "nel baule", baule_url(skip_mobile: true), "data-transition" => "slide"
+    %li{ data: { theme: 'c' } }
+      = link_to "Appunti", appunti_url, "data-transition" => "slide"
+    %li{ data: { theme: 'c' } }
+      = link_to "RA", clienti_url(provincia: 'RA'), "data-transition" => "slide"
+    %li{ data: { theme: 'c' } }
+      = link_to "RE", clienti_url(provincia: 'RE'), "data-transition" => "slide"
+
+  %ul{ data: { role: 'listview', inset: 'true' } }
+    - @clienti.each do |cliente|
+      %li
+        %h2= cliente.titolo
