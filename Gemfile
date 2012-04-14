@@ -38,13 +38,14 @@ gem 'prawn'
 gem 'geocoder'
 gem 'gmaps4rails'
 
-# gem 'mobylette'
+gem 'mobylette'
 gem 'jquery_mobile_rails'
 
 gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
 gem 'simple_form'
 
-
+gem 'will_filter', "~> 3.1.0" 
+gem 'kaminari'
 
 gem 'pg'
 

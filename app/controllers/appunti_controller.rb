@@ -61,7 +61,7 @@ class AppuntiController < ApplicationController
     respond_to do |format|
       if @appunto.save
         format.html   { redirect_to appunti_url, notice: 'Appunto creato!' }
-        # format.mobile { redirect_to  appunti_url }
+        format.mobile { redirect_to  appunti_url }
         format.json
       else
         format.html { render action: "new" }
@@ -76,7 +76,7 @@ class AppuntiController < ApplicationController
     respond_to do |format|
       if @appunto.update_attributes(params[:appunto])
         format.html   { redirect_to appunti_url, notice: 'Appunto modificato.' }
-        # format.mobile { redirect_to appunti_url }
+        format.mobile { redirect_to appunti_url }
         format.json
       else
         format.html { render action: "edit" }

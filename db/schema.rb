@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120408064626) do
+ActiveRecord::Schema.define(:version => 20120413152125) do
 
   create_table "adozioni", :force => true do |t|
     t.integer  "classe_id"
@@ -272,5 +272,17 @@ ActiveRecord::Schema.define(:version => 20120408064626) do
   end
 
   add_index "visite", ["cliente_id"], :name => "index_visite_on_cliente_id"
+
+  create_table "will_filter_filters", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.text     "data"
+    t.integer  "user_id"
+    t.string   "model_class_name"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "will_filter_filters", ["user_id"], :name => "index_will_filter_filters_on_user_id"
 
 end

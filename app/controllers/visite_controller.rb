@@ -2,7 +2,9 @@ class VisiteController < ApplicationController
   
   
   def index
-    @visite = current_user.visite.includes(:cliente)
+    @visite = current_user.visite.includes(:cliente).filter(:params => params)
+  
+    # @users = User.filter(:params => params)  
   end
   
   

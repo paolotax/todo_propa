@@ -1,5 +1,9 @@
 class Visita < ActiveRecord::Base
   
+  WillFilter::Calendar::MONTHS = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'] 
+  WillFilter::Calendar::DAYS = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab']
+  
+  
   belongs_to :cliente
   
   has_many   :da_fare, :through => :cliente, 

@@ -1,5 +1,7 @@
 TodoPropa::Application.routes.draw do
-
+  
+  mount WillFilter::Engine => "/will_filter"
+  
   resources :materie
 
   resources :classi

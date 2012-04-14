@@ -1,5 +1,10 @@
 - title "Giri"
 
+= will_filter_tag(@visite, columns: [:start, :titolo, :baule])
+= will_filter_table_tag(@visite, columns: [:data, :titolo, :baule])
+= will_filter_actions_bar_tag(@visite, [['Delete Selected Languages', "alert('Deleting users...')"]])
+
+
 #giri.well
   %table.table
     %thead
