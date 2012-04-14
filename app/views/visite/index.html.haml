@@ -1,27 +1,38 @@
 - title "Giri"
 
-= will_filter_tag(@visite, columns: [:start, :titolo, :baule])
-= will_filter_table_tag(@visite, columns: [:data, :titolo, :baule])
-= will_filter_actions_bar_tag(@visite, [['Delete Selected Languages', "alert('Deleting users...')"]])
+/ = will_filter_tag(@visite, columns: [:start, :titolo, :baule])
+/ = will_filter_table_tag(@visite, columns: [:data, :titolo, :baule])
+/ = will_filter_actions_bar_tag(@visite, [['Delete Selected Languages', "alert('Deleting users...')"]])
 
+.row  
+  .span9
+    #giri.well
+      %table.table
+        %thead
+          %tr
+            %th Id
+            %th Titolo
+            %th giorno
+            %th cliente
+        %tbody
+          - i = 0
+          - for visita in @visite do
+            %tr
+              %td= i += 1
+              %td= visita.titolo
+              %td= l visita.start, format: :only_date
+              %td= visita.cliente.titolo
+              %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
 
-#giri.well
-  %table.table
-    %thead
-      %tr
-        %th Id
-        %th Titolo
-        %th giorno
-        %th cliente
-    %tbody
-      - i = 0
-      - for visita in @visite do
-        %tr
-          %td= i += 1
-          %td= visita.titolo
-          %td= l visita.start, format: :only_date
-          %td= visita.cliente.titolo
-          %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
-/ - @libro = Libro.new
-/ .modal.fade
-/   = render "libri/modal"
+  .span3
+    .well
+      - @scuole = current_user.clienti.primarie.all
+      - @visite.each do |v|
+        - @scuole.delete(v.cliente)
+      %ol
+        - @scuole.each do |s|
+          %li
+            = s.titolo
+            - if s.mie_adozioni.size > 0
+              .pull-right
+                %span.badge= s.mie_adozioni.size
