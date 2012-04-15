@@ -2,8 +2,19 @@ class VisiteController < ApplicationController
   
   
   def index
-    @visite = current_user.visite.includes(:cliente).filter(:params => params)
-  
+    @visite = current_user.visite.includes(:cliente).filtra(params)
+    
+    @scuole = current_user.clienti.primarie.filtra(params.except([:controller, :action])).order("clienti.id").all
+    
+    logger.debug { "params: #{current_user.clienti.primarie.filtra(params).order("clienti.id").to_sql}" }
+    logger.debug { "tutte Count: #{@scuole.count}" }
+    
+    @visite.each do |v|
+      @scuole.delete(v.cliente)
+    end
+    
+    logger.debug { "diff Count: #{@scuole.count}" }
+    
     # @users = User.filter(:params => params)  
   end
   

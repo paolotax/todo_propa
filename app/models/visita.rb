@@ -17,7 +17,7 @@ class Visita < ActiveRecord::Base
   has_many :adozioni, :through => :cliente
   
   scope :nel_baule, where(baule: true)
-  
+
   after_create :add_appunti
   
   def nel_baule?
@@ -37,12 +37,25 @@ class Visita < ActiveRecord::Base
     self.cliente.mie_adozioni.group_by(&:libro_id) || []
   end
   
+  def self.filtra(params)
+    visite = scoped
+    visite = visite.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
+    # appunti = appunti.where("clienti.comune = ?",    params[:comune])    if params[:comune].present?
+    #     appunti = appunti.in_corso   if params[:status].present? && params[:status] == 'in_corso'
+    #     appunti = appunti.completo   if params[:status].present? && params[:status] == "completati"
+    #     appunti = appunti.da_fare    if params[:status].present? && params[:status] == "da_fare"
+    #     appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
+    #     
+    visite
+  end
+
+  private
   
-  def add_appunti
-    self.da_fare.each do |appunto|
-      self.appunti << appunto
-    end
-  end  
+    def add_appunti
+      self.da_fare.each do |appunto|
+        self.appunti << appunto
+      end
+    end  
 
 end
 

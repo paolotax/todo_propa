@@ -5,7 +5,50 @@
 / = will_filter_actions_bar_tag(@visite, [['Delete Selected Languages', "alert('Deleting users...')"]])
 
 .row  
-  .span9
+  .side-bar.span5
+    .module
+      %ul
+        %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
+          = link_to visite_url, class: "list-link" do
+            Provincie
+            %i.chev-right
+        
+        - @provincie = current_user.clienti.select_provincia     
+        - for p in @provincie
+          %li{ class: "#{ params[:provincia] == p.provincia ? 'active' : ''}" }
+            = link_to visite_url(:provincia => p.provincia), class: "list-link" do
+              = p.provincia
+              %i.chev-right
+    
+    .well
+      
+      %ol.clienti-small
+        - @scuole.each do |s|
+          %li[s]
+            = s.titolo
+            .baule.pull-right
+              - unless s.nel_baule == false
+                %a{ href: "/visite/#{s.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+                  %i.icon-road
+                  Scarica baule
+              - else
+                %form{ action: '/visite', method: 'post', 'data-remote' => true }
+                  %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{s.id}"}
+                  %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
+                  %button{ title: 'metti nel baule!'}
+                    %i.icon-road
+                    Nel baule
+
+            - if s.mie_adozioni.size > 0
+              .pull-right
+                %span.badge= s.mie_adozioni.size
+            - if s.appunti.in_corso.size > 0
+              .pull-right
+                %span.badge.badge-info= s.appunti.in_corso.size
+            .clearfix
+                
+
+  .span7
     #giri.well
       %table.table
         %thead
@@ -20,19 +63,7 @@
             %tr
               %td= i += 1
               %td= visita.titolo
-              %td= l visita.start, format: :only_date
+              %td= l visita.start, format: :only_date unless visita.start.nil?
               %td= visita.cliente.titolo
               %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
-
-  .span3
-    .well
-      - @scuole = current_user.clienti.primarie.all
-      - @visite.each do |v|
-        - @scuole.delete(v.cliente)
-      %ol
-        - @scuole.each do |s|
-          %li
-            = s.titolo
-            - if s.mie_adozioni.size > 0
-              .pull-right
-                %span.badge= s.mie_adozioni.size
+   

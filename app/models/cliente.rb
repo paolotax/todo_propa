@@ -29,10 +29,10 @@ class Cliente < ActiveRecord::Base
   scope :select_provincia, select(:provincia).uniq
   scope :select_citta,     select(:comune).uniq
   
-  scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")
-  scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")
-  scope :con_appunti_da_fare,    joins(:appunti).where("appunti.stato = ''")
-  scope :con_appunti_in_sospeso, joins(:appunti).where("appunti.stato = 'P'")
+  # scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")
+  # scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")
+  # scope :con_appunti_da_fare,    joins(:appunti).where("appunti.stato = ''")
+  # scope :con_appunti_in_sospeso, joins(:appunti).where("appunti.stato = 'P'")
 
   scope :scuole,     where("clienti.cliente_tipo in ('Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica')")
   scope :primarie,   where(cliente_tipo: "Scuola Primaria")

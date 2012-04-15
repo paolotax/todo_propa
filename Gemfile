@@ -51,6 +51,7 @@ gem 'pg'
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
+  gem 'quiet_assets'
 end
 
 group :test do
