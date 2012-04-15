@@ -1,17 +1,25 @@
 .well
-  .map-baule
-    - @mappa = @clienti.to_gmaps4rails
-    = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
-  
-  
-  = form_tag 'baule/update', method: :put do
-    = text_field_tag 'visita[titolo]'
-    = text_field_tag 'visita[data]', Time.now
-    = hidden_field_tag 'visita[baule]', 'f'
-    %input{ type: 'submit' }
+  .row
+    .span7
+      .map-baule
+        - @mappa = @clienti.to_gmaps4rails
+        - unless @mappa.empty?
+          = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
+    .span3
+      = form_tag 'baule/update', method: :put do
+        = text_field_tag 'visita[titolo]'
+        = text_field_tag 'visita[data]', Time.now
+        = hidden_field_tag 'visita[baule]', 'f'
+        %input{ type: 'submit' }
     
-  = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
-
+      = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
+    
+      %ol.clienti-baule
+        - for c in @clienti do
+          %li[c]
+            = c.titolo
+  
+  
 .well
   .row              
     - unless @libri_nel_baule.empty?
@@ -25,16 +33,16 @@
                 .pull-right= libro[:quantita]
 
     - unless @adozioni_nel_baule.empty?
-      .well.span5
+      .adozioni-nel-baule.well.span5
         %h2 Adozioni nel baule
-        %table.table.adozioni-nel-baule
+        %table.table
           - for libro in @adozioni_nel_baule do
             %tr
               %td= libro[:titolo]
               %td
                 .pull-right= libro[:quantita]
 
-  %ol
+  %ol.visite-long
     - for v in @visite do
       %li[v]
         %h2= v.cliente.titolo
@@ -65,7 +73,11 @@
 
       %ol
         - for a in v.appunti do
-          %li= a.note
+          
+          %li
+            = l a.created_at, format: :only_date
+            = a.destinatario
+            %strong= a.note
           %ul 
             - for r in a.righe do
               %li

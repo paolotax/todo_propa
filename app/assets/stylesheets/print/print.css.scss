@@ -1,11 +1,46 @@
 // @import "bootstrap";
 @import "compass/utilities/lists/inline-list";
+@import "compass/utilities/lists/bullets";
+@import "compass/utilities/tables/borders";
+
+body {
+  font-family: Arial,Verdana,sans-serif;
+}
+
+
+table { page-break-inside:avoid; page-break-after:auto }
+tr    { page-break-inside:avoid; page-break-after:auto }
+td    { page-break-inside:avoid; page-break-after:auto }
+thead { display:table-header-group }
+tfoot { display:table-footer-group }
 
 .navbar.navbar-fixed-top {
   display: none;
 }
 
+.visite-long {
+  @include no-bullets;
+  margin: 0;
+  padding: 0;
+  li {
+ 
+  }
+
+}
+
+table {
+  @include inner-table-borders(1px, #666666);
+  @include outer-table-borders(2px)
+}
+
+.adozioni-nel-baule {
+  font-size: 10px;
+  
+
+}
+
 .map_container {
+  display:none;
   margin-bottom: 20px;
   .gmaps4rails_map {
     margin: auto;
@@ -19,13 +54,8 @@
 }
 
 .classi-adozioni {
-  
+
   width: 100%;
-  
-  td {
-    border: solid 1px #666666;
-  }
-  
   td.classe-group {
     width: 60px;
     .badge {

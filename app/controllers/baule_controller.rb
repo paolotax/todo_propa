@@ -4,11 +4,11 @@ class BauleController < ApplicationController
     @clienti = @visite.map(&:cliente)
     
     @righe   = current_user.righe.da_consegnare.joins(:libro, :appunto => :visite).where('visite.baule = true')
-    @libri_nel_baule   = @righe.group_by(&:libro).map do |libro,righe| 
+    @libri_nel_baule   = @righe.order("libri.titolo").group_by(&:libro).map do |libro,righe| 
       { id: libro.id, titolo: libro.titolo, image: libro.image, quantita: righe.sum(&:quantita) }
     end
     
-    @adozioni = Adozione.scolastico.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", @visite.map(&:cliente_id)).order("libri.materia_id")
+    @adozioni = Adozione.scolastico.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", @visite.map(&:cliente_id)).order("libri.titolo")
     @adozioni_nel_baule =  @adozioni.group_by(&:libro).map do |libro,adozioni|
       { image: libro.image_url(:small_thumb), titolo: libro.titolo, image: libro.image, quantita: adozioni.count(&:classe) }
     end
