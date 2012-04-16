@@ -17,7 +17,7 @@
         - for v in @visite do
           %li[v]
             = v.cliente.titolo
-            = link_to v, :method => :delete do
+            = link_to v, :method => :delete, class: "scarica-baule" do
               %i.icon-road
               Scarica baule
       
