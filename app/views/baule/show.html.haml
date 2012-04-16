@@ -5,21 +5,22 @@
         - @mappa = @clienti.to_gmaps4rails
         - unless @mappa.empty?
           = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
-    .span3
+    .span4
       = form_tag 'baule/update', method: :put do
         = text_field_tag 'visita[titolo]'
-        = text_field_tag 'visita[data]', Time.now
+        = text_field_tag 'visita[data]', l(Time.now, format: :only_date)
         = hidden_field_tag 'visita[baule]', 'f'
-        %input{ type: 'submit' }
-    
-      = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
+        = submit_tag "Salva baule", class: "btn btn-primary"
+        = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
     
       %ol.clienti-baule
-        - for c in @clienti do
-          %li[c]
-            = c.titolo
-  
-  
+        - for v in @visite do
+          %li[v]
+            = v.cliente.titolo
+            = link_to v, :method => :delete do
+              %i.icon-road
+              Scarica baule
+      
 .well
   .row              
     - unless @libri_nel_baule.empty?
@@ -63,8 +64,6 @@
                       - for a in c.adozioni.scolastico do
                         %li[a]
                           %span.label.label-important= a.libro.sigla
-                    
-          
 
         / .span5
         /   = render 'classi/classi', cliente: v.cliente
@@ -84,3 +83,5 @@
                 = r.libro.titolo
                 = r.quantita
                 = r.importo
+
+= render "visite/modal"

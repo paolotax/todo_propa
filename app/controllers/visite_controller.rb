@@ -2,7 +2,7 @@ class VisiteController < ApplicationController
   
   
   def index
-    @visite = current_user.visite.includes(:cliente).filtra(params)
+    @visite = current_user.visite.includes(:cliente).where(baule: false).filtra(params)
     
     @scuole = current_user.clienti.primarie.filtra(params.except([:controller, :action])).order("clienti.id").all
     

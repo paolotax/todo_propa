@@ -1,0 +1,7 @@
+.modal.fade
+  .modal-header
+    %a.close{ "data-dismiss" => 'modal'}
+      x
+    %h3= "#{pluralize(@scuole.size, "scuola")} da visitare"
+  .modal-body
+    = render "visite/da_visitare"
