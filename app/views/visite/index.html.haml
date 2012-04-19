@@ -27,21 +27,16 @@
                 
 
   .span7
-    #giri.well
-      %table.table
-        %thead
-          %tr
-            %th Id
-            %th giorno
-            %th cliente
-        %tbody
-          - i = 0
-          - @visite_grouped.each do |k, v|
-            %tr
-              %td= k
-            
+    - i = 0
+    - @visite_grouped.each do |k, v|
+      .giro.well
+        %p
+          %strong= k
+          %span= "#{pluralize(v.count, "tappa")}"
+        %table.table
+          %tbody
             - for visita in v do
-              %tr
+              %tr[visita]
                 %td= i += 1
                 %td= l visita.start, format: :only_date unless visita.start.nil?
                 %td= visita.cliente.titolo
