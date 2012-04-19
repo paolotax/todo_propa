@@ -32,16 +32,18 @@
         %thead
           %tr
             %th Id
-            %th Titolo
             %th giorno
             %th cliente
         %tbody
           - i = 0
-          - for visita in @visite do
+          - @visite_grouped.each do |k, v|
             %tr
-              %td= i += 1
-              %td= visita.titolo
-              %td= l visita.start, format: :only_date unless visita.start.nil?
-              %td= visita.cliente.titolo
-              %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
+              %td= k
+            
+            - for visita in v do
+              %tr
+                %td= i += 1
+                %td= l visita.start, format: :only_date unless visita.start.nil?
+                %td= visita.cliente.titolo
+                %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
    

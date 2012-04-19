@@ -2,7 +2,9 @@ class VisiteController < ApplicationController
   
   
   def index
-    @visite = current_user.visite.includes(:cliente).where(baule: false).filtra(params)
+    @visite = current_user.visite.includes(:cliente).where(baule: false).order("visite.titolo desc, visite.start desc").filtra(params)
+    
+    @visite_grouped = @visite.group_by(&:titolo)
     
     @scuole = current_user.clienti.primarie.filtra(params.except([:controller, :action])).order("clienti.id").all
     

@@ -4,7 +4,7 @@ class AppuntiController < ApplicationController
 
   def index
     # @appunti = Appunto.recente.limit(20)
-    @search = current_user.appunti.includes(:cliente, :user, :righe => :libro).filtra(params)
+    @search = current_user.appunti.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params)
    
     @in_corso = @search.in_corso.size
     @da_fare  = @search.da_fare.size
