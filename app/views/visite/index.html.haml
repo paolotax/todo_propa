@@ -27,6 +27,7 @@
                 
 
   .span7
+    %h2= "#{pluralize(@visite.count, "scuola")} completate."
     - i = 0
     - @visite_grouped.each do |k, v|
       .giro.well
