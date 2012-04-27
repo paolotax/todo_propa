@@ -22,7 +22,7 @@ class FattureController < ApplicationController
         pdf = FatturaPdf.new(@fattura, view_context)
         send_data pdf.render, filename: "fattura_#{@fattura.id}.pdf",
                               type: "application/pdf",
-                              disposition: "inline",
+                              disposition: "inline"
       
       end
       
