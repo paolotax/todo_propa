@@ -25,7 +25,6 @@ class FattureController < ApplicationController
                               disposition: "inline"
       
       end
-      
     end
   end
 
@@ -97,4 +96,5 @@ class FattureController < ApplicationController
       format.json { head :ok }
     end
   end
+  
 end
