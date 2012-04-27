@@ -9,7 +9,7 @@ class CreateVisitaAppunti < ActiveRecord::Migration
     
     add_index :visita_appunti, [:visita_id, :appunto_id], :uniq => true
     
-    drop_table :visita_righe
+    # drop_table :visita_righe
   end
 
 
