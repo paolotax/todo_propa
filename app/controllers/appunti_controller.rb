@@ -36,7 +36,7 @@ class AppuntiController < ApplicationController
         pdf = AppuntoPdf.new(@appunti, view_context)
         send_data pdf.render, filename: "appunto_#{@appunto.id}.pdf",
                               type: "application/pdf",
-                              disposition: "inline",
+                              disposition: "inline"
       
       end
     end
