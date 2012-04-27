@@ -42,4 +42,8 @@
                 %td= l visita.start, format: :only_date unless visita.start.nil?
                 %td= visita.cliente.titolo
                 %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
+                %td
+                  = form_for visita do |f|
+                    = f.hidden_field :baule, value: 't'
+                    = f.submit "Nel baule"
    

@@ -35,7 +35,22 @@ class VisiteController < ApplicationController
       end
     end
   end
-
+  
+  def update
+    
+    @visita = current_user.visite.find(params[:id])
+    
+    respond_to do |format|
+      if @visita.update_attributes(params[:visita])
+        format.html { redirect_to :back, notice: 'Visita modificata.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @visita.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
   def destroy
     @visita = Visita.find(params[:id])
     @cliente = @visita.cliente
