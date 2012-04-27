@@ -49,6 +49,9 @@ gem 'kaminari'
 
 gem 'pg'
 
+gem 'capistrano'
+gem 'unicorn'
+
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
   gem 'quiet_assets'
