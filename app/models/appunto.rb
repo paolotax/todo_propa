@@ -26,6 +26,12 @@ class Appunto < ActiveRecord::Base
   scope :un_anno, lambda {  includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?",  1.year.ago)  }
   
   
+  include PgSearch
+  pg_search_scope :search, against: [:destinatario, :note],
+    using: {tsearch: {dictionary: "italian"}},
+    associated_against: {cliente: [ :titolo, :comune, :frazione, :provincia ] }
+  
+  
   before_save :leggi
   
   def nel_baule
@@ -57,17 +63,22 @@ class Appunto < ActiveRecord::Base
   end
   
   def self.filtra(params)
-    appunti = scoped
-    appunti = appunti.where("appunti.destinatario ilike ? or clienti.titolo ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ? or appunti.note ilike ?", 
-               "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
-    appunti = appunti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
-    appunti = appunti.where("clienti.comune = ?",    params[:comune])    if params[:comune].present?
-    appunti = appunti.in_corso   if params[:status].present? && params[:status] == 'in_corso'
-    appunti = appunti.completo   if params[:status].present? && params[:status] == "completati"
-    appunti = appunti.da_fare    if params[:status].present? && params[:status] == "da_fare"
-    appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
     
-    appunti
+    if params[:search].present?
+      appunti = search(params[:search])
+    else  
+      appunti = scoped
+      # appunti = appunti.where("appunti.destinatario ilike ? or clienti.titolo ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ? or appunti.note ilike ?", 
+      #            "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
+      appunti = appunti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
+      appunti = appunti.where("clienti.comune = ?",    params[:comune])    if params[:comune].present?
+      appunti = appunti.in_corso   if params[:status].present? && params[:status] == 'in_corso'
+      appunti = appunti.completo   if params[:status].present? && params[:status] == "completati"
+      appunti = appunti.da_fare    if params[:status].present? && params[:status] == "da_fare"
+      appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
+    
+      appunti
+    end
   end
 
   private

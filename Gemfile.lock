@@ -137,6 +137,9 @@ GEM
       Ascii85 (~> 1.0.0)
       ruby-rc4
     pg (0.13.2)
+    pg_search (0.4.1)
+      activerecord (>= 3)
+      activesupport (>= 3)
     polyglot (0.3.3)
     prawn (0.12.0)
       pdf-reader (>= 0.9.0)
@@ -239,6 +242,7 @@ DEPENDENCIES
   nested_form!
   on_the_spot
   pg
+  pg_search
   prawn
   quiet_assets
   rabl

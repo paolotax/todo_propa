@@ -46,6 +46,7 @@ gem 'will_filter', "~> 3.1.0"
 gem 'kaminari'
 
 gem 'pg'
+gem 'pg_search'
 
 gem 'capistrano'
 gem 'unicorn'
