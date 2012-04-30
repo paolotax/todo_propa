@@ -64,7 +64,7 @@ class Appunto < ActiveRecord::Base
   
   def self.filtra(params)
     
-    appunti = scoped.search(params[:search]) if params[:search].present?
+    appunti = scoped.search(params[:search]) if params[:search].present? && !params[:search].blank?
     # appunti = appunti.where("appunti.destinatario ilike ? or clienti.titolo ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ? or appunti.note ilike ?", 
     #            "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
     appunti = appunti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
