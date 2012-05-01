@@ -118,9 +118,9 @@
         - u = new Date(@updated_at)
         %small
           %span creato il
-          %span= "#{c.getDay()}-#{c.getMonth()+1}-#{c.getFullYear()}"
-          %span † modificato il 
-          %span= "#{u.getDay()}-#{u.getMonth()+1}-#{u.getFullYear()}"
+          %span= "#{c.getDate()}-#{c.getMonth()+1}-#{c.getFullYear()}"
+          %span - modificato il 
+          %span= "#{u.getDate()}-#{u.getMonth()+1}-#{u.getFullYear()}"
       
       .more-actions
         %ul.nav-appunto
