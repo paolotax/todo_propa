@@ -47,6 +47,7 @@ gem 'kaminari'
 
 gem 'pg'
 gem 'pg_search'
+gem 'activerecord-postgres-hstore'
 
 gem 'capistrano'
 gem 'unicorn'

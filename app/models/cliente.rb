@@ -15,7 +15,7 @@ class Cliente < ActiveRecord::Base
   has_many :classi,      :dependent => :destroy
   has_many :adozioni, :through => :classi, :include => :libro
   has_many :mie_adozioni, :through => :classi, :source => :adozioni, :include => :libro, :conditions => "libri.settore = 'Scolastico'"
-  
+  has_many :righe, through: :appunti
 
   accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:comune].nil? || a[:provincia].nil?}, :allow_destroy => true  
   
@@ -44,6 +44,10 @@ class Cliente < ActiveRecord::Base
   scope :next,     lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} > ?", i.user_id, i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
   
   scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
+  
+  scope :has_sezioni_adottate, where("(properties -> 'sezioni_adottate')::int > 0")
+  scope :has_copie_vendute,    where("(properties -> 'copie_vendute')::int > 0")
+  
   
   
   def self.grouped_by_provincia_and_comune
@@ -106,7 +110,20 @@ class Cliente < ActiveRecord::Base
     classi = self.classi.includes(:adozioni).order("classi.classe, classi.sezione").all.group_by(&:classe)
   end
     
-  
+  def self.ricalcola_properties
+
+    Cliente.all.each do |c|
+      prop = {}
+      if c.mie_adozioni.size > 0
+        prop = prop.merge(sezioni_adottate: c.mie_adozioni.size )
+      end
+      if c.righe.sum(:quantita) > 0
+        prop = prop.merge(copie_vendute:  c.righe.sum(:quantita) )
+      end
+      c.properties = prop
+      c.save   
+    end
+  end  
   
   # def indirizzo
   #   ind = self.indirizzi.where(tipo: "Indirizzo fattura").last
