@@ -45,10 +45,6 @@ class Cliente < ActiveRecord::Base
   
   scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
   
-  scope :has_sezioni_adottate, where("(properties -> 'sezioni_adottate')::int > 0")
-  scope :has_copie_vendute,    where("(properties -> 'copie_vendute')::int > 0")
-  
-  
   
   def self.grouped_by_provincia_and_comune
     clienti = scoped
@@ -125,16 +121,15 @@ class Cliente < ActiveRecord::Base
     end
   end  
   
-  # def indirizzo
-  #   ind = self.indirizzi.where(tipo: "Indirizzo fattura").last
-  #   ind ||= self.indirizzi.build(tipo: 'Indirizzo fattura')
-  # end
-  # 
-  # def indirizzo_spedizione
-  #   ind = self.indirizzi.where(tipo: "Indirizzo spedizione").last
-  #   ind ||= self.indirizzo
-  # end
+  %w[sezioni_adottate copie_vendute].each do |key|
+    # attr_accessible key
+    scope "has_#{key}", where("(properties -> '#{key}')::int > 0")
 
+    define_method(key) do
+      properties && properties[key]
+    end
+  end
+  
   def set_indirizzi
     # self.indirizzi.build(tipo: 'Indirizzo fattura') unless self.indirizzo.present?
     # self.indirizzi.build(tipo: 'Indirizzo spedizione') unless self.indirizzo_spedizione.present?

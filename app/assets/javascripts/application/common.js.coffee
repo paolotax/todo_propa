@@ -4,6 +4,11 @@
 #   $(object).html html
 
 jQuery ->
+  
+  $(".mostra-tappe").on "click", (e) ->
+    e.preventDefault();
+    $("table", $(@).closest(".giro")).toggleClass("hidden");
+  
 
   $('#flash_notice, #flash_alert').delay(2000).slideUp('slow')
 

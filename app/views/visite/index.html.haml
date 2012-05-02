@@ -31,10 +31,13 @@
     - i = 0
     - @visite_grouped.each do |k, v|
       .giro.well
-        %p
+        .pull-left
           %strong= k
           %span= "#{pluralize(v.count, "tappa")}"
-        %table.table
+        .pull-right
+          = link_to "esandi", "#", class: "mostra-tappe"
+        .clearfix  
+        %table.table.hidden
           %tbody
             - for visita in v do
               %tr[visita]
