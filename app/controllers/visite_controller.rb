@@ -43,6 +43,7 @@ class VisiteController < ApplicationController
     respond_to do |format|
       if @visita.update_attributes(params[:visita])
         format.html { redirect_to :back, notice: 'Visita modificata.' }
+        format.js
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

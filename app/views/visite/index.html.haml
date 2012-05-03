@@ -29,6 +29,7 @@
   .span7
     %h2= "#{pluralize(@visite.count, "scuola")} completate."
     - i = 0
+    
     - @visite_grouped.each do |k, v|
       .giro.well
         .pull-left
@@ -46,7 +47,7 @@
                 %td= visita.cliente.titolo
                 %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
                 %td
-                  = form_for visita do |f|
+                  = form_for visita, remote: true do |f|
                     = f.hidden_field :baule, value: 't'
                     = f.submit "Nel baule"
    
