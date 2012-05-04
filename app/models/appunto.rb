@@ -29,7 +29,8 @@ class Appunto < ActiveRecord::Base
   include PgSearch
   pg_search_scope :search, against: [:destinatario, :note],
     using: {tsearch: {dictionary: "italian"}},
-    associated_against: {cliente: [ :titolo, :comune, :frazione, :provincia ] }
+    associated_against: {cliente: [ :titolo, :comune, :frazione, :provincia ] },
+    order_within_rank: "updated_at DESC"
   
   
   before_save :leggi
