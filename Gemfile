@@ -12,7 +12,7 @@ group :assets do
   
 end
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', git: "https://github.com/thomas-mcdonald/bootstrap-sass.git", branch: '2.0.2' 
 gem "compass-rails"
 gem "haml-rails"
 
