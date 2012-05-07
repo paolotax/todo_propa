@@ -3,9 +3,9 @@
 = simple_nested_form_for @fattura do |f|
   = f.error_notification
 
-  = f.hidden_field :user_id
+  = f.hidden_field :user_id, value: current_user.id
   = f.input :cliente_id, :collection => current_user.clienti.order(:titolo), :label_method => :titolo, :value_method => :id, :input_html => { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
-  
+  %hr
   .control-group
     .controls
-      %button{:class => "btn btn-primary", :type => "submit"} Crea Documento
+      %button{:class => "btn btn-primary", :type => "submit"} Continua

@@ -21,6 +21,13 @@ class Riga < ActiveRecord::Base
     end
   end
   
+  def remove_fattura=(value)
+    if value == "true"
+      self.fattura_id = nil
+      self.save
+    end
+  end
+  
   def prezzo=(text)
     self.prezzo_unitario = text
   end

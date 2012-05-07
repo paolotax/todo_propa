@@ -19,16 +19,13 @@ class FatturaStepsController < ApplicationController
     
     case step
       when :intestazione
-        @fattura.numero = @fattura.get_new_id(current_user)
-        @fattura.data   = Time.now
+        if @fattura.numero.nil?
+          @fattura.numero = @fattura.get_new_id(current_user)
+          @fattura.data   = Time.now
+        end
       when :righe
         @fattura.add_righe_from_cliente(@fattura.cliente)      
     end
-
-
-
-    
-    
     render_wizard
   end
 

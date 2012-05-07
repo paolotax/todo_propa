@@ -31,9 +31,6 @@ class FattureController < ApplicationController
 
   def new
     @fattura = current_user.fatture.build
-    
-
-    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @fattura }
@@ -45,7 +42,9 @@ class FattureController < ApplicationController
   end
 
   def create
+
     @fattura = Fattura.new(params[:fattura])
+
     if @fattura.save
       session[:fattura_id] = @fattura.id
       redirect_to fattura_fattura_steps_path(@fattura)
@@ -54,21 +53,15 @@ class FattureController < ApplicationController
     end  
   end
 
-
-
-  # PUT /fatture/1
-  # PUT /fatture/1.json
   def update
+
     @fattura = Fattura.find(params[:id])
 
-    respond_to do |format|
-      if @fattura.update_attributes(params[:fattura])
-        format.html { redirect_to @fattura, notice: 'Fattura modificata.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @fattura.errors, status: :unprocessable_entity }
-      end
+    if @fattura.update_attributes(params[:fattura])
+      session[:fattura_id] = @fattura.id
+      redirect_to fattura_fattura_steps_path(@fattura)
+    else
+      render :edit
     end
   end
 

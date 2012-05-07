@@ -1,4 +1,8 @@
 class RigheController < ApplicationController
+  
+  def index
+  end
+  
   def create
     @riga = Riga.new(params[:riga])
 
@@ -13,6 +17,17 @@ class RigheController < ApplicationController
       end
     end
   end
+  
+  def update 
+    @riga = Riga.find(params[:id])
+    respond_to do |format|
+      if @riga.update_attributes(params[:riga])
+        format.json { head :ok }
+      else
+        format.json { render :json => @riga.errors, :status => :unprocessable_entity }
+      end
+    end
+  end  
 
   def destroy
     @riga = Riga.find(params[:id])

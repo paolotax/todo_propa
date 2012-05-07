@@ -1,13 +1,24 @@
-= simple_form_for @fattura, url: wizard_path do |f|
-  
-  = f.error_notification
-  
-  = yield f
-  
-  
-  
-  .control-group
-    .controls
-      %button{:class => "btn btn-primary", :type => "submit"} Continua
-      o 
-      = link_to "Salta questo passaggio", next_wizard_path
+.container
+  .row
+    .span7.well
+      / = render 'shared/title_bar', title: "Nuova cliente"
+      %h2 Nuova Fattura
+      %hr
+      = simple_form_for @fattura, url: wizard_path do |f|
+
+        = f.error_notification
+
+        = yield f
+
+        .control-group
+          .controls
+            %button{:class => "btn btn-primary", :type => "submit"} Continua
+            o 
+            = link_to "Salta questo passaggio", next_wizard_path
+    .span3
+      .well
+        = link_to 'Fatture', fatture_path
+
+
+
+
