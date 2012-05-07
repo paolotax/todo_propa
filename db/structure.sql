@@ -688,7 +688,8 @@ CREATE TABLE fatture (
     spese numeric(9,2) DEFAULT 0.0,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    slug character varying(255)
+    slug character varying(255),
+    status character varying(255)
 );
 
 
@@ -1610,3 +1611,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120501082549');
 INSERT INTO schema_migrations (version) VALUES ('20120501082649');
 
 INSERT INTO schema_migrations (version) VALUES ('20120501082725');
+
+INSERT INTO schema_migrations (version) VALUES ('20120505083439');

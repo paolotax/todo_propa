@@ -1,0 +1,10 @@
+= render layout: 'form' do |f|
+  .control-group
+    .controls
+      %h2= f.object.cliente.titolo unless f.object.cliente.nil?
+  
+  = f.input :pagata
+  = f.input :condizioni_pagamento, collection: Fattura::TIPO_PAGAMENTO
+  = f.object.importo_fattura
+  = f.object.totale_copie
+  

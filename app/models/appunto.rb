@@ -76,6 +76,8 @@ class Appunto < ActiveRecord::Base
     appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
   
     appunti
+    
+    # raise appunti.inspect  if params[:search].present?
   end
 
   private

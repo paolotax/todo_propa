@@ -44,6 +44,7 @@ gem 'simple_form'
 
 gem 'will_filter', "~> 3.1.0" 
 gem 'kaminari'
+gem 'wicked'
 
 gem 'pg'
 gem 'pg_search'

@@ -9,6 +9,7 @@ class Cliente < ActiveRecord::Base
   belongs_to :user
 
   has_many :appunti, dependent: :destroy
+  has_many :fatture, dependent: :destroy
   has_many :visite,  dependent: :destroy
   has_many :indirizzi, :as => :indirizzable, :dependent => :destroy
 

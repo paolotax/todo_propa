@@ -11,7 +11,8 @@ class Riga < ActiveRecord::Base
 
   scope :per_libro_id, order("righe.libro_id")
   scope :da_consegnare, joins(:appunto).where("appunti.stato is null or appunti.stato = ''")
-
+  scope :da_fatturare,  where("righe.fattura_id is null or righe.fattura_id = 0")
+  
   def prezzo
     if sconto == 0.0
       prezzo_unitario

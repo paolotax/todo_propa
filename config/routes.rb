@@ -25,7 +25,9 @@ TodoPropa::Application.routes.draw do
   
   resources :comuni
 
-  resources :fatture
+  resources :fatture do
+    resources :fattura_steps
+  end
 
   devise_for :users
 

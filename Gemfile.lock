@@ -219,6 +219,9 @@ GEM
       raindrops (~> 0.7)
     warden (1.1.1)
       rack (>= 1.0)
+    wicked (0.1.4)
+      activesupport (>= 3.0.7)
+      rails (>= 3.0.7)
     will_filter (3.1.6)
       coffee-script
       kaminari
@@ -265,5 +268,6 @@ DEPENDENCIES
   turn
   uglifier (>= 1.0.3)
   unicorn
+  wicked
   will_filter (~> 3.1.0)
   yajl-ruby

@@ -13,20 +13,27 @@ class Fattura < ActiveRecord::Base
   
   
   
-  validates :data, :presence => true
-  validates :numero, :presence => true
+  validates :cliente_id, :data, :numero, :presence => true, :if => :active?
   
   scope :per_numero, order('fatture.data desc, fatture.numero desc')
   
   before_save :ricalcola
   
+  def active?
+    status == 'active'
+  end
+  
   def add_righe_from_cliente(cliente) 
     cliente.righe.da_fatturare.each do |riga|
-      self.totale_copie += riga.quantita
-      self.importo_fattura += riga.quantita * riga.prezzo_unitario
-      self.appunto_righe << riga
+      self.totale_copie += riga.quantita || 0
+      self.importo_fattura += riga.quantita * riga.prezzo_unitario || 0
+      self.righe << riga
     end
   end
+  
+  # def to_param
+  #   "#{numero}"
+  # end 
   
   def add_righe_from_appunto(appunto)
     self.totale_copie = self.totale_copie || 0

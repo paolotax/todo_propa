@@ -30,18 +30,9 @@ class FattureController < ApplicationController
 
 
   def new
-    @fattura = Fattura.new
+    @fattura = current_user.fatture.build
     
-    if params[:appunto].present?
-      @appunto = Appunto.includes([:cliente, :righe]).find(params[:appunto])
-      @fattura.cliente = @appunto.cliente
-      @fattura.add_righe_from_appunto(@appunto)      
-    end  
-    
-    @fattura.numero = @fattura.get_new_id(current_user)
-    @fattura.data   = Time.now
-    @fattura.user   = current_user
-    # @appunto_righe = AppuntoRiga.includes([:appunto, :libro]).per_scuola(@scuola).da_fatturare.per_appunto
+
     
     respond_to do |format|
       format.html # new.html.erb
@@ -53,21 +44,17 @@ class FattureController < ApplicationController
     @fattura = Fattura.find(params[:id])
   end
 
-  # POST /fatture
-  # POST /fatture.json
   def create
     @fattura = Fattura.new(params[:fattura])
-
-    respond_to do |format|
-      if @fattura.save
-        format.html { redirect_to @fattura, notice: 'Fattura creata.' }
-        format.json { render json: @fattura, status: :created, location: @fattura }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @fattura.errors, status: :unprocessable_entity }
-      end
-    end
+    if @fattura.save
+      session[:fattura_id] = @fattura.id
+      redirect_to fattura_fattura_steps_path(@fattura)
+    else
+      render :new
+    end  
   end
+
+
 
   # PUT /fatture/1
   # PUT /fatture/1.json

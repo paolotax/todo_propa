@@ -1,5 +1,13 @@
-%h1 New fattura
+- title "Nuovo fattura"
 
-= render 'form'
 
-= link_to 'Back', fatture_path
+.container
+  .row
+    .span7.well
+      / = render 'shared/title_bar', title: "Nuova cliente"
+      %h2 Nuova Fattura
+      %hr
+      = render 'form'
+    .span3
+      .well
+        = link_to 'Fatture', fatture_path
