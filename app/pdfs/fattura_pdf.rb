@@ -163,7 +163,7 @@ class FatturaPdf < Prawn::Document
 
       unless @fattura.righe.empty?
         @fattura.righe.group_by(&:appunto).each do |a, righe|
-          text "Ordine del #{l a.created_at, :format => :short}", size: 8
+          text "Ordine del #{l a.created_at, :format => :short}", size: 8 unless a.nil?
           r =  righe.map do |riga|
             [
               riga.libro.titolo,

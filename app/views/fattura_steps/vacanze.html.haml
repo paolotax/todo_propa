@@ -1,0 +1,26 @@
+= render layout: 'form' do |f|
+  .control-group
+    .controls
+      %h2= f.object.cliente.titolo unless f.object.cliente.nil?
+
+  .control-group
+    #righe
+      = f.simple_fields_for :righe do |riga|
+        - if riga.object.new_record?
+          = div_for riga.object, class: 'form-inline' do
+            = riga.hidden_field :id
+            = riga.hidden_field :libro_id
+            .titolo= riga.object.libro.titolo
+            .pull-right
+              = riga.text_field :quantita, class: 'input-mini riga_quantita'
+              = riga.text_field :prezzo,   class: 'input-mini riga_prezzo'
+              = riga.text_field :sconto,   class: 'input-mini riga_sconto'
+              = link_to "#", class: "btn btn-danger btn-mini remove-fattura" do
+                %i.icon-minus
+        - else
+          .hidden
+
+
+  %ul.well
+    - for a in f.object.cliente.appunti.in_corso do
+      %li= a

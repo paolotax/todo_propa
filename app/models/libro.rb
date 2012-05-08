@@ -31,7 +31,7 @@ class Libro < ActiveRecord::Base
   
   scope :per_settore, unscoped.order(:settore)
   scope :per_titolo,  unscoped.order(:titolo)
-  
+  scope :vacanze,   where("libri.settore = 'Vacanze'").order(:titolo) 
   scope :vendibili, where("libri.settore <> 'Concorrenza'").where("libri.settore <> 'Scorrimento'").where("libri.settore <> 'Adozionale'")
   
   scope :previous, lambda { |i, f| where("#{self.table_name}.#{f} < ?", i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }

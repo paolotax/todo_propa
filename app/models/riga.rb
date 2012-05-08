@@ -3,8 +3,8 @@ class Riga < ActiveRecord::Base
   belongs_to :libro
 
   after_initialize :init
-  after_save :ricalcola_totali
-  after_destroy :ricalcola_totali
+  # after_save :ricalcola_totali
+  # after_destroy :ricalcola_totali
 
 
   delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :to => :libro

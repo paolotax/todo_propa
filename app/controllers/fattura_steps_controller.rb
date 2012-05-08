@@ -1,6 +1,6 @@
 class FatturaStepsController < ApplicationController
   include Wicked::Wizard
-  steps :intestazione, :righe, :finale 
+  steps :intestazione, :righe, :vacanze, :finale 
 
 
   # def create
@@ -24,7 +24,14 @@ class FatturaStepsController < ApplicationController
           @fattura.data   = Time.now
         end
       when :righe
-        @fattura.add_righe_from_cliente(@fattura.cliente)      
+        @fattura.add_righe_from_cliente(@fattura.cliente)    
+      
+      when :vacanze
+        @libri = Libro.vacanze
+        @libri.all.each do |l|
+          @fattura.righe.build(libro: l, prezzo_unitario: l.prezzo_consigliato)
+        end    
+            
     end
     render_wizard
   end

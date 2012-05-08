@@ -3,8 +3,8 @@ class Fattura < ActiveRecord::Base
   TIPO_FATTURA = [ "Fattura", "Buono di consegna", "Nota di accredito" ]
   TIPO_PAGAMENTO = ["Contanti", "Assegno", "Bonifico Bancario", "Bollettino Postale"]
   
-  # extend FriendlyId
-  # friendly_id :doc_id, use: [:slugged, :history]
+  extend FriendlyId
+  friendly_id :doc_id, use: [:slugged, :history]
   
   
   belongs_to :cliente
@@ -23,6 +23,18 @@ class Fattura < ActiveRecord::Base
   
   before_save :ricalcola
   
+  
+  def causale
+    unless causale_id.nil?
+      TIPO_FATTURA[self.causale_id]
+    end
+  end
+  
+  def causale=(text)
+    self.causale_id = TIPO_FATTURA.index(text)
+  end
+  
+  
   def active?
     status == 'active'
   end
@@ -36,7 +48,11 @@ class Fattura < ActiveRecord::Base
   end
   
   def doc_id
-    "#{data.year}-#{numero}"
+    if data == nil
+      self.id
+    else  
+      "#{data.year}-#{numero}"
+    end
   end 
   
   def add_righe_from_appunto(appunto)
@@ -56,7 +72,7 @@ class Fattura < ActiveRecord::Base
     
   def get_new_id(user)
     
-    last_id = Fattura.where("user_id = ? and data > ?", user.id, Time.now.beginning_of_year).order('numero desc').limit(1)
+    last_id = Fattura.where("user_id = ? and data > ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
     
     if last_id.empty?
       return 1
