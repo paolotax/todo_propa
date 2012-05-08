@@ -29,13 +29,11 @@
       .control-group
         %label.control-label Condizioni di pagamento:
         .controls
-          %label.radio
-            = radio_button_tag 'prezzo', 'consigliato', true
-            prezzo consigliato
-          %label.radio.form-inline
-            = radio_button_tag 'prezzo', 'con_sconto', false
-            sconto
-            = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43]), class: 'input-small'
+          = radio_button_tag 'prezzo', 'consigliato', true
+          prezzo consigliato
+          = radio_button_tag 'prezzo', 'con_sconto', false
+          sconto
+          = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43]), class: 'input-mini'
       
       .control-group
         = render 'righe/form'
