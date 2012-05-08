@@ -22,7 +22,7 @@ class RigheController < ApplicationController
     @riga = Riga.find(params[:id])
     respond_to do |format|
       if @riga.update_attributes(params[:riga])
-        format.json { head :ok }
+        format.json { render :json => @riga }
       else
         format.json { render :json => @riga.errors, :status => :unprocessable_entity }
       end

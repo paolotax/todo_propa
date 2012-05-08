@@ -17,7 +17,7 @@ jQuery ->
       
       success: (data) ->
         console.log "succ"
-
+        $(riga).remove();
     
     
     

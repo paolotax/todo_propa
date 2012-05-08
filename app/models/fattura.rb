@@ -1,7 +1,11 @@
 class Fattura < ActiveRecord::Base
 
-  TIPO_FATTURA = [ "Fattura", "Vendita" ]
+  TIPO_FATTURA = [ "Fattura", "Buono di consegna", "Nota di accredito" ]
   TIPO_PAGAMENTO = ["Contanti", "Assegno", "Bonifico Bancario", "Bollettino Postale"]
+  
+  # extend FriendlyId
+  # friendly_id :doc_id, use: [:slugged, :history]
+  
   
   belongs_to :cliente
   belongs_to :user
@@ -31,9 +35,9 @@ class Fattura < ActiveRecord::Base
     end
   end
   
-  # def to_param
-  #   "#{numero}"
-  # end 
+  def doc_id
+    "#{data.year}-#{numero}"
+  end 
   
   def add_righe_from_appunto(appunto)
     self.totale_copie = self.totale_copie || 0
