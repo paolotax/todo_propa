@@ -12,9 +12,10 @@
 
         .control-group
           .controls
-            %button{:class => "btn btn-primary", :type => "submit"} Continua
-            o 
-            = link_to "Salta questo passaggio", next_wizard_path
+            = link_to "Passaggio precedente", previous_wizard_path, class: "btn"
+            %button{:class => "btn btn-primary", :type => "submit"} Salva e continua
+            
+            = link_to "Salta questo passaggio", next_wizard_path, class: "btn"
     .span3
       .well
         = link_to 'Fatture', fatture_path
