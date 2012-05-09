@@ -16,6 +16,7 @@
           %thead
             %tr.item
               %th
+              %th
                 .pull-right #
               %th Data
               %th Cliente
@@ -29,6 +30,7 @@
           %tbody
             - fatture.each do |fattura|
               %tr.item
+                %td= fattura.causale
                 %td
                   .pull-right= fattura.numero
                 %td= l fattura.data, format: :only_date
