@@ -79,6 +79,13 @@ class Appunto < ActiveRecord::Base
     
     # raise appunti.inspect  if params[:search].present?
   end
+  
+  before_save :ricalcola
+  
+  def ricalcola
+    self.totale_copie    = righe.map(&:quantita).sum
+    self.totale_importo  = righe.map(&:importo).sum
+  end
 
   private
 
