@@ -1,12 +1,11 @@
 = render layout: 'form' do |f|
-  .control-group
-    .controls
-      %h2= f.object.cliente.titolo unless f.object.cliente.nil?
-  
-  = f.input :pagata
-  = f.input :condizioni_pagamento, collection: Fattura::TIPO_PAGAMENTO
-  = f.object.importo_fattura
-  = f.object.totale_copie
-  
-  = wizard_steps[2] 
+
+  %fieldset
+    %legend
+      
+    .control-group
+      .controls
+        = link_to "Inserisci Vacanze", wizard_path(:vacanze), class: "btn"
+        = link_to "Scegli appunti", wizard_path(:scegli_appunti), class: "btn"
+        %button{:class => "btn btn-primary", :type => "submit"} Salva e chiudi
   

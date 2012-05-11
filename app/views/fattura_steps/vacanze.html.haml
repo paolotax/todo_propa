@@ -1,9 +1,5 @@
 = render layout: 'form' do |f|
   .control-group
-    .controls
-      %h2= f.object.cliente.titolo unless f.object.cliente.nil?
-
-  .control-group
     #righe
       = f.simple_fields_for :righe do |riga|
         - if riga.object.new_record?
@@ -20,7 +16,9 @@
         - else
           .hidden
 
+  .control-group
+    .controls
+      = link_to "Passaggio precedente", previous_wizard_path, class: "btn"
+      %button{:class => "btn btn-primary", :type => "submit"} Salva e continua
 
-  %ul.well
-    - for a in f.object.cliente.appunti.in_corso do
-      %li= a
+      = link_to "Salta questo passaggio", next_wizard_path, class: "btn"

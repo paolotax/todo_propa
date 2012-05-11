@@ -1,21 +1,15 @@
 .container
   .row
     .span7.well
-      / = render 'shared/title_bar', title: "Nuova cliente"
-      %h2 Nuova Fattura
-      %hr
+      %h2= @fattura.cliente.titolo
+
       = simple_form_for @fattura, url: wizard_path do |f|
 
         = f.error_notification
 
         = yield f
 
-        .control-group
-          .controls
-            = link_to "Passaggio precedente", previous_wizard_path, class: "btn"
-            %button{:class => "btn btn-primary", :type => "submit"} Salva e continua
-            
-            = link_to "Salta questo passaggio", next_wizard_path, class: "btn"
+
     .span3
       .well
         = link_to 'Fatture', fatture_path

@@ -1,17 +1,9 @@
 = render layout: 'form' do |f|
-  .control-group
-    .controls
-      %h2= f.object.cliente.titolo unless f.object.cliente.nil?
-
   = nested_righe_per_appunto(@righe)
   
-  
-  / - for a in f.object.cliente.appunti.in_corso do
-  /   .control-group
-  /     .appunto
-  /       = check_box_tag("appunti_ids[]", a.id, true)
-  /       = a.created_at
-  /       = a.note
-  /       %table.table
-  /         -for riga in a.righe do
-  /           = render riga
+  .control-group
+    .controls
+      = link_to "Passaggio precedente", previous_wizard_path, class: "btn"
+      %button{:class => "btn btn-primary", :type => "submit"} Salva e continua
+      
+      = link_to "Salta questo passaggio", next_wizard_path, class: "btn" 
