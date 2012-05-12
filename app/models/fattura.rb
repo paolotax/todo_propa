@@ -1,6 +1,6 @@
 class Fattura < ActiveRecord::Base
 
-  TIPO_FATTURA = [ "Fattura", "Buono di consegna", "Nota di accredito" ]
+  TIPO_FATTURA = [ "Fattura", "Buono di consegna", "Nota di accredito", "Ordine" ]
   TIPO_PAGAMENTO = ["Contanti", "Assegno", "Bonifico Bancario", "Bollettino Postale"]
   
   extend FriendlyId

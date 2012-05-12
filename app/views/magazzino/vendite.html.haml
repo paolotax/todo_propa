@@ -1,0 +1,27 @@
+.content-main.span8
+  .content-header
+    .header-inner
+      %h2 Volumi da consegnare
+
+    .libri
+      - @da_consegnare.each do |libro, righe|
+        .row
+          .span8[libro]
+            .row
+              .titolo.span3
+                = link_to image_tag(libro.image_url(:small_thumb)), libro
+                %strong= libro.titolo
+                %br
+                = libro.cm
+              .quantita.span1
+                = righe.sum(&:quantita)
+              .righe.span2
+                -for riga in righe do
+                  .label.label-info
+                    = riga.quantita
+                    -
+                    = riga.appunto.cliente.titolo
+              .in_ordine.span1
+                = 100
+              .giacenza.span1
+                = 100 - righe.sum(&:quantita)

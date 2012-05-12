@@ -4,10 +4,8 @@ class FatturaStepsController < ApplicationController
 
   def show
     
-    # raise params[:fattura_id].inspect
-    
     @fattura = current_user.fatture.find(params[:fattura_id])
-    
+
     case step
     when :intestazione
       if @fattura.numero.nil?
@@ -16,13 +14,26 @@ class FatturaStepsController < ApplicationController
       end
     when :scegli_appunti
       @righe = @fattura.cliente.righe.da_fatturare 
-    
     when :vacanze
       @libri = Libro.vacanze
       @libri.all.each do |l|
-        @fattura.righe.build(libro: l, prezzo_unitario: l.prezzo_consigliato)
+        
+        if !(["Cartolibreria", "Ditta"].include?  @fattura.cliente.cliente_tipo)
+          prezzo = l.prezzo_consigliato
+          sconto = 0.0
+        else
+           prezzo = l.prezzo_copertina
+           if @fattura.causale == "Ordine"
+             sconto = 43
+           else 
+             sconto = 20
+           end
+        end
+
+        @fattura.righe.build(libro: l, prezzo_unitario: prezzo, sconto: sconto)
       end    
     end
+
     render_wizard
   end
 

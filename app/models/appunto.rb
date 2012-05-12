@@ -15,10 +15,10 @@ class Appunto < ActiveRecord::Base
 
 
   scope :recente,  order("appunti.id desc")
-  scope :in_corso,   includes(:cliente).where("appunti.stato <> 'X'")
-  scope :completo,   includes(:cliente).where("appunti.stato = 'X'")
-  scope :da_fare,    includes(:cliente).where("appunti.stato = ''")
-  scope :in_sospeso, includes(:cliente).where("appunti.stato = 'P'")
+  scope :in_corso,   where("appunti.stato <> 'X'")
+  scope :completo,   where("appunti.stato = 'X'")
+  scope :da_fare,    where("appunti.stato = ''")
+  scope :in_sospeso, where("appunti.stato = 'P'")
   
   scope :uniq_cliente_id, select(:cliente_id).uniq
   
@@ -87,21 +87,44 @@ class Appunto < ActiveRecord::Base
     self.totale_importo  = righe.map(&:importo).sum
   end
 
+  after_save :update_righe_status
+  
   private
 
-  def leggi
+    def leggi
     
-    new_righe = self.note.lines.to_a
-    for r in self.note.lines do
-      riga = r.squish.split
-      if /\d{5}[A-Z]/.match riga.first
-        libro = Libro.find_or_create_by_cm( cm: riga.first, titolo: riga[1..-2].join(" "), prezzo_consigliato: 0, prezzo_copertina: 0 )
-        new_riga = self.righe.build( libro: libro, quantita:  riga.last, prezzo_unitario: libro.prezzo_copertina )
-        new_righe.delete(r)
+      new_righe = self.note.lines.to_a
+      for r in self.note.lines do
+        riga = r.squish.split
+        if /\d{5}[A-Z]/.match riga.first
+          libro = Libro.find_or_create_by_cm( cm: riga.first, titolo: riga[1..-2].join(" "), prezzo_consigliato: 0, prezzo_copertina: 0 )
+          new_riga = self.righe.build( libro: libro, quantita:  riga.last, prezzo_unitario: libro.prezzo_copertina )
+          new_righe.delete(r)
+        end
+        self.note = new_righe.join() 
       end
-      self.note = new_righe.join() 
     end
-  end
+
+  
+    def update_righe_status
+      
+      if stato == 'X'
+        righe.each do |riga|
+          riga.update_attributes({:pagato => true, :consegnato => true})
+        end
+      elsif stato == 'P'
+        righe.each do |riga|
+          riga.update_attributes({:pagato => false, :consegnato => true})
+        end
+      else
+        righe.each do |riga|
+          riga.update_attributes({:pagato => false, :consegnato => false})
+        end
+      end
+    end
+
+
+
 end
 
 
