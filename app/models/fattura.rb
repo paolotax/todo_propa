@@ -23,6 +23,9 @@ class Fattura < ActiveRecord::Base
   
   before_save :ricalcola
   
+  def imponibile
+    self.importo_fattura - self.totale_iva
+  end
   
   def causale
     unless causale_id.nil?
@@ -51,7 +54,7 @@ class Fattura < ActiveRecord::Base
     if data == nil
       self.id
     else  
-      "#{data.year}-#{numero}"
+      "#{causale}-#{data.year}-#{numero}"
     end
   end 
   
@@ -68,6 +71,12 @@ class Fattura < ActiveRecord::Base
   def ricalcola
     self.totale_copie    = righe.map(&:quantita).sum
     self.importo_fattura = righe.map(&:importo).sum
+    self.totale_iva = 0 
+    righe.each do |r|
+      unless r.libro.iva == "VA"
+        self.totale_iva += r.importo / 100 * r.libro.iva.to_f
+      end
+    end 
   end
     
   def get_new_id(user)

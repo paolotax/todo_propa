@@ -22,6 +22,7 @@ class FatturaPdf < Prawn::Document
 
     @fattura = fattura
     @cliente = @fattura.cliente
+    
     @view = view
 
     repeat :all do
@@ -49,8 +50,8 @@ class FatturaPdf < Prawn::Document
 
       move_down 5
       text "#{current_user.nome_completo}", :size => 13, :style => :bold
-      text "Via Vestri, 4"
-      text "40128 Bologna BO"
+      text "#{current_user.properties['indirizzo']}"
+      text "#{current_user.properties['cap']} #{current_user.properties['citta']} #{current_user.properties['provincia']}"
       move_down 5
       text "tel 051 6342585  fax 051 6341521"
       text "cell #{current_user.telefono}"
@@ -74,7 +75,7 @@ class FatturaPdf < Prawn::Document
     
     bounding_box [bounds.left, bounds.top - 55.mm], :width => 44.mm, :height => 8.mm do
       stroke_bounds
-      text "FATTURA", :align => :center, :valign => :center
+      text "#{@fattura.causale}", :align => :center, :valign => :center
     end
 
 
@@ -143,7 +144,7 @@ class FatturaPdf < Prawn::Document
         stroke_bounds
         draw_text "NOSTRO CODICE IBAN PER BONIFICI", :at => [bounds.left + 1, bounds.top - 6], :size => 6
         bounding_box [ bounds.left + 1.mm, bounds.top - 2.mm ], :width => bounds.width - 2.mm, :height => 6.mm do
-          text "IT81M0538702414000000075619", :align => :center, :valign => :center, :size => 8
+          text "#{current_user.properties['iban']}", :align => :center, :valign => :center, :size => 8
         end
       end
     end
@@ -168,10 +169,10 @@ class FatturaPdf < Prawn::Document
             [
               riga.libro.titolo,
               riga.quantita,
-              riga.prezzo_unitario,
-              riga.sconto.round(2),
-              riga.importo,
-              "VA"
+              price(riga.prezzo_unitario),
+              price(riga.sconto),
+              price(riga.importo),
+              riga.libro.iva
             ]
           end
           table r, :row_colors => ["FFFFFF","DDDDDD"],
@@ -193,19 +194,19 @@ class FatturaPdf < Prawn::Document
 
         bounding_box [bounds.left, bounds.top], :width  => 32.mm, :height => 15.mm do
           bounding_box [ bounds.left + 1.mm, bounds.top - 2.mm ], :width => bounds.width - 2.mm, :height => 6.mm do
-            text "#{@fattura.importo_fattura}", :align => :right, :valign => :center, :size => 8
+            text "#{price(@fattura.imponibile)}", :align => :right, :valign => :center, :size => 8
           end
         end
 
         bounding_box [bounds.left + 32.mm , bounds.top], :width  => 8.mm, :height => 15.mm do
           bounding_box [ bounds.left + 1.mm, bounds.top - 2.mm ], :width => bounds.width - 2.mm, :height => 6.mm do
-            text "0 %", :align => :right, :valign => :center, :size => 8
+            text "", :align => :right, :valign => :center, :size => 8
           end
         end
 
         bounding_box [bounds.left + 40.mm, bounds.top], :width  => 32.mm, :height => 15.mm do
           bounding_box [ bounds.left + 1.mm, bounds.top - 2.mm ], :width => bounds.width - 2.mm, :height => 6.mm do
-            text "0", :align => :right, :valign => :center, :size => 8
+            text "#{price(@fattura.totale_iva)}", :align => :right, :valign => :center, :size => 8
           end
         end
 
@@ -217,13 +218,13 @@ class FatturaPdf < Prawn::Document
 
         bounding_box [bounds.left, bounds.top - 15.mm], :width  => 40.mm, :height => 9.mm do
           bounding_box [ bounds.left + 1.mm, bounds.top - 2.mm ], :width => bounds.width - 2.mm, :height => 6.mm do
-            text "#{@fattura.importo_fattura}", :align => :right, :valign => :center, :size => 8
+            text "#{price(@fattura.imponibile)}", :align => :right, :valign => :center, :size => 8
           end
         end
 
         bounding_box [bounds.left + 40.mm, bounds.top - 15.mm], :width  => 32.mm, :height => 9.mm do
           bounding_box [ bounds.left + 1.mm, bounds.top - 2.mm ], :width => bounds.width - 2.mm, :height => 6.mm do
-            text "0,00", :align => :right, :valign => :center, :size => 8
+            text "#{price(@fattura.totale_iva)}", :align => :right, :valign => :center, :size => 8
           end
         end
 
@@ -295,9 +296,9 @@ class FatturaPdf < Prawn::Document
 
   def price(num)
     
-    (num * 100).modulo(2) == 0 ? precision = 2 : precision = 3
+    # (num * 100).modulo(2) == 0 ? precision = 2 : precision = 3
     
-    @view.number_to_currency(num, :locale => :it, :format => "%n %u", :precision => precision)
+    @view.number_to_currency(num, :locale => :it, :format => "%n", :precision => 2)
   end
   
   def l(data, format)

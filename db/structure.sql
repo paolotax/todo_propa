@@ -805,7 +805,8 @@ CREATE TABLE libri (
     image character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    slug character varying(255)
+    slug character varying(255),
+    iva character varying(255)
 );
 
 
@@ -972,7 +973,8 @@ CREATE TABLE users (
     current_sign_in_ip character varying(255),
     last_sign_in_ip character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    properties hstore
 );
 
 
@@ -1565,6 +1567,13 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
+-- Name: users_properties; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX users_properties ON users USING gin (properties);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -1613,3 +1622,9 @@ INSERT INTO schema_migrations (version) VALUES ('20120501082649');
 INSERT INTO schema_migrations (version) VALUES ('20120501082725');
 
 INSERT INTO schema_migrations (version) VALUES ('20120505083439');
+
+INSERT INTO schema_migrations (version) VALUES ('20120513065513');
+
+INSERT INTO schema_migrations (version) VALUES ('20120513065543');
+
+INSERT INTO schema_migrations (version) VALUES ('20120513083751');

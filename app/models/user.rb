@@ -28,7 +28,20 @@ class User < ActiveRecord::Base
     if ControllaCF.valid?(text)
       text
     else
-      "Codice non valido"
+      "Codice Fiscale non valido"
+    end
+  end
+  
+  %w[indirizzo cap citta provincia iban].each do |key|
+    attr_accessible key
+    scope "has_#{key}", lambda { |value| where("properties @> (? => ?)", key, value) }
+
+    define_method(key) do
+      properties && properties[key]
+    end
+
+    define_method("#{key}=") do |value|
+      self.properties = (properties || {}).merge(key => value)
     end
   end
   
