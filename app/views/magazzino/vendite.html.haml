@@ -17,11 +17,16 @@
                 = righe.sum(&:quantita)
               .righe.span2
                 -for riga in righe do
-                  .label.label-info
-                    = riga.quantita
+                  = link_to riga.appunto, class: "label label-info" do
+                    %strong= riga.quantita
                     -
                     = riga.appunto.cliente.titolo
               .in_ordine.span1
-                = 100
+                - index = @in_ordine.keys.index(libro)
+                - unless index.nil?
+                  = @in_ordine.values[index].sum(&:quantita)
               .giacenza.span1
-                = 100 - righe.sum(&:quantita)
+                - unless index.nil?
+                  = @in_ordine.values[index].sum(&:quantita) - righe.sum(&:quantita)
+                - else
+                  = 0 - righe.sum(&:quantita)

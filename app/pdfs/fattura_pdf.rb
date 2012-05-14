@@ -236,7 +236,7 @@ class FatturaPdf < Prawn::Document
 
         bounding_box [bounds.left + 144.mm, bounds.top - 13.mm], :width  => 44.mm, :height => 11.mm do
           bounding_box [ bounds.left + 1.mm, bounds.top - 2.mm ], :width => bounds.width - 2.mm, :height => 8.mm do
-            text "#{@fattura.importo_fattura}", :align => :right, :valign => :center, :size => 8
+            text "#{price(@fattura.importo_fattura)}", :align => :right, :valign => :center, :size => 8
           end
         end
       end    

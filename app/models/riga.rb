@@ -1,7 +1,8 @@
 class Riga < ActiveRecord::Base
   belongs_to :appunto
   belongs_to :libro
-
+  belongs_to :fattura
+  
   after_initialize :init
   # after_save :ricalcola_totali
   # after_destroy :ricalcola_totali
