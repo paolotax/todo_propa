@@ -23,7 +23,7 @@ class Riga < ActiveRecord::Base
   
   scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
   
-  scope :di_questa_propaganda,  where("righe.created_at > ?", Date.new(2012,5,1))
+  scope :di_questa_propaganda,  where("righe.created_at > ?", Date.new(2012,4,1))
   
   def prezzo
     if sconto == 0.0
