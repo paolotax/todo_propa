@@ -7,12 +7,23 @@ class Riga < ActiveRecord::Base
   # after_save :ricalcola_totali
   # after_destroy :ricalcola_totali
 
-  delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :to => :libro
+  delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :iva, :to => :libro
 
-  scope :per_libro_id, order("righe.libro_id")
+  scope :per_libro_id,  order("righe.libro_id")
+  scope :per_titolo,    joins(:libro).order("libri.titolo asc")
+  scope :per_cm,        joins(:libro).order("libri.cm asc")
+  scope :per_id,        order(:id)
+  
+  scope :scarico,       joins(:appunto)
+  
   scope :da_consegnare, where("righe.consegnato = false")
   scope :da_pagare,     where("righe.pagato     = false")
   scope :da_fatturare,  where("righe.fattura_id is null")
+  scope :consegnata,    where("righe.consegnato = true")
+  
+  scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
+  
+  scope :di_questa_propaganda,  where("righe.created_at > ?", Date.new(2012,5,1))
   
   def prezzo
     if sconto == 0.0
@@ -41,8 +52,8 @@ class Riga < ActiveRecord::Base
   private
   
     def init
-      self.consegnato = false
-      self.pagato = false
+      self.consegnato ||= false
+      self.pagato     ||= false
       self.sconto ||= 0.0           #will set the default value only if it's nil
     end  
   

@@ -1,12 +1,11 @@
-.content-main.span8
+.content-main.span9
   .content-header
     .header-inner
-      %h2 Volumi da consegnare
-
+      %h2 Situazione Vacanze
     .libri
-      - @da_consegnare.each do |libro, righe|
+      - @libri_vacanze.each do |libro|
         .row
-          .span8[libro]
+          .span9[libro]
             .row
               .titolo.span3
                 = link_to image_tag(libro.image_url(:small_thumb)), libro
@@ -14,19 +13,38 @@
                 %br
                 = libro.cm
               .quantita.span1
-                = righe.sum(&:quantita)
+                - da_consegnare = 0
+                - if @da_consegnare.keys.include?(libro)
+                  - da_consegnare = @da_consegnare.values[@da_consegnare.keys.index(libro)].sum(&:quantita) 
+                  = da_consegnare
+                  
               .righe.span2
-                -for riga in righe do
-                  = link_to riga.appunto, class: "label label-info" do
-                    %strong= riga.quantita
-                    -
-                    = riga.appunto.cliente.titolo
+                - if @da_consegnare.keys.include?(libro)
+                  - for riga in @da_consegnare.values[@da_consegnare.keys.index(libro)] do
+                    = link_to riga.appunto, class: "label label-info", style: "display: block; float: left; margin-right: 3px; margin-bottom: 3px;" do
+                      %strong= riga.quantita
+                      -
+                      = riga.appunto.cliente.titolo
+                / - else
+                /   (empty)
+
               .in_ordine.span1
-                - index = @in_ordine.keys.index(libro)
-                - unless index.nil?
-                  = @in_ordine.values[index].sum(&:quantita)
+                - in_ordine = 0
+                - if @in_ordine.keys.include?(libro)
+                  - in_ordine = @in_ordine.values[@in_ordine.keys.index(libro)].sum(&:quantita) 
+                  = in_ordine
+                
+              .consegnati.span1
+                - consegnati = 0
+                - if @consegnati.keys.include?(libro)
+                  - consegnati = @consegnati.values[@consegnati.keys.index(libro)].sum(&:quantita) 
+                  = consegnati
+              
               .giacenza.span1
-                - unless index.nil?
-                  = @in_ordine.values[index].sum(&:quantita) - righe.sum(&:quantita)
-                - else
-                  = 0 - righe.sum(&:quantita)
+                = in_ordine - da_consegnare - consegnati
+              
+              
+                / - unless index.nil?
+                /   = @in_ordine.values[index].sum(&:quantita) - righe.sum(&:quantita)
+                / - else
+                /   = 0 - righe.sum(&:quantita)
