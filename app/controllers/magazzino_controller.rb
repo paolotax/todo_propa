@@ -4,7 +4,7 @@ class MagazzinoController < ApplicationController
     
     @libri_vacanze = Libro.vacanze
 
-    @da_consegnare = current_user.righe.scarico.da_consegnare.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
+    @da_consegnare = current_user.righe.includes(:appunto => :cliente).scarico.da_consegnare.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
     @in_ordine     = current_user.righe_fattura.carico.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
     @consegnati    = current_user.righe.scarico.consegnata.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
     
