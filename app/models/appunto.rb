@@ -36,11 +36,13 @@ class Appunto < ActiveRecord::Base
   before_save :leggi
   
   def nel_baule
-    if self.visite.nel_baule.empty?
-      return false
-    else
-      self.visite.nel_baule.uniq[0].id
-    end
+    nel_baule = false
+    self.visite.each do |v|
+      if v.nel_baule?
+        nel_baule = v.id
+      end
+    end 
+    nel_baule
   end
   
   def to_s

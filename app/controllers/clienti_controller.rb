@@ -4,7 +4,7 @@ class ClientiController < ApplicationController
   
   def index
 
-    @search = current_user.clienti.per_localita.filtra(params)
+    @search = current_user.clienti.includes(:visite).per_localita.filtra(params)
     @search_appunti = current_user.appunti.filtra(params.except(:status))
     
     @in_corso   = Cliente.con_appunti(@search_appunti.in_corso).size
@@ -17,7 +17,7 @@ class ClientiController < ApplicationController
     @clienti = @clienti.offset((params[:page].to_i-1)*50) if params[:page].present?
 
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
-    @citta     = current_user.clienti.select_citta.filtra(params.except(:comunesearch)).order(:comune)
+    @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
   end
 
   def show

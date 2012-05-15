@@ -15,7 +15,7 @@ class Fattura < ActiveRecord::Base
   
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => false
   
-  
+  delegate :titolo, to: :cliente
   
   validates :cliente_id, :data, :numero, :presence => true, :if => :active?
   

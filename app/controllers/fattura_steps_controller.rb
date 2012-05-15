@@ -14,6 +14,9 @@ class FatturaStepsController < ApplicationController
       end
     when :scegli_appunti
       @righe = @fattura.cliente.righe.da_fatturare 
+      if @righe.empty?
+        skip_step
+      end
     when :vacanze
       @libri = Libro.vacanze
       @libri.all.each do |l|

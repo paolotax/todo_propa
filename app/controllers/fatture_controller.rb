@@ -1,7 +1,7 @@
 class FattureController < ApplicationController
 
   def index
-    @fatture = current_user.fatture.per_numero
+    @fatture = current_user.fatture.includes(:cliente).per_numero
     @fatture_per_anno = @fatture.group_by { |t| t.data.beginning_of_year }
     
     respond_to do |format|

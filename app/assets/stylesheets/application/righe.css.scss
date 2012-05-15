@@ -48,6 +48,12 @@
   margin: auto;
 }
 
+.modal #righe {
+  height: 200px;
+  max-height: 200px;
+  padding: 10px;
+  overflow-y: scroll;
+}
 
 #righe {
   margin: auto;
@@ -58,11 +64,6 @@
   border-bottom-right-radius:5px 5px;
   border: solid 1px #BBBBBB;
 
-  height: 200px;
-  max-height: 200px;
-  padding: 10px;
-  overflow-y: scroll;
-  
   .empty {
     margin-top: 3px;
     margin-bottom: 3px;

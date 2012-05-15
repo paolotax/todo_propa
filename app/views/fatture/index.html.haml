@@ -34,7 +34,7 @@
                 %td
                   .pull-right= fattura.numero
                 %td= l fattura.data, format: :only_date
-                %td= link_to fattura.cliente.titolo, cliente_path(fattura.cliente) unless fattura.cliente.nil?
+                %td= link_to fattura.titolo, cliente_path(fattura.cliente) unless fattura.cliente.nil?
                 %td
                   .pull-right
                     %strong= fattura.totale_copie
