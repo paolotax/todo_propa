@@ -12,9 +12,14 @@
             %li= link_to "Appunti",  appunti_url
             %li= link_to "Clienti",  clienti_url
             %li= link_to "Libri",    libri_url
-            %li= link_to "Fatture",  fatture_url
+            %li.dropdown
+              %a.dropdown-toggle{ href: '#', "data-toggle" => 'dropdown'}
+                Magazzino
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to "Fatture",  fatture_url
+                %li= link_to "Vendite",  vendite_url
             %li= link_to "Giri",     visite_url
-            %li= link_to "Vendite",  vendite_url
             %li= link_to "Adozioni", adozioni_url
 
         - if user_signed_in?
