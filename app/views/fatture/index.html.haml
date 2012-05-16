@@ -40,7 +40,7 @@
                     %strong= fattura.totale_copie
                 %td= pretty_prezzo fattura.importo_fattura
                 %td= link_to 'pdf', fattura_path(fattura, format: 'pdf')
-                %td= link_to 'modifica', edit_fattura_path(fattura)
+                %td= link_to 'modifica', fattura_fattura_step_path({:fattura_id => fattura.id, id: :intestazione})
                 %td= link_to 'elimina', fattura, :confirm => 'Are you sure?', :method => :delete
             
             

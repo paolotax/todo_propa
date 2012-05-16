@@ -119,12 +119,16 @@ class Cliente < ActiveRecord::Base
       if c.righe.sum(:quantita) > 0
         prop = prop.merge(copie_vendute:  c.righe.sum(:quantita) )
       end
+      if c.appunti.in_corso.size > 0
+        prop = prop.merge(appunti_in_corso:  c.appunti.in_corso.size )
+      end
+      
       c.properties = prop
       c.save   
     end
   end  
   
-  %w[sezioni_adottate copie_vendute].each do |key|
+  %w[sezioni_adottate copie_vendute appunti_in_corso].each do |key|
     # attr_accessible key
     scope "has_#{key}", where("(properties -> '#{key}')::int > 0")
 

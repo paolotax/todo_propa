@@ -2,11 +2,11 @@ class VisiteController < ApplicationController
   
   
   def index
-    @visite = current_user.visite.includes(:cliente).where(baule: false).order("visite.titolo desc, visite.start desc").filtra(params)
+    @visite = current_user.visite.includes(:cliente => :visite).where(baule: false).order("visite.titolo desc, visite.start desc").filtra(params)
     
     @visite_grouped = @visite.group_by(&:titolo)
     
-    @scuole = current_user.clienti.primarie.filtra(params.except([:controller, :action])).order("clienti.id").all
+    @scuole = current_user.clienti.primarie.includes(:appunti).filtra(params.except([:controller, :action])).order("clienti.id").all
     
     logger.debug { "params: #{current_user.clienti.primarie.filtra(params).order("clienti.id").to_sql}" }
     logger.debug { "tutte Count: #{@scuole.count}" }

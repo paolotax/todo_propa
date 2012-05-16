@@ -14,11 +14,11 @@
             %button{ title: 'metti nel baule!'}
               %i.icon-road
               Nel baule
-
-      - if s.mie_adozioni.size > 0
-        .pull-right
-          %span.badge= s.mie_adozioni.size
-      - if s.appunti.in_corso.size > 0
-        .pull-right
-          %span.badge.badge-info= s.appunti.in_corso.size
+      - unless s.properties.nil?
+        - unless s.properties["sezioni_adottate"].nil?
+          .pull-right
+            %span.badge= s.properties["sezioni_adottate"]
+        - unless s.properties["appunti_in_corso"].nil?
+          .pull-right
+            %span.badge.badge-info= s.properties["appunti_in_corso"]
       .clearfix
