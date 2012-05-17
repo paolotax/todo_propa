@@ -64,12 +64,10 @@
           .header-inner
             %h2 Appunti
 
-        - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
-          = render :partial => 'shared/filters'
-
-        #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
-        / - @appunti.each do |appunto|
-        /   = render "appunto"
+        .appunti
+          - for a in @cliente.appunti.recente do
+            = render a
+            
         .stream-loader
    
       

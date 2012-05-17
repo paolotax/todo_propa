@@ -65,18 +65,8 @@
                         %li[a]
                           %span.label.label-important= a.libro.sigla
 
-      %ol
+      .appunti
         - for a in v.appunti do
+          = render a
           
-          %li
-            = l a.created_at, format: :only_date
-            = a.destinatario
-            %strong= a.note
-          %ul 
-            - for r in a.righe do
-              %li
-                = r.libro.titolo
-                = r.quantita
-                = r.importo
-
 = render "visite/modal"
