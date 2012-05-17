@@ -1,11 +1,12 @@
-.content-main.span9
-  .content-header
-    .header-inner
-      %h2 Situazione Vacanze
-    .libri
-      - @libri_vacanze.each do |libro|
-        .row
-          .span9[libro]
+.row
+  .content-main.span8
+    .content-header
+      .header-inner
+        %h2 Situazione Vacanze
+    .row
+      .libri.span8
+        - @libri_vacanze.each do |libro|
+          %div[libro]
             .row
               .titolo.span3
                 = link_to image_tag(libro.image_url(:small_thumb)), libro
@@ -17,7 +18,7 @@
                 - if @da_consegnare.keys.include?(libro)
                   - da_consegnare = @da_consegnare.values[@da_consegnare.keys.index(libro)].sum(&:quantita) 
                   = da_consegnare
-                  
+              
               .righe.span2
                 - if @da_consegnare.keys.include?(libro)
                   - for riga in @da_consegnare.values[@da_consegnare.keys.index(libro)] do
@@ -33,18 +34,29 @@
                 - if @in_ordine.keys.include?(libro)
                   - in_ordine = @in_ordine.values[@in_ordine.keys.index(libro)].sum(&:quantita) 
                   = in_ordine
-                
+            
               .consegnati.span1
                 - consegnati = 0
                 - if @consegnati.keys.include?(libro)
                   - consegnati = @consegnati.values[@consegnati.keys.index(libro)].sum(&:quantita) 
                   = consegnati
-              
+          
               .giacenza.span1
                 = in_ordine - da_consegnare - consegnati
-              
-              
-                / - unless index.nil?
-                /   = @in_ordine.values[index].sum(&:quantita) - righe.sum(&:quantita)
-                / - else
-                /   = 0 - righe.sum(&:quantita)
+  .side-bar.span4
+    - riep_copie = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * libri.coefficente", group: "libri.settore")
+    - riep_fatturato = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
+    .module
+      %table.table
+        %tr
+          %th Settore
+          %th Copie (bb)
+          %th Venduto
+        - for k in riep_copie.keys
+          %tr
+            %td= k
+            %td= riep_copie[k]
+            %td= pretty_prezzo riep_fatturato[k].to_f
+      
+    
+
