@@ -147,7 +147,6 @@ body {
     min-height: 51px;
     padding: 9px 12px 9px;
     border-bottom: 1px solid #E8E8E8;
-
     background: white;
     border-left: 1px solid #E8E8E8;
     border-left: 1px solid rgba(0, 0, 0, .1);
@@ -158,6 +157,37 @@ body {
     background-clip: padding-box;
   }
 }
+
+.situazione-vacanze {
+  .titolo {
+    float: left;
+    width: 35%;
+    strong {
+      line-height: 18px;
+      vertical-align: top;
+    }
+  }
+  .righe {
+    float: left;
+    width: 25%;
+  }
+  .quantita,
+  .in_ordine,
+  .consegnati,
+  .giacenza {
+    text-align: center;
+    font-size: 18px;
+    float: left;
+    width: 10%
+  }
+  .in_ordine {
+    color: red;
+  }
+  .giacenza {
+    color: green
+  }
+}
+
 
 .appunti,
 #appunti,
