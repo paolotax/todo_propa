@@ -340,9 +340,15 @@ body {
 }
 
 .baule button {
+  margin-top: -2px;
+  color: $linkColor;
   border: none;
   background-color: transparent;
   padding: 0;
+  &:hover {
+    color: $linkColorHover;
+    text-decoration: underline;
+  }
 }
 
 .link {
@@ -593,8 +599,8 @@ td.gratis {
   }
   sup {
     position: relative;
-    left: -4px;
-    // top: -3px; 
+    left: -2px;
+    top: -3px; 
   }
 }
 
