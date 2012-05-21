@@ -5,46 +5,16 @@
   .content-main.span6
     %header.content-header
       .header-inner
-        %h2 Fatture
+        %h2 Documenti
 
 
     #fatture.list
       - @fatture_per_anno.each do |a, fatture|
         .item 
           %h3= a.strftime("%Y")
-        %table.table
-          %thead
-            %tr.item
-              %th
-              %th
-                .pull-right #
-              %th Data
-              %th Cliente
-              %th
-                .pull-right Copie
-              %th
-                .pull-right Importo
-              %th
-              %th
-              %th
-          %tbody
-            - fatture.each do |fattura|
-              %tr.item
-                %td= fattura.causale
-                %td
-                  .pull-right= fattura.numero
-                %td= l fattura.data, format: :only_date
-                %td= link_to fattura.titolo, cliente_path(fattura.cliente) unless fattura.cliente.nil?
-                %td
-                  .pull-right
-                    %strong= fattura.totale_copie
-                %td= pretty_prezzo fattura.importo_fattura
-                %td= link_to 'pdf', fattura_path(fattura, format: 'pdf')
-                %td= link_to 'modifica', fattura_fattura_step_path({:fattura_id => fattura.id, id: :intestazione})
-                %td= link_to 'elimina', fattura, :confirm => 'Are you sure?', :method => :delete
-            
-            
-            
+        - fatture.each do |fattura|
+          = render fattura
+
 - @fattura = Fattura.new
 = render "modal"
           

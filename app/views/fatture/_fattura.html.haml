@@ -1,0 +1,24 @@
+.item[fattura]
+  .causale
+    = fattura.causale
+  .consegnato
+    
+  .pagato
+  
+  .numero
+    %strong= fattura.numero
+    %br
+    %span= l(fattura.data, format: :short).downcase
+  .cliente
+    = link_to fattura.titolo, fattura.cliente
+  .copie
+    %strong= fattura.totale_copie
+    copie
+  .importo
+    %strong= number_to_currency fattura.importo_fattura 
+    importo
+  .righe
+    %table.table
+      - for r in fattura.righe
+        = render r
+  
