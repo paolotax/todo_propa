@@ -34,6 +34,7 @@ table {
 }
 
 .adozioni-nel-baule {
+  display: none;
   font-size: 10px;
   // float: right
 
@@ -60,8 +61,16 @@ table {
   display: none;
 }
 
-.classi-adozioni {
+.time, .mostra-classi, .importo.badge, .chiudi, .actions, .stato, .more-actions {
+  display: none
+}
 
+table.righe {
+  width: 100%;
+}
+
+.classi-adozioni {
+  display: none;
   width: 100%;
   td.classe-group {
     width: 60px;
