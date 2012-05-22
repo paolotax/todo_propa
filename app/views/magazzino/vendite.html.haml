@@ -3,51 +3,7 @@
     .content-header
       .header-inner
         %h2 Situazione Vacanze
-        
-        
-    / %table.table    
-    /   - @libri_vacanze.each do |libro|
-    /     %tr[libro]
-    /       %td
-    /         .titolo.span3
-    /           = link_to image_tag(libro.image_url(:small_thumb)), libro
-    /           %strong= libro.titolo
-    /           %br
-    /           = libro.cm
-    /       %td.quantita
-    /         - da_consegnare = 0
-    /         - if @da_consegnare.keys.include?(libro)
-    /           - da_consegnare = @da_consegnare.values[@da_consegnare.keys.index(libro)].sum(&:quantita) 
-    /         = da_consegnare
-    /       %td
-    /         - if @da_consegnare.keys.include?(libro)
-    /           %table
-    /             - @da_consegnare.values[@da_consegnare.keys.index(libro)].in_groups_of(2, false) do |righe_rows|
-    /               %tr
-    /                 - for riga in righe_rows
-    /                   %td
-    /                     = link_to riga.appunto, class: "label label-info", style: "display: block; float: left; margin-right: 3px; margin-bottom: 3px;" do
-    /                       %strong= riga.quantita
-    /                       -
-    /                       = riga.appunto.cliente.titolo
-    /         / - else
-    /         /   (empty)
-    / 
-    /         %td.in_ordine
-    /           - in_ordine = 0
-    /           - if @in_ordine.keys.include?(libro)
-    /             - in_ordine = @in_ordine.values[@in_ordine.keys.index(libro)].sum(&:quantita) 
-    /           = in_ordine
-    / 
-    /         %td.consegnati
-    /           - consegnati = 0
-    /           - if @consegnati.keys.include?(libro)
-    /             - consegnati = @consegnati.values[@consegnati.keys.index(libro)].sum(&:quantita) 
-    /           = consegnati
-    / 
-    /         %td.giacenza.span1
-    /           = in_ordine - da_consegnare - consegnati
-    
+
     .situazione-vacanze.list
       - @libri_vacanze.each do |libro|
         .item[libro]
@@ -80,6 +36,12 @@
               = in_ordine
             - else
               &nbsp
+            - carichi = 0
+            - if @carichi.keys.include?(libro)
+              - carichi = @carichi.values[@carichi.keys.index(libro)].sum(&:quantita) 
+              %span= carichi
+            - else
+              &nbsp
       
           .consegnati
             - consegnati = 0
@@ -90,23 +52,29 @@
               &nbsp
     
           .giacenza
-            = in_ordine - da_consegnare - consegnati
+            = in_ordine + carichi - da_consegnare - consegnati
+            %span
+              = carichi - da_consegnare - consegnati
+              
           .clearfix
 
   .side-bar.span4
     - riep_copie = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * libri.coefficente", group: "libri.settore")
     - riep_fatturato = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
+    - riep_carico = current_user.righe_fattura.joins(:libro).carico.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
     .module
       %table.table
         %tr
           %th Settore
           %th Copie (bb)
           %th Venduto
+          %th Acquisti
         - for k in riep_copie.keys
           %tr
             %td= k
             %td= riep_copie[k]
             %td= pretty_prezzo riep_fatturato[k].to_f
+            %td= pretty_prezzo riep_carico[k].to_f
       
     
 

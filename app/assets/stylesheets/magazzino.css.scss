@@ -3,8 +3,44 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+.situazione-vacanze {
+  .titolo {
+    float: left;
+    width: 35%;
+    strong {
+      line-height: 18px;
+      vertical-align: top;
+    }
+  }
+  .righe {
+    float: left;
+    width: 25%;
+  }
+  .quantita,
+  .in_ordine,
+  .consegnati,
+  .giacenza {
+    text-align: center;
+    font-size: 18px;
+    float: left;
+    width: 10%
+  }
+  .in_ordine {
+    color: red;
+    span {
+      font-size: 13px;
+    }
+  }
+  .giacenza {
+    color: green;
+    span {
+      font-size: 13px;
+    }
+  }
+}
+
+
 .fattura {
-  
   .causale,
   .numero {
     float: left;
@@ -22,7 +58,6 @@
     float: left;
     width: 25%;
   }
-
   .copie,
   .importo {
     position: absolute;
