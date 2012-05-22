@@ -68,12 +68,13 @@ class FattureController < ApplicationController
   # DELETE /fatture/1
   # DELETE /fatture/1.json
   def destroy
-    @fattura = Fattura.find(params[:id])
+    @fattura = current_user.fatture.find(params[:id])
     @fattura.destroy
 
     respond_to do |format|
       format.html { redirect_to fatture_url }
       format.json { head :ok }
+      format.js
     end
   end
   

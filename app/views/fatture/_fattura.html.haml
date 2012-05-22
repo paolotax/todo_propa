@@ -1,6 +1,26 @@
 .item[fattura]
+  .actions
+    %ul.nav-fattura
+      %li.print
+        %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.causale}", target: "_blank" }
+          %i.icon-tag
+          Stampa
+      %li.edit
+        %a{ href: "/fatture/#{fattura.slug}/fattura_steps/intestazione", title: 'modifica appunto'}
+          %i.icon-pencil
+          Modifica
+      
+      %li
+        = " | "
+      %li.show
+        %a{ title: 'mostra dettagli'}
+          Apri
+  .chiudi{ style: "float: right;"}
+    %a
+      Chiudi
+    
   .causale
-    = fattura.causale
+    %strong= fattura.causale
   .consegnato
     
   .pagato
@@ -21,4 +41,19 @@
     %table.table
       - for r in fattura.righe
         = render r
+  .more-actions
+    %ul.nav-fattura
+      %li.delete
+        %a{ href: "/fatture/#{fattura.slug}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+          %i.icon-trash
+          Elimina
+      %li.print
+        %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.causale}", target: "_blank" }
+          %i.icon-tag
+          Stampa
+      %li.edit
+        %a{ href: "/fatture/#{fattura.slug}/fattura_steps/intestazione", title: 'modifica appunto'}
+          %i.icon-pencil
+          Modifica
+    
   
