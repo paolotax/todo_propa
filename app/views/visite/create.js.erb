@@ -18,6 +18,11 @@ if ($('.clienti-small').length > 0) {
   $('.baule', cliente).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
 };
 
+if ($('.clienti-list').length > 0) {
+  cliente = $("#<%= dom_id(@visita.cliente) %>")
+  $('.baule', cliente).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
+};
+
 var new_navbar = $("<%= escape_javascript(render 'shared/header') %>")
 var new_toolbar = $(".toolbar-buttons.pull-right", new_navbar)
 $(".navbar.navbar-fixed-top .toolbar-buttons.pull-right").replaceWith(new_toolbar)

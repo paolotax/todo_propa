@@ -88,9 +88,9 @@
           = gmaps({ :markers => {:data => clienti.to_gmaps4rails }, :map_options => { id: "map_#{provincia}", :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
         
         = provincia
-        %ul
+        %ol
           - for cliente in clienti do
-            %li
+            %li[cliente]
               = link_to cliente.titolo, cliente
               .baule.pull-right
                 - unless cliente.nel_baule == false
