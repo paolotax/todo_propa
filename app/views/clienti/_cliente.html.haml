@@ -1,6 +1,15 @@
 %li[cliente]
-  = link_to cliente.titolo, cliente
-  .baule.pull-right
+  %span.titolo
+    = link_to cliente.titolo, cliente
+  
+  - unless cliente.properties.nil?
+    - unless cliente.properties["appunti_in_corso"].nil?
+      %span.in-corso
+        %span.badge.badge-info= cliente.properties["appunti_in_corso"]
+    - unless cliente.properties["copie_da_consegnare"].nil?
+      %span.da-consegnare
+        %span.badge= cliente.properties["copie_da_consegnare"]
+  %span.baule
     - unless cliente.nel_baule == false
       %a{ href: "/visite/#{cliente.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
         %i.icon-road
@@ -12,10 +21,3 @@
         %button{ title: 'metti nel baule!'}
           %i.icon-road
           Nel baule
-  - unless cliente.properties.nil?
-    - unless cliente.properties["copie_da_consegnare"].nil?
-      .pull-right
-        %span.badge= cliente.properties["copie_da_consegnare"]
-    - unless cliente.properties["appunti_in_corso"].nil?
-      .pull-right
-        %span.badge.badge-info= cliente.properties["appunti_in_corso"]

@@ -88,7 +88,7 @@
           = gmaps({ :markers => {:data => clienti.to_gmaps4rails }, :map_options => { id: "map_#{provincia}", :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
         
         = provincia
-        %ol
+        %ol.clienti-list
           - for cliente in clienti do
             = render cliente
           
