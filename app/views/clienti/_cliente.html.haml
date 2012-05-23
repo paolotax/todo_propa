@@ -1,0 +1,21 @@
+%li[cliente]
+  = link_to cliente.titolo, cliente
+  .baule.pull-right
+    - unless cliente.nel_baule == false
+      %a{ href: "/visite/#{cliente.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+        %i.icon-road
+        Scarica baule
+    - else
+      %form{ action: '/visite', method: 'post', 'data-remote' => true }
+        %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{cliente.id}"}
+        %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
+        %button{ title: 'metti nel baule!'}
+          %i.icon-road
+          Nel baule
+  - unless cliente.properties.nil?
+    - unless cliente.properties["copie_da_consegnare"].nil?
+      .pull-right
+        %span.badge= cliente.properties["copie_da_consegnare"]
+    - unless cliente.properties["appunti_in_corso"].nil?
+      .pull-right
+        %span.badge.badge-info= cliente.properties["appunti_in_corso"]

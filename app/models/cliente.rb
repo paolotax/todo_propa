@@ -122,6 +122,9 @@ class Cliente < ActiveRecord::Base
       if c.appunti.in_corso.size > 0
         prop = prop.merge(appunti_in_corso:  c.appunti.in_corso.size )
       end
+      if c.righe.scarico.di_questa_propaganda.da_consegnare.sum(:quantita) > 0
+        prop = prop.merge(copie_da_consegnare:  c.righe.scarico.di_questa_propaganda.da_consegnare.sum(:quantita) )
+      end
       
       c.properties = prop
       c.save   

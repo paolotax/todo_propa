@@ -15,11 +15,7 @@
     
       %ol.clienti-baule
         - for v in @visite do
-          %li[v]
-            = v.cliente.titolo
-            = link_to v, :method => :delete, class: "scarica-baule" do
-              %i.icon-road
-              Scarica baule
+          = render v.cliente
       
 .well
   .row              
@@ -32,6 +28,10 @@
               %td= libro[:titolo]
               %td
                 .pull-right= libro[:quantita]
+          %tr
+            %td
+            %td
+              .pull-right= @libri_nel_baule.sum {|l| l[:quantita] }
 
     - unless @adozioni_nel_baule.empty?
       .adozioni-nel-baule.well.span5
@@ -42,6 +42,10 @@
               %td= libro[:titolo]
               %td
                 .pull-right= libro[:quantita]
+          %tr
+            %td
+            %td
+              .pull-right= @adozioni_nel_baule.sum {|l| l[:quantita] }
 
   %ol.visite-long
     - for v in @visite do
