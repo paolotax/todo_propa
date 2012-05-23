@@ -12,7 +12,7 @@ group :assets do
   
 end
 
-gem 'bootstrap-sass', git: "https://github.com/thomas-mcdonald/bootstrap-sass.git", branch: '2.0.2' 
+gem 'bootstrap-sass', :git => "https://github.com/thomas-mcdonald/bootstrap-sass.git", :branch => '2.0.2' 
 gem "compass-rails"
 gem "haml-rails"
 
@@ -49,6 +49,8 @@ gem 'wicked'
 gem 'pg'
 gem 'pg_search'
 gem 'activerecord-postgres-hstore'
+
+gem 'whenever', :require => false
 
 gem 'capistrano'
 gem 'unicorn'
