@@ -209,15 +209,15 @@ class Cliente < ActiveRecord::Base
   def nel_baule?
     !self.visite.nel_baule.empty?
   end
-  
+
   private
   
     def set_titolo
-      n = self.titolo.split(' ')
+      n = self.titolo.squish.split(' ')
       suff = Cliente::ABBR_TIPI[Cliente::TIPI_CLIENTI.index(self.cliente_tipo)]
       
       unless n[0] == suff
-        self.titolo = suff + " " + self.titolo
+        self.titolo = (suff + " " + self.titolo).squish
       end
     end
 
