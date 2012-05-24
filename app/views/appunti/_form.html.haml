@@ -7,9 +7,11 @@
     %li
       %a{ href: "#info",      "data-toggle" => "tab"} Appunto...
     %li
-      %a{ href: "#dettaglio", "data-toggle" => "tab"} Inserisci dettaglio...
+      %a{ href: "#dettaglio", "data-toggle" => "tab"} Inserisci righe...
     %li
-      %a{ href: "#completa",  "data-toggle" => "tab"} Completa ordine...
+      %a{ href: "#vacanze", "data-toggle" => "tab"} Inserisci vacanze...  
+    %li
+      %a{ href: "#completa",  "data-toggle" => "tab"} Completa appunto...
 
   
   = f.input :cliente_id, :collection => current_user.clienti.order(:titolo), :label_method => :titolo, :value_method => :id, :input_html => { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
@@ -53,8 +55,26 @@
                   = riga.text_field :prezzo,   class: 'input-mini riga_prezzo'
                   = riga.text_field :sconto,   class: 'input-mini riga_sconto'
                   = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"
-        
-        
+    
+    #vacanze.tab-pane.fade
+      .control-group
+        #righe
+          - @appunto.create_righe_vacanze
+          = f.simple_fields_for :righe do |riga|
+            - if riga.object.new_record?
+              = div_for riga.object, class: 'form-inline' do
+                = riga.hidden_field :id
+                = riga.hidden_field :libro_id
+                .titolo= riga.object.libro.titolo
+                .pull-right
+                  = riga.text_field :quantita, class: 'input-mini riga_quantita'
+                  = riga.text_field :prezzo,   class: 'input-mini riga_prezzo'
+                  = riga.text_field :sconto,   class: 'input-mini riga_sconto'
+                  = link_to "#", class: "btn btn-danger btn-mini remove-fattura" do
+                    %i.icon-minus
+            - else
+              .hidden
+      
     #completa.tab-pane.fade
       = f.input :stato
 

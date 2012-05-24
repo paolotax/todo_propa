@@ -35,6 +35,24 @@ class Appunto < ActiveRecord::Base
   
   before_save :leggi
   
+  
+  def create_righe_vacanze
+    libri = Libro.vacanze
+    libri.all.each do |l|
+      
+      if !(["Cartolibreria", "Ditta"].include?  cliente.cliente_tipo)
+        prezzo = l.prezzo_consigliato
+        sconto = 0.0
+      else
+         prezzo = l.prezzo_copertina
+         sconto = 20
+      end
+
+      righe.build(libro: l, prezzo_unitario: prezzo, sconto: sconto)
+    end
+  end
+  
+  
   def nel_baule
     nel_baule = false
     self.visite.each do |v|
@@ -83,12 +101,20 @@ class Appunto < ActiveRecord::Base
   end
   
   before_save :ricalcola
-  
   def ricalcola
-    self.totale_copie    = righe.map(&:quantita).sum
-    self.totale_importo  = righe.map(&:importo).sum
+    self.totale_copie   = righe.map(&:quantita).sum
+    self.totale_importo = righe.map(&:importo).sum
   end
 
+  after_save :check_importo
+  def check_importo
+    if righe.empty? && !self.totale_importo.zero? 
+      self.totale_copie   = 0
+      self.totale_importo = 0
+      save
+    end
+  end
+  
   after_save :update_righe_status
   
   private
