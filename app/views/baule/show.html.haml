@@ -47,6 +47,10 @@
             %td
               .pull-right= @adozioni_nel_baule.sum {|l| l[:quantita] }
 
+  .pull-right
+    = link_to "esandi tutto", "", class: "esandi-tutto"
+  .clearfix  
+    
   %ol.visite-long
     - for v in @visite do
       %li[v]

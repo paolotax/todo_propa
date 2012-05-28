@@ -25,12 +25,17 @@ window.initializeAppunto = (appunto) ->
     e.stopPropagation()
     id = $(@).data('id')
     stato = $(@).data('status')
+    opened = appunto.hasClass('opened')
+    console.log opened
     $.ajax 
       url: "/appunti/#{id}.json"  
       data: { appunto: { stato: stato } }
       type:  "PUT"
       success: (data)->
         $("#appunto_#{data.id}").replaceWith JST["appunti/appunto"](data)
+        if opened
+          $("#appunto_#{data.id}").toggleClass('opened')
+          
         window.initializeAppunto($("#appunto_#{data.id}"))
         params = $("#appunti").data('json-url').split('?')[1] ||= ""
         $.get "/get_appunti_filters.js", params, (data) ->

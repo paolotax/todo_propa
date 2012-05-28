@@ -8,4 +8,4 @@
     = link_to raw("<i class='icon-plus'></i>"), 'javascript:void(0)', { id: "add-riga", :class => 'btn btn-success btn-mini' }
 
   - @vendibili = Libro.unscoped.vendibili.select('distinct settore').order(:settore)
-  = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :settore, :id, :titolo), {:include_blank => true, :class => 'chzn-select', 'data-placeholder' => "Seleziona un titolo...", :style => "width: 294px;"}
+  = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :settore, :id, :titolo), {:include_blank => true, :class => 'chzn-select', 'data-placeholder' => "Seleziona un titolo...", :style => "width: 240px;"}
