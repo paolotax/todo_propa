@@ -3,7 +3,7 @@ class ClientiController < ApplicationController
   can_edit_on_the_spot
   
   def index
-
+    session[:return_to] = request.path
     @search = current_user.clienti.includes(:visite).per_localita.filtra(params)
     @search_appunti = current_user.appunti.filtra(params.except(:status))
     
@@ -21,6 +21,7 @@ class ClientiController < ApplicationController
   end
 
   def show
+    session[:return_to] = request.path
     @cliente = current_user.clienti.includes(:indirizzi).find(params[:id])
     if request.path != cliente_path(@cliente)
       redirect_to @cliente, status: :moved_permanently
@@ -28,6 +29,7 @@ class ClientiController < ApplicationController
   end
 
   def new
+    session[:return_to] = request.referer
     @cliente   = current_user.clienti.build
     @indirizzo  = @cliente.indirizzo
     # @spedizione = @cliente.indirizzo_spedizione
@@ -39,6 +41,7 @@ class ClientiController < ApplicationController
   end
 
   def edit
+    session[:return_to] = request.referer
     @cliente = current_user.clienti.find(params[:id])
   end
 
@@ -47,7 +50,7 @@ class ClientiController < ApplicationController
 
     respond_to do |format|
       if @cliente.save
-        format.html { redirect_to @cliente, notice: 'Cliente creato.' }
+        format.html { redirect_to session[:return_to], notice: 'Cliente creato.' }
         format.json { render json: @cliente, status: :created, location: @cliente }
       else
         format.html { render action: "new" }
@@ -62,7 +65,7 @@ class ClientiController < ApplicationController
     
     respond_to do |format|
       if @cliente.update_attributes(params[:cliente])
-        format.html { redirect_to @cliente, notice: 'Cliente modificato.' }
+        format.html { redirect_to session[:return_to], notice: 'Cliente modificato.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

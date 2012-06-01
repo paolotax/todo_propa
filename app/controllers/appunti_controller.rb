@@ -3,9 +3,9 @@ class AppuntiController < ApplicationController
   can_edit_on_the_spot
 
   def index
-    # @appunti = Appunto.recente.limit(20)
+    session[:return_to] = request.path
     @search = current_user.appunti.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params)
-   
+
     @in_corso = @search.in_corso.size
     @da_fare  = @search.da_fare.size
     @in_sospeso = @search.in_sospeso.size    
@@ -24,6 +24,7 @@ class AppuntiController < ApplicationController
   end
 
   def show
+    session[:return_to] = request.path    
     @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:id])
     
     respond_to do |format|
@@ -48,6 +49,7 @@ class AppuntiController < ApplicationController
   end
 
   def new
+    session[:return_to] = request.referer
     if params[:cliente].present?
       @cliente = Cliente.find(params[:cliente])
     else
@@ -58,15 +60,15 @@ class AppuntiController < ApplicationController
   end
 
   def edit
+    session[:return_to] = request.referer
     @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:id])
   end
 
   def create
     @appunto = current_user.appunti.build(params[:appunto])
-
     respond_to do |format|
       if @appunto.save
-        format.html   { redirect_to appunti_url, notice: 'Appunto creato!' }
+        format.html   { redirect_to session[:return_to], notice: 'Appunto creato!' }
         format.mobile { redirect_to  appunti_url }
         format.json
       else
@@ -81,7 +83,7 @@ class AppuntiController < ApplicationController
     
     respond_to do |format|
       if @appunto.update_attributes(params[:appunto])
-        format.html   { redirect_to appunti_url, notice: 'Appunto modificato.' }
+        format.html   { redirect_to session[:return_to], notice: 'Appunto modificato.' }
         format.mobile { redirect_to appunti_url }
         format.json
       else

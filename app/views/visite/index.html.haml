@@ -44,7 +44,7 @@
               %tr[visita]
                 %td= i += 1
                 %td= l visita.start, format: :only_date unless visita.start.nil?
-                %td= visita.cliente.titolo
+                %td= link_to visita.cliente.titolo, visita.cliente
                 %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
                 %td
                   = form_for visita, remote: true do |f|

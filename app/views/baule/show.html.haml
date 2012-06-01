@@ -55,7 +55,7 @@
     - for v in @visite do
       %li[v]
         = link_to "mostra classi...", "", class: "mostra-classi"
-        %h2= v.cliente.titolo
+        %h2= link_to v.cliente.titolo, v.cliente
         %table.table.table-bordered.classi-adozioni.hidden
           - v.cliente.classi_adozioni_grouped.each do |k, classi|
             %tr
