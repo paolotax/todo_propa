@@ -37,7 +37,7 @@ class SearchController < ApplicationController
                                      "appunto" => Appunto.search_mate(params['term'], current_user.id),
                                      "libro"   => Libro.search_mate(params['term'])
                                    } 
-                    }.to_json, :callback => params[:callback]
+                    }.to_json
   end
 
 end
