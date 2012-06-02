@@ -20,7 +20,7 @@ TodoPropa::Application.routes.draw do
   match '/get_appunti_filters', :controller => :search, :action  => :get_appunti_filters, :format => :js
   match '/get_clienti_filters', :controller => :search, :action  => :get_clienti_filters, :format => :js
   
-  match '/search/autocomplete'
+  match '/search/autocomplete', format: :json
   
   resources :visite do
     resources :visita_appunti
