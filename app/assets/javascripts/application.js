@@ -19,11 +19,15 @@
 //= require hamlcoffee
 //= require jquery.timeago
 //= require jquery_nested_form
-
+//= require jquery.soulmate
 //= require_tree ../templates
 //= require_tree ./application
 
 //= require stuff
+//= require demo
+
+
+
 
 //pads left
 String.prototype.lpad = function(padString, length) {

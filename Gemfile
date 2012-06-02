@@ -50,6 +50,9 @@ gem 'pg'
 gem 'pg_search'
 gem 'activerecord-postgres-hstore'
 
+gem 'soulmate'
+
+
 gem 'whenever', :require => false
 
 gem 'capistrano'

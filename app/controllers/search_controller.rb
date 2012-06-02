@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   
-  respond_to :js
+  respond_to :json, :js
   
   def get_appunti_filters
     
@@ -27,6 +27,17 @@ class SearchController < ApplicationController
     
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
     @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
+  end
+  
+  def autocomplete
+    render :json => {
+                      "term" => params['term'],
+                      "results" => {
+                                     "cliente" => Cliente.search_mate(params['term'], current_user.id),  
+                                     "appunto" => Appunto.search_mate(params['term'], current_user.id),
+                                     "libro"   => Libro.search_mate(params['term'])
+                                   } 
+                    }.to_json, :callback => params[:callback]
   end
 
 end

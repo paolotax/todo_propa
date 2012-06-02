@@ -116,6 +116,31 @@ class Appunto < ActiveRecord::Base
   end
   
   after_save :update_righe_status
+  after_save :load_into_soulmate
+  
+  def self.search_mate(term, user_id)
+    matches = Soulmate::Matcher.new("appunto:#{user_id}").matches_for_term(term)
+  end
+  
+
+
+  def load_into_soulmate
+    unless cliente.nil?
+      loader = Soulmate::Loader.new("appunto:#{cliente.user_id}")
+      loader.add({
+                    "term" => " #{destinatario} #{cliente.titolo} #{cliente.comune} #{cliente.frazione} #{cliente.provincia} #{note.to_s} #{'tel_' + telefono unless telefono.blank?}".squish, 
+                    "id" => id,
+                    "score" => created_at.to_i, 
+                    "data" => { 
+                      "url" => "appunti/#{id}",
+                      "destinatario" => destinatario,
+                      "note" => note.squish,  
+                      "titolo" => "#{cliente.titolo}", 
+                      "citta" => "#{cliente.comune} #{cliente.frazione} #{cliente.provincia}".squish
+                    }
+                  })
+    end
+  end
   
   private
 

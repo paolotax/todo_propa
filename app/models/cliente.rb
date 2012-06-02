@@ -210,6 +210,27 @@ class Cliente < ActiveRecord::Base
     !self.visite.nel_baule.empty?
   end
 
+  after_save :load_into_soulmate
+  
+  def self.search_mate(term, id_user)
+    matches = Soulmate::Matcher.new("cliente:#{id_user}").matches_for_term(term)
+  end
+  
+  def load_into_soulmate
+    loader = Soulmate::Loader.new("cliente:#{user_id}")
+    loader.add({
+                  "term" => "#{titolo} #{comune} #{frazione} #{provincia} #{ragione_sociale}".squish, 
+                  "id" => id, 
+                  "data" => { 
+                    "url" => "clienti/#{slug}",
+                    "titolo" => titolo, 
+                    "citta"  => "#{comune} #{frazione} #{provincia}".squish
+                  }
+                })
+  end
+
+
+
   private
   
     def set_titolo

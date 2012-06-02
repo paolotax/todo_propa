@@ -47,6 +47,26 @@ class Libro < ActiveRecord::Base
     self.remote_image_url = "http://catalogo.giunti.it/librig/#{self.cm}.jpg"
   end
   
+  after_save :load_into_soulmate
+  
+  def self.search_mate(term)
+    matches = Soulmate::Matcher.new("libro").matches_for_term(term)
+  end
+  
+  def load_into_soulmate
+    loader = Soulmate::Loader.new("libro")
+    loader.add({
+                  "term" => "#{titolo} #{sigla} #{cm} #{ean} #{settore}".squish, 
+                  "id" => id, 
+                  "data" => { 
+                    "url" => "libri/#{slug}",
+                    "titolo" => titolo, 
+                    "codici" => "#{cm} #{ean}".squish,
+                    "tags"   => "#{settore} #{sigla}"
+                  }
+                })
+  end
+  
 
 end
 
