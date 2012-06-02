@@ -251,7 +251,7 @@ class Soulmate
     
     @xhr = $.ajax({
       url: @url
-      dataType: 'json'
+      dataType: 'jsonp'
       timeout: @timeout
       cache: true
       data: {

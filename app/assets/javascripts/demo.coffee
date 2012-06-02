@@ -17,8 +17,8 @@ jQuery ->
     # $("ul#soulmate").hide()
     
   $('#search-query, #search-input').soulmate {
-    url:            '/search/autocomplete'
-    types:          ["cliente", "appunto", "libro"]
+    url:            'http://seatgeek.com/autocomplete'
+    types:          ["event"]
     renderCallback: render
     selectCallback: select
     minQueryLength: 2
