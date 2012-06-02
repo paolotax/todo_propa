@@ -213,11 +213,11 @@ class Cliente < ActiveRecord::Base
   after_save :load_into_soulmate
   
   def self.search_mate(term, id_user)
-    matches = Soulmate::Matcher.new("cliente:#{id_user}").matches_for_term(term)
+    matches = Soulmate::Matcher.new("#{id_user}_cliente").matches_for_term(term)
   end
   
   def load_into_soulmate
-    loader = Soulmate::Loader.new("cliente:#{self.user_id}")
+    loader = Soulmate::Loader.new("#{user_id}_cliente")
     loader.add({
                   "term" => "#{titolo} #{comune} #{frazione} #{provincia} #{ragione_sociale}".squish, 
                   "id" => id, 

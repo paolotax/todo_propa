@@ -118,13 +118,13 @@ class Appunto < ActiveRecord::Base
   after_save :update_righe_status
   after_save :load_into_soulmate
   
-  def self.search_mate(term, user_id)
-    matches = Soulmate::Matcher.new("appunto:#{user_id}").matches_for_term(term)
+  def self.search_mate(term, id_user)
+    matches = Soulmate::Matcher.new("#{id_user}_appunto").matches_for_term(term)
   end
   
   def load_into_soulmate
     unless cliente.nil?
-      loader = Soulmate::Loader.new("appunto:#{cliente.user_id}")
+      loader = Soulmate::Loader.new("#{cliente.user_id}_appunto")
       loader.add({
                     "term" => " #{destinatario} #{cliente.titolo} #{cliente.comune} #{cliente.frazione} #{cliente.provincia} #{note.to_s} #{'tel_' + telefono unless telefono.blank?}".squish, 
                     "id" => id,
