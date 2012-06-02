@@ -217,7 +217,7 @@ class Cliente < ActiveRecord::Base
   end
   
   def load_into_soulmate
-    loader = Soulmate::Loader.new("cliente:#{user_id}")
+    loader = Soulmate::Loader.new("cliente:1")
     loader.add({
                   "term" => "#{titolo} #{comune} #{frazione} #{provincia} #{ragione_sociale}".squish, 
                   "id" => id, 
