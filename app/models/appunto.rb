@@ -122,8 +122,6 @@ class Appunto < ActiveRecord::Base
     matches = Soulmate::Matcher.new("appunto:#{user_id}").matches_for_term(term)
   end
   
-
-
   def load_into_soulmate
     unless cliente.nil?
       loader = Soulmate::Loader.new("appunto:#{cliente.user_id}")
