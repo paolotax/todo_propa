@@ -50,7 +50,9 @@ gem 'pg'
 gem 'pg_search'
 gem 'activerecord-postgres-hstore'
 
-gem 'soulmate'
+
+gem 'rack-contrib'
+gem 'soulmate', :require => 'soulmate/server'
 
 
 gem 'whenever', :require => false
