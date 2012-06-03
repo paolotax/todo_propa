@@ -247,6 +247,7 @@ class Soulmate
 
   fetchResults: ->
     # Cancel any previous requests if there are any.
+    console.log "fetch"
     @xhr.abort() if @xhr?
     
     @xhr = $.ajax({
@@ -261,6 +262,8 @@ class Soulmate
       }
       success: (data) =>
         @update( data.results )
+      error: () ->
+        console.log('cazzo')
     })
 
   update: (results) ->
