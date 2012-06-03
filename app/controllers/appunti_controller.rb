@@ -55,7 +55,7 @@ class AppuntiController < ApplicationController
     else
       @cliente = nil
     end 
-    @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).build
+    @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).build(destinatario: params[:destinatario], telefono: params[:telefono])
     @appunto.cliente = @cliente
   end
 

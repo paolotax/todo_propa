@@ -12,6 +12,12 @@ module ApplicationHelper
     type = options.delete(:type) || :text_field
     content_tag(:div, (f.label(attribute, "#{label_name}:" ) + f.send(type, attribute, options)), :class => "field")
   end
+
+  def new_button(path) 
+    content_for :add_button do
+      render partial: 'shared/add_button', locals: { path: path }
+    end
+  end
   
   def markdown(text)
     options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]

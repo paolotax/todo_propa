@@ -1,3 +1,5 @@
+= new_button( new_libro_url )
+
 - title "Libri"
 
 #libri.well
@@ -28,7 +30,3 @@
             - unless libro.prezzo_consigliato.nil?
               = pretty_prezzo libro.prezzo_consigliato
 
-
-- @libro = Libro.new
-.modal.fade
-  = render "libri/modal"
