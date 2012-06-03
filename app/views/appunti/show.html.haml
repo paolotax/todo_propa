@@ -1,25 +1,57 @@
 - title @appunto.to_s
 
-.row
-  .span7
-    = render 'shared/title_bar', title: @appunto.to_s
-    .well
-      .field
-        .label Destinatario:
-        .destinatario= on_the_spot_edit @appunto, :destinatario
-      .field
-        .label Cliente:
-        .cliente_nome= @appunto.cliente_nome
-      .field
-        .label Note:
-        .note= on_the_spot_edit @appunto, :note, :type => :textarea, :rows => 5, :display_text => markdown(@appunto.note), :loadurl => get_note_appunto_path(@appunto), :callback => "testCallback"
-      .field
-        .label Telefono:
-        .telefono= on_the_spot_edit @appunto, :telefono
-      .field
-        .label Email:
-        .telefono= on_the_spot_edit @appunto, :email
-    
+.content
+  .row
+    %section.span11
+      %header
+      %article.appunto.well
+        .appunto-status
+          .status-container
+            = show_status_css(@appunto.stato)
+          .star-container
+        
+        %div{ style: "margin-left: 150px"}  
+          %h1= on_the_spot_edit @appunto, :destinatario
+          %address
+            %strong
+              = "@#{@appunto.cliente.ragione_sociale || [@appunto.cliente.nome, @appunto.cliente.cognome].join(' ')}"
+            %br
+            = @appunto.cliente.indirizzo
+            %br
+            = "#{@appunto.cliente.cap} #{@appunto.cliente.frazione} #{@appunto.cliente.comune} #{@appunto.cliente.provincia}"
+          
+          
+          %p
+            %strong= on_the_spot_edit @appunto, :note 
+
+          %p
+            %small
+              creato il: 
+              = l @appunto.created_at, format: :only_date
+              %br
+              ultima modifica: 
+              = l @appunto.updated_at, format: :only_date
+
+          %div.pull-left
+            %i{ class: 'icon-user'}
+            = on_the_spot_edit @appunto, :telefono
+            %br
+            %i{ class: 'icon-envelope'}
+            = on_the_spot_edit @appunto, :email
+          .clearfix
+
+        .pull-right
+          %button.btn.btn-danger 
+            %i.icon-trash
+            Elimina
+          %button.btn 
+            %i.icon-print
+            Stampa
+          = link_to edit_appunto_path(@appunto), class: "btn btn-primary" do
+            %i.icon-pencil
+            Modifica
+        .clearfix
+
         - unless @appunto.righe.empty?
           .table-righe
             %table.righe.table.table-striped.table-condensed

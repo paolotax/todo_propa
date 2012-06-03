@@ -65,7 +65,7 @@ $soulmateWidth: $inputWidth + 24px;
   font: 12px/14px $helvetica;
   font-weight: normal;
   list-style: none;
-  margin: 0;
+  margin-left: 210px - $inputWidth;
   padding: 0;
   position: absolute;
   text-shadow: 0 0 0 white;
@@ -128,17 +128,3 @@ $soulmateWidth: $inputWidth + 24px;
   
 }
 
-#footer {
-  margin-top: 40px;
-  font-family: $helvetica;
-  font-size: 13px;
-  color: #444;
-  text-align: center;
-  a {
-    color: #000;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
