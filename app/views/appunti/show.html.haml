@@ -43,13 +43,13 @@
           .clearfix
 
         .pull-right
-          %button.btn.btn-danger 
+          = link_to @appunto, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
             %i.icon-trash
             Elimina
-          %button.btn 
+          = link_to appunto_url(@appunto, format: :pdf), class: "btn" do
             %i.icon-print
             Stampa
-          = link_to edit_appunto_path(@appunto), class: "btn btn-primary" do
+          = link_to edit_appunto_url(@appunto), class: "btn btn-primary" do
             %i.icon-pencil
             Modifica
         .clearfix

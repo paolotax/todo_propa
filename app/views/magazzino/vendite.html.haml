@@ -91,6 +91,17 @@
         %ol.clienti-list
           - for cliente in clienti do
             = render cliente
+            
+    .module
+      %h2 Cassa
+      %table.table
+        %tr
+          %th Data
+          %th Incasso
+        - for r in @cassa
+          %tr
+            %td= r[0]
+            %td= number_to_currency r[1]
           
           
     

@@ -7,7 +7,7 @@
     %section.span11
       %header
         / = render 'shared/title_bar', title: @cliente.to_s
-      %article.cliente.well
+      %article.well[@cliente]
       
         - unless @cliente.latitude.nil?
           .map-avatar.pull-left
@@ -36,25 +36,20 @@
             = @cliente.email
           .clearfix
 
-        .pull-right
-          %button.btn.btn-danger 
-            %i.icon-trash
-            Elimina
-          %button.btn 
-            %i.icon-print
-            Stampa
-          = link_to edit_cliente_path(@cliente), class: "btn btn-primary" do
-            %i.icon-pencil
-            Modifica
-          
-
- 
-          
-          
-          
         %footer
-          = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first)
-          = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first)
+          .pull-right
+            = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+              %i.icon-trash
+              Elimina
+            / = link_to cliente_url(@cliente, format: :pdf), class: "btn" do
+            /   %i.icon-print
+            /   Stampa
+            = link_to edit_cliente_url(@cliente), class: "btn btn-primary" do
+              %i.icon-pencil
+              Modifica
+              
+          = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first), class: "btn"
+          = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first), class: "btn"
             
   .row
     - unless @cliente.new_record?

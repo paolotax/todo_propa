@@ -4,10 +4,10 @@
 
 .content
   .row
-    %section.span11
+    %section.span11.well
       %header
         / = render 'shared/title_bar', title: @cliente.to_s
-      %article.libro.well
+      %article.libro
       
         .copertina{ style: "float: left;"}  
           / = image_tag copertina(@libro)
@@ -21,22 +21,23 @@
           
           .badge.badge-info.pull-right  
             = pretty_prezzo @libro.prezzo_consigliato
-            
           .clearfix
-          
-           
+
+
+      %footer
+        = link_to '< previous', Libro.previous(@libro, 'titolo').first, class: "btn"
+        = link_to 'next >',     Libro.next(@libro, 'titolo').first, class: "btn"
+        
         .pull-right
-          %button.btn.btn-danger 
+          = link_to @libro, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
             %i.icon-trash
             Elimina
-          %button.btn 
-            %i.icon-print
-            Stampa
-          = link_to edit_libro_path(@libro), class: "btn btn-primary" do
+          / = link_to libro_url(@libro, format: :pdf), class: "btn" do
+          /   %i.icon-print
+          /   Stampa
+          = link_to edit_libro_url(@libro), class: "btn btn-primary" do
             %i.icon-pencil
             Modifica
-        .clearfix
-      %footer
-        = link_to '< previous', Libro.previous(@libro, 'titolo').first
-        = link_to 'next >',     Libro.next(@libro, 'titolo').first
+
+
           
