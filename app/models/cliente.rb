@@ -178,7 +178,7 @@ class Cliente < ActiveRecord::Base
     # [self.indirizzo, self.cap, self.frazione, self.comune, self.provincia].join(', ')
   end
   
-  acts_as_gmappable
+  acts_as_gmappable :check_process => true, :checker => "gmaps"
   
   def gmaps4rails_address
     "#{self.indirizzo}, #{self.frazione}, #{self.comune}, #{self.provincia}"

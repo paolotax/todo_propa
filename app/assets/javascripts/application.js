@@ -12,7 +12,10 @@
 //= require chosen.jquery
 //= require showdown
 //= require jquery.validity
-//= require gmaps4rails/googlemaps.js
+
+//= require gmaps4rails/gmaps4rails.base.js
+//= require gmaps4rails/gmaps4rails.googlemaps.js
+
 //= require on_the_spot
 //= require bootstrap
 //= require bootstrap-transition
