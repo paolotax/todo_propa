@@ -36,20 +36,20 @@
             = @cliente.email
           .clearfix
 
-        %footer
-          .pull-right
-            = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
-              %i.icon-trash
-              Elimina
-            / = link_to cliente_url(@cliente, format: :pdf), class: "btn" do
-            /   %i.icon-print
-            /   Stampa
-            = link_to edit_cliente_url(@cliente), class: "btn btn-primary" do
-              %i.icon-pencil
-              Modifica
-              
-          = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first), class: "btn"
-          = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first), class: "btn"
+      %footer
+        .pull-right
+          = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+            %i.icon-trash
+            Elimina
+          / = link_to cliente_url(@cliente, format: :pdf), class: "btn" do
+          /   %i.icon-print
+          /   Stampa
+          = link_to edit_cliente_url(@cliente), class: "btn btn-primary" do
+            %i.icon-pencil
+            Modifica
+            
+        = link_to '< previous', cliente_url(Cliente.previous(@cliente, 'titolo').first), class: "btn"
+        = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first), class: "btn"
             
   .row
     - unless @cliente.new_record?
@@ -60,10 +60,14 @@
         %header.content-header
           .header-inner
             %h2 Appunti
-
+        
+        - @appunti_per_anno = @cliente.appunti.recente.group_by { |t| t.created_at.year }
         .appunti
-          - for a in @cliente.appunti.recente do
-            = render a
+          - for anno, values in @appunti_per_anno do
+            .item
+              %h3= anno
+            - for a in values do
+              = render a
             
         .stream-loader
    

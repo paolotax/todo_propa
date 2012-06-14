@@ -29,6 +29,8 @@
 //= require stuff
 //= require demo
 
+//= require gmaps
+
 
 
 
