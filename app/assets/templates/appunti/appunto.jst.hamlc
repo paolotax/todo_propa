@@ -63,6 +63,9 @@
     %p
       != @note
     
+    %p= "#{@telefono} #{@email}"
+      
+    
     .badge.badge-warning.importo{ "data-value" => "#{@totale_importo}" }
       !=  JST['shared/prezzo']( prezzo: @totale_importo ) 
     .clearfix

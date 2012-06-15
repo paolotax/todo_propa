@@ -67,6 +67,8 @@
     
     %p
       = appunto.note
+      
+    %p= "#{appunto.telefono} #{appunto.email}"
     
     - unless appunto.totale_importo.zero?
       .badge.badge-warning.importo{ "data-value" => "#{appunto.totale_importo}" }

@@ -38,6 +38,27 @@
           = link_to edit_libro_url(@libro), class: "btn btn-primary" do
             %i.icon-pencil
             Modifica
+  .row
+    .span4.well
+      %h1 Carichi
+      %h2 In arrivo
 
+    .span4.well
+      %h1 Scarichi
+      %h2 Da Consegnare
+      %ul
+        - for riga in @libro.righe.scarico.da_consegnare do
+          %li[riga]
+            = riga.quantita
+            = riga.appunto.cliente.titolo
+            = l riga.appunto.created_at, format: :only_date
+              
+      
+      %h2 Consegnati
+      
+      
+    .span3.well
+      %h1 Si sboccia
+      
 
           
