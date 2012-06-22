@@ -3,62 +3,89 @@
 - title @libro.titolo
 
 .content
-  .row
-    %section.span11.well
-      %header
-        / = render 'shared/title_bar', title: @cliente.to_s
-      %article.libro
+  %section.well
+    %header
+      / = render 'shared/title_bar', title: @cliente.to_s
+    %article.libro[@libro]
+    
+      .copertina.hidden-phone
+        / = image_tag copertina(@libro)
+        = image_tag @libro.image_url
       
-        .copertina{ style: "float: left;"}  
-          / = image_tag copertina(@libro)
-          = image_tag @libro.image_url
+      %h1= @libro.titolo
         
-        %div{ style: "margin-left: 150px"}  
-          %h1= @libro.titolo
+      .prezzo-copertina
+        %strong= pretty_prezzo @libro.prezzo_copertina 
+        COPERTINA
           
-          .badge.badge-info.pull-right 
-            = pretty_prezzo @libro.prezzo_copertina 
-          
-          .badge.badge-info.pull-right  
-            = pretty_prezzo @libro.prezzo_consigliato
-          .clearfix
+      .prezzo-consigiato
+        %strong= pretty_prezzo @libro.prezzo_consigliato
+        CONSIGLIATO
 
+    %footer.show-toolbar.clearfix
+      
+      .btn-group.pull-left      
+        = link_to Libro.previous(@libro, 'titolo').first, class: "btn" do
+          %i.icon-caret-left
+        = link_to Libro.next(@libro, 'titolo').first, class: "btn" do
+          %i.icon-caret-right
+      
+      .pull-right
+        = link_to @libro, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+          %i.icon-trash
+          Elimina
+        / = link_to libro_url(@libro, format: :pdf), class: "btn" do
+        /   %i.icon-print
+        /   Stampa
+        = link_to edit_libro_url(@libro), class: "btn btn-primary" do
+          %i.icon-pencil
+          Modifica
+      
+  
+  .row-fluid
+    .span4.carichi
+      .well
+        %h2 Carichi
+        %h3 In arrivo
 
-      %footer
-        = link_to '< previous', Libro.previous(@libro, 'titolo').first, class: "btn"
-        = link_to 'next >',     Libro.next(@libro, 'titolo').first, class: "btn"
+    .span4.scarichi
+      .well
+        %h2 Scarichi
         
-        .pull-right
-          = link_to @libro, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
-            %i.icon-trash
-            Elimina
-          / = link_to libro_url(@libro, format: :pdf), class: "btn" do
-          /   %i.icon-print
-          /   Stampa
-          = link_to edit_libro_url(@libro), class: "btn btn-primary" do
-            %i.icon-pencil
-            Modifica
-  .row
-    .span4.well
-      %h1 Carichi
-      %h2 In arrivo
-
-    .span4.well
-      %h1 Scarichi
-      %h2 Da Consegnare
-      %ul
-        - for riga in @libro.righe.scarico.da_consegnare do
-          %li[riga]
-            = riga.quantita
-            = riga.appunto.cliente.titolo
-            = l riga.appunto.created_at, format: :only_date
+        
+        - scarichi = current_user.righe.includes(:appunto => [:cliente]).di_questa_propaganda.scarico.where("righe.libro_id = ?", @libro.id).order("appunti.created_at")
+        
+        %h3 
+          copie da consegnare
+          .pull-right
+            = scarichi.da_consegnare.sum(&:quantita)
+        %ul
+          - for riga in scarichi.da_consegnare do
+            %li[riga]
+              %span
+                = link_to riga.appunto do
+                  = l riga.appunto.created_at, format: :only_date
+              |
+              %span.cliente
+                = link_to riga.appunto.cliente do
+                  = riga.appunto.cliente.titolo
+              %span.pull-right= riga.quantita
               
+        %h3 
+          copie consegnate
+          .pull-right
+            = scarichi.consegnata.sum(&:quantita)
+        %ul
+          - for riga in scarichi.consegnata do
+            %li[riga]
+              %span.quantita= riga.quantita
+              %span.titolo= riga.appunto.cliente.titolo
+              %span.pull-right= l riga.appunto.created_at, format: :only_date
       
-      %h2 Consegnati
       
-      
-    .span3.well
-      %h1 Si sboccia
+    .span4
+      .well
+        %h2 Si sboccia
       
 
           

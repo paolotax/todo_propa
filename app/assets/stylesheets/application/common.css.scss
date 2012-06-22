@@ -13,3 +13,8 @@
 .title-bar {
   @include bar(left);
 }
+
+.show-toolbar {
+  margin-top: 19px;
+}
+
