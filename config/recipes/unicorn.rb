@@ -23,4 +23,6 @@ namespace :unicorn do
     end
     after "deploy:#{command}", "unicorn:#{command}"
   end
+  after "deploy:start", "unicorn:restart"
+  
 end
