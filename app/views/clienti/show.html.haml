@@ -4,7 +4,7 @@
 
 .content
   .row
-    %section.span11
+    %section.span12
       %header
         / = render 'shared/title_bar', title: @cliente.to_s
       %article.well[@cliente]
@@ -52,33 +52,32 @@
         = link_to 'next >',     cliente_url(Cliente.next(@cliente, 'titolo').first), class: "btn"
             
   .row
-    - unless @cliente.new_record?
-      .side-bar.span5
-        
+    .side-bar.span4
+      - unless @cliente.new_record?  
         - da_consegnare  = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
         = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_consegnare", collection: da_consegnare}
 
         - da_pagare = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_pagare.order("libri.titolo")
         = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_pagare", collection: da_pagare} 
         
-
-
-
-
-      .span6
-        %header.content-header
-          .header-inner
-            %h2 Appunti
+    .span5
+      %header.content-header
+        .header-inner
+          %h2 Appunti
         
-        - @appunti_per_anno = @cliente.appunti.recente.group_by { |t| t.created_at.year }
-        .appunti
-          - for anno, values in @appunti_per_anno do
-            .item
-              %h3= anno
-            - for a in values do
-              = render a
-            
-        .stream-loader
+      - @appunti_per_anno = @cliente.appunti.recente.group_by { |t| t.created_at.year }
+      .appunti
+        - for anno, values in @appunti_per_anno do
+          .item
+            %h3= anno
+          - for a in values do
+            = render a
+          
+      .stream-loader
+      
+    .side-bar.span3
+      .well
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
    
       
 - @appunto = Appunto.new(cliente: @cliente)

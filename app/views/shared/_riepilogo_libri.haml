@@ -1,4 +1,4 @@
-.riepilogo-libri
+.module.riepilogo-libri
   %header
     %h3
       Libri #{tipo_riepilogo.humanize.downcase}
@@ -11,5 +11,7 @@
           %span.importo= number_to_currency righe.sum(&:importo)
       %li.totali
         %span.totale Totale
-        %span.quantita= collection.sum(&:quantita)
-        %span.importo= number_to_currency collection.sum(&:importo)
+        %span.quantita
+          %strong= collection.sum(&:quantita)
+        %span.importo
+          %strong= number_to_currency collection.sum(&:importo)
