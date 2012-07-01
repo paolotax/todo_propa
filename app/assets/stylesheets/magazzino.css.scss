@@ -1,6 +1,48 @@
 // Place all the styles related to the magazzino controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@mixin clearfix {
+  zoom: 1;
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.riepilogo-libri {
+  ul {
+    margin: 0;
+    list-style: none;
+    background-color: white;
+    li {
+      padding: 3px 10px;
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      @include clearfix;
+      span {
+        display: block;
+        float: left;
+      }
+      span.titolo,
+      span.totale {
+        width: 50%;
+      }
+      span.quantita {
+        width: 20%;
+        text-align: center;
+      }
+      span.importo {
+        width: 30%;
+        text-align: right;
+      
+      }
+    }
+  }
+}
 
 
 .situazione-vacanze {
