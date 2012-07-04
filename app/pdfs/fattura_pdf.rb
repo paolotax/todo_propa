@@ -38,7 +38,24 @@ class FatturaPdf < Prawn::Document
     repeat(:all, :dynamic => true) do
       draw_text page_number, :at => [bounds.left + 7, bounds.top - 69.mm], size: 8
     end
+    
+    if (@fattura.pagata == true)
+      create_stamp("PAGATO") do 
+        rotate(30, :origin => [-5, -5]) do
+          stroke_color "FF3333" 
+          #pdf.stroke_ellipse [0, 0], 29, 15 
+          stroke_color "000000"
+          fill_color "993333" 
+          font("Times-Roman") do
+            draw_text "PAGATO", :at => [-23, -3] 
+          end
+          fill_color "000000" 
+        end
+      end
 
+      stamp_at "PAGATO", [170, 400]
+    end    
+    
   end
   
   def intestazione_cliente(cliente)

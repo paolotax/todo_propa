@@ -37,10 +37,10 @@
   .importo
     %strong= number_to_currency fattura.importo_fattura 
     importo
-  .righe
-    %table.table
-      - for r in fattura.righe
-        = render r
+  / .righe
+  /   %table.table
+  /     - for r in fattura.righe
+  /       = render r
   .more-actions
     %ul.nav-fattura
       %li.delete
