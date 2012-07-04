@@ -12,12 +12,12 @@
       
         %li
           = " | "
-        %li.show
+        %li.show-fattura
           %a.apri-fattura{ title: 'mostra dettagli'}
             Apri
-    .chiudi{ style: "float: right;"}
-      %a
-        Chiudi
+  .chiudi{ style: "float: right;"}
+    %a
+      Chiudi
     
   .causale
     %strong= @causale
@@ -68,20 +68,20 @@
               %td.gratis
                 %span.badge.badge-info. gratis
 
-        - if @righe.length > 1
-          %tr.riga
-            %td
-            %td.quantita
-              %span.badge.badge-error= @totale_copie
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-              .badge.badge-info
-                !=  JST['shared/prezzo']( prezzo: @totale_importo )
+        / - if @righe.length > 1
+        /   %tr.riga
+        /     %td
+        /     %td.quantita
+        /       %span.badge.badge-error= @totale_copie
+        /     %td
+        /     %td
+        /     %td
+        /     %td
+        /     %td
+        /     %td
+        /     %td
+        /       .badge.badge-info
+        /         !=  JST['shared/prezzo']( prezzo: @importo_fattura )
 
   .more-actions
     %ul.nav-fattura

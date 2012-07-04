@@ -53,6 +53,7 @@ gem 'activerecord-postgres-hstore'
 gem 'rack-contrib'
 gem 'soulmate', :require => 'soulmate/server'
 
+gem 'routing-filter'
 
 gem 'whenever', :require => false
 

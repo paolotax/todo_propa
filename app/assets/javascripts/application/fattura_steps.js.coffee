@@ -31,6 +31,12 @@ jQuery ->
         $("#fattura_#{data.id}").toggleClass('opened')
         
   
+  $('.chiudi a').live 'click', (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    fattura = $(@).closest($('.fattura'))
+    fattura.removeClass('opened')
+    console.log "chiuso"
     
     
     
