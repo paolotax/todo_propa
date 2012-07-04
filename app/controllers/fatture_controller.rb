@@ -15,19 +15,16 @@ class FattureController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @fattura }
-      
+      format.json { render rabl: @fattura }
       format.pdf do
         # @fattura = Array(@fattura)
         pdf = FatturaPdf.new(@fattura, view_context)
-        send_data pdf.render, filename: "fattura_#{@fattura.id}.pdf",
+        send_data pdf.render, filename: "#{@fattura.slug}.pdf",
                               type: "application/pdf",
                               disposition: "inline"
-      
       end
     end
   end
-
 
   def new
     @fattura = current_user.fatture.build

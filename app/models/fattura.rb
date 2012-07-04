@@ -23,6 +23,10 @@ class Fattura < ActiveRecord::Base
   
   before_save :ricalcola
   
+  def righe_per_titolo
+    self.righe.joins(:libro).order("libri.titolo")
+  end
+  
   def imponibile
     self.importo_fattura - self.totale_iva
   end

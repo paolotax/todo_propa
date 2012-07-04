@@ -14,10 +14,23 @@ jQuery ->
       url: "/righe/#{riga_id}.json"  
       data: { riga: { remove_fattura: true } }
       type:  "PUT"
-      
       success: (data) ->
-        console.log "succ"
         $(riga).remove();
+  
+  
+  $('.show-fattura a.apri-fattura').live 'click', (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    fattura = $(@).closest(".fattura")
+    id = fattura.data("id")
+    $.ajax 
+      url: "/fatture/#{id}"  
+      dataType: 'json'
+      success: (data) ->
+        fattura.replaceWith JST["fatture/fattura"](data)
+        $("#fattura_#{data.id}").toggleClass('opened')
+        
+  
     
     
     

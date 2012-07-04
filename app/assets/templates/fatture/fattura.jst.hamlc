@@ -1,0 +1,99 @@
+.item.fattura{ id: "fattura_#{@id}", "data-id" => "#{@id}" }
+  .actions
+    %ul.nav-fattura
+      %li.print
+        %a{ href: "/fatture/#{@slug}.pdf", title: "stampa #{@causale}", target: "_blank" }
+          %i.icon-tag
+          Stampa
+        %li.edit
+          %a{ href: "/fatture/#{@slug}/fattura_steps/intestazione", title: 'modifica appunto'}
+            %i.icon-pencil
+            Modifica
+      
+        %li
+          = " | "
+        %li.show
+          %a.apri-fattura{ title: 'mostra dettagli'}
+            Apri
+    .chiudi{ style: "float: right;"}
+      %a
+        Chiudi
+    
+  .causale
+    %strong= @causale
+  .consegnato
+  
+  .pagato
+
+  .numero
+    %strong= @numero
+    %br
+    %span= @data
+  .cliente
+    %a{ href: "@cliente.cliente_url", title: 'scheda cliente'}
+      = @cliente.titolo
+  .copie
+    %strong= @totale_copie
+    copie
+  .importo
+    %strong= @importo_fattura 
+    importo
+  .clearfix  
+  - if @righe?
+    .table-righe
+      %table.righe.table.table-striped.table-condensed
+        - for r in @righe
+          %tr.riga
+            %td= r.titolo
+            %td.quantita
+              %strong
+                = r.quantita
+            %td x
+            - if r.prezzo_unitario isnt "0.0"
+              %td
+                !=  JST['shared/prezzo']( prezzo: r.prezzo_unitario )
+            - else
+              %td.gratis 
+                %span.badge.badge-info gratis
+            %td
+            %td.sconto
+              = "- #{r.sconto}%" if r.sconto isnt "0.0"
+            
+            %td =
+            %td
+            - if r.importo isnt 0
+              %td
+                !=  JST['shared/prezzo']( prezzo: r.importo )
+            - else
+              %td.gratis
+                %span.badge.badge-info. gratis
+
+        - if @righe.length > 1
+          %tr.riga
+            %td
+            %td.quantita
+              %span.badge.badge-error= @totale_copie
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+              .badge.badge-info
+                !=  JST['shared/prezzo']( prezzo: @totale_importo )
+
+  .more-actions
+    %ul.nav-fattura
+      %li.delete
+        %a{ href: "/fatture/#{@slug}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+          %i.icon-trash
+          Elimina
+      %li.print
+        %a{ href: "/fatture/#{@slug}.pdf", title: "stampa #{@causale}", target: "_blank" }
+          %i.icon-tag
+          Stampa
+      %li.edit
+        %a{ href: "/fatture/#{@slug}/fattura_steps/intestazione", title: 'modifica appunto'}
+          %i.icon-pencil
+          Modifica

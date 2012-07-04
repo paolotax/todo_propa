@@ -26,7 +26,6 @@ window.initializeAppunto = (appunto) ->
     id = $(@).data('id')
     stato = $(@).data('status')
     opened = appunto.hasClass('opened')
-    console.log opened
     $.ajax 
       url: "/appunti/#{id}.json"  
       data: { appunto: { stato: stato } }
