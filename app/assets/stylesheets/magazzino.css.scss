@@ -3,17 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "compass/css3/border-radius";
-
-@mixin clearfix {
-  zoom: 1;
-  &:before, &:after {
-    content: "";
-    display: table;
-  }
-  &:after {
-    clear: both;
-  }
-}
+@import "application/mixins";
 
 .riepilogo-libri {
   

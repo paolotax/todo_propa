@@ -7,20 +7,27 @@
     %header
       / = render 'shared/title_bar', title: @cliente.to_s
     %article.libro[@libro]
-    
       .copertina.hidden-phone
         / = image_tag copertina(@libro)
         = image_tag @libro.image_url
       
-      %h1= @libro.titolo
-        
-      .prezzo-copertina
-        %strong= pretty_prezzo @libro.prezzo_copertina 
-        COPERTINA
-          
-      .prezzo-consigiato
-        %strong= pretty_prezzo @libro.prezzo_consigliato
-        CONSIGLIATO
+      .content
+        %h1= @libro.titolo
+        .settore
+          = @libro.settore
+        .abbr
+          = @libro.sigla
+        .cm
+          = @libro.cm
+        .ean
+          = @libro.ean
+
+        .prezzo-copertina
+          %strong= pretty_prezzo @libro.prezzo_copertina 
+          COPERTINA
+        .prezzo-consigiato
+          %strong= pretty_prezzo @libro.prezzo_consigliato
+          CONSIGLIATO
 
     %footer.show-toolbar.clearfix
       

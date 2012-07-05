@@ -1,0 +1,30 @@
+@import "compass/css3/text-shadow";
+@import "mixins";
+
+.libro {
+  @include clearfix;   
+  .content {
+    float: left;
+    margin-left: 20px;
+    margin-top: -4px;
+    @include clearfix;    
+    h1 {
+      @include text-shadow(rgba(#666, 0.2) 1px 1px 0, rgba(#666, 0.2) 2px 2px 0, rgba(#666, 0.2) 3px 3px 0);
+    }
+    .settore {
+      margin-top: 5px;
+      text-align: right;
+      color: #666;
+      font-size: 14px;
+      font-style: italic; 
+    }
+  }
+  .copertina {
+    float: left;
+    img {
+      -moz-box-shadow:    4px 4px 4px rgba(0,0,0,0.50);
+      -webkit-box-shadow: 4px 4px 4px rgba(0,0,0,0.50);
+      box-shadow:         4px 4px 4px rgba(0,0,0,0.50);
+    }
+  }
+}
