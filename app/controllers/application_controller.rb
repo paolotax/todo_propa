@@ -4,8 +4,9 @@ class ApplicationController < ActionController::Base
   
   helper :layout
 
-  respond_to_mobile_requests :skip_xhr_requests => false
-  # before_filter :prepare_for_mobile
+  # respond_to_mobile_requests :skip_xhr_requests => false
+  
+  ##### before_filter :prepare_for_mobile
   
   before_filter :authenticate_user!
   

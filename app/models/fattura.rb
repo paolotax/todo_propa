@@ -1,6 +1,6 @@
 class Fattura < ActiveRecord::Base
 
-  TIPO_FATTURA = [ "Fattura", "Buono di consegna", "Nota di accredito", "Ordine" ]
+  TIPO_FATTURA   = [ "Fattura", "Buono di consegna", "Nota di accredito", "Ordine" ]
   TIPO_PAGAMENTO = ["Contanti", "Assegno", "Bonifico Bancario", "Bollettino Postale"]
   
   extend FriendlyId
@@ -22,6 +22,7 @@ class Fattura < ActiveRecord::Base
   scope :per_numero, order('fatture.data desc, fatture.numero desc')
   
   before_save :ricalcola
+  before_create :init
   
   def righe_per_titolo
     self.righe.joins(:libro).order("libri.titolo")
@@ -84,16 +85,19 @@ class Fattura < ActiveRecord::Base
   end
     
   def get_new_id(user)
-    
     last_id = Fattura.where("user_id = ? and data > ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
-    
     if last_id.empty?
       return 1
     else
       return last_id[0][:numero] + 1    
     end
   end
-
+  
+  private
+    
+    def init
+      self.data ||= self.data = Time.now
+    end
 end
 
 # == Schema Information
