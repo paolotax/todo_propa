@@ -27,17 +27,29 @@
           Codice Fiscale:
           = @cliente.codice_fiscale
         %div.pull-right
-          %i{ class: 'icon-user'}
-          = @cliente.telefono
-          %br
-          %i{ class: 'icon-envelope'}
-          = mail_to @cliente.email unless @cliente.email.blank?
-    
+          
+          - unless @cliente.telefono.blank?
+            %a.btn{ href: "tel:#{@cliente.telefono.split.join}" }
+              %i.icon-user
+              = @cliente.telefono
+            %br
+
+          - unless @cliente.email.blank?
+            %a.btn{ href: "tel:#{@cliente.email}" }
+              %i.icon-envelope
+              = @cliente.email
+            %br
+          
+          - unless @cliente.latitude.nil?
+            %a.btn{ href: "http://maps.google.it/maps?q=#{@cliente.latitude},#{@cliente.longitude}" }
+              %i.icon-road
+              Mostra percorso
+
     %footer.show-toolbar
       = link_to cliente_url(Cliente.previous(@cliente, 'titolo').first), class: "btn" do
         %i.icon-caret-left
       = link_to cliente_url(Cliente.next(@cliente, 'titolo').first), class: "btn" do
-        %i.icon-caret-left
+        %i.icon-caret-right
       .pull-right
         = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
           %i.icon-trash

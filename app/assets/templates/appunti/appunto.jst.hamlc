@@ -63,7 +63,12 @@
     %p
       != @note
     
-    %p= "#{@telefono} #{@email}"
+    %p
+      %a{ href: "tel:#{@telefono}" }
+        = @telefono
+      %a{ href: "mailto:#{@email}" }
+        = @email
+        
       
     
     .badge.badge-warning.importo{ "data-value" => "#{@totale_importo}" }

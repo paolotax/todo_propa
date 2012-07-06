@@ -68,7 +68,11 @@
     %p
       = appunto.note
       
-    %p= "#{appunto.telefono} #{appunto.email}"
+      %p
+        %a{ href: "tel:#{appunto.telefono}" }
+          = appunto.telefono
+        %a{ href: "mailto:#{appunto.email}" }
+          = appunto.email
     
     - unless appunto.totale_importo.zero?
       .badge.badge-warning.importo{ "data-value" => "#{appunto.totale_importo}" }
