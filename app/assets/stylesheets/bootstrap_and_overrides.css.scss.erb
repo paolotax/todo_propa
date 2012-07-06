@@ -710,11 +710,28 @@ td.gratis {
 
 // Landscape phones and down
 @media (max-width: 480px) {
-
+  #soulmate {
+    margin: auto;
+    padding: 0 10px;
+    position: fixed;
+    width: 100%;
+    top: 10px;
+    left: 0px;
+    z-index: 99999;
+    .soulmate-type-suggestions {
+      width: 70%;
+    }
+  }
 }
 
 // Landscape phone to portrait tablet
 @media (max-width: 768px) {
+  
+  .content-main.span6 {
+    display: block;
+    float: none;
+    width: 100% !important;
+  }
   div.location {
     padding-bottom: 10px;
   }
@@ -722,10 +739,24 @@ td.gratis {
     display: block;
     
   }
+
+  #soulmate {
+    margin: auto;
+    padding: 0 10px;
+    position: fixed;
+    width: 100%;
+    top: 10px;
+    left: 0px;
+    z-index: 99999;
+    .soulmate-type-suggestions {
+      width: 70%;
+    }
+  }
 }
  
 // Portrait tablet to landscape and desktop
 @media (min-width: 768px) and (max-width: 980px) {
+
 
 }
  

@@ -2,7 +2,7 @@
   
 - title "Appunti"
 
-.row
+.row-fluid
   .side-bar.span3
     = render :partial => 'shared/episode_views'
     = render :partial => 'shared/search_options'
@@ -22,7 +22,7 @@
     .stream-loader
       
 
-  .side-right.span3
+  .side-right.span3.visible-desktop
     .well
       = link_to "Mostra Baule", baule_url
       %p

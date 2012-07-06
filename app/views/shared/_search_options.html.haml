@@ -84,7 +84,7 @@
           %i.chev-right
           
           
-.module
+.module.hidden-phone
   %ul
     %li{ class: "#{ params[:comune].present? ? '': 'active' }" }
       = link_to params.merge(:controller => @controller, :action => :index, :format => 'json').except(:comune), class: "list-link"  do
