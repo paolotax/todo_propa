@@ -75,56 +75,16 @@
           = appunto.email
     
     - unless appunto.totale_importo.zero?
-      .badge.badge-warning.importo{ "data-value" => "#{appunto.totale_importo}" }
+      .badge.badge-warning.totale-importo{ "data-value" => "#{appunto.totale_importo}" }
         =  pretty_prezzo appunto.totale_importo 
     .clearfix
       
     .more
       - if appunto.has_righe?
-        .table-righe
-          %table.righe.table.table-striped.table-condensed
-            - for r in appunto.righe
-              %tr.riga
-                %td= r.titolo
-                %td.quantita
-                  %strong
-                    = r.quantita
-                %td x
-                - unless r.prezzo_unitario.zero?
-                  %td
-                    =  pretty_prezzo r.prezzo_unitario
-                - else
-                  %td.gratis 
-                    %span.badge.badge-info gratis
-                %td
-                %td.sconto
-                  = "- #{r.sconto}%" unless r.sconto.zero?
-              
-                %td =
-                %td
-                - unless r.importo.zero?
-                  %td
-                    = pretty_prezzo r.importo
-                - else
-                  %td.gratis
-                    %span.badge.badge-info gratis
-  
-            - if appunto.righe.length > 1
-              %tr.riga
-                %td
-                %td.quantita
-                  %span.badge.badge-error= appunto.totale_copie
-                %td
-                %td
-                %td
-                %td
-                %td
-                %td
-                %td
-                  .badge.badge-info
-                    =  pretty_prezzo appunto.totale_importo
-                
-                
+        .table-righe-new
+          - for riga in appunto.righe do
+            = render riga
+
       / %div{ style: "color: gray;"}
       /   - c = new Date(created_at)
       /   - u = new Date(@updated_at)

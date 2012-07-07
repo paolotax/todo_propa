@@ -1,24 +1,19 @@
-%tr[riga]
-  %td= riga.titolo
-  %td.quantita
-    %strong
-      = riga.quantita
-  %td x
-  - unless riga.prezzo_unitario.zero?
-    %td
-      = pretty_prezzo riga.prezzo_unitario
-  - else
-    %td.gratis 
-      %span.badge.badge-info gratis
-  %td
-  %td.sconto
-    = "- #{riga.sconto}%" unless riga.sconto.zero?
-  
-  %td =
-  %td
-  - unless riga.importo.zero?
-    %td
-      = pretty_prezzo riga.importo
-  - else
-    %td.gratis
-      %span.badge.badge-info gratis
+%div[riga]
+  .titolo
+    = riga.titolo
+  .dati-riga
+    .quantita
+      %strong
+        = riga.quantita
+    .prezzo
+      - unless riga.prezzo_unitario.zero?
+        = pretty_prezzo riga.prezzo_unitario
+      - else
+        %span.badge.badge-info gratis
+    .sconto
+      = "- #{riga.sconto}%" unless riga.sconto.zero?
+    .importo
+      - unless riga.importo.zero?
+        = pretty_prezzo riga.importo
+      - else
+        %span.badge.badge-info gratis

@@ -105,7 +105,7 @@
     width: 25%;
   }
   .copie,
-  .importo {
+  .importo-fattura {
     position: absolute;
     bottom: 0;
     width: 15%;
@@ -126,9 +126,10 @@
   .copie {
     left: 70%;
   }
-  .importo {
+  .importo-fattura {
     left: 80%
   }
+  .table-righe-new,
   .righe {
     display: none;
     margin-top: 10px;
@@ -141,6 +142,7 @@
     .actions {
       display: none;
     }
+    .table-righe-new,
     .more-actions,
     .righe {
       display: block;

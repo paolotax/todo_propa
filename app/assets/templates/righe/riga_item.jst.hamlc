@@ -1,0 +1,19 @@
+.riga{ class: "riga_#{@id}"}
+  .titolo
+    = @titolo
+  .dati-riga
+    .quantita
+      %strong
+        = @quantita
+    .prezzo
+      - unless @prezzo_unitario is 0
+        !=  JST['shared/prezzo']( prezzo: @prezzo_unitario ) 
+      - else
+        %span.badge.badge-info gratis
+    .sconto
+      = "- #{@sconto}%" unless @sconto is 0
+    .importo
+      - unless @importo is 0
+        !=  JST['shared/prezzo']( prezzo: @importo ) 
+      - else
+        %span.badge.badge-info gratis

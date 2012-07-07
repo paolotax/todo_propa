@@ -4,6 +4,37 @@
 
 @import "compass/utilities/lists/bullets";
 @import "compass/utilities/text/ellipsis";
+@import "mixins";
+
+.table-righe-new {
+  .riga {
+    padding: 3px 0;
+    border-bottom: 1px solid #E8E8E8;
+    @include clearfix;
+    .titolo {
+      float: left;
+      font-style: italic;
+    }
+    .dati-riga {
+      float: right;
+      min-width: 224px;
+      .quantita, .prezzo, .sconto, .importo {
+        float:left;
+        width: 56px;
+        min-width: 56px;
+        text-align: center;
+      }
+      .prezzo {
+        font-weight: normal;
+      }
+      .importo {
+        float: right;
+        text-align: right;
+      }
+    }
+  }
+}
+
 
 .table-righe {
   font-size: 90%;

@@ -18,13 +18,10 @@
   .chiudi{ style: "float: right;"}
     %a
       Chiudi
-    
   .causale
     %strong= fattura.causale
   .consegnato
-    
   .pagato
-  
   .numero
     %strong= fattura.numero
     %br
@@ -34,7 +31,7 @@
   .copie
     %strong= fattura.totale_copie
     copie
-  .importo
+  .importo-fattura
     %strong= number_to_currency fattura.importo_fattura 
     importo
   .righe.loading
