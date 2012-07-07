@@ -40,7 +40,7 @@
                 %ul.dropdown-menu
                   %li.current-user
                     %a                      
-                      = link_to "Profilo di #{current_user.username}", edit_user_registration_path, :class => 'tab' 
+                      = link_to "Profilo di #{current_user.username}", user_profile_path, :class => 'tab' 
                   %li
                     = link_to "Esci", destroy_user_session_path, {:method => :delete, :class => 'tab'}
             .toolbar-buttons.pull-right

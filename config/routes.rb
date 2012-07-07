@@ -14,6 +14,10 @@ TodoPropa::Application.routes.draw do
   match '/baule/rimuovi', controller: 'baule', action: 'destroy'
   match '/baule/update',  controller: 'baule', action: 'update', :via => :put
   
+  
+  match '/user/profile',  controller: 'user_profile', action: 'edit'
+  match '/user/update_profile',  controller: 'user_profile', action: 'update', :via => :put
+  
   resources :visita_appunti
 
   match '/:action.appcache', :controller => 'appcache', :format => :appcache

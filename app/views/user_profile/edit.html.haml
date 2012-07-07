@@ -1,0 +1,44 @@
+.devise-form.well
+  %h2 Modifica profilo
+  
+  %hr
+  
+  = simple_form_for(@user, :url => user_update_profile_path(@user), :html => { :method => :put , :multipart => true}) do |f|
+    
+    %fieldset
+      = f.input :username
+      = f.input :email
+      = f.input :nome_completo
+
+    %fieldset
+      = f.input :indirizzo
+      = f.input :cap
+      = f.input :citta
+      = f.input :provincia
+      = f.input :telefono
+    
+    %fieldset
+      = f.input :iban
+      = f.input :codice_fiscale
+      = f.input :partita_iva
+    
+    .control-group
+      %label
+        = image_tag @user.avatar, alt: @user.username unless @user.avatar.blank?
+      .controls
+        = f.file_field :avatar
+
+
+    
+    .control-group
+      .controls
+        = f.button :submit, "Salva modifiche"
+    
+  
+  %hr
+  
+  %p
+    Non sei felice? 
+    = link_to "Elimina questo account", registration_path(@user), :confirm => "Sei sicuro?", :method => :delete
+  
+
