@@ -7,10 +7,16 @@
 @import "mixins";
 
 .table-righe-new {
+  
+  
   .riga {
-    padding: 3px 0;
+    padding: 3px 2px;
     border-bottom: 1px solid #E8E8E8;
     @include clearfix;
+    
+    &:nth-child(odd) {
+      background-color: #E7E7E7;
+    }
     .titolo {
       float: left;
       font-style: italic;
