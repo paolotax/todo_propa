@@ -38,7 +38,6 @@
     .chiudi{ style: "float: right;"}
       %a
         Chiudi
-          
 
     .stato.dropdown
       %a{ class: "dropdown-toggle #{@stato}", "data-toggle" => "dropdown" }
@@ -69,10 +68,15 @@
       %a{ href: "mailto:#{@email}" }
         = @email
         
-      
-    
-    .badge.badge-warning.totale-importo{ "data-value" => "#{@totale_importo}" }
-      !=  JST['shared/prezzo']( prezzo: @totale_importo ) 
+    - if @righe?
+      .totali
+        .totale-copie
+          %strong= @totale_copie
+          copie
+        .totale-importo
+          !=  JST['shared/prezzo']( prezzo: @totale_importo ) 
+          importo
+
     .clearfix
       
     .more

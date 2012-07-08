@@ -162,15 +162,6 @@ body {
     .content {
       margin-left: 46px;
     }
-    .totale-importo[data-value="0"] {
-      display: none;
-    }
-    .totale-importo {
-      float: left;
-      // position: absolute;
-      //       bottom: 12px;
-      //       right: 12px;
-    }
     .more {
       display: none;
     }
@@ -185,7 +176,6 @@ body {
     &:hover .content .actions .nav-cliente {
       display:block;
     }
-    
     .chiudi {
       display: none;
     }
@@ -193,12 +183,9 @@ body {
     &.opened:hover .chiudi {
       display: block;
     }
-    
-    
     &.opened {
       margin-top: 10px;
       margin-bottom: 10px;
-      .totale-importo,
       .time,
       .actions {
         display: none;
@@ -206,26 +193,20 @@ body {
       .more {
         display:block;
       }
-      
     }
-    
     .stato {
       position: absolute;
       top: 12px;
       left: 12px;
       display: inline-block;
-      
       > a {
         line-height: 32px;
         text-indent: -9999px;
         cursor: pointer;
       }
-            
       .icon-status {
-        
         width: 40px;
         height: 32px;
-
         text-indent: -9999px;
         cursor: pointer;
         &.da_fare {
@@ -237,27 +218,70 @@ body {
         &.in_sospeso {
           background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -68px transparent;
         }
-        
       }
-      
-
     }
-
     .full_name {
       font-weight: bold;
       color: #333;
     }
-
     a:hover .full_name {
       color: #999;
       text-decoration: none;
     }
+    .totali {
+      position: absolute;
+      bottom: 0;      
+      right: 0;
+      border-top: 1px solid #E8E8E8;
+      color: #999;
+      font-size: 10px;
+      line-height: 16px;
+      text-transform: uppercase;
+      width: 30.08849557522124%;
+      .totale-copie,
+      .totale-importo {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left:  2.941176470588235%;
+        padding-right: 2.941176470588235%;
+        border-left: 1px solid #E8E8E8;
+        strong {
+          display: block;
+          color: #333;
+          font-size: 14px;     
+        }    
+      }
+      .totale-copie {
+        float: left;
+        width: 25.882352941176475%;
+        text-align: right;
+      }
+      .totale-importo {
+        float: right;
+        width: 61.1764705882353%;
+        text-align: right;
+      }      
+    }
   }
 }
 
+.appunto.in_sospeso {
+  .totale-copie strong {
+    color: #999 !important;
+  }
+}
+
+.appunto.completato {
+  .totale-copie strong {
+    color: #999 !important;
+  }
+  .totale-importo strong{
+    color: #999 !important;
+  }
+}
+
+
 .content-header {
-  
-  
   border-left: 1px solid #EEE;
   border-left: 1px solid rgba(0, 0, 0, .1);
   border-right: 1px solid #EEE;
