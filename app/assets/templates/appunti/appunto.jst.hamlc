@@ -1,37 +1,10 @@
-/ encoding: utf-8
-
 %div{ class: "appunto #{@stato} #{if @nel_baule isnt false and @stato isnt 'completato'  then 'favorited' else ''}", id: "appunto_#{@id}"}
   .content
     .dogear
     %small.time
       %time.timeago{ datetime: "#{@updated_at || @created_at}" }
-    
     .actions
       %ul.nav-appunto
-        %li.print
-          %a{ href: "/appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
-            %i.icon-tag
-            Stampa
-        %li.edit
-          %a{ href: "/appunti/#{@id}/edit", title: 'modifica appunto'}
-            %i.icon-pencil
-            Modifica
-        
-        - if @stato isnt "completato"
-          %li.baule
-            - if @nel_baule isnt false
-              %a{ href: "/visite/#{@nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
-                %i.icon-road
-                Scarica baule
-            - else
-              %form{ action: '/visite', method: 'post', 'data-remote' => true }
-                %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{@cliente_id}"}
-                %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
-                %button{ title: 'metti nel baule!'}
-                  %i.icon-road
-                  Nel baule
-        %li
-          = " | "
         %li.show
           %a{ title: 'mostra dettagli'}
             Apri
@@ -50,7 +23,6 @@
         %li
           %a.change-status{ "data-status" => "X", "data-id" => "#{@id}"} completato
 
-    
     %a{ href: "/clienti/#{@cliente_id}" }
       %strong.full_name
         = @cliente_nome
@@ -67,64 +39,61 @@
         = @telefono
       %a{ href: "mailto:#{@email}" }
         = @email
-        
+
+  .more
     - if @righe?
-      .totali
-        .totale-copie
-          %strong= @totale_copie
-          copie
-        .totale-importo
-          !=  JST['shared/prezzo']( prezzo: @totale_importo ) 
-          importo
+      .table-righe-new
+        - for riga in @righe
+          - console.log riga
+          != JST['righe/riga_item'](riga)
 
-    .clearfix
+    %div{ style: "color: gray;"}
+      - c = new Date(@created_at)
+      - u = new Date(@updated_at)
+      %small
+        %span creato il
+        %span= "#{c.getDate()}-#{c.getMonth()+1}-#{c.getFullYear()}"
+        %span - modificato il 
+        %span= "#{u.getDate()}-#{u.getMonth()+1}-#{u.getFullYear()}"
       
-    .more
-      - if @righe?
-        .table-righe-new
-          - for riga in @righe
-            - console.log riga
-            != JST['righe/riga_item'](riga)
-
-      %div{ style: "color: gray;"}
-        - c = new Date(@created_at)
-        - u = new Date(@updated_at)
-        %small
-          %span creato il
-          %span= "#{c.getDate()}-#{c.getMonth()+1}-#{c.getFullYear()}"
-          %span - modificato il 
-          %span= "#{u.getDate()}-#{u.getMonth()+1}-#{u.getFullYear()}"
-      
-      .more-actions
-        %ul.nav-appunto
-          %li.delete
-            %a{ href: "/appunti/#{@id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-              %i.icon-trash
-              Elimina
-          %li.print
-            %a{ href: "/appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
-              %i.icon-tag
-              Stampa
-          %li.edit
-            %a{ href: "/appunti/#{@id}/edit", title: 'modifica appunto'}
+  %footer
+    .footer-actions
+      %ul.nav-actions
+        %li.delete
+          %a{ href: "/appunti/#{@id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+            %i.icon-trash
+            Elimina
+        %li.print
+          %a{ href: "/appunti/#{@id}.pdf", title: 'stampa etichetta', target: "_blank" }
+            %i.icon-tag
+            Stampa
+        %li.edit
+          %a{ href: "/appunti/#{@id}/edit", title: 'modifica appunto'}
+            %i.icon-pencil
+            Modifica
+        - if @con_righe is true    
+          %li.fattura
+            %a{ href: "/fatture/new?appunto=#{@id}", title: 'fattura appunto'}
               %i.icon-pencil
-              Modifica
-          - if @con_righe is true    
-            %li.fattura
-              %a{ href: "/fatture/new?appunto=#{@id}", title: 'fattura appunto'}
-                %i.icon-pencil
-                Fattura
-          - if @stato isnt "completato"
-            %li.baule
-              - if @nel_baule isnt false
-                %a{ href: "/visite/#{@nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+              Fattura
+        - if @stato isnt "completato"
+          %li.baule
+            - if @nel_baule isnt false
+              %a{ href: "/visite/#{@nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+                %i.icon-shopping-cart
+                Scarica baule
+            - else
+              %form{ action: '/visite', method: 'post', 'data-remote' => true }
+                %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{@cliente_id}"}
+                %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
+                %button{ title: 'metti nel baule!'}
                   %i.icon-shopping-cart
-                  Scarica baule
-              - else
-                %form{ action: '/visite', method: 'post', 'data-remote' => true }
-                  %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{@cliente_id}"}
-                  %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
-                  %button{ title: 'metti nel baule!'}
-                    %i.icon-shopping-cart
-                    Nel baule
-  
+                  Nel baule
+
+    - if @righe? && @totale_importo isnt 0
+      .totali-new.pull-right
+        %span.totale-copie= "#{@totale_copie} copie"
+        = "-"
+        %span.totale-importo= accounting.formatMoney(@totale_importo, { symbol: 'euro',  format: '%v %s', decimal: ",", thousand: "." })
+    
+    .clearfix
