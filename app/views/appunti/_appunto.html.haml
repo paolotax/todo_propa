@@ -1,5 +1,3 @@
-/ encoding: utf-8
-
 - if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
   - favorited = "favorited"
 - else
@@ -13,38 +11,13 @@
     
     .actions
       %ul.nav-appunto
-        %li.print
-          %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
-            %i.icon-tag
-            Stampa
-        %li.edit
-          %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
-            %i.icon-pencil
-            Modifica
-        
-        - if !(appunto.stato == "completato")
-          %li.baule
-            - unless appunto.nel_baule == false
-              %a{ href: "/visite/#{appunto.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
-                %i.icon-road
-                Scarica baule
-            - else
-              %form{ action: '/visite', method: 'post', 'data-remote' => true }
-                %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{appunto.cliente_id}"}
-                %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
-                %button{ title: 'metti nel baule!'}
-                  %i.icon-road
-                  Nel baule
-        %li
-          = " | "
         %li.show
           %a{ title: 'mostra dettagli'}
             Apri
     .chiudi{ style: "float: right;"}
       %a
         Chiudi
-          
-    
+
     .stato.dropdown
       %a{ class: "dropdown-toggle #{stato_to_s(appunto)}", "data-toggle" => "dropdown" }
         .icon-status{ class: "#{stato_to_s(appunto)}" }
@@ -55,75 +28,69 @@
           %a.change-status{ "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
         %li
           %a.change-status{ "data-status" => "X", "data-id" => "#{appunto.id}"} completato
-    
-    
-    / %a{ href: "/clienti/#{appunto.cliente_id}" }
-    /   %strong.full_name
-    /     = appunto.cliente_nome
-    
+
     - if appunto.destinatario?
       %span.destinatario
         = "@#{appunto.destinatario}"
-    
+
     %p
       = appunto.note
-      
+
       %p
         %a{ href: "tel:#{appunto.telefono}" }
           = appunto.telefono
         %a{ href: "mailto:#{appunto.email}" }
           = appunto.email
-    
-    - unless appunto.totale_importo.zero?
-      .badge.badge-warning.totale-importo{ "data-value" => "#{appunto.totale_importo}" }
-        =  pretty_prezzo appunto.totale_importo 
-    .clearfix
-      
-    .more
-      - if appunto.has_righe?
-        .table-righe-new
-          - for riga in appunto.righe do
-            = render riga
 
-      / %div{ style: "color: gray;"}
-      /   - c = new Date(created_at)
-      /   - u = new Date(@updated_at)
-      /   %small
-      /     %span creato il
-      /     %span= "#{c.getDate()}-#{c.getMonth()+1}-#{c.getFullYear()}"
-      /     %span - modificato il 
-      /     %span= "#{u.getDate()}-#{u.getMonth()+1}-#{u.getFullYear()}"
-    
-      .more-actions
-        %ul.nav-appunto
-          %li.delete
-            %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-              %i.icon-trash
-              Elimina
-          %li.print
-            %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
-              %i.icon-tag
-              Stampa
-          %li.edit
-            %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
-              %i.icon-pencil
-              Modifica
-          - if appunto.has_righe?    
-            %li.fattura
-              %a{ href: "/fatture/new?appunto=#{appunto.id}", title: 'fattura appunto'}
-                %i.icon-pencil
-                Fattura
-          - unless appunto.stato == "completato"
-            %li.baule
-              - unless appunto.nel_baule == false
-                %a{ href: "/visite/#{appunto.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+  .clearfix      
+  .more
+    - if appunto.has_righe?
+      .table-righe-new
+        - for riga in appunto.righe do
+          = render riga
+
+    / %div{ style: "color: gray;"}
+    /   - c = new Date(created_at)
+    /   - u = new Date(@updated_at)
+    /   %small
+    /     %span creato il
+    /     %span= "#{c.getDate()}-#{c.getMonth()+1}-#{c.getFullYear()}"
+    /     %span - modificato il 
+    /     %span= "#{u.getDate()}-#{u.getMonth()+1}-#{u.getFullYear()}"
+  
+  %footer
+    - if appunto.has_righe?
+      .totali-new.pull-right
+        %span.totale-copie= "#{appunto.totale_copie} copie"
+        = "-"
+        %span.totale-importo= number_to_currency appunto.totale_importo
+
+    .footer-actions
+      %ul.nav-actions
+        %li.delete
+          %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+            %i.icon-trash
+            Elimina
+        %li.print
+          %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
+            %i.icon-tag
+            Stampa
+        %li.edit
+          %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
+            %i.icon-pencil
+            Modifica
+        - unless appunto.stato == "completato"
+          %li.baule
+            - unless appunto.nel_baule == false
+              %a{ href: "/visite/#{appunto.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+                %i.icon-shopping-cart
+                Scarica baule
+            - else
+              %form{ action: '/visite', method: 'post', 'data-remote' => true }
+                %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{appunto.cliente_id}"}
+                %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
+                %button{ title: 'metti nel baule!'}
                   %i.icon-shopping-cart
-                  Scarica baule
-              - else
-                %form{ action: '/visite', method: 'post', 'data-remote' => true }
-                  %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{appunto.cliente_id}"}
-                  %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
-                  %button{ title: 'metti nel baule!'}
-                    %i.icon-shopping-cart
-                    Nel baule
-    
+                  Nel baule
+
+    .clearfix

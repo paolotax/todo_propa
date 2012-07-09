@@ -39,7 +39,7 @@
         = @telefono
       %a{ href: "mailto:#{@email}" }
         = @email
-
+  .clearfix      
   .more
     - if @righe?
       .table-righe-new
@@ -57,6 +57,12 @@
         %span= "#{u.getDate()}-#{u.getMonth()+1}-#{u.getFullYear()}"
       
   %footer
+    - if @righe? && @totale_importo isnt 0
+      .totali-new.pull-right
+        %span.totale-copie= "#{@totale_copie} copie"
+        = "-"
+        %span.totale-importo= accounting.formatMoney(@totale_importo, { symbol: 'euro',  format: '%v %s', decimal: ",", thousand: "." })
+    
     .footer-actions
       %ul.nav-actions
         %li.delete
@@ -71,11 +77,6 @@
           %a{ href: "/appunti/#{@id}/edit", title: 'modifica appunto'}
             %i.icon-pencil
             Modifica
-        - if @con_righe is true    
-          %li.fattura
-            %a{ href: "/fatture/new?appunto=#{@id}", title: 'fattura appunto'}
-              %i.icon-pencil
-              Fattura
         - if @stato isnt "completato"
           %li.baule
             - if @nel_baule isnt false
@@ -90,10 +91,4 @@
                   %i.icon-shopping-cart
                   Nel baule
 
-    - if @righe? && @totale_importo isnt 0
-      .totali-new.pull-right
-        %span.totale-copie= "#{@totale_copie} copie"
-        = "-"
-        %span.totale-importo= accounting.formatMoney(@totale_importo, { symbol: 'euro',  format: '%v %s', decimal: ",", thousand: "." })
-    
     .clearfix
