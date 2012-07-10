@@ -2,9 +2,9 @@
   / .validity-summary-container
   /   %ul
   .pull-right
-    = text_field_tag "new_quantita", nil, :class => 'input-mini', placeholder: "quantità"
-    = text_field_tag "new_prezzo", nil,   :class => 'input-mini', placeholder: "prezzo"
-    = text_field_tag "new_sconto", nil,   :class => 'input-mini', placeholder: "sconto"
+    = number_field_tag "new_quantita", nil, :class => 'input-mini', placeholder: "quantità"
+    = number_field_tag "new_prezzo", nil,   :class => 'input-mini', placeholder: "prezzo"
+    = number_field_tag "new_sconto", nil,   :class => 'input-mini', placeholder: "sconto"
     = link_to raw("<i class='icon-plus'></i>"), 'javascript:void(0)', { id: "add-riga", :class => 'btn btn-success btn-mini' }
 
   - @vendibili = Libro.unscoped.vendibili.select('distinct settore').order(:settore)

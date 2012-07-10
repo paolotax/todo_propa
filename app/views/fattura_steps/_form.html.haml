@@ -1,18 +1,17 @@
-.container
-  .row
-    .span7.well
-      %h2= @fattura.cliente.titolo
+.row
+  .span7.well
+    %h2= @fattura.cliente.titolo
 
-      = simple_form_for @fattura, url: wizard_path do |f|
+    = simple_form_for @fattura, url: wizard_path do |f|
 
-        = f.error_notification
+      = f.error_notification
 
-        = yield f
+      = yield f
 
 
-    .span3
-      .well
-        = link_to 'Fatture', fatture_path
+  .span3
+    .well
+      = link_to 'Fatture', fatture_path
 
 
 

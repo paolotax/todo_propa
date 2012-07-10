@@ -51,9 +51,9 @@
                 = riga.hidden_field :libro_id
                 .titolo= riga.object.libro.titolo
                 .pull-right
-                  = riga.text_field :quantita, class: 'input-mini riga_quantita'
-                  = riga.text_field :prezzo,   class: 'input-mini riga_prezzo'
-                  = riga.text_field :sconto,   class: 'input-mini riga_sconto'
+                  = riga.number_field :quantita, class: 'input-mini riga_quantita'
+                  = riga.number_field :prezzo,   class: 'input-mini riga_prezzo'
+                  = riga.number_field :sconto,   class: 'input-mini riga_sconto'
                   = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"
     
     #vacanze.tab-pane.fade
@@ -67,9 +67,9 @@
                 = riga.hidden_field :libro_id
                 .titolo= riga.object.libro.titolo
                 .pull-right
-                  = riga.text_field :quantita, class: 'input-mini riga_quantita'
-                  = riga.text_field :prezzo,   class: 'input-mini riga_prezzo'
-                  = riga.text_field :sconto,   class: 'input-mini riga_sconto'
+                  = riga.number_field :quantita, class: 'input-mini riga_quantita'
+                  = riga.number_field :prezzo,   class: 'input-mini riga_prezzo'
+                  = riga.number_field :sconto,   class: 'input-mini riga_sconto'
                   = link_to "#", class: "btn btn-danger btn-mini remove-fattura" do
                     %i.icon-minus
             - else

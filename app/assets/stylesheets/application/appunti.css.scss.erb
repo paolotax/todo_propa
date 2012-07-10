@@ -179,7 +179,39 @@
   }
 }
 
+// corregge quadratino orrendo grigio
+.dropdown.open .dropdown-toggle {
+  background: white;
+}
 
+
+.appunto-status .status-container {
+  margin-left:20px;
+}
+.appunto-status .status-container, #td_task_info .star-container {
+  float:left;
+}
+#status_span {
+  height: 64px;
+  width: 64px;
+}
+
+.appunto-status .status-container .active {
+  background-attachment:initial;
+  background-clip:initial;
+  background-color:transparent;
+  background-image: url(<%= asset_path "task-active.png" %>);
+  background-origin:initial;
+  background-repeat:no-repeat no-repeat;
+}
+.appunto-status .status-container .done {
+  background-attachment:initial;
+  background-clip:initial;
+  background-color:transparent;
+  background-image: url(<%= asset_path "task-completed.png" %>);
+  background-origin:initial;
+  background-repeat:no-repeat no-repeat;
+}
 
 
 
