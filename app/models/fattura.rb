@@ -22,7 +22,7 @@ class Fattura < ActiveRecord::Base
   scope :per_numero, order('fatture.data desc, fatture.numero desc')
   
   before_save :ricalcola
-  before_create :init
+  # before_create :init
   
   def righe_per_titolo
     self.righe.joins(:libro).order("libri.titolo")
@@ -85,7 +85,7 @@ class Fattura < ActiveRecord::Base
   end
     
   def get_new_id(user)
-    last_id = Fattura.where("user_id = ? and data > ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
+    last_id = Fattura.where("user_id = ? and data >= ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
     if last_id.empty?
       return 1
     else
