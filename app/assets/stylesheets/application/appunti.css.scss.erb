@@ -1,13 +1,70 @@
-// Place all the styles related to the appunti controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 @import "compass/css3/transform";
 @import "compass/utilities/text/ellipsis";
 @import "compass/css3/box";
 @import "compass/utilities/lists/inline-list";
 @import "mixins";
 
+.nav-fattura,
+.nav-appunto,
+.nav-cliente {
+  @include inline-list;
+}
+
+.appunti > div,
+#appunti > div,
+#clienti > div {
+
+  position: relative;
+  min-height: 51px;
+  padding: 9px 12px 9px;
+  border-bottom: 1px solid #E8E8E8;
+  
+  background: white;
+  border-left: 1px solid #E8E8E8;
+  border-left: 1px solid rgba(0, 0, 0, .1);
+  border-right: 1px solid #E8E8E8;
+  border-right: 1px solid rgba(0, 0, 0, .1);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+
+}
+
+.time {
+  position: absolute;
+  right: 12px;
+  font-size: 12px;
+  color: #999;
+  -webkit-transition: opacity .15s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  transition: opacity .15s ease-in-out;
+}
+
+.select-check {
+  position: absolute;
+  right: 12px;
+  bottom: 3px;
+}
+
+.destinatario {
+  font-size: 12px;
+  color: #999;
+}
+
+.fattura, .appunto, .cliente {
+  position: relative;
+  .actions {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    padding-left: 35px;
+    background-position: 0 -240px;
+    background-image: url(<%= asset_path "twitter_web_sprite_bgs.png" %>);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    
+  }
+}
 
 .appunti,
 #appunti,
@@ -50,7 +107,7 @@
     }
     .stato {
       position: absolute;
-      top: 12px;
+      top: 0;
       left: 12px;
       display: inline-block;
       > a {
@@ -59,7 +116,7 @@
         cursor: pointer;
       }
       .icon-status {
-        width: 40px;
+        width: 32px;
         height: 32px;
         text-indent: -9999px;
         cursor: pointer;
@@ -82,42 +139,9 @@
       color: #999;
       text-decoration: none;
     }
-    .totali {
-      position: absolute;
-      bottom: 0;      
-      right: 0;
-      border-top: 1px solid #E8E8E8;
-      color: #999;
-      font-size: 10px;
-      line-height: 16px;
-      text-transform: uppercase;
-      width: 30.08849557522124%;
-      .totale-copie,
-      .totale-importo {
-        padding-top: 2px;
-        padding-bottom: 2px;
-        padding-left:  2.941176470588235%;
-        padding-right: 2.941176470588235%;
-        border-left: 1px solid #E8E8E8;
-        strong {
-          display: block;
-          color: #333;
-          font-size: 14px;     
-        }    
-      }
-      .totale-copie {
-        float: left;
-        width: 25.882352941176475%;
-        text-align: right;
-      }
-      .totale-importo {
-        float: right;
-        width: 61.1764705882353%;
-        text-align: right;
-      }      
-    }
   }
 }
+
 
 .appunto {
   .footer-actions ul.nav-actions {

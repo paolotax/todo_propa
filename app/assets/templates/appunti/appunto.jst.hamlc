@@ -39,6 +39,7 @@
         = @telefono
       %a{ href: "mailto:#{@email}" }
         = @email
+
   .clearfix      
   .more
     - if @righe?
