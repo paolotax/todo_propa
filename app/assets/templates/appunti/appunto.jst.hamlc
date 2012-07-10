@@ -26,43 +26,53 @@
     %a{ href: "/clienti/#{@cliente_id}" }
       %strong.full_name
         = @cliente_nome
-
     - if @destinatario?
       %span.destinatario
         = "@#{@destinatario}"
     
     %p
       != @note
-    
+
     %p
-      %a{ href: "tel:#{@telefono}" }
-        = @telefono
-      %a{ href: "mailto:#{@email}" }
-        = @email
+      - if @telefono
+        %a.btn{ href: "tel:#{@telefono}" }
+          %i.icon-user
+          = @telefono
+        %br
+
+      - if @email
+        %a.btn{ href: "tel:#{@email}" }
+          %i.icon-envelope
+          = @email
+        %br
 
   .clearfix      
-  .more
-    - if @righe?
-      .table-righe-new
-        - for riga in @righe
-          - console.log riga
-          != JST['righe/riga_item'](riga)
 
+
+  .more
     %div{ style: "color: gray;"}
       - c = new Date(@created_at)
       - u = new Date(@updated_at)
       %small
         %span creato il
-        %span= "#{c.getDate()}-#{c.getMonth()+1}-#{c.getFullYear()}"
+        %span= "#{c.getDate()}/#{c.getMonth()+1}/#{c.getFullYear()}"
         %span - modificato il 
-        %span= "#{u.getDate()}-#{u.getMonth()+1}-#{u.getFullYear()}"
+        %span= "#{u.getDate()}/#{u.getMonth()+1}/#{u.getFullYear()}"
       
+    .table-righe-new
+      - if @righe?
+        - for riga in @righe
+          != JST['righe/riga'](riga)
+
+          
   %footer
     - if @righe? && @totale_importo isnt 0
       .totali-new.pull-right
         %span.totale-copie= "#{@totale_copie} copie"
         = "-"
         %span.totale-importo= accounting.formatMoney(@totale_importo, { symbol: 'euro',  format: '%v %s', decimal: ",", thousand: "." })
+    - else
+      &nbsp    
     
     .footer-actions
       %ul.nav-actions

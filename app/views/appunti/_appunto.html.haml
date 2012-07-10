@@ -36,34 +36,42 @@
     %p
       = appunto.note
 
-      %p
-        %a{ href: "tel:#{appunto.telefono}" }
+    %p
+      - unless appunto.telefono.blank?
+        %a.btn{ href: "tel:#{appunto.telefono}" }
+          %i.icon-user
           = appunto.telefono
-        %a{ href: "mailto:#{appunto.email}" }
+        %br
+
+      - unless appunto.email.blank?
+        %a.btn{ href: "tel:#{appunto.email}" }
+          %i.icon-envelope
           = appunto.email
+        %br
 
   .clearfix      
   .more
-    - if appunto.has_righe?
-      .table-righe-new
+
+    %div{ style: "color: gray;"}
+      %small
+        %span creato il
+        %span= l appunto.created_at, format: :only_date
+        %span= "- modificato il"
+        %span= l appunto.updated_at, format: :only_date
+        
+    .table-righe-new
+      - if appunto.has_righe?
         - for riga in appunto.righe do
           = render riga
 
-    / %div{ style: "color: gray;"}
-    /   - c = new Date(created_at)
-    /   - u = new Date(@updated_at)
-    /   %small
-    /     %span creato il
-    /     %span= "#{c.getDate()}-#{c.getMonth()+1}-#{c.getFullYear()}"
-    /     %span - modificato il 
-    /     %span= "#{u.getDate()}-#{u.getMonth()+1}-#{u.getFullYear()}"
-  
   %footer
     - if appunto.has_righe?
       .totali-new.pull-right
         %span.totale-copie= "#{appunto.totale_copie} copie"
         = "-"
         %span.totale-importo= number_to_currency appunto.totale_importo
+    - else
+      &nbsp  
 
     .footer-actions
       %ul.nav-actions

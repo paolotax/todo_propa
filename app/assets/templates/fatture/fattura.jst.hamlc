@@ -43,7 +43,7 @@
   - if @righe?
     .table-righe-new
       - for riga in @righe
-        != JST['righe/riga_item'](riga)
+        != JST['righe/riga'](riga)
 
   .more-actions
     %ul.nav-fattura
