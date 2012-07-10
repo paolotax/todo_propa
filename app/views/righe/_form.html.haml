@@ -1,11 +1,13 @@
 #create-riga
   / .validity-summary-container
   /   %ul
+
+  - @vendibili = Libro.unscoped.vendibili.select('distinct settore').order(:settore)
+  = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :settore, :id, :titolo), {:include_blank => true, :class => 'chzn-select', 'data-placeholder' => "Seleziona un titolo...", :style => "width: 240px;"}
+
   .pull-right
     = number_field_tag "new_quantita", nil, :class => 'input-mini', placeholder: "quantità"
     = number_field_tag "new_prezzo", nil,   :class => 'input-mini', placeholder: "prezzo"
     = number_field_tag "new_sconto", nil,   :class => 'input-mini', placeholder: "sconto"
     = link_to raw("<i class='icon-plus'></i>"), 'javascript:void(0)', { id: "add-riga", :class => 'btn btn-success btn-mini' }
-
-  - @vendibili = Libro.unscoped.vendibili.select('distinct settore').order(:settore)
-  = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :settore, :id, :titolo), {:include_blank => true, :class => 'chzn-select', 'data-placeholder' => "Seleziona un titolo...", :style => "width: 240px;"}
+  .clearfix  
