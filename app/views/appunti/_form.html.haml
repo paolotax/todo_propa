@@ -4,14 +4,11 @@
 
   %ul.nav.nav-tabs.tab
     %li.active
-      %a{ href: "#info",      "data-toggle" => "tab"} Appunto...
+      %a{ href: "#info",      "data-toggle" => "tab"} Appunto
     %li
-      %a{ href: "#dettaglio", "data-toggle" => "tab"} Inserisci righe...
+      %a{ href: "#dettaglio", "data-toggle" => "tab"} Dettaglio righe
     %li
       %a{ href: "#vacanze", "data-toggle" => "tab"} Inserisci vacanze...  
-    %li
-      %a{ href: "#completa",  "data-toggle" => "tab"} Completa appunto...
-
 
   .tab-content
 
@@ -20,17 +17,20 @@
       = f.input :note, :input_html => { rows: 5 }
       = f.input :telefono
       = f.input :email
-
+      %hr
+      = f.input :stato,  :collection => [ ["in sospeso", "P"], ["completo", "X"], ["da fare", ""]], as: :radio_buttons
+    
     #dettaglio.tab-pane.fade
-      
       .control-group
         %label.control-label Condizioni di pagamento:
         .controls
-          = radio_button_tag 'prezzo', 'consigliato', true
-          prezzo consigliato
-          = radio_button_tag 'prezzo', 'con_sconto', false
-          sconto
-          = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43]), class: 'input-mini'
+          %label.radio.inline
+            = radio_button_tag 'prezzo', 'consigliato', true
+            prezzo consigliato
+          %label.radio.inline
+            = radio_button_tag 'prezzo', 'con_sconto', false
+            sconto
+            = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43], 20), class: 'input-mini'
       
       .control-group
         = render 'righe/form'
@@ -65,17 +65,13 @@
                   = riga.number_field :quantita, class: 'input-mini riga_quantita'
                   = riga.number_field :prezzo,   class: 'input-mini riga_prezzo'
                   = riga.number_field :sconto,   class: 'input-mini riga_sconto'
-                 
             - else
               .hidden
       
-    #completa.tab-pane.fade
-      = f.input :stato
-
   = f.error :base
 
   .control-group
     .controls
       %button{:class => "btn btn-primary", :type => "submit", id: "new_appunto_submit"} Salva
-      %button{:class => "btn btn-danger"} Annulla
+      = link_to "Annulla", :back, class: "btn btn-danger"
   
