@@ -1,0 +1,12 @@
+# encoding: utf-8
+
+<div class="row">
+  <div class="span7 well">
+    <h2><%= @fattura.cliente.titolo %></h2>
+    = €€€€€€€€€
+    <%= simple_form_for @fattura, url: wizard_path do |f| %>
+      <%= f.error_notification %>
+      <%= yield f %>
+    <% end %>
+  </div>
+</div>

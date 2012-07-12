@@ -1,12 +1,9 @@
-/ encoding: utf-8
-
 = render layout: 'form' do |f|
-
+  - # encoding: utf-8
   %fieldset
     %legend= "Intestazione #{@fattura.causale}"
     = f.input :numero
     = f.input :data, input_html: {class: "input-small"}
-  
   %fieldset
     %legend Modalità pagamento
     = f.input :condizioni_pagamento, collection: Fattura::TIPO_PAGAMENTO
@@ -14,7 +11,4 @@
   
   .control-group
     .controls
-    .controls
-      = link_to "Inserisci Vacanze", wizard_path(:vacanze), class: "btn"
-      = link_to "Scegli appunti", wizard_path(:scegli_appunti), class: "btn"
       %button{:class => "btn btn-primary", :type => "submit"} Salva e continua      

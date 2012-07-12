@@ -36,7 +36,7 @@
     %p
       - if @telefono
         %a.btn{ href: "tel:#{@telefono}" }
-          %i.icon-user
+          %i.icon-phone
           = @telefono
         %br
 

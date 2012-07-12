@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class FatturaStepsController < ApplicationController
   include Wicked::Wizard
   steps :intestazione, :scegli_appunti, :vacanze, :finale 
