@@ -71,13 +71,12 @@ body {
   padding-left: 5px;
 }
 
-
-
 .container.page {
   background-image: url(<%= asset_path "wash-white-30.png" %>);
   padding: 20px 15px 10px 15px;
   margin-top: -20px
 }
+
 .wrapper {
   background-image: url(<%= asset_path "wash-white-30.png" %>);
   padding: 20px 15px 10px 15px;
@@ -528,14 +527,17 @@ td.gratis {
   }
 }
 
+@media (min-width: 480px) and (max-width: 768px) {
+  .content-main.span6 {
+    display: block;
+    float: left;
+    width: 520px !important;
+  }
+}
 // Landscape phone to portrait tablet
 @media (max-width: 768px) {
   
-  .content-main.span6 {
-    display: block;
-    float: none;
-    width: 100% !important;
-  }
+
   div.location {
     padding-bottom: 10px;
   }
