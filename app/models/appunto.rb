@@ -39,13 +39,12 @@ class Appunto < ActiveRecord::Base
   def create_righe_vacanze
     libri = Libro.vacanze
     libri.all.each do |l|
-      
-      if !(["Cartolibreria", "Ditta"].include?  cliente.cliente_tipo)
+    
+      prezzo = l.prezzo_copertina
+      sconto = 20  
+      if cliente.present? && !(["Cartolibreria", "Ditta"].include?  cliente.cliente_tipo)
         prezzo = l.prezzo_consigliato
         sconto = 0.0
-      else
-         prezzo = l.prezzo_copertina
-         sconto = 20
       end
 
       righe.build(libro: l, prezzo_unitario: prezzo, sconto: sconto)

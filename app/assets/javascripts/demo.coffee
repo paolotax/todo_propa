@@ -24,3 +24,12 @@ jQuery ->
     minQueryLength: 2
     maxResults:     5
   }
+  
+  $('#main-search-input').soulmate {
+    url:            '/search/autocomplete.json'
+    types:          ["cliente", "appunto", "libro"]
+    renderCallback: render
+    selectCallback: select
+    minQueryLength: 2
+    maxResults:     5
+  }

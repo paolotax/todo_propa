@@ -54,21 +54,20 @@
     #vacanze.tab-pane.fade
       .control-group
         #righe
-          / - @appunto.create_righe_vacanze
-          / = f.simple_fields_for :righe do |riga|
-          /   - if riga.object.new_record?
-          /     = div_for riga.object, class: 'form-inline' do
-          /       = riga.hidden_field :id
-          /       = riga.hidden_field :libro_id
-          /       .titolo= riga.object.libro.titolo
-          /       .pull-right
-          /         = riga.number_field :quantita, class: 'input-mini riga_quantita'
-          /         = riga.number_field :prezzo,   class: 'input-mini riga_prezzo'
-          /         = riga.number_field :sconto,   class: 'input-mini riga_sconto'
-          /         = link_to "#", class: "btn btn-danger btn-mini remove-fattura" do
-          /           %i.icon-minus
-          /   - else
-          /     .hidden
+          - @appunto.create_righe_vacanze
+          = f.simple_fields_for :righe do |riga|
+            - if riga.object.new_record?
+              = div_for riga.object, class: 'form-inline' do
+                = riga.hidden_field :id
+                = riga.hidden_field :libro_id
+                .titolo= riga.object.libro.titolo
+                .pull-right
+                  = riga.number_field :quantita, class: 'input-mini riga_quantita'
+                  = riga.number_field :prezzo,   class: 'input-mini riga_prezzo'
+                  = riga.number_field :sconto,   class: 'input-mini riga_sconto'
+                 
+            - else
+              .hidden
       
     #completa.tab-pane.fade
       = f.input :stato
