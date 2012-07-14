@@ -25,9 +25,9 @@ jQuery ->
   String.prototype.capitalize = () ->
     this.charAt(0).toUpperCase() + this.slice(1)
   
-  $(".search_options a, .filters a, .module a").live 'click', (e) ->
+  $(".filters a, .module.remote a").live 'click', (e) ->
     e.preventDefault()
-
+  
     cont = $(@).attr('href').split('?')[0] ||= ""
     params = $(@).attr('href').split('?')[1] ||= ""
     
@@ -37,18 +37,18 @@ jQuery ->
     else
       controller = 'appunti'
       template = JST['appunti/appunto']    
-
+  
     storageName = "pending#{controller.capitalize()}"
     if !localStorage[storageName]
       localStorage[storageName] = JSON.stringify []
-
+  
     $.get "/get_#{controller}_filters.js", params, (data) ->
       console.log data
     
     $.getJSON $(@).attr('href'), (data) ->
       pending = $.parseJSON localStorage[storageName]
       appunti = pending.concat(data)
-
+  
       $("##{controller}").empty()
       for obj in appunti
         if obj.data?

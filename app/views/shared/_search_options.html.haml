@@ -1,7 +1,7 @@
 - if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
   - @controller = 'appunti'
 
-  .module
+  .module.remote
     %ul.stats
       %li
         = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:status) do
@@ -18,7 +18,7 @@
           in sospeso
 
 - if params[:action] == "get_clienti_filters" || params[:controller] == 'clienti'
-  .module
+  .module.remote
     %ul.stats
       %li
         = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').except(:status) do
@@ -37,7 +37,7 @@
 
 - if params[:action] == "get_clienti_filters" || params[:controller] == "clienti"
   - @controller = 'clienti'
-  .module
+  .module.remote
     %ul
       %li{ class: "#{ params[:tipo].present? ? '': 'active' }" }
         = link_to params.merge(:controller => :clienti, :action => :index, :format => 'json').except(:tipo), class: "list-link"  do
@@ -70,7 +70,7 @@
           %i.chev-right
 
     
-.module
+.module.remote
   %ul
     %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
       = link_to params.merge(:controller => @controller, :action => :index, :format => 'json').except(:provincia), class: "list-link" do
@@ -84,7 +84,7 @@
           %i.chev-right
           
           
-.module.hidden-phone
+.module.hidden-phone.remote
   %ul
     %li{ class: "#{ params[:comune].present? ? '': 'active' }" }
       = link_to params.merge(:controller => @controller, :action => :index, :format => 'json').except(:comune), class: "list-link"  do

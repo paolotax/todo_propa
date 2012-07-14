@@ -6,8 +6,43 @@
       
 .row
   .side-bar.span3
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  
+    .module
+      %ul.stats
+        %li
+          = link_to "" do
+            %strong= @fatture.sum(&:totale_copie)
+            copie
+
+        %li
+          = link_to "" do
+            %strong= @fatture.sum(&:importo_fattura)
+            importo
+
+    .module
+      %ul
+        %li{ class: "#{ params[:causale].present? ? '': 'active' }" }
+          = link_to params.except(:causale), class: "list-link"  do
+            Tutti 
+            %i.chev-right
+
+        - for c in Fattura::TIPO_FATTURA
+          %li{ class: "#{ params[:causale] == c ? 'active' : ''}"}
+            = link_to fatture_url(params.merge(:causale => c)), class: "list-link"  do
+              = c.pluralize
+              %i.chev-right
+    .module
+      %ul
+        %li{ class: "#{ params[:anno].present? ? '': 'active' }" }
+          = link_to params.except(:anno), class: "list-link"  do
+            Tutti 
+            %i.chev-right
+
+        - for c in ["2012", "2011"]
+          %li{ class: "#{ params[:anno] == c ? 'active' : ''}"}
+            = link_to fatture_url(params.merge(:anno => c)), class: "list-link"  do
+              = c
+              %i.chev-right
+        
   .content-main.span6
     %header.content-header
       .header-inner

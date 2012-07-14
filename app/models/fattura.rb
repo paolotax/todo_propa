@@ -11,7 +11,7 @@ class Fattura < ActiveRecord::Base
   belongs_to :user
   
   has_many :righe, :dependent => :nullify
-  has_many :appunti, :through => :righe
+  has_many :fatture, :through => :righe
   
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => false
   
@@ -23,6 +23,16 @@ class Fattura < ActiveRecord::Base
   
   before_save :ricalcola
   # before_create :init
+
+  def self.filtra(params)
+    fatture = scoped
+    fatture = fatture.search(params[:search]) if params[:search].present?
+    fatture = fatture.where("causale_id = ?", TIPO_FATTURA.index(params[:causale])) if params[:causale].present?
+    fatture = fatture.where("extract(year  from data) = ? ", params[:anno] ) if params[:anno].present?
+    fatture
+    # raise fatture.inspect  if params[:search].present?
+  end
+
   
   def righe_per_titolo
     self.righe.joins(:libro).order("libri.titolo")
