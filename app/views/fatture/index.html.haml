@@ -2,29 +2,29 @@
   .topbar-tweet-btn
     %a.btn.btn-primary{ "data-toggle" => "modal", "data-target" => ".modal" }
       .icon-tweet
-      
-      
+
 .row
   .side-bar.span3
     .module
       %ul.stats
         %li
           = link_to "" do
+            %strong= @fatture.size
+            DOC
+        %li
+          = link_to "" do
             %strong= @fatture.sum(&:totale_copie)
             copie
-
         %li
           = link_to "" do
             %strong= @fatture.sum(&:importo_fattura)
             importo
-
     .module
       %ul
         %li{ class: "#{ params[:causale].present? ? '': 'active' }" }
           = link_to params.except(:causale), class: "list-link"  do
             Tutti 
             %i.chev-right
-
         - for c in Fattura::TIPO_FATTURA
           %li{ class: "#{ params[:causale] == c ? 'active' : ''}"}
             = link_to fatture_url(params.merge(:causale => c)), class: "list-link"  do
@@ -34,7 +34,7 @@
       %ul
         %li{ class: "#{ params[:anno].present? ? '': 'active' }" }
           = link_to params.except(:anno), class: "list-link"  do
-            Tutti 
+            Anni 
             %i.chev-right
 
         - for c in ["2012", "2011"]
@@ -42,13 +42,22 @@
             = link_to fatture_url(params.merge(:anno => c)), class: "list-link"  do
               = c
               %i.chev-right
-        
+    .module
+      %ul
+        %li{ class: "#{ params[:pagamento].present? ? '': 'active' }" }
+          = link_to params.except(:pagamento), class: "list-link"  do
+            Pagamenti 
+            %i.chev-right
+        - for c in Fattura::TIPO_PAGAMENTO
+          %li{ class: "#{ params[:pagamento] == c ? 'active' : ''}"}
+            = link_to fatture_url(params.merge(:pagamento => c)), class: "list-link"  do
+              = c
+              %i.chev-right
+
   .content-main.span6
     %header.content-header
       .header-inner
         %h2 Documenti
-
-
     #fatture.list
       - @fatture_per_anno.each do |a, fatture|
         .item 
@@ -56,6 +65,25 @@
         - fatture.each do |fattura|
           = render fattura
 
+  .side-bar.span3
+    .module
+      %ul
+        - for c, r in @clienti_righe_da_fatturare do
+          %li
+            = link_to  c, class: "list-link" do
+              %span.titolo= c[:titolo]
+              %span.copie
+                %small= r.sum(&:quantita)
+              %span.importo
+                %small= number_to_currency r.sum(&:importo)
+              %span.num_appunti
+                %small= r.count(&:appunto_id)
+                
+          %ol
+            - for a, righe in r.group_by(&:appunto) do
+              %li= render "appunti/item", appunto: a
+        
+        
 - @fattura = Fattura.new
 = render "modal"
           

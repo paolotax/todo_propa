@@ -74,7 +74,7 @@
   %ul
     %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
       = link_to params.merge(:controller => @controller, :action => :index, :format => 'json').except(:provincia), class: "list-link" do
-        Provincie
+        Province
         %i.chev-right
 
     - for p in @provincie

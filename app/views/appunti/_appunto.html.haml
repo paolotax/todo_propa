@@ -48,6 +48,11 @@
           %i.icon-envelope
           = appunto.email
         %br
+    
+    - if appunto.da_fatturare?
+      %p
+        DA FATTURARE
+    
 
   .clearfix      
   .more

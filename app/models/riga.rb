@@ -3,6 +3,7 @@ class Riga < ActiveRecord::Base
   belongs_to :appunto
   belongs_to :libro
   belongs_to :fattura
+  has_one :cliente, through: :appunto
   
   after_initialize :init
   # after_save :ricalcola_totali
@@ -22,6 +23,7 @@ class Riga < ActiveRecord::Base
   scope :da_fatturare,  where("righe.fattura_id is null")
   scope :fatturata,     where("righe.fattura_id is not null")
   scope :consegnata,    where("righe.consegnato = true")
+  scope :pagata,        where("righe.pagato = true")
   
   scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
   

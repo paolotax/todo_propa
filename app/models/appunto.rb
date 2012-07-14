@@ -4,6 +4,7 @@ class Appunto < ActiveRecord::Base
   belongs_to :cliente
   
   has_many :righe, :dependent => :destroy
+  has_many :fatture, through: :righe
   
   has_many :visita_appunti, dependent: :destroy
   has_many :visite, :through => :visita_appunti
@@ -49,6 +50,16 @@ class Appunto < ActiveRecord::Base
 
       righe.build(libro: l, prezzo_unitario: prezzo, sconto: sconto)
     end
+  end
+  
+  def da_fatturare?
+    self.righe.each do |r|
+      if r.fattura_id.nil?
+        return true
+        break
+      end
+    end 
+    return false
   end
   
   
