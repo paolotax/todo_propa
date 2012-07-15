@@ -9,6 +9,7 @@ TodoPropa::Application.routes.draw do
   resources :adozioni
   
   match '/vendite', controller: 'magazzino', action: 'vendite'
+  match '/crea_buoni_di_consegna', controller: 'magazzino', action: 'crea_buoni_di_consegna'
   
   match '/baule', controller: 'baule', action: 'show'
   match '/baule/rimuovi', controller: 'baule', action: 'destroy'
