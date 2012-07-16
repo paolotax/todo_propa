@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   has_many :righe,    :through => :appunti
   
   has_many :visite,   :through => :clienti
-  has_many :fatture,  :through => :clienti
+
+  has_many :fatture
   
   has_many :righe_fattura, :through => :fatture, :source => :righe
   has_many :adozioni, :through => :clienti

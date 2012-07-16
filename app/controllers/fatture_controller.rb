@@ -6,6 +6,8 @@ class FattureController < ApplicationController
     
     @clienti_righe_da_fatturare = current_user.righe.includes(:libro, :appunto, :cliente).pagata.da_fatturare.group_by(&:cliente)
     
+    @clienti_righe_da_pagare    = current_user.righe.includes(:libro, :appunto, :cliente).da_pagare.da_fatturare.group_by(&:cliente)
+    
     
     respond_to do |format|
       format.html # index.html.erb
@@ -31,6 +33,12 @@ class FattureController < ApplicationController
 
   def new
     @fattura = current_user.fatture.build
+    if params[:causale]
+      @fattura.causale_id = params[:causale]
+    end
+    if params[:cliente_id]
+      @fattura.cliente_id = params[:cliente_id]
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @fattura }

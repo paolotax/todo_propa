@@ -68,21 +68,54 @@
   .side-bar.span3
     .module
       %ul
-        - for c, r in @clienti_righe_da_fatturare do
-          %li
-            = link_to  c, class: "list-link" do
-              %span.titolo= c[:titolo]
-              %span.copie
-                %small= r.sum(&:quantita)
-              %span.importo
-                %small= number_to_currency r.sum(&:importo)
-              %span.num_appunti
-                %small= r.count(&:appunto_id)
-                
-          %ol
-            - for a, righe in r.group_by(&:appunto) do
-              %li= render "appunti/item", appunto: a
-        
+        %li
+          %span.list-link.active 
+            Pagamenti da registrare
+        - unless @clienti_righe_da_fatturare.empty?
+          - for c, r in @clienti_righe_da_fatturare do
+            %li
+              = link_to  c, class: "list-link" do
+                %span.titolo= c[:titolo]
+                %span.copie
+                  %small= r.sum(&:quantita)
+                %span.importo
+                  %small= number_to_currency r.sum(&:importo)
+                %span.num_appunti
+                  %small= r.count(&:appunto_id)
+              = link_to "Registra",  new_fattura_url(causale: 1, cliente_id: c[:id]) 
+            %ol
+              - for a, righe in r.group_by(&:appunto) do
+                %li.list-fixed= render "appunti/item", appunto: a
+        - else
+          %span.list-link 
+            %small non ci sono appunti pagati da registrare 
+
+
+    .module
+      %ul
+        %li
+          %span.list-link.active 
+            Da incassare e registrare
+        - unless @clienti_righe_da_pagare.empty?
+          - for c, r in @clienti_righe_da_pagare do
+            %li
+              = link_to  c, class: "list-link" do
+                %span.titolo= c[:titolo]
+                %span.copie
+                  %small= r.sum(&:quantita)
+                %span.importo
+                  %small= number_to_currency r.sum(&:importo)
+                %span.num_appunti
+                  %small= r.count(&:appunto_id)
+            = link_to "Registra",  new_fattura_url(causale: 1, cliente_id: c[:id]) 
+            %ol
+              - for a, righe in r.group_by(&:appunto) do
+                %li.list-fixed= render "appunti/item", appunto: a
+        - else
+          %span.list-link 
+            %small non ci sono appunti da incassare e registrare 
+
+
         
 - @fattura = Fattura.new
 = render "modal"

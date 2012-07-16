@@ -29,14 +29,23 @@ class MagazzinoController < ApplicationController
                                         da_fatturare.group_by(&:appunto)
     
     
+    last_id = Fattura.where("user_id = ? and data >= ? and causale_id = ?", current_user.id, Time.now.beginning_of_year, 1).order('numero desc').limit(1)
+    if last_id.empty?
+      numero_fattura = 1
+    else
+      numero_fattura = last_id[0][:numero] + 1  
+    end
     
     for k, v in @righe_da_registrare do
-      fattura = Fattura.create!( causale_id: 1, cliente_id: k.cliente_id, data: k.updated_at)
-      fattura.numero = fattura.get_new_id(current_user)
+      fattura = Fattura.create!( user_id: current_user.id, causale_id: 1, cliente_id: k.cliente_id, data: k.updated_at, numero: numero_fattura)
+      
+      
+      # raise fattura.numero.inspect
       for riga in v do
         fattura.righe << riga
       end                                  
-      fattura.save
+      fattura.save!
+      numero_fattura += 1
     end                                    
     redirect_to fatture_url
   end

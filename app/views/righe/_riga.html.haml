@@ -7,13 +7,13 @@
         = riga.quantita
     .prezzo
       - unless riga.prezzo_unitario.zero?
-        = pretty_prezzo riga.prezzo_unitario
+        = number_to_currency riga.prezzo_unitario
       - else
         %span.badge.badge-info gratis
     .sconto
       = "- #{riga.sconto}%" unless riga.sconto.zero?
     .importo
       - unless riga.importo.zero?
-        = pretty_prezzo riga.importo
+        = number_to_currency riga.importo
       - else
         %span.badge.badge-info gratis
