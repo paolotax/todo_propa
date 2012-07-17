@@ -30,7 +30,7 @@
     %br
     %span= @data
   .cliente
-    %a{ href: "@cliente.cliente_url", title: 'scheda cliente'}
+    %a{ href: @cliente.url, title: 'scheda cliente'}
       = @cliente.titolo
   .copie
     %strong= @totale_copie
@@ -40,10 +40,21 @@
     importo
   .clearfix  
 
-  - if @righe?
+  - if @appunti?
     .table-righe-new
-      - for riga in @righe
-        != JST['righe/riga'](riga)
+      %ul.unstyled
+        - for appunto in @appunti
+          %li
+            %a{href: "/appunti/#{appunto.id}"}
+              - c = new Date(appunto.updated_at)
+              = "Nr.#{appunto.id} del #{c.getDate()}/#{c.getMonth()+1}/#{c.getFullYear()}"
+            - for riga in appunto.righe
+              != JST['righe/riga'](riga)
+  - else
+    .table-righe-new
+      %ul.unstyled
+        - for riga in @righe
+          != JST['righe/riga'](riga)
 
   .more-actions
     %ul.nav-fattura

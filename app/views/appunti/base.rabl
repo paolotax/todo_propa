@@ -35,5 +35,5 @@ child :righe do |u|
   end
 end
 
-child(:user)   { attributes :username }
+child(:user)    { attributes :username }
 child(:cliente) { attributes :id, :titolo, :frazione, :comune, :provincia }

@@ -27,8 +27,7 @@ class MagazzinoController < ApplicationController
                                         where("appunti.stato = 'X'").
                                         order("appunti.updated_at").
                                         da_fatturare.group_by(&:appunto)
-    
-    
+
     last_id = Fattura.where("user_id = ? and data >= ? and causale_id = ?", current_user.id, Time.now.beginning_of_year, 1).order('numero desc').limit(1)
     if last_id.empty?
       numero_fattura = 1
@@ -38,9 +37,6 @@ class MagazzinoController < ApplicationController
     
     for k, v in @righe_da_registrare do
       fattura = Fattura.create!( user_id: current_user.id, causale_id: 1, cliente_id: k.cliente_id, data: k.updated_at, numero: numero_fattura)
-      
-      
-      # raise fattura.numero.inspect
       for riga in v do
         fattura.righe << riga
       end                                  
@@ -49,6 +45,34 @@ class MagazzinoController < ApplicationController
     end                                    
     redirect_to fatture_url
   end
+  
+  def crea_fatture
+    @righe_da_registrare = current_user.righe.
+                                        includes(:appunto, :libro, :cliente).
+                                        joins(:appunto, :cliente).
+                                        where("appunti.stato <> 'X'").
+                                        where("clienti.cliente_tipo in ('Cartolibreria', 'Ditta')").
+                                        order("appunti.updated_at").
+                                        da_fatturare.group_by(&:cliente)
+
+    last_id = Fattura.where("user_id = ? and data >= ? and causale_id = ?", current_user.id, Time.now.beginning_of_year, 1).order('numero desc').limit(1)
+    if last_id.empty?
+      numero_fattura = 1
+    else
+      numero_fattura = last_id[0][:numero] + 1  
+    end
+    
+    for k, v in @righe_da_registrare do
+      fattura = current_user.fatture.build( causale_id: 2, cliente_id: k.id, data: Time.now, numero: numero_fattura)
+      for riga in v do
+        fattura.righe << riga
+      end                                  
+      fattura.save!
+      numero_fattura += 1
+    end                                    
+    redirect_to fatture_url
+  end
+  
 end
 
 

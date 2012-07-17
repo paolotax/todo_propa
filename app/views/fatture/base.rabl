@@ -10,6 +10,25 @@ node :errors do |model|
    model.errors
 end
 
+child :appunti do |u|
+  attributes :id, :created_at, :updated_at, :totale_copie, :totale_importo, :stato
+  child :righe do |r|
+    attributes :id, :libro_id, :quantita
+    node :prezzo_unitario do |u|
+      u.prezzo_unitario.round(2)
+    end
+    node :sconto do |u|
+      u.sconto.round(2)
+    end
+    node :importo do |u|
+      u.importo.round(2)
+    end 
+    glue :libro do |l|
+      attributes :titolo, :prezzo_copertina
+    end
+  end
+end    
+
 child :righe_per_titolo => :righe do |u|
   attributes :id, :libro_id, :quantita
   node :prezzo_unitario do |u|
@@ -30,7 +49,7 @@ child(:user)   { attributes :username }
 
 child(:cliente) do |c|
   attributes :id, :titolo, :frazione, :comune, :provincia
-  node(:cliente_url) { |cliente| cliente_url(cliente) }
+  node(:url) { |cliente| cliente_url(cliente) }
 end
      
     

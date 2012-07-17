@@ -13,7 +13,7 @@
         %span.badge.badge-info gratis
     .sconto
       = "- #{@sconto}%" unless @sconto is 0
-    .importo
+    .importo.hidden-phone
       - unless @importo is 0
         = accounting.formatMoney(@importo, { symbol: '€',  format: '%s %v', decimal: ",", thousand: "." })
         / !=  JST['shared/prezzo']( prezzo: @importo ) 

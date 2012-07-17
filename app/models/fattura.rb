@@ -11,7 +11,7 @@ class Fattura < ActiveRecord::Base
   belongs_to :user
   
   has_many :righe, :dependent => :nullify
-  has_many :appunti, :through => :righe
+  has_many :appunti, :through => :righe, uniq: true, order: "appunti.id"
   
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => false
   
