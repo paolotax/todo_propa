@@ -23,7 +23,23 @@ class Fattura < ActiveRecord::Base
   
   before_save :ricalcola
   # before_create :init
-
+  
+  TIPO_FATTURA.each do |tipo|
+    scope "#{tipo.downcase.split.join('_')}", where("causale_id = ?", TIPO_FATTURA.index(tipo))
+    
+    define_method "#{tipo.downcase.split.join('_')}?" do
+      self.causale_id == TIPO_FATTURA.index(tipo)
+    end
+  end
+  
+  TIPO_PAGAMENTO.each do |tipo|
+    scope "#{tipo.downcase.split.join('_')}", where("condizioni_pagamento = ?", tipo)
+    
+    define_method "#{tipo.downcase.split.join('_')}?" do
+      self.condizioni_pagamento == tipo
+    end
+  end
+  
   def self.filtra(params)
     fatture = scoped
     fatture = fatture.search(params[:search]) if params[:search].present?

@@ -64,18 +64,20 @@ class Cliente < ActiveRecord::Base
   
   before_save :set_titolo
   
-  TIPI_CLIENTI.each do |tc|
-    define_method '#{cliente_tipo}?' do
-      self.cliente_tipo == tc
+  TIPI_CLIENTI.each do |tipo|
+    scope "#{tipo.split.join.underscore}", where("clienti.cliente_tipo = ?", tipo)
+    
+    define_method "#{tipo.split.join.underscore}?" do
+      self.cliente_tipo == tipo
     end
   end
   
   class << self
-    TIPI_CLIENTI.each do |tc|
-      define_method '#{cliente_tipo}' do
-        cliente_tipo
-      end
-    end
+    # TIPI_CLIENTI.each do |tc|
+    #   define_method "#{tc.split.join.underscore}" do
+    #     cliente_tipo
+    #   end
+    # end
   end  
   
   def to_s
