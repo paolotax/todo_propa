@@ -36,18 +36,7 @@
     %p
       = appunto.note
 
-    %p
-      - unless appunto.telefono.blank?
-        %a.btn{ href: "tel:#{appunto.telefono}" }
-          %i.icon-phone
-          = appunto.telefono
-        %br
-
-      - unless appunto.email.blank?
-        %a.btn{ href: "tel:#{appunto.email}" }
-          %i.icon-envelope
-          = appunto.email
-        %br
+    = render "appunti/recapiti", appunto: appunto
     
     - if appunto.da_fatturare?
       %p

@@ -4,7 +4,7 @@ class Appunto < ActiveRecord::Base
   belongs_to :cliente
   
   has_many :righe, :dependent => :destroy
-  has_many :fatture, through: :righe
+  has_many :fatture, through: :righe, uniq: true
   
   has_many :visita_appunti, dependent: :destroy
   has_many :visite, :through => :visita_appunti
@@ -36,6 +36,21 @@ class Appunto < ActiveRecord::Base
   
   before_save :leggi
   
+  def da_consegnare?
+    self.stato.blank?
+  end
+  
+  def in_sospeso?
+    self.stato == "P"
+  end
+  
+  def completo?
+    self.stato == "X"
+  end
+  
+  def consegnato?
+    in_sospeso? || completo?
+  end
   
   def create_righe_vacanze
     libri = Libro.vacanze
@@ -53,15 +68,16 @@ class Appunto < ActiveRecord::Base
   end
   
   def da_fatturare?
-    self.righe.each do |r|
-      if r.fattura_id.nil?
-        return true
-        break
-      end
-    end 
-    return false
+    self.has_righe? && self.fatture.empty? 
+  end
+
+  def has_righe?
+    !self.righe.empty?
   end
   
+  def has_recapiti?
+   !self.telefono.blank? || !self.email.blank?
+  end
   
   def nel_baule
     nel_baule = false
@@ -85,13 +101,7 @@ class Appunto < ActiveRecord::Base
     self.cliente.titolo if cliente.present?
   end
   
-  def has_righe?
-    !self.righe.empty?
-  end
-  
-  def has_recapiti?
-   !self.telefono.blank? || !self.email.blank?
-  end
+
   
   def self.filtra(params)
     appunti = scoped

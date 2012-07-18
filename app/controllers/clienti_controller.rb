@@ -22,7 +22,7 @@ class ClientiController < ApplicationController
 
   def show
     session[:return_to] = request.path
-    @cliente = current_user.clienti.includes(:indirizzi).find(params[:id])
+    @cliente = current_user.clienti.includes(:indirizzi, :appunti, :fatture, :righe).find(params[:id])
     if request.path != cliente_path(@cliente)
       redirect_to @cliente, status: :moved_permanently
     end

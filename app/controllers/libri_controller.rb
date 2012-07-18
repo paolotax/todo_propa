@@ -10,8 +10,18 @@ class LibriController < ApplicationController
   end
 
   def show
-    @libro = Libro.find(params[:id])
-    respond_with @libro
+    @libro = Libro.includes(righe: [ :libro, :appunto, :fattura ] ).find(params[:id])
+    @carichi = current_user.righe_fattura.includes(:fattura => [:cliente]).
+                            carico.
+                            where("righe.libro_id = ?", @libro.id).
+                            order("fatture.data")
+    
+    @scarichi = current_user.righe.includes(:appunto => [:cliente]).
+                            di_questa_propaganda.scarico.
+                            where("righe.libro_id = ?", @libro.id).
+                            order("appunti.created_at")
+    #respond_with @libro
+    
     # if request.path != libro_path(@libro)
     #   redirect_to @libro, status: :moved_permanently
     # end

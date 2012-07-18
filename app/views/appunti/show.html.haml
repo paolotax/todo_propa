@@ -4,7 +4,7 @@
 
 .content
   .row
-    %section.span11
+    %section.offset2.span8
       %header
       %article.appunto.well
         .appunto-status
@@ -12,8 +12,8 @@
             = show_status_css(@appunto.stato)
           .star-container
         
-        %div{ style: "margin-left: 150px"}  
-          %h1= on_the_spot_edit @appunto, :destinatario
+        %div{ style: "margin-left: 80px"}  
+          %h2= @appunto.destinatario.blank? ? @appunto.cliente.titolo : @appunto.destinatario
           %address
             %strong
               = "@#{@appunto.cliente.ragione_sociale || [@appunto.cliente.nome, @appunto.cliente.cognome].join(' ')}"
@@ -21,11 +21,12 @@
             = @appunto.cliente.indirizzo
             %br
             = "#{@appunto.cliente.cap} #{@appunto.cliente.frazione} #{@appunto.cliente.comune} #{@appunto.cliente.provincia}"
-          
-          
-          %p
-            %strong= on_the_spot_edit @appunto, :note 
 
+          %p
+            %strong= @appunto.note 
+          
+          = render "appunti/recapiti", appunto: @appunto
+          
           %p
             %small
               creato il: 
@@ -33,14 +34,6 @@
               %br
               ultima modifica: 
               = l @appunto.updated_at, format: :only_date
-
-          %div.pull-left
-            %i{ class: 'icon-user'}
-            = on_the_spot_edit @appunto, :telefono
-            %br
-            %i{ class: 'icon-envelope'}
-            = on_the_spot_edit @appunto, :email
-          .clearfix
 
         .pull-right
           = link_to @appunto, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
@@ -54,29 +47,15 @@
             Modifica
         .clearfix
 
-        - unless @appunto.righe.empty?
-          .table-righe
-            %table.righe.table.table-striped.table-condensed
-              - for r in @appunto.righe do
-                %tr.riga
-                  %td= r.titolo
-                  %td= r.quantita
-                  %td x
-                  %td= r.prezzo_unitario
-                  %td
-                  %td= "- #{r.sconto}%" if r.sconto != 0.0
-                  %td =
-                  %td= r.importo 
-              %tr.riga
-                %td
-                %td
-                  %span.label.label-info= @appunto.totale_copie
-                %td
-                %td
-                %td
-                %td
-                %td
-                %td
-                  %span.label.label-info
-                    = "€ #{@appunto.totale_importo}"
+
+        - if @appunto.has_righe?
+          .table-righe-new{ style: "margin-top: 10px;"} 
+            - for riga in @appunto.righe do
+              = render riga
+            .totali-new.pull-right
+              %span.totale-copie= "#{@appunto.totale_copie} copie"
+              = "-"
+              %span.totale-importo= number_to_currency @appunto.totale_importo
+      
+        
 

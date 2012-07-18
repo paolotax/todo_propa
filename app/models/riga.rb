@@ -3,7 +3,6 @@ class Riga < ActiveRecord::Base
   belongs_to :appunto
   belongs_to :libro
   belongs_to :fattura
-  has_one :cliente, through: :appunto
   
   after_initialize :init
   # after_save :ricalcola_totali
@@ -28,6 +27,15 @@ class Riga < ActiveRecord::Base
   scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
   
   scope :di_questa_propaganda,  where("righe.created_at > ?", Date.new(2012,4,1))
+  
+  
+  def documento
+    self.appunto || self.fattura
+  end
+  
+  def cliente
+   self.appunto.cliente || self.fattura.cliente
+ end
   
   def prezzo
     if sconto == 0.0

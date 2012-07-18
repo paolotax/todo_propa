@@ -2,15 +2,13 @@
 
 - title @libro.titolo
 
+= link_to "click me", "#", class: "click-me"
+ 
 .content
   %section.well.show-page
-    %header
-      / = render 'shared/title_bar', title: @cliente.to_s
     %article.row-fluid[@libro]
       .copertina.span2
-        / = image_tag copertina(@libro)
-        = image_tag @libro.image_url
-      
+        / = image_tag @libro.image_url
       .content-inner.span5
         %h1= @libro.titolo
         .settore
@@ -52,42 +50,48 @@
   .row-fluid
     .span4.carichi
       .well
-        %h2 Carichi
-        %h3 In arrivo
+        %h2 
+          Carichi
+          .pull-right
+            = @carichi.sum(&:quantita)
+        %h3 
+          copie acquistate
+          .pull-right
+            = @carichi.select {|r| r.fattura.condizioni_pagamento != "Contanti" }.sum(&:quantita)
+        %ul.unstyled
+          - for riga in @carichi.select {|r| r.fattura.condizioni_pagamento != "Contanti" } do
+            = render "riga", riga: riga
+
+        %h3 
+          copie in deposito
+          .pull-right
+            = @carichi.select {|r| r.fattura.condizioni_pagamento == "Contanti" }.sum(&:quantita)
+        %ul.unstyled
+          - for riga in @carichi.select {|r| r.fattura.condizioni_pagamento == "Contanti" } do
+            = render "riga", riga: riga
+
+
 
     .span4.scarichi
       .well
         %h2 Scarichi
         
-        
-        - scarichi = current_user.righe.includes(:appunto => [:cliente]).di_questa_propaganda.scarico.where("righe.libro_id = ?", @libro.id).order("appunti.created_at")
-        
+        / - da_consegnare = @scarichi.select {|r| r.consegnato = true }
         %h3 
           copie da consegnare
           .pull-right
-            = scarichi.da_consegnare.sum(&:quantita)
-        %ul
-          - for riga in scarichi.da_consegnare do
-            %li[riga]
-              %span
-                = link_to riga.appunto do
-                  = l riga.appunto.created_at, format: :only_date
-              |
-              %span.cliente
-                = link_to riga.appunto.cliente do
-                  = riga.appunto.cliente.titolo
-              %span.pull-right= riga.quantita
+            = @scarichi.select {|r| r.appunto.stato.blank?   }.sum(&:quantita)
+        %ul.unstyled
+          - for riga in @scarichi.select {|r| r.appunto.stato.blank? } do
+            = render "riga", riga: riga  
               
         %h3 
           copie consegnate
           .pull-right
-            = scarichi.consegnata.sum(&:quantita)
-        %ul
-          - for riga in scarichi.consegnata do
-            %li[riga]
-              %span.quantita= riga.quantita
-              %span.titolo= riga.appunto.cliente.titolo
-              %span.pull-right= l riga.appunto.created_at, format: :only_date
+            = @scarichi.select {|r| r.appunto.consegnato? }.sum(&:quantita)
+        %ul.unstyled
+          - for riga in @scarichi.select {|r| r.appunto.consegnato? } do
+            = render "riga", riga: riga  
       
       
     .span4

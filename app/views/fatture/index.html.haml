@@ -1,7 +1,4 @@
-= content_for :add_button do
-  .topbar-tweet-btn
-    %a.btn.btn-primary{ "data-toggle" => "modal", "data-target" => ".modal" }
-      .icon-tweet
+= new_button( new_fattura_url )
 
 .row
   .side-bar.span3
@@ -113,12 +110,7 @@
           %span.list-link 
             %small non ci sono appunti da incassare e registrare 
 
-
         
-- @fattura = Fattura.new
-= render "modal"
-          
-          
 
 
 

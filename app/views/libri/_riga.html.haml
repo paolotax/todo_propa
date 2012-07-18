@@ -1,0 +1,9 @@
+%li[riga]
+  %span
+    = link_to riga.documento do
+      = l riga.documento.created_at, format: :only_date
+  |
+  %span.cliente
+    = link_to riga.documento.cliente do
+      = riga.documento.cliente.titolo
+  %span.pull-right= riga.quantita
