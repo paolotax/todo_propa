@@ -29,6 +29,10 @@ class Riga < ActiveRecord::Base
   scope :di_questa_propaganda,  where("righe.created_at > ?", Date.new(2012,4,1))
   
   
+  def riga_abbreviata
+    self.libro.sigla + " " + self.quantita.to_s
+  end  
+  
   def documento
     self.appunto || self.fattura
   end

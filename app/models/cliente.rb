@@ -72,6 +72,10 @@ class Cliente < ActiveRecord::Base
     end
   end
   
+  def has_documenti?
+    !self.appunti.empty? || !self.fatture.empty?
+  end
+  
   class << self
     # TIPI_CLIENTI.each do |tc|
     #   define_method "#{tc.split.join.underscore}" do

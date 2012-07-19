@@ -64,7 +64,7 @@ it:
 
   date:
     formats:
-      default: "%d-%m-%Y"
+      default: "%d-%m-%y"
       short: "%e %b"
       long: "%d %B %Y"
       only_date: "%d/%m/%Y"
@@ -124,7 +124,7 @@ it:
       default: "%a %d %b %Y, %H:%M:%S %z"
       short: "%d %b %H:%M"
       long: "%d %B %Y %H:%M"
-      only_date: "%d/%m/%Y"
+      only_date: "%d-%m-%y"
     am: 'am'
     pm: 'pm'
 

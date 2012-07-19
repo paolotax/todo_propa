@@ -36,6 +36,10 @@ class Appunto < ActiveRecord::Base
   
   before_save :leggi
   
+  def fattura
+    self.fatture[0] unless self.fatture.empty?
+  end
+  
   def da_consegnare?
     self.stato.blank?
   end

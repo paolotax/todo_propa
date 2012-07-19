@@ -1,15 +1,31 @@
-%p#notice= notice
-
-%p
-  %b Numero:
-  = @fattura.numero
-%p
-  %b Data:
-  = @fattura.data
-%p
-  %b Cliente:
-  = @fattura.cliente_id
-
-= link_to 'Edit', edit_fattura_path(@fattura)
-\|
-= link_to 'Back', fatture_path
+.content
+  .row
+    %section.offset2.span8
+      %header
+      %article.fattura.well
+        %div{ style: "margin-left: 80px"}  
+          %h2= "#{@fattura.causale} Nr. #{@fattura.numero} del #{l @fattura.data}"
+          %address
+            %strong
+              = link_to @fattura.cliente do
+                = "@#{@fattura.cliente.ragione_sociale || [@fattura.cliente.nome, @fattura.cliente.cognome].join(' ')}"
+            %br
+            = @fattura.cliente.indirizzo
+            %br
+            = "#{@fattura.cliente.cap} #{@fattura.cliente.frazione} #{@fattura.cliente.comune} #{@fattura.cliente.provincia}"
+      - unless @fattura.appunti.empty?
+        .table-righe-new
+          %ul.unstyled
+            - for appunto, righe in @fattura.righe.group_by(&:appunto)
+              %li
+                = link_to appunto do
+                  = "Nr.#{appunto.id} del #{l appunto.created_at, format: :only_date}"
+                - for riga in righe
+                  = render riga
+      - else
+        .table-righe-new
+          %ul.unstyled
+            - for riga in @fattura.righe
+              = render riga
+        
+          

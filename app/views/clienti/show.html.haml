@@ -51,9 +51,10 @@
       = link_to cliente_url(Cliente.next(@cliente, 'titolo').first), class: "btn" do
         %i.icon-caret-right
       .pull-right
-        = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
-          %i.icon-trash
-          Elimina
+        - unless @cliente.has_documenti?
+          = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+            %i.icon-trash
+            Elimina
         / = link_to cliente_url(@cliente, format: :pdf), class: "btn" do
         /   %i.icon-print
         /   Stampa

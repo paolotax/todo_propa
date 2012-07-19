@@ -16,7 +16,8 @@
           %h2= @appunto.destinatario.blank? ? @appunto.cliente.titolo : @appunto.destinatario
           %address
             %strong
-              = "@#{@appunto.cliente.ragione_sociale || [@appunto.cliente.nome, @appunto.cliente.cognome].join(' ')}"
+              = link_to @appunto.cliente do
+                = "@#{@appunto.cliente.ragione_sociale || [@appunto.cliente.nome, @appunto.cliente.cognome].join(' ')}"
             %br
             = @appunto.cliente.indirizzo
             %br
@@ -24,9 +25,7 @@
 
           %p
             %strong= @appunto.note 
-          
           = render "appunti/recapiti", appunto: @appunto
-          
           %p
             %small
               creato il: 
@@ -35,21 +34,26 @@
               ultima modifica: 
               = l @appunto.updated_at, format: :only_date
 
-        .pull-right
-          = link_to @appunto, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
-            %i.icon-trash
-            Elimina
-          = link_to appunto_url(@appunto, format: :pdf), class: "btn" do
-            %i.icon-print
-            Stampa
-          = link_to edit_appunto_url(@appunto), class: "btn btn-primary" do
-            %i.icon-pencil
-            Modifica
-        .clearfix
-
+        %footer.show-toolbar
+          .pull-right
+            - if @appunto.da_fatturare?
+              = link_to @appunto, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+                %i.icon-trash
+                Elimina
+            = link_to appunto_url(@appunto, format: :pdf), class: "btn" do
+              %i.icon-print
+              Stampa
+            - if @appunto.da_fatturare?
+              = link_to edit_appunto_url(@appunto), class: "btn btn-primary" do
+                %i.icon-pencil
+                Modifica
 
         - if @appunto.has_righe?
-          .table-righe-new{ style: "margin-top: 10px;"} 
+          - unless @appunto.da_fatturare?
+            .riferimento-fattura{ style: "margin-top: 10px;"}
+              = link_to @appunto.fattura do
+                = "registrato con #{@appunto.fattura.causale.downcase} nr. #{@appunto.fattura.numero} del #{l @appunto.fattura.data, format: :only_date}"
+          .table-righe-new
             - for riga in @appunto.righe do
               = render riga
             .totali-new.pull-right
