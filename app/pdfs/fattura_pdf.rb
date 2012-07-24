@@ -180,7 +180,7 @@ class FatturaPdf < Prawn::Document
     bounding_box([bounds.left, bounds.top - 106.mm], :width  => bounds.width, :height => 135.mm) do
 
       unless @fattura.righe.empty?
-        @fattura.righe.group_by(&:appunto).each do |a, righe|
+        @fattura.righe.includes(:appunto).order("appunti.created_at").group_by(&:appunto).each do |a, righe|
           text "Ordine del #{l a.created_at, :format => :short}", size: 8 unless a.nil?
           r =  righe.map do |riga|
             [

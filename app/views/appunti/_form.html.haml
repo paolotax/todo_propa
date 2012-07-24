@@ -70,8 +70,9 @@
       
   = f.error :base
 
-  .control-group
-    .controls
-      %button{:class => "btn btn-primary", :type => "submit", id: "new_appunto_submit"} Salva
-      = link_to "Annulla", :back, class: "btn btn-danger"
+  / .control-group
+  /   .controls
+  .form-actions
+    %button{:class => "btn btn-primary", :type => "submit", id: "new_appunto_submit"} Salva
+    = link_to "Annulla", :back, class: "btn btn-danger"
   

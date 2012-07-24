@@ -35,7 +35,7 @@
             %br
 
           - unless @cliente.email.blank?
-            %a.btn{ href: "tel:#{@cliente.email}" }
+            %a.btn{ href: "mailto:#{@cliente.email}" }
               %i.icon-envelope
               = @cliente.email
             %br

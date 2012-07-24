@@ -6,7 +6,7 @@
     %br
 
   - unless appunto.email.blank?
-    %a.btn{ href: "tel:#{appunto.email}" }
+    %a.btn{ href: "mailto:#{appunto.email}" }
       %i.icon-envelope
       = appunto.email
     %br

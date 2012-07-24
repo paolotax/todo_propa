@@ -50,6 +50,10 @@
 
 
   .more
+    .table-righe-new
+      - if @righe?
+        - for riga in @righe
+          != JST['righe/riga'](riga)
     %div{ style: "color: gray;"}
       - c = new Date(@created_at)
       - u = new Date(@updated_at)
@@ -57,12 +61,11 @@
         %span creato il
         %span= "#{c.getDate()}/#{c.getMonth()+1}/#{c.getFullYear()}"
         %span - modificato il 
-        %span= "#{u.getDate()}/#{u.getMonth()+1}/#{u.getFullYear()}"
+        %span= "#{u.getDate()}/#{u.getMonth()+1}/#{u.getFullYear()} - "
       
-    .table-righe-new
-      - if @righe?
-        - for riga in @righe
-          != JST['righe/riga'](riga)
+        %a{href: "/appunti/#{@id}"}
+          Dettagli
+
 
           
   %footer
