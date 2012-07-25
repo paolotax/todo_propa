@@ -1,0 +1,15 @@
+.row
+  .span8
+    %h2 Incassi giornalieri
+    %table.table
+      - for i in @incassi do
+        %tr
+          %td{ style: "width: 250px"}
+            = i.data.try(:strftime, "%d-%m-%y")
+          %td.pull-right{ style: "text-align: right; width: 250px"}
+            = number_to_currency i.incasso
+      %tr
+        %td Incasso totale
+        %td.pull-right{ style: "text-align: right"}
+          = number_to_currency @incassi.sum { |i| i.incasso.to_d }
+          

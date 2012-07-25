@@ -20,6 +20,12 @@ class MagazzinoController < ApplicationController
                               sum(:totale_importo)  
   end
   
+  
+  def cassa
+    @incassi = current_user.fatture.where(causale_id: 1).order(:data).select("data, sum(importo_fattura) as incasso").group(:data)
+  end  
+  
+  
   def crea_buoni_di_consegna
     @righe_da_registrare = current_user.righe.
                                         includes(:appunto, :libro, :cliente).
