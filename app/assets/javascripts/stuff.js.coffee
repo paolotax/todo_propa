@@ -18,3 +18,14 @@ jQuery ->
   if $('.visite-long').length
     $('.appunto').each ->
       $(@).addClass('opened')
+      
+      
+  $('.the-modal .the-close').on 'click', (e) ->
+    e.preventDefault()
+    $.modal().close()
+  
+  $('.trigger').live 'click', (e) ->
+    console.log "ciao"
+    e.preventDefault();
+    $('#terms-of-service').modal().open();
+    

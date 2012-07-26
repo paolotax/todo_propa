@@ -9,6 +9,7 @@
  *= require_tree ./application
  *= require magazzino
  *= require soulmate
- *= require bootstrap_and_overrides 
+ *= require bootstrap_and_overrides
+ *= require the-modal
  
 */

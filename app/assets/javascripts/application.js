@@ -26,10 +26,11 @@
 //= require_tree ../templates
 //= require_tree ./application
 
-//= require stuff
 //= require demo
 //= require accounting
 //= require gmaps
+//= require jquery.the-modal.js
+//= require stuff
 
 
 
