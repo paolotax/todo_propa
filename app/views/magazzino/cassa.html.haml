@@ -1,11 +1,11 @@
-.row
-  .span8
+.offset3.row
+  .span6.well
     %h2 Incassi giornalieri
     %table.table
       - for i in @incassi do
         %tr
           %td{ style: "width: 250px"}
-            = i.data.try(:strftime, "%d-%m-%y")
+            = l i.data, format: :long_with_day
           %td.pull-right{ style: "text-align: right; width: 250px"}
             = number_to_currency i.incasso
       %tr
