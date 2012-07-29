@@ -25,7 +25,6 @@ jQuery ->
     $.modal().close()
   
   $('.trigger').live 'click', (e) ->
-    console.log "ciao"
     e.preventDefault();
     $('#terms-of-service').modal().open();
     

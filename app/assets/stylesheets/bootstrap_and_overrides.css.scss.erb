@@ -15,31 +15,40 @@ body { padding-top: 60px; }
 @import "bootstrap-responsive";
 
 .the-modal {
-    background: #eee;
-    width: 600px;
-    margin: 150px auto;
+  background: #eee;
+  width: 80%;
+  margin: 150px auto;
 
-    border: 3px solid #666;
-    padding: 20px;
+  border: 3px solid #666;
+  padding: 20px;
 }
 
 .the-modal .the-close {
-    float: right;
-    text-decoration: none;
-    font-size: 40px;
+  float: right;
+  text-decoration: none;
+  font-size: 25px;
 }
 
+.page-break  { display:none; }
 
-
+input.numeric,
+input.decimal {
+  text-align: right;
+}
 
 
 [class^="icon-"] {
   background-image:none;
 }
 
-input.numeric,
-input.decimal {
-  text-align: right;
+@media all
+{
+  .page-break  { display:none; }
+}
+
+@media print
+{
+  .page-break  { display:block; page-break-before:always; }
 }
 
 //.cliente {

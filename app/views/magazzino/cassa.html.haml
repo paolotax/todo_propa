@@ -1,25 +1,27 @@
 #terms-of-service.the-modal{style: "display: none;"}
   %a.the-close{ href: "#"}
     x
-  Terms of service here
-  %p  
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  .modal-content  
 
 .offset3.row
   .span6.well
     %h2 Incassi giornalieri
-    %table.table
-      - for i in @incassi do
-        %tr
-          %td{ style: "width: 250px"}
-            = link_to "#", class: "trigger" do
-              = l i.data, format: :long_with_day
+    %ul.unstyled
+      - for month, values in @incassi.group_by {|f| f.data.beginning_of_month} do
+        .page-break
+        %li
+          %strong= month
+        - for i in values do
+          %li
+            .data.pull-left{ style: "width: 50%"}
+              = link_to "#", class: "trigger" do
+                = i.data.strftime("%A %e")
               
-          %td.pull-right{ style: "text-align: right; width: 250px"}
-            = number_to_currency i.incasso
-      %tr
-        %td Incasso totale
-        %td.pull-right{ style: "text-align: right"}
+            .pull-right{ style: "text-align: right; width:50%"}
+              = number_to_currency i.incasso
+      %li
+        .pull-left Incasso totale
+        .pull-right{ style: "text-align: right"}
           = number_to_currency @incassi.sum { |i| i.incasso.to_d }
 
 
