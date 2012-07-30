@@ -20,6 +20,11 @@ class LibriController < ApplicationController
                             di_questa_propaganda.scarico.
                             where("righe.libro_id = ?", @libro.id).
                             order("appunti.created_at")
+    respond_to do |format|
+      format.html
+      format.json { render :rabl => @libro }
+    end
+    
     #respond_with @libro
     
     # if request.path != libro_path(@libro)
