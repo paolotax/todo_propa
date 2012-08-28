@@ -66,11 +66,19 @@
     .side-bar.span4
       - unless @cliente.new_record?  
         - da_consegnare  = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
-        = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_consegnare", collection: da_consegnare}
+        = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_consegnare", collection: da_consegnare} unless da_consegnare.empty?
 
         - da_pagare = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_pagare.order("libri.titolo")
-        = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_pagare", collection: da_pagare} 
+        = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_pagare", collection: da_pagare} unless da_pagare.empty?
         
+        %ul
+          - for libro, classi in @cliente.adozioni.joins(:classe).scolastico.order("classi.classe, classi.sezione").group_by(&:libro) do
+            %li
+              = libro.titolo
+              = classi.map {|c| c.classe.sezione}.join
+            
+        
+
     .span5
       %header.content-header
         .header-inner
