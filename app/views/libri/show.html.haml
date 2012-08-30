@@ -10,15 +10,16 @@
       .copertina.span2
         / = image_tag @libro.image_url
       .content-inner.span5
-        %h1= @libro.titolo
-        .settore
-          = @libro.settore
-        .abbr
-          = @libro.sigla
-        .cm
-          = @libro.cm
-        .ean
-          = @libro.ean
+        %h1
+          = @libro.titolo
+          %small= @libro.settore
+        %dl.dl-horizontal
+          %dt sigla
+          %dd= @libro.sigla
+          %dt cm      
+          %dd= @libro.cm
+          %dt ean
+          %dd= @libro.ean
 
         .prezzo-copertina
           %strong= pretty_prezzo @libro.prezzo_copertina 
