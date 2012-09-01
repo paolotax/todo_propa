@@ -69,30 +69,30 @@
         = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_pagare", collection: da_pagare} unless da_pagare.empty?
         
 
-      = render "classi_inserter/form"
+      .well
+        - adozioni_grouped = @cliente.mie_adozioni.includes(:libro).joins(:classe).order("classi.classe, classi.sezione").group_by(&:libro)
+        - unless adozioni_grouped.empty?
+          %h2 Adozioni
+          %ul.adozioni.unstyled
+            - for libro, adozioni in adozioni_grouped do
+              %li.classi-group.clearfix
+                %span.classi= libro.classe.to_s + " " + adozioni.map {|c| c.classe.sezione}.join
+                %span.nr_alunni= adozioni.sum {|a| a.classe.nr_alunni}
+                %span.titolo= link_to libro.titolo, libro
+                %span.pull-right= render "adozioni/destroy_all", adozioni: adozioni
 
-      - adozioni_grouped = @cliente.mie_adozioni.includes(:libro).joins(:classe).order("classi.classe, classi.sezione").group_by(&:libro)
-      - unless adozioni_grouped.empty?
-        %h2 Adozioni
-        %ul.adozioni.unstyled
-          - for libro, adozioni in adozioni_grouped do
-            %li.classi-group
-              %span.classi= libro.classe.to_s + " " + adozioni.map {|c| c.classe.sezione}.join
-              %span.nr_alunni= adozioni.sum {|a| a.classe.nr_alunni}
-              %span.titolo= link_to libro.titolo, libro
-              %span.pull-right= render "adozioni/destroy_all", adozioni: adozioni
 
+        - classi_grouped = @cliente.classi.order("classi.classe, classi.sezione").group_by(&:classe)
+        - unless classi_grouped.empty?
+          %h2 Classi
+          %ul.classi.unstyled
+            - for classe, sezioni in classi_grouped do
+              %li.classi-group.clearfix
+                %span.classe= classe.to_s + " " + sezioni.map(&:sezione).join 
+                %span.nr_alunni= sezioni.sum(&:nr_alunni)
+                %span.pull-right= render "classi/destroy_all", classi: sezioni
 
-      - classi_grouped = @cliente.classi.order("classi.classe, classi.sezione").group_by(&:classe)
-      - unless classi_grouped.empty?
-        %h2 Classi
-        %ul.classi.unstyled
-          - for classe, sezioni in classi_grouped do
-            %li.classi-group
-              %span.classe= classe.to_s + " " + sezioni.map(&:sezione).join 
-              %span.nr_alunni= sezioni.sum(&:nr_alunni)
-              %span.pull-right= render "classi/destroy_all", classi: sezioni
-
+        = render "classi_inserter/form"
             
         
 
