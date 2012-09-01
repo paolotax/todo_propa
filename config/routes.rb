@@ -2,11 +2,19 @@ TodoPropa::Application.routes.draw do
   
   mount WillFilter::Engine => "/will_filter"
   
+  resources :classi do
+    collection do
+      post 'destroy_all'
+    end
+  end
+  
+  resources :adozioni do
+    collection do
+      post 'destroy_all'
+    end
+  end
+  
   resources :materie
-
-  resources :classi
-
-  resources :adozioni
   
   match '/vendite', controller: 'magazzino', action: 'vendite'
   match '/cassa',   controller: 'magazzino', action: 'cassa'
@@ -55,6 +63,8 @@ TodoPropa::Application.routes.draw do
     
     resources :indirizzi
 
+    resources :classi_inserters
+    
     collection do
       put :update_attribute_on_the_spot
     end

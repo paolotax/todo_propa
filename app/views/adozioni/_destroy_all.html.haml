@@ -1,0 +1,5 @@
+= form_for :adozione, url: destroy_all_adozioni_path, method: :post do |f|
+  - for a in adozioni do
+    = hidden_field_tag "adozioni[adozione_ids][]", nil, value: a.id
+  = f.submit "elimina"
+    

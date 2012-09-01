@@ -806,7 +806,8 @@ CREATE TABLE libri (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     slug character varying(255),
-    iva character varying(255)
+    iva character varying(255),
+    classe integer
 );
 
 
@@ -1628,3 +1629,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120513065513');
 INSERT INTO schema_migrations (version) VALUES ('20120513065543');
 
 INSERT INTO schema_migrations (version) VALUES ('20120513083751');
+
+INSERT INTO schema_migrations (version) VALUES ('20120901074823');

@@ -1,0 +1,17 @@
+= simple_form_for [@cliente, ClassiInserter.new] do |f|
+  = f.input :classe, as: :select, collection: 1..5, prompt: "inserisci classe", autofocus: true
+  = f.input :sezioni, hint: "Inserisci la sezione (a-z) senza spazi e senza ripetizioni.</br>Le sezioni inserite verranno convertite in maiuscolo"
+  = f.input :nr_alunni, hint: "Inserisci il numero di alunni per sezione separati da spazio(es. 22 23 25) oppure il totale per classe"
+  
+  .input.collection_checkbox
+    = hidden_field_tag "classi_inserter[libro_ids][]", nil
+    %label Libri adottati
+    - Libro.all.each do |libro|
+      %span.hidden{ data: { classe: "#{libro.classe}" } }
+        = check_box_tag "classi_inserter[libro_ids][]", libro.id, false, id: dom_id(libro)
+        = label_tag dom_id(libro), libro.titolo
+    %br
+    
+  .actions
+    = f.button :submit, label: "Salva"
+

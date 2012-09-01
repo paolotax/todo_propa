@@ -3,7 +3,7 @@
   = f.input :titolo, :input_html => { :class => 'span4' }
   
   = f.input :settore, collection:  ::Libro::SETTORI
-
+  = f.input :classe, as: :select, collection: 1..5, include_blank: true
   = f.input :cm,    :input_html => { :class => 'input-small' },  label: "Codice Giunti"
   = f.input :sigla, :input_html => { :class => 'input-small' }
   = f.input :ean
