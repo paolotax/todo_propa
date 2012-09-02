@@ -1,4 +1,4 @@
-= form_for :classe, url: destroy_all_classi_path, method: :post do |f|
+= form_for :classe, url: destroy_all_classi_path, method: :post, remote: true do |f|
   - for c in classi do
     = hidden_field_tag "classi[classe_ids][]", nil, value: c.id
   = button_tag class: "close" do

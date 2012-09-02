@@ -3,8 +3,8 @@ it:
     "yes": 'Si'
     "no": 'No'
     required:
-      text: 'richiesto'
-      mark: '**'
+      text: 'campo richiesto'
+      mark: '*'
       # You can uncomment the line below if you need to overwrite the whole required html.
       # When using html, text and mark won't be used.
       # html: '<abbr title="required">*</abbr>'

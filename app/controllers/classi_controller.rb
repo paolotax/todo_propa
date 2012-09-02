@@ -5,6 +5,9 @@ class ClassiController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to :back }
+      format.js {
+        @cliente = @classi.first.cliente
+      }
       format.json { head :no_content }
     end
   end

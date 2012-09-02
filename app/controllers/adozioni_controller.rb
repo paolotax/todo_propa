@@ -19,6 +19,9 @@ class AdozioniController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to :back }
+      format.js {
+        @cliente = @adozioni.first.classe.cliente
+      }
       format.json { head :no_content }
     end
   end

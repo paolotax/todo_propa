@@ -1,0 +1,8 @@
+$(".classi-adozioni").replaceWith("<%= escape_javascript( render 'clienti/classi_adozioni') %>"); 
+
+var classe = $("#classi_inserter_classe").val();
+$("#classi_inserter_classe").val(parseInt(classe) + 1);
+
+
+$("#classi_inserter_nr_alunni").focus()
+$("#classi_inserter_nr_alunni").select()
