@@ -5,11 +5,16 @@
   var classe = $("#classi_inserter_classe").val();
   $("#classi_inserter_classe").val(parseInt(classe) + 1);
   $("#classi_inserter_classe").trigger("change");
-
+  
+  $(".error").removeClass("error");
+  $(".help-inline").remove();
+  
+  $(".alert").remove();
   $("#classi_inserter_nr_alunni").focus();
   $("#classi_inserter_nr_alunni").select();
 <% else %>
   
   $(".insert-classi").replaceWith("<%= escape_javascript( render 'classi_inserters/form') %>");
   $(".more").removeClass("hidden");
+  $("#classi_inserter_classe").trigger("change");
 <% end %>

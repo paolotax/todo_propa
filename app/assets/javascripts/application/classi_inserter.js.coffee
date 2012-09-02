@@ -1,5 +1,5 @@
 jQuery ->
-  $("#classi_inserter_classe").change (e) ->
+  $("#classi_inserter_classe").live 'change', (e) ->
     $("label.checkbox input").attr('checked', false);
     $(".collection_checkbox label.checkbox").addClass("hidden")
     classe = $(@).val()
