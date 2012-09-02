@@ -1,85 +1,100 @@
 = new_button( new_appunto_url )
 
-.well
+
+
+.well.baule-page
   .row
     .span7
-      .map-baule
+      = link_to "nascondi", "", class: "pull-right show-hide"
+      .map-baule.more
         - @mappa = @clienti.to_gmaps4rails
         - unless @mappa.empty?
           = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
-      
-      / #new_map
-      /   #mappa{style: "width: 400px; height: 200px"}
-    
+
     .span4
-      = form_tag 'baule/update', method: :put do
-        = text_field_tag 'visita[titolo]'
-        = text_field_tag 'visita[data]', l(Time.now, format: :only_date)
-        = hidden_field_tag 'visita[baule]', 'f'
-        = submit_tag "Salva baule", class: "btn btn-primary"
-        = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
-    
-      %ol.clienti-baule
-        - for v in @visite do
-          = render v.cliente
-      
+      = link_to "nascondi", "", class: "pull-right show-hide"
+      .more
+        = form_tag 'baule/update', method: :put, id: "baule_update" do
+          = text_field_tag 'visita[titolo]'
+          = text_field_tag 'visita[data]', l(Time.now, format: :only_date)
+          = hidden_field_tag 'visita[baule]', 'f'
+          = submit_tag "Salva baule", class: "btn btn-primary"
+          = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
+
+        %ol.clienti-baule
+          - for v in @visite do
+            = render v.cliente
+
 .well
   .row              
+    = link_to "esandi tutto", "", class: "esandi-tutto pull-right"
+
     - unless @libri_nel_baule.empty?
-      .well.span5
+      .ordini-nel-baule.well.span5
+        .pull-right.show-hide
+          nascondi
         %h2 Ordini nel baule
-        %table.table.libri-nel-baule
-          - for libro in @libri_nel_baule do
+        .more
+          %table.table.libri-nel-baule
+            - for libro in @libri_nel_baule do
+              %tr
+                %td.titolo= libro[:titolo]
+                %td.qta
+                  .pull-right= libro[:quantita]
             %tr
-              %td= libro[:titolo]
               %td
-                .pull-right= libro[:quantita]
-          %tr
-            %td
-            %td
-              .pull-right= @libri_nel_baule.sum {|l| l[:quantita] }
+              %td.qta
+                .pull-right= @libri_nel_baule.sum {|l| l[:quantita] }
 
     - unless @adozioni_nel_baule.empty?
       .adozioni-nel-baule.well.span5
+        = link_to "nascondi", "", class: "pull-right show-hide"
+          
         %h2 Adozioni nel baule
-        %table.table
-          - for libro in @adozioni_nel_baule do
+        .more
+          %table.table
+            - for libro in @adozioni_nel_baule do
+              %tr
+                %td.titolo= libro[:titolo]
+                %td.qta
+                  .pull-right= libro[:quantita]
             %tr
-              %td= libro[:titolo]
               %td
-                .pull-right= libro[:quantita]
-          %tr
-            %td
-            %td
-              .pull-right= @adozioni_nel_baule.sum {|l| l[:quantita] }
+              %td.qta
+                .pull-right= @adozioni_nel_baule.sum {|l| l[:quantita] }
 
-  .pull-right
-    = link_to "esandi tutto", "", class: "esandi-tutto"
   .clearfix  
-    
+
+  .break.page-break
+    = link_to "page break", "", class: "pull-right"
   %ol.visite-long
     - for v in @visite do
-      %li[v]
-        = link_to "mostra classi...", "", class: "mostra-classi"
+      %li.clearfix[v]
+        = link_to "mostra", "", class: "pull-right show-hide"
         %h2= link_to v.cliente.titolo, v.cliente
-        %table.table.table-bordered.classi-adozioni.hidden
-          - v.cliente.classi_adozioni_grouped.each do |k, classi|
-            %tr
-              %td.classe-group
-                .badge.badge-primary.pull-left= k
-              - classi.each do |c|
-                %td[c]
-                  .pull-left
-                    .badge.badge-info.sezione
-                      =c[:sezione]
-                  .clearfix  
-                  - unless c.adozioni.scolastico.empty?
-                    %ul.adozioni-list
-                      - for a in c.adozioni.scolastico do
-                        %li[a]
-                          %span.label.label-important= a.libro.sigla
+        .more.hidden
+          %br
+          %table.table.table-bordered.classi-adozioni
+            - v.cliente.classi_adozioni_grouped.each do |k, classi|
+              %tr
+                %td.classe-group
+                  .badge.badge-primary.pull-left= k
+                - classi.each do |c|
+                  %td[c]
+                    .pull-left
+                      .badge.badge-info.sezione
+                        =c[:sezione]
+                    .clearfix  
+                    - unless c.adozioni.scolastico.empty?
+                      %ul.adozioni-list
+                        - for a in c.adozioni.scolastico do
+                          %li[a]
+                            %span.label.label-important= a.libro.sigla
 
-      .appunti
-        - for a in v.appunti do
-          = render a
+        .appunti.clearfix
+          - for a in v.appunti do
+            .span5
+              = render a
+      .break
+        = link_to "page break", "", class: "pull-right"
 

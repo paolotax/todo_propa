@@ -35,6 +35,7 @@
 
 
 
+
 //pads left
 String.prototype.lpad = function(padString, length) {
 	var str = this;

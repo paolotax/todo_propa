@@ -12,7 +12,36 @@ jQuery ->
   $(".mostra-classi").on "click", (e) ->
     e.preventDefault();
     $("table", $(@).closest(".visita")).toggleClass("hidden");
+    
+    if $(@).text() == 'mostra'
+      $(@).text("nascondi")
+    else
+      $(@).text("mostra")
+
+  $(".show-hide").on "click", (e) ->
+    e.preventDefault();
+    $(".more", $(@).parent()).toggleClass("hidden");
+    if $(@).text() == 'mostra'
+      $(@).text("nascondi")
+    else
+      $(@).text("mostra")    
   
+  $(".esandi-tutto").on "click", (e) ->
+    e.preventDefault();
+    if $(@).text() == 'esandi tutto'
+      $(".more").removeClass("hidden")
+      $(@).text("nascondi tutto")
+      $(".show-hide").each -> $(@).text("nascondi")
+      $(".show a").each ->    $(@).trigger "click"  
+    else
+      $(".more").addClass("hidden");
+      $(@).text("esandi tutto")
+      $(".show-hide").each -> $(@).text("mostra")
+      $(".chiudi a").each ->    $(@).trigger "click"  
+      
+  $(".break a").live "click", (e) ->
+    e.preventDefault();
+    $(@).parent().toggleClass("page-break")
 
   $('#flash_notice, #flash_alert').delay(2000).slideUp('slow')
 

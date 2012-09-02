@@ -1,0 +1,152 @@
+
+.container.page {
+  background-image: url(<%= asset_path "wash-white-30.png" %>);
+  padding: 20px 15px 10px 15px;
+  margin-top: -20px
+}
+
+.wrapper {
+  background-image: url(<%= asset_path "wash-white-30.png" %>);
+  padding: 20px 15px 10px 15px;
+  margin-top: -20px
+}
+
+
+[class^="icon-"] {
+  background-image:none;
+}
+
+.topbar-tweet-btn {
+  float: right;
+  margin-right: 13px;
+}
+
+.icon-tweet {
+  background-image: url(<%= asset_path "twitter_web_sprite_icons.png" %>);
+  background-repeat: no-repeat;
+  background-position: -160px -50px;
+  width: 18px;
+  height: 22px;
+}
+
+.module {
+  text-shadow: 0 1px 0 white;
+  border: 1px solid #EEE;
+  border: 1px solid rgba(0, 0, 0, .1);
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    
+  }
+}
+
+.module ul:first-child li:first-child .list-link,
+.module .flex-module:first-child {
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.module, .promptbird {
+  position: relative;
+  margin-bottom: 10px;
+  line-height: 16px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.module .list-link {
+  position: relative;
+  display: block;
+  padding: 8px 12px;
+  
+  font-family: HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  
+  background-color: #F9F9F9;
+  border-top: 1px solid #E8E8E8;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+.module .active .list-link {
+  font-weight: bold;
+}
+
+.module .chev-right {
+  position: absolute;
+  top: 9px;
+  right: 12px;
+}
+
+.module .list-link:hover, .module .active .list-link {
+  background-color: white;
+  color: #333;
+  text-decoration: none;
+}
+
+.list-link:hover .chev-right, .active .chev-right {
+  background-position: 0 -160px;
+}
+
+
+.chev-right {
+  background-image: url(<%= asset_path "twitter_web_sprite_icons.png" %>);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  display: inline-block;
+  zoom: 1;
+  vertical-align: text-top;
+  
+  background-position: 0 -140px;
+  width: 9px;
+  height: 13px;
+}
+
+.module .flex-module {
+  background-color: #F9F9F9;
+  padding: 12px;
+  line-height: 16px;
+}
+
+.retweeted .dogear, .favorited .dogear, .retweeted.favorited .dogear {
+  display: block;
+}
+
+.favorited .dogear {
+  background-position: -30px -450px;
+}
+
+.retweeted .time, 
+.favorited .time, 
+.favorited .actions, 
+.retweeted .actions,
+.favorited .chiudi {
+  margin-right: 5px;
+}
+
+.dogear {
+  background-image: url(<%= asset_path "twitter_web_sprite_icons.png" %>);
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+  width: 24px;
+  height: 24px;
+}

@@ -38,15 +38,14 @@
 
     = render "appunti/recapiti", appunto: appunto
     
-    - if appunto.da_fatturare?
+    - if appunto.has_righe? && appunto.da_fatturare?
       %p
         DA FATTURARE
     
 
   .clearfix      
   .more
-
-    %div{ style: "color: gray;"}
+    .dates{ style: "color: gray;"}
       %small
         %span creato il
         %span= l appunto.created_at, format: :only_date
@@ -55,8 +54,7 @@
         
     .table-righe-new
       - if appunto.has_righe?
-        - for riga in appunto.righe do
-          = render riga
+        = render appunto.righe
 
   %footer
     - if appunto.has_righe?

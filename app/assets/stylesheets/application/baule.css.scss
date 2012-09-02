@@ -1,0 +1,39 @@
+@import "application/mixins";
+@import "compass/utilities/lists/inline-list";
+
+.more .more-actions {
+  margin-top: 30px;
+  @include clearfix;
+  .nav-appunto {
+    margin-top: 20px;
+    padding-top: 10px;
+    margin-left: -30px;
+  }
+}
+
+.visita {
+  h2 {
+    margin-bottom: 10px;
+  }
+}
+  
+.classi-adozioni {
+  td.classe-group {
+    width: 60px;
+    .badge {
+      text-align: center;
+      font-size: 130%;
+      margin: auto;
+    }
+  }
+  .adozioni-list {
+    @include inline-list;
+  }
+  .sezione {
+    margin-bottom: 10px
+  }  
+}
+
+.break.page-break {
+  border-top: 5px dotted blue;
+}
