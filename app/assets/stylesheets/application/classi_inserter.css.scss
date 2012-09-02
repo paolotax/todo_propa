@@ -9,6 +9,13 @@
   border: 1px solid #E6B96F;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
+  
+  .error.help-inline {
+    color: #B94A48;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+  }
 }
 
 

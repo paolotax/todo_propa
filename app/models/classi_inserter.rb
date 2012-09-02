@@ -60,12 +60,17 @@ class ClassiInserter
         sezione: m.keys[0].upcase,
         nr_alunni: m.values[0]
       )
+      
+      return false unless nuova_classe.errors.empty?
+      
       if self.libro_ids
         self.libro_ids.each do |libro|
           nuova_classe.adozioni.create(libro_id: libro) unless libro.blank?
         end  
-      end
+      end  
     end  
+
+    return true
   end  
 
   def persisted?

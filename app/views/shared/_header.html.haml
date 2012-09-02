@@ -26,9 +26,6 @@
         - if user_signed_in?
           .pull-right
             %ul.nav
-              / - if ['clienti', 'appunti'].include?(params[:controller])
-              /   %li
-              /     = render partial: "shared/search"
               %li
                 = render partial: "shared/autocomplete"
               

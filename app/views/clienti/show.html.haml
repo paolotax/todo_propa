@@ -72,7 +72,9 @@
       - if @cliente.scuola_primaria?
         = render "classi_adozioni"
         = render "classi_inserters/form"
-
+      - else
+        &nbsp
+        
     .span5
       %header.content-header
         .header-inner

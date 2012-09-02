@@ -2,7 +2,10 @@
 
 .insert-classi.clearfix
   = simple_form_for [@cliente, @classi_inserter], class: "classi_inserter", remote: true do |f|
+
     = f.error_notification
+    = f.error :base, class: "error"
+
     = f.hidden_field  :cliente_id, value: @cliente.id
     = f.input :classe, as: :select, collection: 1..5, prompt: "inserisci classe", autofocus: true
     .more.hidden
@@ -18,7 +21,6 @@
             %label.checkbox.hidden{ data: { classe: "#{libro.classe}" } }
               = check_box_tag "classi_inserter[libro_ids][]", libro.id, false, id: dom_id(libro)
               = libro.titolo
-      = f.error :base
       .controls
         = f.button :submit, "Salva", class: "btn-primary"
 
