@@ -10,15 +10,20 @@ class ClassiInsertersController < ApplicationController
     
     if @classi_inserter.valid?
       @classi_inserter.insert_classi
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js {
+          @cliente = current_user.clienti.find(params[:cliente_id])
+        }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.js { @cliente = current_user.clienti.find(params[:cliente_id]) }
+      end
     end
     
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js {
-        @cliente = current_user.clienti.find(params[:cliente_id])
-      }
-      format.json { head :no_content }
-    end
+
   
   end
 

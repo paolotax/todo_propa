@@ -1,5 +1,7 @@
+- @classi_inserter ||= ClassiInserter.new
+
 .insert-classi.clearfix
-  = simple_form_for [@cliente, ClassiInserter.new], class: "classi_inserter", remote: true do |f|
+  = simple_form_for [@cliente, @classi_inserter], class: "classi_inserter", remote: true do |f|
     = f.error_notification
     = f.hidden_field  :cliente_id, value: @cliente.id
     = f.input :classe, as: :select, collection: 1..5, prompt: "inserisci classe", autofocus: true

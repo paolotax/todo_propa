@@ -26,7 +26,9 @@ class ClientiController < ApplicationController
     @cliente = current_user.clienti.includes(:indirizzi, :appunti, :fatture, :righe).find(params[:id])
     
     @adozioni_per_scuola = @cliente.adozioni.joins(:classe).scolastico.order("classi.classe, classi.sezione").group_by(&:libro)
+    
     @classi_inserter = ClassiInserter.new
+    
     if request.path != cliente_path(@cliente)
       redirect_to @cliente, status: :moved_permanently
     end
