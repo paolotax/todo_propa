@@ -52,19 +52,25 @@ table {
 .hidden         { display: none; }
 .modal          { display: none; }
 
-.ordini-nel-baule,
+
 .adozioni-nel-baule {
-  @include clearfix();
-  float: left;
-  margin-right: 10px;
+  position: fixed;
+  bottom: 1px;
+  right: -100px;
+}
+.ordini-nel-baule {
+  position: fixed;
+  bottom: 1px;
+  left: 1px;
 }
 
 .baule_btn { display: none; }
-.map_container {
+
+.map-baule .map_container {
   margin-bottom: 20px;
   .gmaps4rails_map {
     margin: auto;
-    width: 600px;
+    width: 600;
     height: 300px;
   }
 } 
@@ -74,9 +80,7 @@ table {
   .riga {
     @include clearfix();
   }
-  
   .titolo  { float: left; padding: 3px 3px 3px 10px; width: 200px; }
-  
   .dati-riga {
     float: right;
     .quantita { float: left; padding: 3px; width:  50px; text-align: right; }

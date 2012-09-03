@@ -1,4 +1,6 @@
-%div{ class: "cliente #{if @nel_baule isnt false then 'favorited' else ''}", id: "cliente_#{@id}" }
+= console.log @nel_baule?
+
+%div{ class: "cliente #{if @nel_baule? then 'favorited' else ''}", id: "cliente_#{@id}" }
   .content
     .dogear
     .actions
@@ -12,7 +14,7 @@
             %i.icon-pencil
             Modifica
         %li.baule
-          - if @nel_baule isnt false
+          - if @nel_baule?
             %a{ href: "/visite/#{@nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
               %i.icon-road
               Scarica baule

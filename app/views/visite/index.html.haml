@@ -19,12 +19,10 @@
             = link_to visite_url(:provincia => p.provincia), class: "list-link" do
               = p.provincia
               %i.chev-right
-    
-    .well
-      
-      = render :partial => 'da_visitare'
 
-                
+    .well
+      %ol
+        = render @scuole
 
   .span7
     %h2= "#{pluralize(@visite.count, "scuola")} completate."

@@ -17,11 +17,10 @@ module ApplicationHelper
     
     if cliente.nel_baule
       link_to cliente.nel_baule, method: "delete", remote: true, class: "baule_btn #{options[:class_scarica]}" do
-        content_tag( :i, "", class: 'icon-truck') + "Scarica Baule"
+        content_tag( :i, "", class: 'icon-truck')
       end  
     else
-
-      render "visite/nel_baule"
+      render "visite/nel_baule", cliente: cliente
     end
   end
     
