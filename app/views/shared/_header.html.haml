@@ -42,10 +42,9 @@
                   %li
                     = link_to "Esci", destroy_user_session_path, {:method => :delete, :class => 'tab'}
             .toolbar-buttons.pull-right
-              - if current_user.visite.nel_baule.size > 0
-                = link_to baule_url, class: "btn btn-warning topbar-tweet-btn", style: "font-size: 24px" do
-                  %i.icon-road
-                  %sup= current_user.visite.nel_baule.size
+              = link_to baule_url, class: "btn btn-warning topbar-tweet-btn nav-baule", style: "font-size: 24px" do
+                %i.icon-road
+                %sup= current_user.visite.nel_baule.size
           
               = yield :add_button
 

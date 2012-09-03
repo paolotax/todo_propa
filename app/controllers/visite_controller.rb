@@ -60,10 +60,5 @@ class VisiteController < ApplicationController
       format.html { redirect_to :back, :notice => 'Visita eliminata.' }
       format.js
     end
-    # respond_to do |format|
-    #   format.html { redirect_to visite_url }
-    #   format.js
-    #   format.xml  { head :ok }
-    # end
   end
 end

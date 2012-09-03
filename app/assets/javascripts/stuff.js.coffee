@@ -14,11 +14,6 @@ jQuery ->
     e.stopPropagation()
     e.preventDefault()
     $(@).closest($('.fattura')).removeClass('opened')
-  
-  if $('.visite-long').length
-    $('.appunto').each ->
-      $(@).addClass('opened')
-      
       
   $('.the-modal .the-close').on 'click', (e) ->
     e.preventDefault()

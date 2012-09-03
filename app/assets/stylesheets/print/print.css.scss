@@ -79,20 +79,23 @@ table {
   
   .dati-riga {
     float: right;
-    .quantita { float: left; padding: 3px; width:  60px; text-align: right; }
-    .prezzo   { float: left; padding: 3px; width:  60px; text-align: right; }
-    .sconto   { float: left; padding: 3px; width:  60px; text-align: right; }
-    .importo  { float: left; padding: 3px; width:  70px; text-align: right; }    
+    .quantita { float: left; padding: 3px; width:  50px; text-align: right; }
+    .prezzo   { float: left; padding: 3px; width:  50px; text-align: right; display: none }
+    .sconto   { float: left; padding: 3px; width:  50px; text-align: right; display: none }
+    .importo  { float: left; padding: 3px; width:  60px; text-align: right; display: none }    
   }
 
 
 }
 
-.dates, .totali-new { 
+.totali-new { 
   float: right;
   @include clearfix();
 }
 
+.dates { 
+
+}
 
 .time, .mostra-classi, .importo.badge, .chiudi, .actions, .stato, .more-actions {
   display: none
@@ -102,6 +105,18 @@ table.righe {
   width: 100%;
 }
 
+.baule-page {
+  .appunti {
+    @include clearfix();
+    .appunto {
+      width: 300px;
+      float: left;
+      border: 1px solid black;
+      margin: 0 5px 5px 0;
+      padding: 5px; 
+    }    
+  }
+}
 
 
 .classi-adozioni {

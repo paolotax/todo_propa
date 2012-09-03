@@ -25,20 +25,19 @@
           - for v in @visite do
             = render v.cliente
 
-.well
+.well.baule-page
   .row              
     = link_to "esandi tutto", "", class: "esandi-tutto pull-right"
 
     - unless @libri_nel_baule.empty?
       .ordini-nel-baule.well.span5
-        .pull-right.show-hide
-          nascondi
-        %h2 Ordini nel baule
+        = link_to "nascondi", "", class: "pull-right show-hide"
         .more
+          %h2 Ordini nel baule
           %table.table.libri-nel-baule
             - for libro in @libri_nel_baule do
               %tr
-                %td.titolo= libro[:titolo]
+                %td.titolo= link_to libro[:titolo], libro
                 %td.qta
                   .pull-right= libro[:quantita]
             %tr
@@ -49,9 +48,8 @@
     - unless @adozioni_nel_baule.empty?
       .adozioni-nel-baule.well.span5
         = link_to "nascondi", "", class: "pull-right show-hide"
-          
-        %h2 Adozioni nel baule
         .more
+          %h2 Adozioni nel baule
           %table.table
             - for libro in @adozioni_nel_baule do
               %tr
@@ -67,6 +65,7 @@
 
   .break.page-break
     = link_to "page break", "", class: "pull-right"
+  
   %ol.visite-long
     - for v in @visite do
       %li.clearfix[v]

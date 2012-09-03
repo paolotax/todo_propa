@@ -3,9 +3,9 @@
 - title @cliente.nome
 
 .content
-  %section.well.show-page
+  %section.well.show-page[@cliente]
     %header
-    %article.row-fluid[@cliente]
+    %article.row-fluid
       .location.span4
         - unless @cliente.latitude.nil?
           .map-avatar
@@ -46,11 +46,15 @@
               Mostra percorso
 
     %footer.show-toolbar
-      = link_to cliente_url(Cliente.previous(@cliente, 'titolo').first), class: "btn" do
+      = link_to cliente_url(Cliente.previous(@cliente, 'id').first), class: "btn" do
         %i.icon-caret-left
-      = link_to cliente_url(Cliente.next(@cliente, 'titolo').first), class: "btn" do
+      = link_to cliente_url(Cliente.next(@cliente, 'id').first), class: "btn" do
         %i.icon-caret-right
+      
       .pull-right
+        
+        = baule_tag @cliente, class_scarica: "btn btn-warning"
+        
         - unless @cliente.has_documenti?
           = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
             %i.icon-trash

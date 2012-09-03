@@ -2,30 +2,27 @@ if ($('#appunti').length > 0) {
   <%- @visita.appunti.each do |a|  %>
     appunto = $("#<%= dom_id(a) %>")
     appunto.toggleClass('favorited');
-    $('.baule', appunto).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
+    $('.baule_btn', appunto).html("<%= escape_javascript(render 'visite/scarica_baule', visita: @visita) %>")
   <% end %>  
 };
 
-if ($('#clienti').length > 0) {
+if ($('.cliente').length > 0) {
   cliente = $("#<%= dom_id(@visita.cliente) %>")
   cliente.toggleClass('favorited');
-  $('.baule', cliente).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
+  console.log(cliente);
+  $('.baule_btn', cliente).replaceWith("<%= escape_javascript(render 'visite/scarica_baule', visita: @visita) %>")
 };
 
-if ($('.clienti-small').length > 0) {
-  cliente = $("#<%= dom_id(@visita.cliente) %>")
-  cliente.toggleClass('favorited');
-  $('.baule', cliente).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
-};
+$(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");
 
-if ($('.clienti-list').length > 0) {
-  cliente = $("#<%= dom_id(@visita.cliente) %>")
-  $('.baule', cliente).html("<%= escape_javascript(render 'visite/scarica_baule') %>")
-};
-
-var new_navbar = $("<%= escape_javascript(render 'shared/header') %>")
-var new_toolbar = $(".toolbar-buttons.pull-right", new_navbar)
-$(".navbar.navbar-fixed-top .toolbar-buttons.pull-right").replaceWith(new_toolbar)
+// var new_navbar = $("<%= escape_javascript(render 'shared/header') %>")
+// var new_toolbar = $(".toolbar-buttons.pull-right", new_navbar)
+// $(".navbar.navbar-fixed-top .toolbar-buttons.pull-right").replaceWith(new_toolbar)
+// 
+// 
+// var new_navbar = $("<%= escape_javascript(render 'shared/header') %>")
+// var new_toolbar = $(".toolbar-buttons.pull-right", new_navbar)
+// $(".navbar.navbar-fixed-top .toolbar-buttons.pull-right").replaceWith(new_toolbar)
 
 
 

@@ -23,7 +23,7 @@ class ClientiController < ApplicationController
   def show
     session[:return_to] = request.path
     
-    @cliente = current_user.clienti.includes(:indirizzi, :appunti, :fatture, :righe).find(params[:id])
+    @cliente = current_user.clienti.includes(:indirizzi, :appunti, :fatture, :righe, :visite).find(params[:id])
     
     @adozioni_per_scuola = @cliente.adozioni.joins(:classe).scolastico.order("classi.classe, classi.sezione").group_by(&:libro)
     

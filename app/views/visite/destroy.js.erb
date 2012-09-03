@@ -6,8 +6,6 @@
 
 cliente = $("#<%= dom_id(@cliente) %>")
 cliente.toggleClass('favorited');
-$('.baule', cliente).html("<%= escape_javascript(render 'visite/nel_baule') %>")
+$('.baule_btn', cliente).replaceWith("<%= escape_javascript(render 'visite/nel_baule') %>")
 
-var new_navbar = $("<%= escape_javascript(render 'shared/header') %>")
-var new_toolbar = $(".toolbar-buttons.pull-right", new_navbar)
-$(".navbar.navbar-fixed-top .toolbar-buttons.pull-right").replaceWith(new_toolbar)
+$(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");

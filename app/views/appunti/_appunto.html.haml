@@ -45,8 +45,9 @@
 
   .clearfix      
   .more
-    .dates{ style: "color: gray;"}
+    .dates
       %small
+        %span= "##{appunto.id} - "
         %span creato il
         %span= l appunto.created_at, format: :only_date
         %span= "- modificato il"

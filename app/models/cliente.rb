@@ -89,10 +89,10 @@ class Cliente < ActiveRecord::Base
   end
   
   def nel_baule
-    nel_baule = false
+    nel_baule = nil
     self.visite.each do |v|
       if v.nel_baule?
-        nel_baule = v.id
+        nel_baule = v
       end
     end 
     nel_baule

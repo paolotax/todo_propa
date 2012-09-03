@@ -12,6 +12,19 @@ module ApplicationHelper
     type = options.delete(:type) || :text_field
     content_tag(:div, (f.label(attribute, "#{label_name}:" ) + f.send(type, attribute, options)), :class => "field")
   end
+  
+  def baule_tag(cliente, options = {})
+    
+    if cliente.nel_baule
+      link_to cliente.nel_baule, method: "delete", remote: true, class: "baule_btn #{options[:class_scarica]}" do
+        content_tag( :i, "", class: 'icon-truck') + "Scarica Baule"
+      end  
+    else
+
+      render "visite/nel_baule"
+    end
+  end
+    
 
   def new_button(path) 
     content_for :add_button do
