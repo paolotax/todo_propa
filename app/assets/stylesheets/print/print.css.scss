@@ -75,6 +75,32 @@ table {
   }
 } 
 
+
+@import "application/mixins";
+
+div.cliente {
+  width: 40%;
+  @include clearfix();
+  margin: 3px 0 3px 0;
+  padding: 3px;
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+  > div {
+    float: left;
+  }
+  .titolo {
+    width: 52%;
+  }
+  .baule-div,
+  .in-corso,
+  .da-consegnare, 
+  .mie-adozioni {
+    text-align: center;
+    width: 12%;
+  }
+}
+
+
 .table-righe-new {
   @include clearfix();
   .riga {
