@@ -87,9 +87,8 @@
           = gmaps({ :markers => {:data => clienti.to_gmaps4rails }, :map_options => { id: "map_#{provincia}", :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
         
         = provincia
-        %ol.clienti-list
-          - for cliente in clienti do
-            = render cliente
+        .clienti-list
+          = render clienti
 
     .module
       %h2 Cassa
@@ -106,16 +105,14 @@
     - ids = current_user.righe.scarico.da_pagare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
     - grouped_clienti = Cliente.order(:id).find(ids).group_by(&:provincia)
     .clienti-list
-
       - grouped_clienti.each do |provincia, clienti|
 
         .map-avatar
           = gmaps({ :markers => {:data => clienti.to_gmaps4rails }, :map_options => { id: "map_#{provincia}_da_pagare", :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
 
         = provincia
-        %ol.clienti-list
-          - for cliente in clienti do
-            = render cliente
+        .clienti-list
+          = render clienti
 
 
             

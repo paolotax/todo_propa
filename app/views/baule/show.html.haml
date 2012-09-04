@@ -4,6 +4,7 @@
 
 .well.baule-page
   .row
+    = link_to "esandi tutto", "", class: "esandi-tutto pull-right"
     .span7
       = link_to "nascondi", "", class: "pull-right show-hide"
       .map-baule.more
@@ -21,22 +22,21 @@
           = submit_tag "Salva baule", class: "btn btn-primary"
           = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
 
-        %ol.clienti-baule
-          - for v in @visite do
-            = render v.cliente
+        .clienti-baule
+          = render @clienti
 
 .well.baule-page
   .row              
-    = link_to "esandi tutto", "", class: "esandi-tutto pull-right"
-
+    
     - unless @libri_nel_baule.empty?
-      .ordini-nel-baule.well.span5
+      .ordini-nel-baule.span5
         = link_to "nascondi", "", class: "pull-right show-hide"
         .more
           %h2 Ordini nel baule
           %table.table.libri-nel-baule
-            - for libro in @libri_nel_baule do
+            - for libro, index in @libri_nel_baule do
               %tr
+                %td= index
                 %td.titolo= link_to libro[:titolo], libro
                 %td.qta
                   .pull-right= libro[:quantita]
@@ -46,7 +46,7 @@
                 .pull-right= @libri_nel_baule.sum {|l| l[:quantita] }
 
     - unless @adozioni_nel_baule.empty?
-      .adozioni-nel-baule.well.span5
+      .adozioni-nel-baule.span5
         = link_to "nascondi", "", class: "pull-right show-hide"
         .more
           %h2 Adozioni nel baule

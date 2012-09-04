@@ -1,12 +1,11 @@
 %div[cliente]
+  .counter
+    = "#{cliente_counter + 1}."
   .baule-div
     = baule_tag cliente, class_scarica: "btn btn-warning btn-mini"
   
   .titolo
     = link_to cliente.titolo, cliente
-  
-  / - unless cliente.properties.nil?
-  /   - unless cliente.properties["appunti_in_corso"].nil?
 
   .in-corso
     - if cliente.properties['appunti_in_corso']
@@ -15,16 +14,13 @@
     - else
       &nbsp
 
-  / - unless cliente.properties["copie_da_consegnare"].nil?
-  
   .da-consegnare
     - if cliente.properties["copie_da_consegnare"]
       %span.badge
         = cliente.properties["copie_da_consegnare"]
     - else
       &nbsp
-  
-  / - unless cliente.mie_adozioni.empty?
+
   .mie-adozioni
     - unless cliente.mie_adozioni.empty?
       %span.adozioni.badge.badge-important 

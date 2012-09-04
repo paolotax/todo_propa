@@ -9,7 +9,9 @@ class User < ActiveRecord::Base
   has_many :fatture
   
   has_many :righe_fattura, :through => :fatture, :source => :righe
+
   has_many :adozioni, :through => :clienti
+  has_many :mie_adozioni, :through => :clienti, :source => :adozioni, :include => :libro, :conditions => "libri.settore = 'Scolastico'"
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

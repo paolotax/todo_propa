@@ -89,14 +89,18 @@ div.cliente {
     float: left;
   }
   .titolo {
-    width: 52%;
+    width: 50%;
   }
-  .baule-div,
+  .counter,
   .in-corso,
   .da-consegnare, 
   .mie-adozioni {
     text-align: center;
-    width: 12%;
+    width: 10%;
+  }
+  .baule-div {
+    text-align: left;
+    width: 10%;
   }
 }
 

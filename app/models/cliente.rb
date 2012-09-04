@@ -14,8 +14,9 @@ class Cliente < ActiveRecord::Base
   has_many :indirizzi, :as => :indirizzable, :dependent => :destroy
 
   has_many :classi,      :dependent => :destroy
-  has_many :adozioni, :through => :classi, :include => :libro
+  has_many :adozioni,     :through => :classi, :include => :libro
   has_many :mie_adozioni, :through => :classi, :source => :adozioni, :include => :libro, :conditions => "libri.settore = 'Scolastico'"
+  
   has_many :righe, through: :appunti
 
   accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:comune].nil? || a[:provincia].nil?}, :allow_destroy => true  
