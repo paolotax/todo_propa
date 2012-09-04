@@ -8,15 +8,16 @@ code do |u|
     note:         markdown(u.note),
     stato:        stato_to_s(u),
     con_recapiti: u.has_recapiti?,
+    nel_baule:    u.nel_baule,
     con_righe:    u.has_righe?
   }
 end
 
-code do |u|
-  unless u.nel_baule.nil?  
-    { nel_baule:    u.cliente.nel_baule.id }
-  end
-end
+# code do |u|
+#   unless u.nel_baule.nil?  
+#     { nel_baule:    u.cliente.nel_baule.id }
+#   end
+# end
 
 node :errors do |model|
    model.errors
