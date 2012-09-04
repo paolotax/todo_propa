@@ -1,14 +1,34 @@
-%li[cliente]
-  %span.titolo
+%div[cliente]
+  .baule-div
+    = baule_tag cliente, class_scarica: "btn btn-warning btn-mini"
+  
+  .titolo
     = link_to cliente.titolo, cliente
   
-  - unless cliente.properties.nil?
-    - unless cliente.properties["appunti_in_corso"].nil?
-      %span.in-corso
-        %span.badge.badge-info= cliente.properties["appunti_in_corso"]
-    - unless cliente.properties["copie_da_consegnare"].nil?
-      %span.da-consegnare
-        %span.badge= cliente.properties["copie_da_consegnare"]
+  / - unless cliente.properties.nil?
+  /   - unless cliente.properties["appunti_in_corso"].nil?
+
+  .in-corso
+    - if cliente.properties['appunti_in_corso']
+      %span.badge.badge-info
+        = cliente.properties["appunti_in_corso"]
+    - else
+      &nbsp
+
+  / - unless cliente.properties["copie_da_consegnare"].nil?
   
-  = baule_tag cliente, class_scarica: "btn btn-warning btn-mini"
+  .da-consegnare
+    - if cliente.properties["copie_da_consegnare"]
+      %span.badge
+        = cliente.properties["copie_da_consegnare"]
+    - else
+      &nbsp
   
+  / - unless cliente.mie_adozioni.empty?
+  .mie-adozioni
+    - unless cliente.mie_adozioni.empty?
+      %span.adozioni.badge.badge-important 
+        = cliente.mie_adozioni.size
+    - else
+      &nbsp
+    

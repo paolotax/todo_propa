@@ -197,29 +197,6 @@ ol.clienti-list {
   
 }
 
-li.cliente {
-  margin: 3px 0;
-  padding: 3px;
-  background-color: white;
-  span {
-    display: inline-block;
-  }
-  .titolo {
-    width: 40%;
-  }
-  .in-corso,
-  .da-consegnare {
-    text-align: center;
-    width: 12%;
-  }
-  .baule {
-    text-align: right;
-    width: 30%;
-    a {
-      color: #FF9F00; 
-    }
-  }
-}
 
 .baule form {
   display: inline
