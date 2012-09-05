@@ -4,7 +4,7 @@
   $('.baule', appunto).html("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>")
 <% end %>
 
-cliente = $("#<%= dom_id(@cliente) %>")
+cliente = $(".<%= dom_id(@cliente) %>")
 cliente.toggleClass('favorited');
 $('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>")
 

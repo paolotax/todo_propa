@@ -3,7 +3,7 @@
 - title @cliente.nome
 
 .content
-  %section.well.show-page[@cliente]
+  %section.well.show-page{ class: "cliente #{dom_id(@cliente)}"}
     %header
     %article.row-fluid
       .location.span4

@@ -7,7 +7,7 @@ if ($('.appunto').length > 0) {
 };
 
 if ($('.cliente').length > 0) {
-  cliente = $("#<%= dom_id(@visita.cliente) %>")
+  cliente = $(".<%= dom_id(@visita.cliente) %>")
   cliente.toggleClass('favorited');
   $('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @visita.cliente, class_scarica: 'btn btn-warning' ) %>");
 };
