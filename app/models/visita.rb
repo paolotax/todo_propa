@@ -20,18 +20,16 @@ class Visita < ActiveRecord::Base
 
   after_create :add_appunti
   
+  
+  attr_writer :data
+  validate    :check_data
+  before_save :save_data
+  
   def nel_baule?
     self.baule == true
   end
   
-  def data
-    self.start
-  end
-  
-  def data=(data)
-    self.start = Date.parse(data).beginning_of_day
-    self.end   = Date.parse(data).end_of_day
-  end
+
   
   def mie_adozioni_grouped_titolo
     self.cliente.mie_adozioni.group_by(&:libro_id) || []
@@ -48,6 +46,20 @@ class Visita < ActiveRecord::Base
     #     
     visite
   end
+  
+  
+  def data
+    @data || start.try(:strftime, "%d-%m-%Y")
+  end
+
+  # def data
+  #   self.start
+  # end
+  # 
+  # def data=(data)
+  #   self.start = Date.parse(data).beginning_of_day
+  #   self.end   = Date.parse(data).end_of_day
+  # end
 
   private
   
@@ -56,6 +68,19 @@ class Visita < ActiveRecord::Base
         self.appunti << appunto
       end
     end  
+
+    def save_data
+      self.start = Date.parse(@data).beginning_of_day if @data.present?
+      self.end   = Date.parse(@data).end_of_day if @data.present?
+    end
+
+    def check_data
+      if @data.present? && Date.parse(@data).nil?
+        errors.add :data, "cannot be parsed"
+      end
+    rescue ArgumentError
+      errors.add :data, "data non valida"
+    end
 
 end
 
