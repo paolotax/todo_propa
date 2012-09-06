@@ -85,6 +85,10 @@
                   .pull-left
                     .badge.badge-info.sezione
                       =c[:sezione]
+                  .pull-right
+                    = link_to new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe} #{c.sezione}"), class: "btn" do
+                      %i.icon-book
+                      
                   .clearfix  
                   - unless c.adozioni.scolastico.empty?
                     %ul.adozioni-list
