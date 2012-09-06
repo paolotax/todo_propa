@@ -2,14 +2,14 @@ if ($('.appunto').length > 0) {
   <%- @visita.appunti.each do |a|  %>
     appunto = $("#<%= dom_id(a) %>")
     appunto.toggleClass('favorited');
-    $('.baule_btn', appunto).replaceWith("<%= escape_javascript( baule_tag @visita.cliente, class_scarica: 'btn btn-warning' ) %>");
+    $('.baule_btn', appunto).replaceWith("<%= escape_javascript( baule_tag @visita.cliente ) %>");
   <% end %>  
 };
 
 if ($('.cliente').length > 0) {
   cliente = $(".<%= dom_id(@visita.cliente) %>")
   cliente.toggleClass('favorited');
-  $('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @visita.cliente, class_scarica: 'btn btn-warning' ) %>");
+  $('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @visita.cliente ) %>");
 };
 
 $(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");

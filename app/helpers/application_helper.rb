@@ -16,7 +16,7 @@ module ApplicationHelper
   def baule_tag(cliente, options = {})
     
     if cliente.nel_baule
-      link_to cliente.nel_baule, method: "delete", remote: true, class: "baule_btn btn btn-mini #{options[:class_scarica]}" do
+      link_to cliente.nel_baule, method: "delete", remote: true, class: "baule_btn btn btn-mini btn-warning" do
         content_tag( :i, "", class: 'icon-truck')
       end  
     else
