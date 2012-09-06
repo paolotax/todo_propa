@@ -1,4 +1,4 @@
-%div{ class: "cliente #{dom_id(cliente)}"}
+%div{ class: "cliente #{dom_id(cliente)} #{cliente.fatto? ? "fatto" : "" }"}
   .counter
     = "#{cliente_counter + 1}."
   .baule-div

@@ -99,6 +99,17 @@ class Cliente < ActiveRecord::Base
     nel_baule
   end
   
+  def fatto?
+    unless nel_baule
+      self.visite.each do |v|
+        if v.start > Date.new(2012, 8, 31)
+          return true
+        end
+      end
+    end
+    false      
+  end
+  
   def mie_adozioni_grouped
     adozioni = self.mie_adozioni.
                     includes(:libro, :classe, :materia).
