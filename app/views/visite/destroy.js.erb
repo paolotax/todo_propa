@@ -1,11 +1,19 @@
-<%- @cliente.appunti.each do |a|  %>
-  appunto = $("#<%= dom_id(a) %>")
+var visita = $("#<%= dom_id(@visita) %>");
+console.log( $("#<%= dom_id(@visita) %>"))
+if (visita.length > 0) {
+  visita.remove();
+}
+
+
+<% @appunti.each do |a|  %>
+  var appunto = $("#<%= dom_id(a) %>");
   appunto.toggleClass('favorited');
-  $('.baule', appunto).html("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>")
+  $('.baule', appunto).html("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>");
 <% end %>
 
-cliente = $(".<%= dom_id(@cliente) %>")
-cliente.toggleClass('favorited');
-$('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>")
+
+
+var cliente = $(".<%= dom_id(@cliente) %>");
+$('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>");
 
 $(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");

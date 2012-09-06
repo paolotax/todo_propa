@@ -43,7 +43,7 @@
                 %td= i += 1
                 %td= l visita.start, format: :only_date unless visita.start.nil?
                 %td= link_to visita.cliente.titolo, visita.cliente
-                %td= link_to 'elimina', visita, :confirm => 'Sei sicuro?', :method => :delete
+                %td= link_to 'elimina', visita, :method => :delete, remote: true
                 %td{ class: "cliente #{dom_id(visita.cliente)}" }
                   = baule_tag visita.cliente
    

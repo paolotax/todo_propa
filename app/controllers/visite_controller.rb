@@ -55,6 +55,8 @@ class VisiteController < ApplicationController
   def destroy
     @visita = Visita.find(params[:id])
     @cliente = @visita.cliente
+    @appunti = @cliente.appunti.in_corso
+    
     @visita.destroy
     respond_to do |format|
       format.html { redirect_to :back, :notice => 'Visita eliminata.' }
