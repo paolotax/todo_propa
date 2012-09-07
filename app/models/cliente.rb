@@ -47,6 +47,8 @@ class Cliente < ActiveRecord::Base
   
   scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
   
+  scope :con_adozioni, includes(:adozioni).where('adozioni.id is not null') & Adozione.scolastico
+  
   
   def self.grouped_by_provincia_and_comune
     clienti = scoped
@@ -56,10 +58,36 @@ class Cliente < ActiveRecord::Base
     clienti
   end
   
-  def self.con_appunti(relation)
-    ids = relation.pluck(:cliente_id).uniq
-    Cliente.where('clienti.id in (?)', ids)
+  class << self
+    ["adozioni", "appunti", "classi", "visite"].each do |objects|
+      define_method "con_#{objects}" do |relation|
+        ids = relation.pluck(:cliente_id)
+        Cliente.where('clienti.id in (?)', ids)
+      end
+
+      define_method "senza_#{objects}" do |relation|
+        ids = relation.pluck(:cliente_id)
+        scoped - Cliente.where('clienti.id in (?)', ids)
+      end
+
+    end
   end
+  
+  # def self.con_appunti(appunti_relation)
+  #     ids = appunti_relation.pluck(:cliente_id).uniq
+  #     Cliente.where('clienti.id in (?)', ids)
+  #   end
+  # 
+  #   def self.with_objects(objects_relation)
+  #     ids = objects_relation.pluck(:cliente_id).uniq
+  #     Cliente.where('clienti.id in (?)', ids)
+  #   end
+  #     
+  #   def self.without_objects(objects_relation)
+  #     ids = objects_relation.pluck(:cliente_id).uniq
+  #     Cliente.where('clienti.id in (?)', ids)
+  #     
+  #   end
   
   #after_initialize :set_indirizzi
   
@@ -234,22 +262,20 @@ class Cliente < ActiveRecord::Base
     matches = Soulmate::Matcher.new("#{id_user}_cliente").matches_for_term(term)
   end
   
-  def load_into_soulmate
-    loader = Soulmate::Loader.new("#{user_id}_cliente")
-    loader.add({
-                  "term" => "#{titolo} #{comune} #{frazione} #{provincia} #{ragione_sociale}".squish, 
-                  "id" => id, 
-                  "data" => { 
-                    "url" => "clienti/#{slug}",
-                    "titolo" => titolo, 
-                    "citta"  => "#{comune} #{frazione} #{provincia}".squish
-                  }
-                })
-  end
-
-
-
   private
+
+    def load_into_soulmate
+      loader = Soulmate::Loader.new("#{user_id}_cliente")
+      loader.add({
+                    "term" => "#{titolo} #{comune} #{frazione} #{provincia} #{ragione_sociale}".squish, 
+                    "id" => id, 
+                    "data" => { 
+                      "url" => "clienti/#{slug}",
+                      "titolo" => titolo, 
+                      "citta"  => "#{comune} #{frazione} #{provincia}".squish
+                    }
+                  })
+    end
   
     def set_titolo
       n = self.titolo.squish.split(' ')
