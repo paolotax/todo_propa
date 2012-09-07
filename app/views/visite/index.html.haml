@@ -6,7 +6,7 @@
 
 .row  
   .side-bar.span5
-    .module_1
+    .module
       %ul
         %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
           = link_to visite_url, class: "list-link" do
@@ -22,13 +22,13 @@
 
     .well
       .clienti
-        %h2 Da Fare
+        %h3 Da Fare
         = render @scuole_da_fare
       .clienti
-        %h2 Fatte
+        %h3 Fatte
         = render @scuole_fatte
       .clienti
-        %h2 Altro
+        %h3 Altro
         = render @altri_clienti
         
   .span7
@@ -37,20 +37,22 @@
     
     - @visite_grouped.each do |k, v|
       .giro.well
-        .pull-left
+        %header
           %strong= k
           %span= "#{pluralize(v.count, "tappa")}"
-        .pull-right
-          = link_to "esandi", "#", class: "mostra-tappe"
-        .clearfix  
-        %table.table.hidden
-          %tbody
-            - for visita in v do
-              %tr[visita]
-                %td= i += 1
-                %td= l visita.start, format: :only_date unless visita.start.nil?
-                %td= link_to visita.cliente.titolo, visita.cliente
-                %td= link_to 'elimina', visita, :method => :delete, remote: true
-                %td{ class: "cliente #{dom_id(visita.cliente)}" }
-                  = baule_tag visita.cliente
-   
+
+          = link_to "nascondi", "", class: "pull-right show-hide btn"
+
+        .more  
+          %table.table
+            %tbody
+              - for visita in v do
+                %tr[visita]
+                  %td= i += 1
+                  %td= l visita.start, format: :only_date unless visita.start.nil?
+                  %td= link_to visita.cliente.titolo, visita.cliente
+                  %td{ class: "cliente #{dom_id(visita.cliente)}" }
+                    = baule_tag visita.cliente
+                  %td
+                    = link_to visita, method: :delete, remote: true, class: "close" do
+                      &times;
