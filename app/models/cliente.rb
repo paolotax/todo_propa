@@ -47,7 +47,7 @@ class Cliente < ActiveRecord::Base
   
   scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
   
-  scope :con_adozioni, includes(:adozioni).where('adozioni.id is not null') & Adozione.scolastico
+  # scope :con_adozioni, joins(:adozioni) & Adozione.scolastico
   
   
   def self.grouped_by_provincia_and_comune
@@ -62,14 +62,18 @@ class Cliente < ActiveRecord::Base
     ["adozioni", "appunti", "classi", "visite"].each do |objects|
       define_method "con_#{objects}" do |relation|
         ids = relation.pluck(:cliente_id)
-        Cliente.where('clienti.id in (?)', ids)
+        clienti = scoped
+        clienti = clienti.where('clienti.id in (?)', ids)
+        clienti
       end
-
+  
       define_method "senza_#{objects}" do |relation|
         ids = relation.pluck(:cliente_id)
-        scoped - Cliente.where('clienti.id in (?)', ids)
+        clienti = scoped
+        clienti = clienti.where('clienti.id not in (?)', ids)
+        clienti
       end
-
+  
     end
   end
   

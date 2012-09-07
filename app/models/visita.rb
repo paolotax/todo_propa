@@ -16,14 +16,19 @@ class Visita < ActiveRecord::Base
   
   has_many :adozioni, :through => :cliente
   
-  scope :nel_baule, where(baule: true)
-
+  scope :nel_baule,     where(baule: true)
+  scope :non_nel_baule, where(baule: false)
+  
+  scope :settembre, where("start > ?", Date.new(Time.now.year, 8, 31))
+  
   after_create :add_appunti
   
   
   attr_writer :data
   validate    :check_data
   before_save :save_data
+  
+  
   
   def nel_baule?
     self.baule == true

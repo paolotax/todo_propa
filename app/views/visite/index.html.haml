@@ -22,8 +22,15 @@
 
     .well
       .clienti
-        = render @scuole
-
+        %h2 Da Fare
+        = render @scuole_da_fare
+      .clienti
+        %h2 Fatte
+        = render @scuole_fatte
+      .clienti
+        %h2 Altro
+        = render @altri_clienti
+        
   .span7
     %h2= "#{pluralize(@visite.count, "scuola")} completate."
     - i = 0

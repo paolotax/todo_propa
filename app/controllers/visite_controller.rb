@@ -2,21 +2,24 @@ class VisiteController < ApplicationController
   
   
   def index
-    @visite = current_user.visite.includes(:cliente => :visite).where(baule: false).filtra(params)
+    @visite = current_user.visite.settembre.includes(:cliente => :visite).where(baule: false).filtra(params)
     
     @visite_grouped = @visite.order("date(start) desc").group_by {|v| "#{v.start.strftime("%d-%m-%y")} #{v.titolo}" }
+
+    @scuole_fatte  = current_user.clienti.primarie.con_visite(Visita.settembre).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
+    @scuole_da_fare = current_user.clienti.primarie.senza_visite(Visita.settembre).con_adozioni(Adozione.joins(:classe).scolastico).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
     
-    @scuole = current_user.clienti.primarie.includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id").all
+    @altri_clienti = current_user.clienti.con_appunti(Appunto.in_corso).senza_adozioni(Adozione.joins(:classe).scolastico).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
     
     logger.debug { "params: #{current_user.clienti.primarie.filtra(params).order("clienti.id").to_sql}" }
-    logger.debug { "tutte Count: #{@scuole.count}" }
+    logger.debug { "tutte Count: #{@scuole_fatte.count}" }
     
     # elimina le fatte 
     # @visite.each do |v|
     #   @scuole.delete(v.cliente)
     # end
     
-    logger.debug { "diff Count: #{@scuole.count}" }
+    logger.debug { "diff Count: #{@scuole_fatte.count}" }
     
   end
   
