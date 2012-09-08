@@ -5,9 +5,6 @@
 
 jQuery ->
   
-  $(".mostra-tappe").on "click", (e) ->
-    e.preventDefault();
-    $("table", $(@).closest(".giro")).toggleClass("hidden");
 
   $(".mostra-classi").on "click", (e) ->
     e.preventDefault();
@@ -21,22 +18,28 @@ jQuery ->
   $(".show-hide").on "click", (e) ->
     e.preventDefault();
     $(".more", $(@).parent()).toggleClass("hidden");
-    if $(@).text() == 'mostra'
-      $(@).text("nascondi")
+    if $("i", $(@)).hasClass('icon-caret-down')
+      $("i", $(@)).removeClass('icon-caret-down');
+      $("i", $(@)).addClass('icon-caret-up');
     else
-      $(@).text("mostra")    
-  
+      $("i", @).removeClass('icon-caret-up')
+      $("i", @).addClass('icon-caret-down')      
+    
   $(".esandi-tutto").on "click", (e) ->
     e.preventDefault();
     if $(@).text() == 'esandi tutto'
       $(".more").removeClass("hidden")
       $(@).text("nascondi tutto")
-      $(".show-hide").each -> $(@).text("nascondi")
+      $(".show-hide").each -> 
+        $("i", $(@)).removeClass('icon-caret-down');
+        $("i", $(@)).addClass('icon-caret-up');
       $(".show a").each ->    $(@).trigger "click"  
     else
       $(".more").addClass("hidden");
       $(@).text("esandi tutto")
-      $(".show-hide").each -> $(@).text("mostra")
+      $(".show-hide").each ->
+        $("i", @).removeClass('icon-caret-up')
+        $("i", @).addClass('icon-caret-down')
       $(".chiudi a").each ->    $(@).trigger "click"  
       
   $(".break a").live "click", (e) ->

@@ -37,13 +37,11 @@
     
     - @visite_grouped.each do |k, v|
       .giro.well
-        %header
-          %strong= k
-          %span= "#{pluralize(v.count, "tappa")}"
-
-          = link_to "nascondi", "", class: "pull-right show-hide btn"
-
-        .more  
+        %strong= k
+        %span= "#{pluralize(v.count, "tappa")}"
+        = link_to "", class: "pull-right show-hide btn" do
+          %i.icon-caret-down
+        .more.hidden  
           %table.table
             %tbody
               - for visita in v do

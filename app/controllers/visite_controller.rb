@@ -4,7 +4,7 @@ class VisiteController < ApplicationController
   def index
     @visite = current_user.visite.settembre.includes(:cliente => :visite).where(baule: false).filtra(params)
     
-    @visite_grouped = @visite.order("date(start) desc").group_by {|v| "#{v.start.strftime("%d-%m-%y")} #{v.titolo}" }
+    @visite_grouped = @visite.order("date(start) desc").group_by {|v| "#{v.to_s}" }
 
     @scuole_fatte  = current_user.clienti.primarie.con_visite(Visita.settembre).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
     @scuole_da_fare = current_user.clienti.primarie.senza_visite(Visita.settembre).con_adozioni(Adozione.joins(:classe).scolastico).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")

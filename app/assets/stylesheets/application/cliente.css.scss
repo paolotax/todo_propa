@@ -8,6 +8,7 @@ div.cliente {
   border-bottom: 1px solid #ccc;
   > div {
     float: left;
+    line-height: 18px;
   }
   .titolo {
     width: 50%;
@@ -20,6 +21,7 @@ div.cliente {
     width: 10%;
   }
   .baule-div {
+    margin-top: -4px;
     text-align: left;
     width: 10%;
   }

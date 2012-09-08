@@ -7,7 +7,8 @@
     .row
       .span7
         .well
-          = link_to "nascondi", "", class: "pull-right show-hide btn"
+          = link_to "", class: "pull-right show-hide btn" do
+            %i.icon-caret-up
 
           .map-baule.more
             - @mappa = @clienti.to_gmaps4rails
@@ -15,18 +16,24 @@
               = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
 
       .span5
-        .well
+        .toolbar.clearfix
+          = link_to "", class: "btn btn-stampami pull-right", onclick: "window.print();return false;" do
+            %i.icon-print
+            Stampami
           = link_to "esandi tutto", "", class: "esandi-tutto pull-right btn"
+
         .well
-          = link_to "nascondi", "", class: "pull-right show-hide btn"
+          = link_to "", class: "pull-right show-hide btn" do
+            %i.icon-caret-up
           .more
             = form_tag 'baule/update', method: :put, id: "baule_update" do
               = text_field_tag 'visita[titolo]'
               = text_field_tag 'visita[data]', Time.now.strftime("%d-%m-%Y")
               = hidden_field_tag 'visita[baule]', 'f'
+              %br
               = submit_tag "Salva baule", class: "btn btn-primary"
               = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
-
+            %br  
             .clienti-baule
               = render @clienti
 
@@ -35,9 +42,10 @@
     .well.clearfix
       - unless @libri_nel_baule.empty?
         .ordini-nel-baule.span5
-          = link_to "nascondi", "", class: "pull-right show-hide btn"
+          = link_to "", class: "pull-right show-hide btn" do
+            %i.icon-caret-up
+          %h2 Ordini nel baule
           .more
-            %h2 Ordini nel baule
             %table.table.libri-nel-baule
               - for libro, index in @libri_nel_baule do
                 %tr
@@ -52,9 +60,10 @@
 
       - unless @adozioni_nel_baule.empty?
         .adozioni-nel-baule.span5
-          = link_to "nascondi", "", class: "pull-right show-hide btn"
+          = link_to "", class: "pull-right show-hide btn" do
+            %i.icon-caret-up
+          %h2 Adozioni nel baule
           .more
-            %h2 Adozioni nel baule
             %table.table
               - for libro in @adozioni_nel_baule do
                 %tr
@@ -71,7 +80,8 @@
     .break.page-break
       = link_to "page break", "", class: "pull-right btn"
     %div[v]
-      = link_to "mostra", "", class: "pull-right show-hide btn"
+      = link_to "", class: "pull-right show-hide btn" do
+        %i.icon-caret-down
       %h2= link_to v.cliente.titolo, v.cliente
       .more.hidden
         %br

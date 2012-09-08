@@ -28,7 +28,9 @@ class Visita < ActiveRecord::Base
   validate    :check_data
   before_save :save_data
   
-  
+  def to_s
+    "#{start.strftime('%d-%m-%y')} #{titolo}"
+  end
   
   def nel_baule?
     self.baule == true

@@ -1,6 +1,6 @@
 = form_for cliente.visite.build, remote: true, html: { style: "display:inline;", class: "baule_btn" } do |f|
   = f.hidden_field :baule, value: 't'
   = f.hidden_field :cliente_id, value: cliente.id
-  %button.btn.btn-mini{ title: 'metti nel baule!' }
+  %button.btn{ title: 'metti nel baule!' }
     %i.icon-truck
     / Nel baule
