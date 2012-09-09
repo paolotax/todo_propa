@@ -47,11 +47,15 @@
     - i = 0
     
     - @visite_grouped.each do |k, v|
-      .giro.well
+      .giro.well{ class: "giro_#{k.parameterize}"}
         %strong= k
         %span= "#{pluralize(v.count, "tappa")}"
+
+        .pull-right
+          = render "visite/destroy_all", visite: v  
         = link_to "", class: "pull-right show-hide btn" do
           %i.icon-caret-down
+
         .more.hidden  
           %table.table
             %tbody

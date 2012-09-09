@@ -1,0 +1,5 @@
+= form_for :visite, url: destroy_all_visite_path, method: :post, remote: true do |f|
+  - for v in visite do
+    = hidden_field_tag "visite[visita_ids][]", nil, value: v.id
+  = button_tag class: "close", data: {confirm: "Sei sicuro?"} do
+    &times

@@ -42,7 +42,6 @@ class VisiteController < ApplicationController
   def update
     
     @visita = current_user.visite.find(params[:id])
-    
     respond_to do |format|
       if @visita.update_attributes(params[:visita])
         format.html { redirect_to :back, notice: 'Visita modificata.' }
@@ -66,4 +65,19 @@ class VisiteController < ApplicationController
       format.js
     end
   end
+
+  def update_all
+  end
+  
+  
+  def destroy_all
+    @visite = Visita.destroy(params[:visite][:visita_ids])
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js
+      format.json { head :no_content }
+    end
+  end
+
 end

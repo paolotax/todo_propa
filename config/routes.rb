@@ -39,6 +39,9 @@ TodoPropa::Application.routes.draw do
   
   resources :visite do
     resources :visita_appunti
+    collection do
+      post 'destroy_all'
+    end
   end
 
   

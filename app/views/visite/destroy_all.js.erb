@@ -1,0 +1,3 @@
+console.log("<%= escape_javascript  @visite.first.to_s.parameterize %>")
+
+$(".giro_'<%= escape_javascript  @visite.first.to_s.parameterize %>'").remove()
