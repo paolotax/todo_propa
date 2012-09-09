@@ -1,3 +1,2 @@
-console.log("<%= escape_javascript  @visite.first.to_s.parameterize %>")
-
-$(".giro_'<%= escape_javascript  @visite.first.to_s.parameterize %>'").remove()
+var giro = "<%= escape_javascript  @visite.first.to_s.parameterize %>"
+$(".giro_" + giro).remove()
