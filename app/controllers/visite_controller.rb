@@ -21,6 +21,11 @@ class VisiteController < ApplicationController
     
     logger.debug { "diff Count: #{@scuole_fatte.count}" }
     
+    respond_to do |format|
+      format.html
+      format.json { render :rabl => @visite }
+    end
+    
   end
   
   

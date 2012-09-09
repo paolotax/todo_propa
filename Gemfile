@@ -55,6 +55,8 @@ gem 'activerecord-postgres-hstore'
 gem 'rack-contrib'
 gem 'soulmate', :require => 'soulmate/server'
 
+gem 'fullcalendar-rails'
+
 gem 'routing-filter'
 
 gem 'whenever', :require => false

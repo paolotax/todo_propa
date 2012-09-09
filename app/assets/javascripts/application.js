@@ -25,14 +25,17 @@
 //= require jquery.timeago
 //= require jquery_nested_form
 //= require jquery.soulmate
+//= require fullcalendar
+//= require jquery.the-modal.js
+
 //= require_tree ../templates
 //= require_tree ./application
-
 //= require demo
 //= require accounting
 //= require gmaps
-//= require jquery.the-modal.js
 //= require stuff
+
+
 
 
 

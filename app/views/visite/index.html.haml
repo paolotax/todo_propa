@@ -20,7 +20,7 @@
               = p.provincia
               %i.chev-right
 
-    .well
+    .module
       .clienti
         %h3 Da Fare
         = render @scuole_da_fare
@@ -32,6 +32,9 @@
         = render @altri_clienti
         
   .span7
+    .module
+      #calendar
+      
     .module
       = render 'baule/mappa_baule', clienti: @nel_baule
       
