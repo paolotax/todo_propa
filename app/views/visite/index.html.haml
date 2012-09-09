@@ -35,8 +35,11 @@
     .module
       = render 'baule/mappa_baule', clienti: @nel_baule
       
-      = render 'baule/riepilogo_baule'
-
+      .item.clearfix
+        .riepilogo.pull-left
+          = render 'baule/riepilogo_baule'
+        .well.pull-right
+          = render "baule/form"
       
     
     

@@ -1,5 +1,5 @@
 .riepilogo-baule
-  %ul.stats
+  %ul.stats.pull-left
     %li
       - nel_baule = current_user.clienti.nel_baule
       = link_to "" do
@@ -15,3 +15,5 @@
       = link_to "" do
         %strong= adozioni.size
         adozioni
+
+    
