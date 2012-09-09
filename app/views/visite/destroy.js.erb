@@ -1,9 +1,16 @@
 var visita = $("#<%= dom_id(@visita) %>");
-console.log( $("#<%= dom_id(@visita) %>"))
 if (visita.length > 0) {
   visita.remove();
 }
 
+if ($('.map-baule').length > 0) {
+  var clienti = <%= raw current_user.clienti.nel_baule.to_gmaps4rails %>
+  Gmaps.map.replaceMarkers(clienti)
+};
+
+if ($('.riepilogo-baule').length > 0) {
+  $('.riepilogo-baule').replaceWith("<%= escape_javascript( render 'baule/riepilogo_baule' ) %>");
+};
 
 <% @appunti.each do |a|  %>
   var appunto = $("#<%= dom_id(a) %>");

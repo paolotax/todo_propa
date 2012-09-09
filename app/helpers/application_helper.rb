@@ -24,6 +24,11 @@ module ApplicationHelper
     end
   end
     
+  def stampami_tag(options = {})
+    link_to "", class: "btn btn-stampami pull-right", onclick: "window.print();return false;" do
+      content_tag( :i, "", class: 'icon-print') + " Stampami"
+    end  
+  end
 
   def new_button(path) 
     content_for :add_button do

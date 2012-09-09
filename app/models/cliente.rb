@@ -30,7 +30,8 @@ class Cliente < ActiveRecord::Base
   
   scope :select_provincia, select(:provincia).uniq
   scope :select_citta,     select(:comune).uniq
-  
+  scope :nel_baule,        joins(:visite).where("visite.baule = true")
+    
   # scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")
   # scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")
   # scope :con_appunti_da_fare,    joins(:appunti).where("appunti.stato = ''")

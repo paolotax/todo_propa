@@ -1,0 +1,7 @@
+= form_tag 'baule/update', method: :put, id: "baule_update" do
+  = text_field_tag 'visita[titolo]'
+  = text_field_tag 'visita[data]', Time.now.strftime("%d-%m-%Y")
+  = hidden_field_tag 'visita[baule]', 'f'
+  %br
+  = submit_tag "Salva baule", class: "btn btn-primary"
+  = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'

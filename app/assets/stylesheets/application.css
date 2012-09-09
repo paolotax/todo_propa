@@ -11,5 +11,6 @@
  *= require bootstrap_and_overrides
  *= require twitter
  *= require the-modal
- 
+ *= require jquery.ui.datepicker
+
 */

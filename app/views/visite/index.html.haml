@@ -32,6 +32,14 @@
         = render @altri_clienti
         
   .span7
+    .module
+      = render 'baule/mappa_baule', clienti: @nel_baule
+      
+      = render 'baule/riepilogo_baule'
+
+      
+    
+    
     %h2= "#{pluralize(@visite.count, "scuola")} completate."
     - i = 0
     

@@ -16,30 +16,25 @@ class BauleController < ApplicationController
 
   def destroy
     @visite = current_user.visite.nel_baule
-      
     @visite.each do |v|
       v.destroy
     end
-    
+
     respond_to do |format|
-      format.html { redirect_to baule_path }
+      format.html { redirect_to visite_path, notice: "Baule svuotato" }
     end
-      
   end
   
   def update
-    #raise params.inspect
+
     @visite = current_user.visite.nel_baule
-   
     @visite.each do |a|
       a.update_attributes!(params[:visita].reject { |k,v| v.blank? })  #  unless k == 'stato'
     end
     
     respond_to do |format|
-      format.html { redirect_to baule_path, notice: "Baule aggiornato" }
-      format.json { render :json => @appunti }
+      format.html { redirect_to visite_path, notice: "Il giro e' stato salvato" }
     end
   end
-  
-  
+
 end

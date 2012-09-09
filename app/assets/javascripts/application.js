@@ -5,10 +5,12 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery-ui
-//= require jquery-offline
 
+//= require jquery-offline
 //= require jquery_ujs
+//= require jquery.ui.datepicker
+//= require jquery.ui.datepicker-it
+
 //= require chosen.jquery
 //= require showdown
 //= require jquery.validity
