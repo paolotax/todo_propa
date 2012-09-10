@@ -32,8 +32,12 @@
         = render @altri_clienti
         
   .span7
-    .module
-      #calendar
+    .well
+      = link_to "", class: "pull-right show-hide btn" do
+        %i.icon-caret-down
+      %h2 Agenda
+      .more
+        #calendar
       
     .module
       = render 'baule/mappa_baule', clienti: @nel_baule

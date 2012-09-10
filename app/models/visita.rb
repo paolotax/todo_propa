@@ -24,10 +24,15 @@ class Visita < ActiveRecord::Base
   after_create :add_appunti
   
   
-  attr_writer :data
+  attr_writer :data, :step
+  
   validate    :check_data
   before_save :save_data
   
+  def data
+    @data || start.try(:strftime, "%d-%m-%Y")
+  end
+
   def to_s
     "#{start.strftime('%d-%m-%y')} #{titolo}"
   end
@@ -35,38 +40,17 @@ class Visita < ActiveRecord::Base
   def nel_baule?
     self.baule == true
   end
-  
 
-  
-  def mie_adozioni_grouped_titolo
-    self.cliente.mie_adozioni.group_by(&:libro_id) || []
-  end
-  
   def self.filtra(params)
     visite = scoped
     visite = visite.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
-    # appunti = appunti.where("clienti.comune = ?",    params[:comune])    if params[:comune].present?
-    #     appunti = appunti.in_corso   if params[:status].present? && params[:status] == 'in_corso'
-    #     appunti = appunti.completo   if params[:status].present? && params[:status] == "completati"
-    #     appunti = appunti.da_fare    if params[:status].present? && params[:status] == "da_fare"
-    #     appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
-    #     
     visite
   end
-  
-  
-  def data
-    @data || start.try(:strftime, "%d-%m-%Y")
+
+  def mie_adozioni_grouped_titolo
+    self.cliente.mie_adozioni.group_by(&:libro_id) || []
   end
 
-  # def data
-  #   self.start
-  # end
-  # 
-  # def data=(data)
-  #   self.start = Date.parse(data).beginning_of_day
-  #   self.end   = Date.parse(data).end_of_day
-  # end
 
   private
   
@@ -77,8 +61,10 @@ class Visita < ActiveRecord::Base
     end  
 
     def save_data
-      self.start = Date.parse(@data).beginning_of_day if @data.present?
-      self.end   = Date.parse(@data).end_of_day if @data.present?
+      if @data && @step
+        self.start = Date.parse(@data).beginning_of_day + 8.hours + 30.minutes + (30.minutes * @step.to_i)
+        self.end   = self.start + 30.minutes
+      end
     end
 
     def check_data

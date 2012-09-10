@@ -28,8 +28,8 @@ class BauleController < ApplicationController
   def update
 
     @visite = current_user.visite.nel_baule
-    @visite.each do |a|
-      a.update_attributes!(params[:visita].reject { |k,v| v.blank? })  #  unless k == 'stato'
+    @visite.each_with_index do |a, index|
+      a.update_attributes!(params[:visita].merge(step: index).reject { |k,v| v.blank? })  #  unless k == 'stato'
     end
     
     respond_to do |format|
