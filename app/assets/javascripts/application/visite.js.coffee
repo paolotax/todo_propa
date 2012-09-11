@@ -42,7 +42,8 @@ jQuery ->
 
     eventSources: [
       {
-        url: '/visite.json'       
+        url: '/visite.json'
+        currentTimezone: "Rome/Europe"       
       }
     ]     
     

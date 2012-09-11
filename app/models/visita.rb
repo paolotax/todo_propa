@@ -62,7 +62,7 @@ class Visita < ActiveRecord::Base
 
     def save_data
       if @data && @step
-        self.start = Date.parse(@data).beginning_of_day + 8.hours + 30.minutes + (30.minutes * @step.to_i)
+        self.start = Time.zone.parse(@data).beginning_of_day + 8.hours + 30.minutes + (30.minutes * @step.to_i)
         self.end   = self.start + 30.minutes
       end
     end
