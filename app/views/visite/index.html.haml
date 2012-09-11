@@ -4,75 +4,99 @@
 / = will_filter_table_tag(@visite, columns: [:data, :titolo, :baule])
 / = will_filter_actions_bar_tag(@visite, [['Delete Selected Languages', "alert('Deleting users...')"]])
 
-.row  
-  .side-bar.span5
-    .module
-      %ul
-        %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
-          = link_to visite_url, class: "list-link" do
-            Provincie
-            %i.chev-right
-        
-        - @provincie = current_user.clienti.primarie.select_provincia     
-        - for p in @provincie
-          %li{ class: "#{ params[:provincia] == p.provincia ? 'active' : ''}" }
-            = link_to visite_url(:provincia => p.provincia), class: "list-link" do
-              = p.provincia
-              %i.chev-right
+.row
 
+  .span12
     .module
-      .clienti
-        %h3 Da Fare
-        = render @scuole_da_fare
-      .clienti
-        %h3 Fatte
-        = render @scuole_fatte
-      .clienti
-        %h3 Altro
-        = render @altri_clienti
-        
-  .span7
-    .well
-      = link_to "", class: "pull-right show-hide btn" do
-        %i.icon-caret-down
-      %h2 Agenda
-      .more
-        #calendar
-      
-    .module
-      = render 'baule/mappa_baule', clienti: @nel_baule
-      
-      .item.clearfix
-        .riepilogo.pull-left
-          = render 'baule/riepilogo_baule'
-        .well.pull-right
-          = render "baule/form"
-      
-    
-    
-    %h2= "#{pluralize(@visite.count, "scuola")} completate."
-    - i = 0
-    
-    - @visite_grouped.each do |k, v|
-      .giro.well{ class: "giro_#{k.parameterize}"}
-        %strong= k
-        %span= "#{pluralize(v.count, "tappa")}"
-
-        .pull-right
-          = render "visite/destroy_all", visite: v  
+      .header
         = link_to "", class: "pull-right show-hide btn" do
           %i.icon-caret-down
+        %h2 Agenda
+      .more.content
+        #calendar
+      
+    .row
+      .span4
+        .module
+          %ul
+            %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
+              = link_to visite_url, class: "list-link" do
+                Provincie
+                %i.chev-right
+        
+            - @provincie = current_user.clienti.primarie.select_provincia     
+            - for p in @provincie
+              %li{ class: "#{ params[:provincia] == p.provincia ? 'active' : ''}" }
+                = link_to visite_url(:provincia => p.provincia), class: "list-link" do
+                  = p.provincia
+                  %i.chev-right
 
-        .more.hidden  
-          %table.table
-            %tbody
-              - for visita in v do
-                %tr[visita]
-                  %td= i += 1
-                  %td= l visita.start, format: :only_date unless visita.start.nil?
-                  %td= link_to visita.cliente.titolo, visita.cliente
-                  %td{ class: "cliente #{dom_id(visita.cliente)}" }
-                    = baule_tag visita.cliente
-                  %td
-                    = link_to visita, method: :delete, remote: true, class: "close" do
-                      &times;
+        .module
+          .header
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-up
+            %h3 
+              Scuole da Fare
+              %small= @scuole_da_fare.size
+          .clienti.more
+            = render @scuole_da_fare
+        .module 
+          .header
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-down
+            %h3 
+              = "#{ pluralize @scuole_fatte.size, "Scuola"} fatte"
+              %small= @scuole_fatte.size
+          .clienti.more.hidden
+            = render @scuole_fatte
+
+      .span4
+        .module
+          .content
+            = render 'baule/mappa_baule', clienti: @nel_baule
+            .item.clearfix
+              .riepilogo.pull-left
+                = render 'baule/riepilogo_baule'
+              .well.pull-right
+                = render "baule/form"
+        .module
+          .header
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-up
+            %h3
+              Giri
+              %small= @visite_grouped.keys.size
+            
+          .more.content
+            - @visite_grouped.each do |k, v|
+              .giro.clearfix{ class: "giro_#{k.parameterize}"}
+                %strong= k
+                %span= "#{pluralize(v.count, "tappa")}"
+                
+                .button-bar.pull-right
+                  .pull-right
+                    = render "visite/destroy_all", visite: v
+                  = link_to "", class: "pull-right show-hide btn" do
+                    %i.icon-caret-down
+  
+                    
+                .more.hidden  
+                  %table.table
+                    %tbody
+                      - for visita in v.sort_by(&:start) do
+                        %tr[visita]
+                          %td= visita.start.try(:strftime, "%H:%M")
+                          %td= link_to visita.cliente.titolo, visita.cliente
+                          %td{ class: "cliente #{dom_id(visita.cliente)}" }
+                            = baule_tag visita.cliente
+                          %td
+                            = link_to visita, method: :delete, remote: true, class: "close" do
+                              &times;
+        
+      .side-bar.span4
+        .module 
+          .header
+            %h3 Altro
+          .clienti    
+            = render @altri_clienti
+                        

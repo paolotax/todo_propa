@@ -1,8 +1,27 @@
 @import "application/mixins";
 
+.module .header {
+  background-color: white;
+  min-height: 20px;
+  padding: 12px;
+  background-color: white;
+  border-bottom: 1px solid #E8E8E8;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  color: #333;
+}
+
+.module .content {
+  background-color: white;
+}
+
+.giro {
+  padding: 12px;
+}
+
 div.cliente {
   @include clearfix();
-  margin: 3px 0 3px 0;
   padding: 3px;
   background-color: white;
   border-bottom: 1px solid #ccc;
@@ -21,7 +40,6 @@ div.cliente {
     width: 10%;
   }
   .baule-div {
-    margin-top: -4px;
     text-align: left;
     width: 10%;
   }

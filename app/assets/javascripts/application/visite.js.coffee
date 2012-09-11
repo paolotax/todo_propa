@@ -14,9 +14,9 @@ jQuery ->
     
     allDayText: '',
     axisFormat: 'H:mm',
-    firstHour: 7,
-    minTime: 7,
-    maxTime: 20,
+    firstHour: 8,
+    minTime: 8,
+    maxTime: 16,
     defaultEventMinutes: 30,
     
     columnFormat:
@@ -43,12 +43,13 @@ jQuery ->
     eventSources: [
       {
         url: '/visite.json'
-        currentTimezone: "Rome/Europe"       
+        currentTimezone: "Rome"       
       }
     ]     
     
     firstDay: 1,
     selectable: true,
+    
     timeFormat:
       agendaWeek: ' '
     
