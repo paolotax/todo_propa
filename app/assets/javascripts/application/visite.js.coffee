@@ -43,7 +43,7 @@ jQuery ->
     eventSources: [
       {
         url: '/visite.json', 
-        ignoreTimezone: true        
+        ignoreTimezone: false        
       }
     ]     
     
@@ -52,7 +52,6 @@ jQuery ->
     timeFormat:
       agendaWeek: ' '
     
-    ignoreTimezone: true
     
     # eventRender: (event, element) ->
     #   element.find('.fc-event-title')
