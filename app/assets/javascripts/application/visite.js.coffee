@@ -42,8 +42,7 @@ jQuery ->
 
     eventSources: [
       {
-        url: '/visite.json', 
-        ignoreTimezone: false        
+        url: '/visite.json'       
       }
     ]     
     
@@ -52,7 +51,8 @@ jQuery ->
     timeFormat:
       agendaWeek: ' '
     
-    
+    ignoreTimezone: false
+ 
     # eventRender: (event, element) ->
     #   element.find('.fc-event-title')
     
@@ -64,6 +64,7 @@ updateEvent = (event) ->
     type: 'put'
     data: 
       'visita':
+        all_day: event.allDay
         start: event.start.toString() 
         end:   event.end.toString()
     url: '/visite/' + event.id + '.json',

@@ -51,7 +51,7 @@ class VisiteController < ApplicationController
       if @visita.update_attributes(params[:visita])
         format.html { redirect_to :back, notice: 'Visita modificata.' }
         format.js
-        format.json { head :no_content }
+        format.json { render json: @visita }
       else
         format.html { render action: "edit" }
         format.json { render json: @visita.errors, status: :unprocessable_entity }
