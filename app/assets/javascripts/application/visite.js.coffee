@@ -52,7 +52,7 @@ jQuery ->
     timeFormat:
       agendaWeek: ' '
     
-    ignoreTimeZone: true
+    ignoreTimezone: true
     
     # eventRender: (event, element) ->
     #   element.find('.fc-event-title')
