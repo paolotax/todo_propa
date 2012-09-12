@@ -69,7 +69,7 @@
             
           .more.content
             - @visite_grouped.each do |k, v|
-              .giro.clearfix{ class: "giro_#{k.parameterize}"}
+              .giro.clearfix{ class: "giro_#{k.parameterize} #{ (v[0].start.to_date == Time.now.to_date) ? 'oggi' : ''}"}
                 %strong= k
                 %span= "#{pluralize(v.count, "tappa")}"
                 

@@ -18,6 +18,11 @@
 
 .giro {
   padding: 12px;
+  color: white;
+}
+
+.giro.oggi {
+  background-color: #36C;
 }
 
 div.cliente {
@@ -27,10 +32,12 @@ div.cliente {
   border-bottom: 1px solid #ccc;
   > div {
     float: left;
-    line-height: 18px;
+    
   }
   .titolo {
     width: 50%;
+    line-height: 28px;
+    text-indent: 5px;
   }
   .counter,
   .in-corso,
@@ -38,6 +45,7 @@ div.cliente {
   .mie-adozioni {
     text-align: center;
     width: 10%;
+    line-height: 28px;
   }
   .baule-div {
     text-align: left;
