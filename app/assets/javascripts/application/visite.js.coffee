@@ -1,5 +1,26 @@
 jQuery ->
-  
+
+
+
+  $('.clienti .cliente').live 'mouseover', ->
+    
+    eventObject =
+      title: $(".titolo a", @).text()
+      id:    $(@).data('id')
+
+    # store the Event Object in the DOM element so we can get to it later
+    $(@).data('eventObject', eventObject);
+
+    # make the event draggable using jQuery UI
+    $(@).draggable
+      zIndex: 999
+      revert: true        # will cause the event to go back to its
+      revertDuration: 0   #  original position after the drag
+
+
+
+
+
   $("#calendar").fullCalendar
     header:
       left: 'prev,next today',
@@ -39,13 +60,45 @@ jQuery ->
     monthNamesShort: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'],
     dayNames:        ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
     dayNamesShort:   ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'],
+    
+    drop: (date, allDay) ->     # this function is called when something is dropped
+      # retrieve the dropped element's stored Event Object
+      originalEventObject = $(@).data('eventObject');
+      console.log originalEventObject
+      # we need to copy it, so that multiple events don't have a reference to the same object
+      copiedEventObject = $.extend({}, originalEventObject);
 
-    eventSources: [
-      {
-        url: '/visite.json'
-        currentTimezone: "Rome"       
-      }
-    ]     
+      # assign it the date that was reported
+      copiedEventObject.start = date;
+      copiedEventObject.end   = new Date(date.getTime() + 30*60000);
+            
+      copiedEventObject.allDay = allDay;
+
+      $.ajax
+        type: 'post',
+        data: 
+          'visita': 
+            cliente_id: copiedEventObject.id
+            start: copiedEventObject.start.toString()
+            end:   copiedEventObject.end.toString()
+            baule: false
+            
+        url: '/visite',
+        
+        dataType: 'json',
+
+        success: (data) =>
+          # render the event on the calendar
+          console.log copiedEventObject
+          console.log $(@)
+          # the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+          $('#calendar').fullCalendar('renderEvent', copiedEventObject);
+          # $('#calendar').fullCalendar('renderEvents');
+          $(@).remove();
+    
+    
+    events:
+      url: '/visite.json'
     
     firstDay: 1,
     selectable: true,
