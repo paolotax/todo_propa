@@ -48,9 +48,9 @@ class Cliente < ActiveRecord::Base
   
   scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
   
-  # scope :con_adozioni, joins(:adozioni) & Adozione.scolastico
-  
-  
+  # scope :con_adozioni, joins(:adozioni) & Adozione.scolastico  
+
+
   def self.grouped_by_provincia_and_comune
     clienti = scoped
     clienti = clienti.group_by(&:provincia).each do |k, v|
@@ -220,13 +220,13 @@ class Cliente < ActiveRecord::Base
     clienti
   end
   
-  # geocoded_by :full_street_address
+  geocoded_by :full_street_address
   
-  # after_validation :geocode, 
-  #                        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.citta_changed? || obj.cap_changed? || obj.indirizzable.citta_changed? }
+  after_validation :geocode, 
+        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.comune_changed? || obj.cap_changed? || obj.provincia_changed?}
   
   def full_street_address
-    # [self.indirizzo, self.cap, self.frazione, self.comune, self.provincia].join(', ')
+    [self.indirizzo, self.cap, self.frazione, self.comune, self.provincia].join(', ')
   end
   
   acts_as_gmappable :check_process => true, :checker => "gmaps"

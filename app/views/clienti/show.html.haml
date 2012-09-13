@@ -95,7 +95,23 @@
       .stream-loader
       
     .side-bar.span3
-      .well
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-   
+      .module
+        .header
+          = link_to "", class: "pull-right show-hide btn" do
+            %i.icon-caret-up
+          %h3 
+            con appunti da fare
+            %small= @cliente.nearbys(10).con_appunti(Appunto.da_fare).size
+        .clienti.more
+          = render @cliente.nearbys(10).con_appunti(Appunto.da_fare)
+      .module 
+        .header
+          = link_to "", class: "pull-right show-hide btn" do
+            %i.icon-caret-up
+          %h3 
+            = "#{ pluralize @cliente.nearbys(10).con_appunti(Appunto.in_sospeso).size, 'cliente'}"
+            %small con appunti in sospeso
+            
+        .clienti.more
+          = render @cliente.nearbys(10).con_appunti(Appunto.in_sospeso)
       
