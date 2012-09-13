@@ -31,7 +31,7 @@
 
 div.cliente {
   @include clearfix();
-  padding: 3px;
+  padding: 3px 12px 3px 12px;
   background-color: white;
   border-bottom: 1px solid #ccc;
   > div {
@@ -39,11 +39,10 @@ div.cliente {
     
   }
   .titolo {
-    width: 50%;
+    width: 60%;
     line-height: 28px;
     text-indent: 5px;
   }
-  .counter,
   .in-corso,
   .da-consegnare, 
   .mie-adozioni {
