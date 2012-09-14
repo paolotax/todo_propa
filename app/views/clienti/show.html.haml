@@ -95,23 +95,24 @@
       .stream-loader
       
     .side-bar.span4
-      .module
-        .header
-          = link_to "", class: "pull-right show-hide btn" do
-            %i.icon-caret-up
-          %h3 
-            con appunti da fare
-            %small= @cliente.nearbys(10).con_appunti(Appunto.da_fare).size
-        .clienti.more
-          = render @cliente.nearbys(10).con_appunti(Appunto.da_fare)
-      .module 
-        .header
-          = link_to "", class: "pull-right show-hide btn" do
-            %i.icon-caret-up
-          %h3 
-            = "#{ pluralize @cliente.nearbys(10).con_appunti(Appunto.in_sospeso).size, 'cliente'}"
-            %small con appunti in sospeso
+      - if @cliente.longitude && @cliente.latitude
+        .module
+          .header
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-up
+            %h3 
+              con appunti da fare
+              %small= @cliente.nearbys(10).con_appunti(Appunto.da_fare).size
+          .clienti.more
+            = render @cliente.nearbys(10).con_appunti(Appunto.da_fare)
+        .module 
+          .header
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-up
+            %h3 
+              = "#{ pluralize @cliente.nearbys(10).con_appunti(Appunto.in_sospeso).size, 'cliente'}"
+              %small con appunti in sospeso
             
-        .clienti.more
-          = render @cliente.nearbys(10).con_appunti(Appunto.in_sospeso)
+          .clienti.more
+            = render @cliente.nearbys(10).con_appunti(Appunto.in_sospeso)
       
