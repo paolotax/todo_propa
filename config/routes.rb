@@ -44,6 +44,9 @@ TodoPropa::Application.routes.draw do
     end
   end
 
+  match "giri/:giorno" => "giri#show", as: "giro"
+  
+  
   
   resources :comuni
 

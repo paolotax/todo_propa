@@ -1,0 +1,111 @@
+- require 'chronic'
+
+= new_button( new_appunto_url )
+
+
+- if @visite.empty?
+  .image
+    = image_tag asset_path("cavaliere.jpg")
+  .buttons
+    = link_to "Previous", giro_url(giorno: "#{(Chronic.parse(params[:giorno]) - 1.day).to_date.to_s}"), class: "pull-left btn"
+    = link_to "Next", giro_url(giorno: "#{(Chronic.parse(params[:giorno]) + 1.day).to_date.to_s}"), class: "pull-left btn"
+
+- else
+  .row.baule-page
+    .span12
+    
+      .row
+        .span7
+          .well.clearfix
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-up
+
+            = render 'baule/mappa_baule', clienti: @clienti
+            = link_to "Previous", giro_url(giorno: "#{(Chronic.parse(params[:giorno]) - 1.day).to_date.to_s}"), class: "pull-left btn"
+            = link_to "Next", giro_url(giorno: "#{(Chronic.parse(params[:giorno]) + 1.day).to_date.to_s}"), class: "pull-left btn"
+        .span5
+          .toolbar.clearfix
+            = stampami_tag  
+            = link_to "esandi tutto", "", class: "esandi-tutto pull-right btn"
+
+          .well
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-up
+            .more.clienti
+              = render @clienti
+
+  .row.baule-page
+    .span12
+      .well.clearfix
+        - unless @libri_nel_baule.empty?
+          .ordini-nel-baule.span5
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-up
+            %h2 Ordini nel baule
+            .more
+              %table.table.libri-nel-baule
+                - for libro, index in @libri_nel_baule do
+                  %tr
+                    %td= index
+                    %td.titolo= link_to libro[:titolo], libro
+                    %td.qta
+                      .pull-right= libro[:quantita]
+                %tr
+                  %td
+                  %td.qta
+                    .pull-right= @libri_nel_baule.sum {|l| l[:quantita] }
+
+        - unless @adozioni_nel_baule.empty?
+          .adozioni-nel-baule.span5
+            = link_to "", class: "pull-right show-hide btn" do
+              %i.icon-caret-up
+            %h2 Adozioni nel baule
+            .more
+              %table.table
+                - for libro in @adozioni_nel_baule do
+                  %tr
+                    %td.titolo= libro[:titolo]
+                    %td.qta
+                      .pull-right= libro[:quantita]
+                %tr
+                  %td
+                  %td.qta
+                    .pull-right= @adozioni_nel_baule.sum {|l| l[:quantita] }
+
+  .visite-long.well
+    - for v in @visite do
+      .break.page-break
+        = link_to "page break", "", class: "pull-right btn"
+      %div[v]
+        = link_to "", class: "pull-right show-hide btn" do
+          %i.icon-caret-down
+        %h2= link_to v.cliente.titolo, v.cliente
+        .more.hidden
+          %br
+          %table.table.table-bordered.classi-adozioni
+            - v.cliente.classi_adozioni_grouped.each do |k, classi|
+              %tr
+                %td.classe-group
+                  .badge.badge-primary.pull-left= k
+                - classi.each do |c|
+                  %td[c]
+                    .pull-left
+                      .badge.badge-info.sezione
+                        =c[:sezione]
+                    .pull-right
+                      = link_to new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe} #{c.sezione}"), class: "btn" do
+                        %i.icon-book
+                      
+                    .clearfix  
+                    - unless c.adozioni.scolastico.empty?
+                      %ul.adozioni-list
+                        - for a in c.adozioni.scolastico do
+                          %li[a]
+                            %span.label.label-important= a.libro.sigla
+
+        .appunti.clearfix
+          - for a in v.appunti do
+            .span5
+              = render a
+
+

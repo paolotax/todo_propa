@@ -261,6 +261,7 @@ DEPENDENCIES
   bootstrap-sass
   capistrano
   carrierwave
+  chronic
   coffee-rails (~> 3.2.2)
   compass-rails
   devise

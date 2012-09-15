@@ -57,6 +57,7 @@ gem 'soulmate', :require => 'soulmate/server'
 
 gem 'fullcalendar-rails'
 
+gem "chronic"
 gem 'routing-filter'
 
 gem 'whenever', :require => false

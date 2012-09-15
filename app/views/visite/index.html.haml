@@ -70,7 +70,7 @@
           .more.content
             - @visite_grouped.each do |k, v|
               .giro.clearfix{ class: "giro_#{k.parameterize} #{ (v[0].start.to_date == Time.now.to_date) ? 'oggi' : ''}"}
-                %strong= k
+                %strong= link_to k, giro_url(giorno: "#{v[0].start.to_date}")
                 %span= "#{pluralize(v.count, "tappa")}"
                 
                 .button-bar.pull-right
