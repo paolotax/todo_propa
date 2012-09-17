@@ -50,6 +50,13 @@ class Cliente < ActiveRecord::Base
   
   # scope :con_adozioni, joins(:adozioni) & Adozione.scolastico  
 
+  def localita
+    if frazione.blank?
+      comune
+    else
+      frazione
+    end
+  end      
 
   def self.grouped_by_provincia_and_comune
     clienti = scoped

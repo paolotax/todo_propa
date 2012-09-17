@@ -26,8 +26,15 @@ class Visita < ActiveRecord::Base
   
   attr_writer :data, :step
   
+  validates :cliente_id, :uniqueness => { :scope => :start, :message => "gia' nel giro" }
+  
   validate    :check_data
   before_save :save_data
+  
+  
+  def giorno
+    start.to_date
+  end
   
   def data
     @data || start.try(:strftime, "%d-%m-%Y")

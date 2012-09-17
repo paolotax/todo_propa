@@ -3,14 +3,34 @@ if (visita.length > 0) {
   visita.remove();
 }
 
+// if ($('.map-baule').length > 0) {
+//   var clienti = <%= raw current_user.clienti.nel_baule.to_gmaps4rails %>
+//   Gmaps.map.replaceMarkers(clienti)
+// };
+
+
 if ($('.map-baule').length > 0) {
-  var clienti = <%= raw current_user.clienti.nel_baule.to_gmaps4rails %>
+  var clienti = <%= raw @giro.clienti.to_gmaps4rails %>
   Gmaps.map.replaceMarkers(clienti)
+};
+
+if ($('.list-giro').length > 0) {
+  $('.list-giro').replaceWith("<%= escape_javascript( render partial: 'giri/list_giro') %>");
+};
+
+if ($('.list-volumi_da_consegnare').length > 0) {
+  $('.list-volumi_da_consegnare').replaceWith("<%= escape_javascript( render partial: 'shared/riepilogo_libri', locals: { tipo_riepilogo: 'volumi_da_consegnare', collection: @giro.righe_da_consegnare} ) %>");
+};
+
+if ($('.list-adozioni').length > 0) {
+  $('.list-adozioni').replaceWith("<%= escape_javascript( render partial: 'shared/riepilogo_libri', locals: { tipo_riepilogo: 'adozioni', collection: @giro.adozioni} ) %>");
 };
 
 if ($('.riepilogo-baule').length > 0) {
   $('.riepilogo-baule').replaceWith("<%= escape_javascript( render 'baule/riepilogo_baule' ) %>");
 };
+
+
 
 <% @appunti.each do |a|  %>
   var appunto = $("#<%= dom_id(a) %>");

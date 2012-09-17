@@ -20,7 +20,19 @@
                 %li= link_to "Documenti",  fatture_url
                 %li= link_to "Situazione Vacanze",  vendite_url
                 %li= link_to "Cassa",  cassa_url
-            %li= link_to "Giri",     visite_url
+            %li.dropdown
+              %a.dropdown-toggle{ href: '#', "data-toggle" => 'dropdown'}
+                Giri
+                %b.caret
+              %ul.dropdown-menu              
+                %li= link_to "Agenda",     giri_url
+                %li.divider
+                %li= link_to "Ieri",   giro_url(giorno: Time.now.to_date - 1.day)
+                %li= link_to "Oggi",   giro_url(giorno: Time.now.to_date)
+                %li= link_to "Domani", giro_url(giorno: Time.now.to_date + 1.day)
+                %li.divider
+                %li= link_to "Baule",  baule_url
+                
             %li= link_to "Adozioni", adozioni_url
 
         - if user_signed_in?

@@ -51,6 +51,13 @@
       = link_to cliente_url(Cliente.next(@cliente, 'id').first), class: "btn" do
         %i.icon-caret-right
       
+      %ul.inline
+        - for v in @cliente.visite.order("start desc") do
+          = link_to giro_path(giorno: v.start.to_date) do
+            .span.label
+              = v.start.strftime("%d-%m-%Y")
+      
+      
       .pull-right
         
         = baule_tag @cliente, class_scarica: "btn btn-warning"

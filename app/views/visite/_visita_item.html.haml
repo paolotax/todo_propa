@@ -1,0 +1,8 @@
+%tr[visita]
+  %td= visita.start.try(:strftime, "%H:%M")
+  %td
+    = link_to visita.cliente.titolo, "##{visita.cliente.slug}"
+    / = render "clienti/cliente", cliente: visita.cliente 
+  %td
+    = link_to visita, method: :delete, remote: true, class: "close" do
+      &times;

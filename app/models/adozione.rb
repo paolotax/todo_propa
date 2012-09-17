@@ -14,6 +14,18 @@ class Adozione < ActiveRecord::Base
   
   scope :per_classe_e_sezione, joins(:classe).order("classi.classe, classi.sezione, adozioni.materia_id")
   
+  def importo
+    libro.prezzo_copertina * classe.nr_alunni
+  end
+  
+  def titolo
+    libro.titolo
+  end
+  
+  def quantita
+    1
+  end
+  
   def after_save
     self.update_counter_cache
   end

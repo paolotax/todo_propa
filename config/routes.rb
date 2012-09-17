@@ -43,8 +43,10 @@ TodoPropa::Application.routes.draw do
       post 'destroy_all'
     end
   end
-
-  match "giri/:giorno" => "giri#show", as: "giro"
+  
+  
+  match "giri"         => "giri#index", as: "giri"
+  match "giri/:giorno" => "giri#show",  as: "giro"
   
   
   

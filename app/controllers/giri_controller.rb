@@ -1,23 +1,29 @@
 class GiriController < ApplicationController
   
+  def index
+    @visite         = current_user.visite.settembre.includes(:cliente => :visite).where(baule: false).filtra(params)
+    
+    @visite_grouped = @visite.order("start desc").group_by {|v| "#{v.to_s}" }
+    @nel_baule      = current_user.clienti.nel_baule.filtra(params.except([:controller, :action]))
+    
+    @scuole_fatte   = current_user.clienti.primarie.con_visite(Visita.settembre).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
+    
+    @scuole_da_fare = current_user.clienti.primarie.senza_visite(Visita.settembre).con_adozioni(Adozione.joins(:classe).scolastico).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
+    
+    @altri_clienti  = current_user.clienti.con_appunti(Appunto.in_corso).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
+
+    logger.debug { "diff Count: #{@scuole_fatte.count}" }
+  end  
+  
+  
   def show
-    
-    
-    @visite  = current_user.visite.includes([:cliente, :visita_appunti => [:appunto => [:righe => :libro]]]).order(:cliente_id).where("date(start) = ?", params[:giorno])
-    @clienti = @visite.map(&:cliente)
 
-    righe   = current_user.righe.da_consegnare.joins(:libro, :appunto => :visite).where("date(start) = ?", params[:giorno])
-    @libri_nel_baule   = righe.order("libri.titolo").group_by(&:libro).map do |libro,righe| 
-      { id: libro.id, titolo: libro.titolo, image: libro.image, quantita: righe.sum(&:quantita) }
-    end
+    @giro = Giro.new(user_id: current_user.id, giorno: Chronic::parse(params[:giorno])) 
     
-    adozioni = current_user.mie_adozioni.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", @clienti.map(&:id)).order("libri.titolo")
-    @adozioni_nel_baule =  adozioni.group_by(&:libro).map do |libro,adozioni|
-      { image: libro.image_url(:small_thumb), titolo: libro.titolo, image: libro.image, quantita: adozioni.count(&:classe) }
-    end
-    
-
-    
+    @visite  = @giro.visite 
+    @clienti = @giro.clienti
+    @libri_nel_baule    = @giro.titoli_da_consegnare
+    @adozioni_nel_baule = @giro.adozioni_per_titolo     
   end
   
 end

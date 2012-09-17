@@ -60,9 +60,11 @@ class VisiteController < ApplicationController
   end
   
   def destroy
+    
     @visita = Visita.find(params[:id])
     @cliente = @visita.cliente
     @appunti = @cliente.appunti.in_corso
+    @giro  = Giro.new(user_id: current_user, giorno: @visita.giorno)
     
     @visita.destroy
     respond_to do |format|

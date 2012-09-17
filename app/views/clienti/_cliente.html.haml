@@ -6,16 +6,16 @@
   
   .titolo
     = link_to cliente.titolo, cliente
-
+  
   .in-corso
-    - if cliente.properties['appunti_in_corso']
+    - if cliente.properties && cliente.properties['appunti_in_corso']
       %span.badge.badge-info
         = cliente.properties["appunti_in_corso"]
     - else
       &nbsp
 
   .da-consegnare
-    - if cliente.properties["copie_da_consegnare"]
+    - if cliente.properties && cliente.properties["copie_da_consegnare"]
       %span.badge
         = cliente.properties["copie_da_consegnare"]
     - else

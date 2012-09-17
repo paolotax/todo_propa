@@ -64,11 +64,11 @@ it:
 
   date:
     formats:
-      default: "%d-%m-%y"
+      default: "%d-%m-%Y"
       short: "%e %b"
       long: "%d %B %Y"
       only_date: "%d/%m/%Y"
-      long_with_day: "%a %d %b %Y"
+      long_with_day: "%A, %d %B %Y"
 
     day_names:
       - Domenica

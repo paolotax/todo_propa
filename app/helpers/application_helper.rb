@@ -13,6 +13,20 @@ module ApplicationHelper
     content_tag(:div, (f.label(attribute, "#{label_name}:" ) + f.send(type, attribute, options)), :class => "field")
   end
   
+  def next_tag(url, options = {})
+    link_to url, class: "btn" do
+      content_tag( :i, "", class: "icon-caret-right")
+    end  
+  end  
+
+  def previous_tag(url, options = {})
+    link_to url, class: "btn" do
+      content_tag( :i, "", class: "icon-caret-left")
+    end  
+  end  
+
+    
+  
   def baule_tag(cliente, options = {})
     
     if cliente.nel_baule

@@ -21,7 +21,7 @@ class BauleController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to visite_path, notice: "Baule svuotato" }
+      format.html { redirect_to giri_path, notice: "Baule svuotato" }
     end
   end
   
@@ -33,7 +33,7 @@ class BauleController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to visite_path, notice: "Il giro e' stato salvato" }
+      format.html { redirect_to giri_path, notice: "Il giro e' stato salvato" }
     end
   end
 

@@ -1,6 +1,10 @@
 @import "application/mixins";
 @import "compass/utilities/lists/inline-list";
 
+
+.module.white {
+  background-color: white;
+}
 .more .more-actions {
   margin-top: 30px;
   @include clearfix;
@@ -34,6 +38,9 @@
   }  
 }
 
-.break.page-break {
-  border-top: 5px dotted blue;
+.break {
+  margin: -15px -10px 15px -10px;
+  &.page-break {
+    border-top: 5px dotted blue;
+  }
 }

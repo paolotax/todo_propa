@@ -1,0 +1,14 @@
+- if @giro.visite.empty?
+  .module.list-giro.hidden
+- else    
+  .module.list-giro.white
+    .header
+      = link_to "", class: "pull-right show-hide btn" do
+        %i.icon-caret-up
+      %h3
+        = @giro.visite.size
+        %small TAPPE
+    .more 
+      %table.table
+        - for visita in @giro.visite do
+          = render "visite/visita_item", visita: visita

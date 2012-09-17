@@ -1,9 +1,5 @@
 - title "Giri"
 
-/ = will_filter_tag(@visite, columns: [:start, :titolo, :baule])
-/ = will_filter_table_tag(@visite, columns: [:data, :titolo, :baule])
-/ = will_filter_actions_bar_tag(@visite, [['Delete Selected Languages', "alert('Deleting users...')"]])
-
 .row
 
   .span12
@@ -20,14 +16,14 @@
         .module
           %ul
             %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
-              = link_to visite_url, class: "list-link" do
+              = link_to giri_path, class: "list-link" do
                 Provincie
                 %i.chev-right
         
             - @provincie = current_user.clienti.primarie.select_provincia     
             - for p in @provincie
               %li{ class: "#{ params[:provincia] == p.provincia ? 'active' : ''}" }
-                = link_to visite_url(:provincia => p.provincia), class: "list-link" do
+                = link_to giri_path(:provincia => p.provincia), class: "list-link" do
                   = p.provincia
                   %i.chev-right
 

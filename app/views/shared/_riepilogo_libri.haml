@@ -1,17 +1,23 @@
-.module.riepilogo-libri
-  %header
-    %h3
-      Libri #{tipo_riepilogo.humanize.downcase}
-  %section
-    %ul{ class: "#{tipo_riepilogo}"}
-      - for libro, righe in collection.group_by(&:libro) do
-        %li
-          %span.titolo= link_to libro.titolo, libro
-          %span.quantita= righe.sum(&:quantita)
-          %span.importo= number_to_currency righe.sum(&:importo)
-      %li.totali
-        %span.totale Totale
-        %span.quantita
-          %strong= collection.sum(&:quantita)
-        %span.importo
-          %strong= number_to_currency collection.sum(&:importo)
+- if collection.empty?
+  .module.hidden{ class: "list-#{tipo_riepilogo}" }
+- else  
+  .module{ class: "list-#{tipo_riepilogo}" }
+    .header
+      = link_to "", class: "pull-right show-hide btn" do
+        %i.icon-caret-up
+      %h3
+        = collection.sum(&:quantita) 
+        %small= tipo_riepilogo.humanize.upcase
+    .more.riepilogo-libri
+      %ul
+        - for libro, righe in collection.group_by(&:libro) do
+          %li
+            %span.titolo= link_to libro.titolo, libro
+            %span.quantita= righe.sum(&:quantita)
+            %span.importo= number_to_currency righe.sum(&:importo)
+        %li.totali
+          %span.totale Totale
+          %span.quantita
+            %strong= collection.sum(&:quantita)
+          %span.importo
+            %strong= number_to_currency collection.sum(&:importo)
