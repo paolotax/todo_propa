@@ -3,11 +3,9 @@
 - else    
   .module.list-giro.white
     .header
-      = link_to "", class: "pull-right show-hide btn" do
-        %i.icon-caret-up
+      = show_hide_tag
       %h3
-        = @giro.visite.size
-        %small TAPPE
+        = "#{ pluralize @giro.visite.size, 'tappa'}"
     .more 
       %table.table
         - for visita in @giro.visite do

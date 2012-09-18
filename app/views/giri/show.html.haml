@@ -28,17 +28,12 @@
               %a domani
             %li
               %a dopo domani
-        
         .btn-group
           = stampami_tag
           = link_to "esandi tutto", "", class: "esandi-tutto btn"
-        
         .btn-group  
           = previous_tag  giro_url(giorno: @giro.ieri)
           = next_tag      giro_url(giorno: @giro.domani)
-      
-      
-                
       %h2= "Giro di #{l @giro.giorno.to_date, format: :long_with_day}"
 
   .row    
@@ -51,21 +46,20 @@
     .span8
       .module.white
         .header
-          = link_to "", class: "pull-right show-hide btn" do
-            %i.icon-caret-up
+          = show_hide_tag
           %h3 Mappa
         = render 'baule/mappa_baule', clienti: @giro.clienti
 
 
 
 
-      - for v in @visite do
+      - for v in @giro.visite do
         .module{ id: "#{v.cliente.slug}", class: "#{dom_id(v)} white" }
           .header
+            = show_hide_tag "down"
             .break
               = link_to "page break", "", class: "pull-right btn"
-            = link_to "", class: "pull-right show-hide btn" do
-              %i.icon-caret-down
+            
             %h3
               = link_to v.cliente.titolo, v.cliente
           .more.hidden

@@ -1,5 +1,35 @@
 @import "mixins";
 
+.inline li {
+    display: inline;
+}
+
+.span4.center {
+  margin-left: 20px;
+  margin-right: -10px;
+}
+
+
+.show-hide {
+  float: right;
+  font-size: 20px;
+  margin-left: 10px;
+  font-weight: bold;
+  line-height: 18px;
+  color: black;
+  text-shadow: 0 1px 0 white;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+.show-hide:hover {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+
 
 /*** FILTERS ***/
 

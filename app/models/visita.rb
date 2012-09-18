@@ -33,7 +33,9 @@ class Visita < ActiveRecord::Base
   
   
   def giorno
-    start.to_date
+    if start
+      start.to_date
+    end
   end
   
   def data

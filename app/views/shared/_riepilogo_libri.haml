@@ -3,11 +3,10 @@
 - else  
   .module{ class: "list-#{tipo_riepilogo}" }
     .header
-      = link_to "", class: "pull-right show-hide btn" do
-        %i.icon-caret-up
+      = show_hide_tag
       %h3
         = collection.sum(&:quantita) 
-        %small= tipo_riepilogo.humanize.upcase
+        %small= tipo_riepilogo.humanize.downcase
     .more.riepilogo-libri
       %ul
         - for libro, righe in collection.group_by(&:libro) do

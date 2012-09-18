@@ -29,20 +29,18 @@
 
         .module
           .header
-            = link_to "", class: "pull-right show-hide btn" do
-              %i.icon-caret-up
-            %h3 
-              Scuole da Fare
-              %small= @scuole_da_fare.size
+            = show_hide_tag 'up'
+            %h3
+              = "#{pluralize @scuole_da_fare.length, "scuola"}"
+              %small da fare
           .clienti.more
             = render @scuole_da_fare
         .module 
           .header
-            = link_to "", class: "pull-right show-hide btn" do
-              %i.icon-caret-down
+            = show_hide_tag 'down'
             %h3 
-              = "#{ pluralize @scuole_fatte.size, "Scuola"} fatte"
-              %small= @scuole_fatte.size
+              = "#{pluralize @scuole_fatte.length, "scuola"}"
+              %small fatte
           .clienti.more.hidden
             = render @scuole_fatte
 
@@ -70,10 +68,9 @@
                 %span= "#{pluralize(v.count, "tappa")}"
                 
                 .button-bar.pull-right
+                  = show_hide_tag 'down'
                   .pull-right
                     = render "visite/destroy_all", visite: v
-                  = link_to "", class: "pull-right show-hide btn" do
-                    %i.icon-caret-down
   
                     
                 .more.hidden  
@@ -92,7 +89,20 @@
       .side-bar.span4
         .module 
           .header
-            %h3 Altro
-          .clienti    
-            = render @altri_clienti
+            = show_hide_tag
+            %h3
+              = "#{pluralize @clienti_da_fare.length, "cliente"}"
+              %small con appunti da consegnare
+          .clienti.more    
+            = render @clienti_da_fare
+            
+        .module 
+          .header
+            = show_hide_tag
+            %h3
+              = "#{pluralize @clienti_in_sospeso.length, "cliente"}"
+              %small con appunti in sospeso
+          .clienti.more    
+            = render @clienti_in_sospeso
+            
                         

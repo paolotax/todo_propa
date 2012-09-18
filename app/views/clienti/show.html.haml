@@ -1,6 +1,8 @@
+- title @cliente.titolo
+
 = new_button( new_appunto_url(cliente: @cliente) )
 
-- title @cliente.nome
+
 
 .content
   %section.well.show-page{ class: "cliente #{dom_id(@cliente)}"}
@@ -46,16 +48,17 @@
               Mostra percorso
 
     %footer.show-toolbar
-      = link_to cliente_url(Cliente.previous(@cliente, 'id').first), class: "btn" do
-        %i.icon-caret-left
-      = link_to cliente_url(Cliente.next(@cliente, 'id').first), class: "btn" do
-        %i.icon-caret-right
+      .btn-group.pull-left
+        = previous_tag cliente_url(Cliente.previous(@cliente, 'id').first)
+        = next_tag cliente_url(Cliente.next(@cliente, 'id').first)
       
-      %ul.inline
+      %ul.inline.pull-left{ style: "margin-top: 5px;"}
         - for v in @cliente.visite.order("start desc") do
-          = link_to giro_path(giorno: v.start.to_date) do
-            .span.label
-              = v.start.strftime("%d-%m-%Y")
+          - if v.giorno
+            %li{ style: "margin-right: 5px"}
+              = link_to giro_path(giorno: v.giorno) do
+                %span.label.label-important
+                  = v.giorno.strftime("%d %B %Y")
       
       
       .pull-right
@@ -86,7 +89,7 @@
       - else
         &nbsp
         
-    .span4
+    .center.span4
       %header.content-header
         .header-inner
           %h2 Appunti
@@ -105,21 +108,19 @@
       - if @cliente.longitude && @cliente.latitude
         .module
           .header
-            = link_to "", class: "pull-right show-hide btn" do
-              %i.icon-caret-up
+            = show_hide_tag
             %h3 
-              con appunti da fare
-              %small= @cliente.nearbys(10).con_appunti(Appunto.da_fare).size
+              = "#{pluralize @cliente.nearbys(10).con_appunti(current_user.appunti.da_fare).size, 'cliente'}"
+              %small vicini con appunti da fare
           .clienti.more
-            = render @cliente.nearbys(10).con_appunti(Appunto.da_fare)
+            = render @cliente.nearbys(10).con_appunti(current_user.appunti.da_fare)
         .module 
           .header
-            = link_to "", class: "pull-right show-hide btn" do
-              %i.icon-caret-up
+            = show_hide_tag
             %h3 
-              = "#{ pluralize @cliente.nearbys(10).con_appunti(Appunto.in_sospeso).size, 'cliente'}"
-              %small con appunti in sospeso
+              = "#{pluralize @cliente.nearbys(10).con_appunti(current_user.appunti.in_sospeso).size, 'cliente'}"
+              %small vicini con appunti in sospeso
             
           .clienti.more
-            = render @cliente.nearbys(10).con_appunti(Appunto.in_sospeso)
+            = render @cliente.nearbys(10).con_appunti(current_user.appunti.in_sospeso)
       

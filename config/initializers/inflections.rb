@@ -22,6 +22,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'adozione', 'adozioni'
   inflect.irregular 'materia', 'materie'
   inflect.irregular 'tappa', 'tappe'
+  inflect.irregular 'sezione', 'sezioni'
   inflect.irregular 'giro', 'giri'
   inflect.irregular 'copia', 'copie'
   inflect.irregular 'comune', 'comuni'
