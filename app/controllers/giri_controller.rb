@@ -1,3 +1,5 @@
+require 'chronic'
+
 class GiriController < ApplicationController
   
   def index

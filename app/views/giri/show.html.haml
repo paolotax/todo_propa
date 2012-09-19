@@ -10,7 +10,7 @@
         = previous_tag  giro_url(giorno: @giro.ieri)
         = next_tag      giro_url(giorno: @giro.domani)
         
-      %h2= "Giro di #{l @giro.giorno.to_date, format: :long_with_day}"
+      %h2= "#{l @giro.giorno.to_date, format: :long_with_day} in cavalleria"
     .image
       = image_tag asset_path("cavaliere.jpg")
 
@@ -58,7 +58,7 @@
           .header
             = show_hide_tag "down"
             .break
-              = link_to "page break", "", class: "pull-right btn"
+              = link_to image_tag(asset_path "PageBreak16.png"), "", class: "pull-right"
             
             %h3
               = link_to v.cliente.titolo, v.cliente

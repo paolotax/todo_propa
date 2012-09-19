@@ -39,6 +39,10 @@ class Libro < ActiveRecord::Base
   scope :next,     lambda { |i, f| where("#{self.table_name}.#{f} > ?", i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
   
   
+  SETTORI.each do |settore|
+    scope "#{settore.downcase}", where("libri.settore = ?", settore)
+  end
+  
   #fratelli usato per option group
   def bros
     Libro.unscoped.where("settore = ?", self.settore).order(:titolo)

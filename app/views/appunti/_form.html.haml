@@ -4,11 +4,22 @@
 
   %ul.nav.nav-tabs.tab
     %li.active
-      %a{ href: "#info",      "data-toggle" => "tab"} Appunto
+      %a{ href: "#info",           "data-toggle" => "tab"} Appunto
     %li
-      %a{ href: "#dettaglio", "data-toggle" => "tab"} Dettaglio righe
+      %a{ href: "#dettaglio",      "data-toggle" => "tab"} Dettaglio righe
     %li
-      %a{ href: "#vacanze", "data-toggle" => "tab"} Inserisci vacanze...  
+      %a{ href: "#parascolastico", "data-toggle" => "tab"} Parascolastico  
+    %li
+      %a{ href: "#scolastico",     "data-toggle" => "tab"} Scolastico  
+    %li
+      %a{ href: "#adozionale",     "data-toggle" => "tab"} Adozionale  
+    %li
+      %a{ href: "#guide",          "data-toggle" => "tab"} Guide  
+    %li
+      %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
+    %li
+      %a{ href: "#varia",          "data-toggle" => "tab"} Varia  
+
 
   .tab-content
 
@@ -51,22 +62,36 @@
                   = riga.number_field :sconto,   class: 'input-mini riga_sconto'
                   = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"
     
+    #parascolastico.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.parascolastico
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Parascolastico" }
+
+    #scolastico.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.scolastico
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Scolastico" }
+
+    #adozionale.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.adozionale
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Adozionale" }
+        
+    #guide.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.guide
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Guide" }
+
     #vacanze.tab-pane.fade
       .control-group
-        #righe
-          - @appunto.create_righe_vacanze
-          = f.simple_fields_for :righe do |riga|
-            - if riga.object.new_record?
-              = div_for riga.object, class: 'form-inline' do
-                = riga.hidden_field :id
-                = riga.hidden_field :libro_id
-                .titolo= riga.object.libro.titolo
-                .pull-right
-                  = riga.number_field :quantita, class: 'input-mini riga_quantita'
-                  = riga.number_field :prezzo,   class: 'input-mini riga_prezzo'
-                  = riga.number_field :sconto,   class: 'input-mini riga_sconto'
-            - else
-              .hidden
+        - @appunto.create_righe Libro.vacanze
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
+
+    #varia.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.varia
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Varia" }
+
       
   = f.error :base
 

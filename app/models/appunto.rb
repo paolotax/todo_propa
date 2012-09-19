@@ -56,8 +56,8 @@ class Appunto < ActiveRecord::Base
     in_sospeso? || completo?
   end
   
-  def create_righe_vacanze
-    libri = Libro.vacanze
+  def create_righe(scope)
+    libri = scope.order(:titolo)
     libri.all.each do |l|
     
       prezzo = l.prezzo_copertina

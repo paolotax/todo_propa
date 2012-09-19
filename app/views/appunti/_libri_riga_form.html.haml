@@ -1,0 +1,13 @@
+#righe
+  = f.simple_fields_for :righe do |riga|
+    - if riga.object.new_record? && riga.object.libro.settore == settore
+      = div_for riga.object, class: 'form-inline' do
+        = riga.hidden_field :id
+        = riga.hidden_field :libro_id
+        .titolo= riga.object.libro.titolo
+        .pull-right
+          = riga.number_field :quantita, class: 'input-mini riga_quantita'
+          = riga.number_field :prezzo,   class: 'input-mini riga_prezzo'
+          = riga.number_field :sconto,   class: 'input-mini riga_sconto'
+    - else
+      .hidden
