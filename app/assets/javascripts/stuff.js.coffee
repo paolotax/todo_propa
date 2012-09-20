@@ -21,5 +21,5 @@ jQuery ->
   
   $('.trigger').live 'click', (e) ->
     e.preventDefault();
-    $('#terms-of-service').modal().open();
+    $('.the-modal').modal().open();
     

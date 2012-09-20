@@ -4,7 +4,7 @@ class Giro
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :giorno, :user_id
+  attr_accessor :giorno, :user_id, :baule
   
   validates_presence_of :giorno, :user_id
   
@@ -27,7 +27,11 @@ class Giro
   end
   
   def visite
-    user.visite.includes(:cliente).where("date(start) = ?", @giorno).order(:start)
+    if baule
+      user.visite.includes(:cliente).where(baule: true)
+    else  
+      user.visite.includes(:cliente).where("date(start) = ?", @giorno).order(:start)
+    end
   end
   
   def clienti

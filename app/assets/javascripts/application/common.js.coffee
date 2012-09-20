@@ -5,6 +5,24 @@
 
 jQuery ->
   
+  $(".mie-adozioni span.adozioni").live "click", (e) ->
+    
+    id = $(@).parent().parent().data("id")
+    e.preventDefault()
+    $('.the-modal').modal().open
+          
+      onOpen: (el, options) ->
+        el.html("<div class='the-modal'></div>");
+        $(".the-modal", el).append("<div class='the-close'>&times</div>");
+        $(".the-modal", el).append("<div class='appunti'></div>");  
+        
+        $.ajax 
+          url: "/appunti.json?cliente_id=#{id}"
+          dataType: 'json'
+          success: (data) ->
+            for obj in data
+              $(".appunti", el).append  JST['appunti/appunto'](obj);
+
 
   $(".mostra-classi").on "click", (e) ->
     e.preventDefault();

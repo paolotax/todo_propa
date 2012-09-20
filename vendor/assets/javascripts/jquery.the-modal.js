@@ -12,8 +12,10 @@
 	var pluginNamespace = 'the-modal',
 		// global defaults
     	defaults = {
+			overlayClass: 'themodal-overlay',
+
 			closeOnEsc: true,
-			//closeOnShimClick: false,
+			closeOnOverlayClick: true,
 
 			onClose: null,
 			onOpen: null
@@ -44,18 +46,21 @@
 
 		return {
 			open: function(options) {
-				// close modal if opened
-				$.modal().close();
-
 				var el = els.get(0);
 				var localOptions = $.extend({}, defaults, $(el).data(pluginNamespace+'.options'), options);
 
 				getContainer().addClass('lock');
 
-				var modal = $('<div class="shim" />').prependTo('body');
+				// close modal if opened
+				if($('.'+localOptions.overlayClass).length) {
+					$.modal().close();
+				}
+
+				var overlay = $('<div/>').addClass(localOptions.overlayClass).prependTo('body');
+				overlay.data(pluginNamespace+'.options', options);
 
 				if(el) {
-					var cln = $(el).clone(true).appendTo(modal).show();
+					$(el).clone(true).appendTo(overlay).show();
 				}
 
 				if(localOptions.closeOnEsc) {
@@ -66,29 +71,33 @@
 					});
 				}
 
+				if(localOptions.closeOnOverlayClick) {
+					overlay.children().on('click.' + pluginNamespace, function(e){
+						e.stopPropagation();
+					});
+					$('.' + localOptions.overlayClass).on('click.' + pluginNamespace, function(e){
+						$.modal().close();
+					});
+				}
+
 				$(document).bind("touchmove",function(e){
-					if(!$(e).parents('.shim')) {
+					if(!$(e).parents('.' + localOptions.overlayClass)) {
 						e.preventDefault();
 					}
 				});
 
-				if(localOptions.closeOnShimClick) {
-					$('body').bind('click.'+pluginNamespace, function(e){
-						console.debug('shim');
-					});
-				}
-
 				if(localOptions.onOpen) {
-					localOptions.onOpen(cln, localOptions);
+					localOptions.onOpen(overlay, localOptions);
 				}
 			},
 			close: function() {
-				var shim = $('.shim');
-				var el = shim.children().get(0);
-				var localOptions = $.extend({}, defaults, $(el).data(), options);
+				var el = els.get(0);
 
-				shim.remove();
+				var localOptions = $.extend({}, defaults, options);
+				var overlay = $('.' + localOptions.overlayClass);
+				$.extend(localOptions, overlay.data(pluginNamespace+'.options'));
 
+				overlay.remove();
 				getContainer().removeClass('lock');
 
 				if(localOptions.closeOnEsc) {
@@ -96,14 +105,14 @@
 				}
 
 				if(localOptions.onClose) {
-					localOptions.onClose(el, localOptions);
+					localOptions.onClose(overlay, localOptions);
 				}
 			}
 		};
 	}
 
 	$.modal = function(options){
-		return init($, options);
+		return init($(), options);
 	};
 
 	$.fn.modal = function(options) {

@@ -1,71 +1,41 @@
+- title "Nel Baule"
+
 = new_button( new_appunto_url )
 
-.row.baule-page
-  .span12
-    .row
-      .span7
-        .well
-          = link_to "", class: "pull-right show-hide btn" do
-            %i.icon-caret-up
 
-          = render 'mappa_baule', clienti: @clienti
-          
-      .span5
-        .toolbar.clearfix
-          = stampami_tag  
-          = link_to "esandi tutto", "", class: "esandi-tutto pull-right btn"
+.module.white
+  .header
+    .btn-toolbar.pull-right
+      .btn-group
+        = stampami_tag
+        = link_to "page break", "", class: "toggle-break btn"
+        = link_to "esandi tutto", "", class: "esandi-tutto btn"
 
-        .well
-          = link_to "", class: "pull-right show-hide btn" do
-            %i.icon-caret-up
-          .more
-            = render "form"  
-            
-            %br  
-            .clienti-baule
-              = render @clienti
+    %h2 Nel Baule
 
 .row.baule-page
-  .span12
-    .well.clearfix
-      - unless @libri_nel_baule.empty?
-        .ordini-nel-baule.span5
-          = link_to "", class: "pull-right show-hide btn" do
-            %i.icon-caret-up
-          %h2 Ordini nel baule
-          .more
-            %table.table.libri-nel-baule
-              - for libro, index in @libri_nel_baule do
-                %tr
-                  %td= index
-                  %td.titolo= link_to libro[:titolo], libro
-                  %td.qta
-                    .pull-right= libro[:quantita]
-              %tr
-                %td
-                %td.qta
-                  .pull-right= @libri_nel_baule.sum {|l| l[:quantita] }
+  .span7
+    .well
+      = show_hide_tag
+      = render 'mappa_baule', clienti: @giro.clienti
+  .span5
+    .well
+      = show_hide_tag
+      .more
+        = render "form"          
 
-      - unless @adozioni_nel_baule.empty?
-        .adozioni-nel-baule.span5
-          = link_to "", class: "pull-right show-hide btn" do
-            %i.icon-caret-up
-          %h2 Adozioni nel baule
-          .more
-            %table.table
-              - for libro in @adozioni_nel_baule do
-                %tr
-                  %td.titolo= libro[:titolo]
-                  %td.qta
-                    .pull-right= libro[:quantita]
-              %tr
-                %td
-                %td.qta
-                  .pull-right= @adozioni_nel_baule.sum {|l| l[:quantita] }
+.row.baule-page
+  .span4
+    = render :partial => 'giri/list_giro'
+  .span4
+    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
+  .span4
+    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
+    
 
-.visite-long.well
-  - for v in @visite do
-    .break.page-break
+.visite-long.well.baule-page
+  - for v in @giro.visite do
+    .break
       = link_to "page break", "", class: "pull-right btn"
     %div[v]
       = link_to "", class: "pull-right show-hide btn" do

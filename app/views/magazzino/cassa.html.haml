@@ -1,8 +1,3 @@
-#terms-of-service.the-modal{style: "display: none;"}
-  %a.the-close{ href: "#"}
-    x
-  .modal-content  
-
 .offset3.row
   .span6.well
     %h2 Incassi giornalieri
@@ -25,5 +20,9 @@
           = number_to_currency @incassi.sum { |i| i.incasso.to_d }
 
 
+.the-modal{style: "display: none;"}
+  %a.the-close{ href: "#"}
+    x
+  .modal-content
 
   

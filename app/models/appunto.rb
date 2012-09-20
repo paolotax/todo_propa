@@ -21,6 +21,8 @@ class Appunto < ActiveRecord::Base
   scope :da_fare,    where("appunti.stato = ''")
   scope :in_sospeso, where("appunti.stato = 'P'")
   
+  scope :pop,        lambda { |id| where("appunti.cliente_id = ?", id) }
+  
   scope :uniq_cliente_id, select(:cliente_id).uniq
   
   scope :recente_da_data, lambda { |data| includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?", data)  }
@@ -118,7 +120,8 @@ class Appunto < ActiveRecord::Base
     appunti = appunti.completo   if params[:status].present? && params[:status] == "completati"
     appunti = appunti.da_fare    if params[:status].present? && params[:status] == "da_fare"
     appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
-  
+    
+    #appunti = appunti.pop(params[:cliente_id].to_i) if params[:cliente_id].present?
     appunti
     
     # raise appunti.inspect  if params[:search].present?
