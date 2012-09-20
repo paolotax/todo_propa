@@ -103,4 +103,18 @@ class AppuntiController < ApplicationController
       format.js
     end
   end
+  
+  def print_multiple
+    # raise params.inspect
+    @appunti = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids])
+    
+    respond_to do |format|
+      format.pdf do
+        pdf = AppuntoPdf.new(@appunti, view_context)
+        send_data pdf.render, filename: "sovrapacchi_#{Time.now}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end   
+  end
 end

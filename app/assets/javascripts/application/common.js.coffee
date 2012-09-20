@@ -5,6 +5,15 @@
 
 jQuery ->
   
+  $('#btn-pdf').live 'click', (e) ->
+    e.preventDefault();
+    params = $("#form_appunti").serialize()
+    $('#form_appunti').attr({'action': "/appunti/print_multiple", 'method': 'get'});
+    $('#form_appunti').submit();
+    return false
+   
+     
+  
   $(".mie-adozioni span.adozioni").live "click", (e) ->
     
     id = $(@).parent().parent().data("id")

@@ -61,6 +61,7 @@ TodoPropa::Application.routes.draw do
   resources :appunti do
     collection do
       put :update_attribute_on_the_spot
+      get :print_multiple, format: :pdf
     end
     member do
       get :get_note
