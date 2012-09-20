@@ -8,6 +8,9 @@ if (visita.length > 0) {
 //   Gmaps.map.replaceMarkers(clienti)
 // };
 
+if ($(".<%= dom_id(@visita) %>").length > 0) {
+  $(".<%= dom_id(@visita) %>").remove();
+}
 
 if ($('.map-baule').length > 0) {
   var clienti = <%= raw @giro.clienti.to_gmaps4rails %>

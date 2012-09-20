@@ -52,6 +52,9 @@ table {
 .hidden         { display: none; }
 .modal          { display: none; }
 
+.btn-toolbar { display: none; }
+.btn-group   { display: none; }
+
 
 .adozioni-nel-baule {
   position: fixed;
@@ -145,12 +148,14 @@ table.righe {
     float: left;
   }
   
-  
+  .hide-print {
+    display: none;
+  }
   
   .appunti {
     @include clearfix();
     .appunto {
-      width: 300px;
+      
       float: left;
       border: 1px solid black;
       margin: 0 5px 5px 0;
