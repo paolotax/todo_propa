@@ -110,7 +110,7 @@ class AppuntiController < ApplicationController
     
     respond_to do |format|
       format.pdf do
-        pdf = EtichettaPdf.new(@appunti, view_context)
+        pdf = EtichettaPdf.new(@appunti, view_context, params[:etichetta_da])
         send_data pdf.render, filename: "sovrapacchi_#{Time.now}.pdf",
                               type: "application/pdf",
                               disposition: "inline"

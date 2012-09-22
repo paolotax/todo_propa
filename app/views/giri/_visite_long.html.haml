@@ -1,5 +1,8 @@
-= form_tag print_multiple_appunti_path, :method => :get, :id => "form_appunti" do
-  = submit_tag "Stampa Etichette",  id: "btn-pdf", class: "btn"
+= form_tag print_multiple_appunti_path, :method => :put, :id => "fom_appunti" do
+  
+  .btn-toolbar
+    = submit_tag "Stampa Etichette",  id: "bt-pdf", class: "btn"
+    = number_field_tag "etichetta_da", "", class: "input-mini", placeholder: "salta"
     
 
   - for v in @giro.visite do
@@ -38,6 +41,6 @@
       .appunti.clearfix
         - for a in v.appunti do
           .span5
-            = check_box_tag "appunto_ids[]", a.id, false, {:class => 'cb-appunto'}
+            = check_box_tag "appunto_ids[]", a.id, a.da_consegnare?, {:class => 'cb-appunto'}
         
             = render a

@@ -4,7 +4,7 @@ class EtichettaPdf < Prawn::Document
   
   include LayoutPdf
   
-  def initialize(appunti, view)
+  def initialize(appunti, view, etichetta_da = 0)
     super(:page_size => "A4", 
           :page_layout => :portrait,
           :margin => [4.mm, 0],
@@ -18,8 +18,9 @@ class EtichettaPdf < Prawn::Document
               :CreationDate => Time.now
           })
     
-    @appunti = appunti.insert(0, nil).insert(0, nil).insert(0, nil)
+    @appunti = appunti
     @view = view
+    (1..etichetta_da.to_i).each { @appunti.insert(0, nil) }
 
     @appunti.in_groups_of( 8, false ) do |pages|
       
