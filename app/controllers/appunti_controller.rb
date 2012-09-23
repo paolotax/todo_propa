@@ -114,12 +114,12 @@ class AppuntiController < ApplicationController
       format.pdf do
         
         case params[:tipo_etichetta]
-          when "2x4"
+          when "2x4 con bordo"
             options = {
               top_margin: 4.mm,
+              bottom_margin: 4.mm,
               page_layout: :portrait,
               start_from: params[:etichetta_da],
-              # page_size:  [36.mm, 89.mm],
               labels_per_page: 8,
               columns: 2,
               print_logo: "small",
@@ -127,9 +127,22 @@ class AppuntiController < ApplicationController
               destinatario_top: 3.4.cm,
               destinatario_left: 2.5.cm
             }
+          when "2x4 senza bordo"
+            options = {
+              page_layout: :portrait,
+              start_from: params[:etichetta_da],
+              labels_per_page: 8,
+              columns: 2,
+              print_logo: "small",
+              print_pieghi: true,
+              destinatario_top: 3.4.cm,
+              destinatario_left: 2.5.cm
+            }
+            
           when "2x6"
             options = {
               top_margin: 4.mm,
+              bottom_margin: 4.mm,
               page_layout: :portrait,
               start_from: params[:etichetta_da],
               labels_per_page: 12,
@@ -137,11 +150,12 @@ class AppuntiController < ApplicationController
               print_logo: "small",
               print_pieghi: true,
               destinatario_top: 2.cm,
-              destinatario_left: 2.5.cm
+              destinatario_left: 2.cm
             }
           when "3x8"
             options = {
               top_margin: 4.mm,
+              bottom_margin: 4.mm,
               page_layout: :portrait,
               start_from: params[:etichetta_da],
               labels_per_page: 24,
@@ -149,7 +163,6 @@ class AppuntiController < ApplicationController
             }
           when "Dymo 99012"
             options = {
-              top_margin: 4.mm,
               page_size:  [36.mm, 89.mm],
               labels_per_page: 1,
               columns: 1
