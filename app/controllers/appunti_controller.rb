@@ -1,3 +1,5 @@
+require "prawn/measurement_extensions"
+
 class AppuntiController < ApplicationController
   
   can_edit_on_the_spot
@@ -110,7 +112,52 @@ class AppuntiController < ApplicationController
     
     respond_to do |format|
       format.pdf do
-        pdf = EtichettaPdf.new(@appunti, view_context, params[:etichetta_da])
+        
+        case params[:tipo_etichetta]
+          when "2x4"
+            options = {
+              top_margin: 4.mm,
+              page_layout: :portrait,
+              start_from: params[:etichetta_da],
+              # page_size:  [36.mm, 89.mm],
+              labels_per_page: 8,
+              columns: 2,
+              print_logo: "small",
+              print_pieghi: true,
+              destinatario_top: 3.4.cm,
+              destinatario_left: 2.5.cm
+            }
+          when "2x6"
+            options = {
+              top_margin: 4.mm,
+              page_layout: :portrait,
+              start_from: params[:etichetta_da],
+              labels_per_page: 12,
+              columns: 2,
+              print_logo: "small",
+              print_pieghi: true,
+              destinatario_top: 2.cm,
+              destinatario_left: 2.5.cm
+            }
+          when "3x8"
+            options = {
+              top_margin: 4.mm,
+              page_layout: :portrait,
+              start_from: params[:etichetta_da],
+              labels_per_page: 24,
+              columns: 3
+            }
+          when "Dymo 99012"
+            options = {
+              top_margin: 4.mm,
+              page_size:  [36.mm, 89.mm],
+              labels_per_page: 1,
+              columns: 1
+            }
+        end  
+        
+                
+        pdf = EtichettaPdf.new(@appunti, view_context, options)
         send_data pdf.render, filename: "sovrapacchi_#{Time.now}.pdf",
                               type: "application/pdf",
                               disposition: "inline"

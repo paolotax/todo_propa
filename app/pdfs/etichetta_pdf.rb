@@ -4,11 +4,33 @@ class EtichettaPdf < Prawn::Document
   
   include LayoutPdf
   
-  def initialize(appunti, view, etichetta_da = 0)
-    super(:page_size => "A4", 
-          :page_layout => :portrait,
-          :margin => [4.mm, 0],
-          :info => {
+  def initialize(appunti, view, options = {})
+    
+    defaults = {
+      page_layout:   :landscape,
+      page_size:     "A4",
+      top_margin:    0,
+      left_margin:   0,
+      bottom_margin: 0,
+      right_margin:  0,
+      columns:       1,
+      labels_per_page: 1,
+      destinatario_top:  5.mm,
+      destinatario_left: 5.mm,
+            
+    }
+
+    options = options.reverse_merge(defaults)
+    
+    #raise options.inspect
+    
+    super(page_size:     options[:page_size], 
+          page_layout:   options[:page_layout], 
+          top_margin:    options[:top_margin],
+          left_margin:   options[:left_margin],
+          bottom_margin: options[:bottom_margin],
+          right_margin:  options[:right_margin],
+          info: {
               :Title => "etichette",
               :Author => "todo-propa",
               :Subject => "etichette",
@@ -17,50 +39,74 @@ class EtichettaPdf < Prawn::Document
               :Producer => "Prawn",
               :CreationDate => Time.now
           })
+
+    @labels_per_page = options[:labels_per_page]
+    @columns         = options[:columns]
+    @rows            = @labels_per_page / @columns
+    
+    @label_width  = bounds.width / @columns
+    @label_height = (bounds.height - options[:top_margin] - options[:bottom_margin]) / @rows   
+    
+    @print_logo   = options[:print_logo]
+    @print_pieghi = options[:print_pieghi]
     
     @appunti = appunti
     @view = view
-    (1..etichetta_da.to_i).each { @appunti.insert(0, nil) }
+    
+    @destinatario_top  = options[:destinatario_top]
+    @destinatario_left = options[:destinatario_left]
+    
 
-    @appunti.in_groups_of( 8, false ) do |pages|
-      
-      pages.each_with_index do |a, index|
-        if a
-          etichetta(a, index + 1)
-        end
+    if options[:start_from]
+      (1..options[:start_from].to_i).each { @appunti.insert(0, nil) }
+    end
+
+    @appunti.in_groups_of( @labels_per_page, false ) do |pages|
+      num_row = 0
+      pages.in_groups_of(@columns, false) do |rows|
+        rows.each_with_index do |a, index|
+          if a
+            etichetta(a, index, num_row)
+          end
+        end  
+        num_row += 1
       end
       
-      start_new_page unless page_number >= @appunti.size.to_f / 8
+      start_new_page unless page_number >= @appunti.size.to_f / @labels_per_page
     end
+    
   end  
     
-  def etichetta(appunto, num_etichetta)
+  def etichetta(appunto, num_etichetta, num_row)
     
-    if num_etichetta.even?
-      left = 10.5.cm
-    else
-      left = 0
-    end
+    left = num_etichetta * @label_width
 
-    top  =  bounds.top - (((num_etichetta - 1) / 2) * 7.2.cm)
-    
-    bounding_box [ left, top ], :width => 10.5.cm, :height => 7.2.cm do
-      #stroke_bounds
-      logo_small
-      agente_small(current_user)
-      text_box "PIEGHI DI LIBRI", at: [ bounds.left + 3.mm, bounds.top - 6.8.cm], size: 11, style: :bold, rotate: 90
-      
-      destinatario(appunto)
+ 
+    top  =  bounds.top - (num_row * @label_height)
+     
+    bounding_box [ left, top ], :width => @label_width, :height => @label_height do
+       #stroke_bounds
+       
+       if @print_logo == "small"       
+         logo_small
+         agente_small(current_user)
+       end
+       
+       if @print_pieghi
+         text_box "PIEGHI DI LIBRI", at: [ bounds.left + 3.mm, bounds.top - 6.8.cm], size: 11, style: :bold, rotate: 90
+       end
+       
+       destinatario(appunto)
     end
   end
   
   def destinatario(appunto)
 
-    bounding_box [30.mm , bounds.top - 3.cm], :width => 6.5.cm do
-      move_down 10
+    bounding_box [ bounds.left + @destinatario_left, bounds.top - @destinatario_top ], :width => 6.5.cm do
+      
       text appunto.destinatario, :size => 14, :style => :bold, :spacing => 4
-      #move_down(3)
-      text "#{appunto.cliente.cognome} #{appunto.cliente.nome}",  :size => 14, :style => :bold, :spacing => 4      
+      move_down 2.mm
+      #text "#{appunto.cliente.cognome} #{appunto.cliente.nome}",  :size => 14, :style => :bold, :spacing => 4      
       text appunto.cliente.ragione_sociale,  :size => 14, :style => :bold, :spacing => 4
       text appunto.cliente.indirizzo,  :size => 12
       text appunto.cliente.cap + ' ' + appunto.cliente.frazione  + ' ' + appunto.cliente.comune  + ' ' + appunto.cliente.provincia,  :size => 12
