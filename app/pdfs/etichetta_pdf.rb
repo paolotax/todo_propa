@@ -85,7 +85,7 @@ class EtichettaPdf < Prawn::Document
     top  =  bounds.top - (num_row * @label_height)
      
     bounding_box [ left, top ], :width => @label_width, :height => @label_height do
-       stroke_bounds
+       #stroke_bounds
        
        if @print_logo == "small"       
          logo_small
