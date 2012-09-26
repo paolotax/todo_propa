@@ -1,9 +1,10 @@
-- if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
-  - favorited = "favorited"
-- else
-  -favorited = ''
+/ - if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
+/   - favorited = "favorited"
+/ - else
+/   -favorited = ''
 
-%div[appunto]{ class: "#{stato_to_s(appunto)} #{favorited}" }
+/ %div[appunto]{ class: "#{stato_to_s(appunto)} #{favorited}" }
+%div[appunto]{ class: "#{stato_to_s(appunto)}" }
   .content
     .dogear
     %small.time
@@ -80,18 +81,18 @@
           %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
             %i.icon-pencil
             Modifica
-        - unless appunto.stato == "completato"
-          %li.baule
-            - unless appunto.nel_baule == false
-              %a{ href: "/visite/#{appunto.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
-                %i.icon-shopping-cart
-                Scarica baule
-            - else
-              %form{ action: '/visite', method: 'post', 'data-remote' => true }
-                %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{appunto.cliente_id}"}
-                %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
-                %button{ title: 'metti nel baule!'}
-                  %i.icon-shopping-cart
-                  Nel baule
+        / - unless appunto.stato == "completato"
+        /   %li.baule
+        /     - unless appunto.nel_baule == false
+        /       %a{ href: "/visite/#{appunto.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
+        /         %i.icon-shopping-cart
+        /         Scarica baule
+        /     - else
+        /       %form{ action: '/visite', method: 'post', 'data-remote' => true }
+        /         %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{appunto.cliente_id}"}
+        /         %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
+        /         %button{ title: 'metti nel baule!'}
+        /           %i.icon-shopping-cart
+        /           Nel baule
 
     .clearfix

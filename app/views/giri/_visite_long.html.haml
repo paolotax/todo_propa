@@ -1,10 +1,9 @@
 = form_tag print_multiple_appunti_path, :method => :put, :id => "fom_appunti" do
-  
+
   .btn-toolbar
     = submit_tag "Stampa Etichette",  id: "bt-pdf", class: "btn"
     = select_tag "tipo_etichetta", options_for_select(["2x4 con bordo", "2x4 senza bordo", "3x8", "2x6", "Dymo 99012"])
     = number_field_tag "etichetta_da", "", class: "input-mini", placeholder: "salta"
-    
 
   - for v in @giro.visite do
 
