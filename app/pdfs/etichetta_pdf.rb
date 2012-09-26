@@ -80,8 +80,6 @@ class EtichettaPdf < Prawn::Document
   def etichetta(appunto, num_etichetta, num_row)
     
     left = num_etichetta * @label_width
-
- 
     top  =  bounds.top - (num_row * @label_height)
      
     bounding_box [ left, top ], :width => @label_width, :height => @label_height do
@@ -93,7 +91,7 @@ class EtichettaPdf < Prawn::Document
        end
        
        if @print_pieghi
-         text_box "PIEGHI DI LIBRI", at: [ bounds.left + 3.mm, bounds.top - 6.8.cm], size: 11, style: :bold, rotate: 90
+         text_box "PIEGHI DI LIBRI", at: [ bounds.left + 5.mm, bounds.top - 6.8.cm], size: 11, style: :bold, rotate: 90
        end
        
        destinatario(appunto)

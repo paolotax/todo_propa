@@ -26,14 +26,14 @@ module LayoutPdf
   
   
   def logo_small
-    bounding_box([bounds.left + 3.mm, bounds.top - 2.mm], :width => bounds.width / 2.0) do
+    bounding_box([bounds.left + 5.mm, bounds.top - 5.mm], :width => bounds.width / 2.0) do
       giunti = "#{Rails.root}/public/images/giunti_scuola.jpg"
       image giunti, :width => 4.cm, :height => 0.8.cm
     end
   end
   
   def agente_small(user)
-    bounding_box([bounds.width / 2.0, bounds.top - 3.mm], :width => bounds.width / 2.0 - 2.mm ) do
+    bounding_box([bounds.width / 2.0 - 5.mm, bounds.top - 5.mm], :width => bounds.width / 2.0 ) do
       #stroke_bounds
       font_size 8
       text "#{user.nome_completo.upcase}", :size => 10, :align => :right, style: :bold
