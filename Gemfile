@@ -65,6 +65,8 @@ gem 'whenever', :require => false
 gem 'capistrano'
 gem 'unicorn'
 
+gem "acts-as-taggable-on"
+
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
   gem 'quiet_assets'

@@ -13,7 +13,6 @@
 //= require jquery.ui.draggable
 //= require jquery.ui.resizable
 
-
 //= require chosen.jquery
 //= require showdown
 //= require jquery.validity
@@ -37,7 +36,6 @@
 //= require accounting
 //= require gmaps
 //= require stuff
-
 
 
 

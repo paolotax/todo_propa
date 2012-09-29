@@ -11,11 +11,6 @@ jQuery ->
 window.initializeAppunto = (appunto) ->
 
   $('time.timeago', appunto).timeago();
-  
-  # appunto.bind 'dblclick', (e) ->
-  #   e.stopPropagation()
-  #   e.preventDefault()
-  #   $(@).toggleClass 'opened'
 
   $('.stato', appunto).bind 'click', (e) ->
     e.stopPropagation()
@@ -55,23 +50,6 @@ window.initializeAppunto = (appunto) ->
   $('.edit a, .print a', appunto).bind 'click', (e) ->
     e.stopPropagation()
 
-  # non funzia
-  # $('.delete a', appunto).bind 'click', (e) ->
-  # appunto = $(@).closest($('.appunto'))
-  # appunto.addClass('opened')
-  
-  # $('.baule a', appunto).bind 'click', (e) ->
-  #   e.stopPropagation()
-  #   e.preventDefault()
-  #   container = $(@).closest($('.appunto'))
-  #   $(container).toggleClass 'favorited'
-  # 
-  #   appunto = 
-  #     id: container.attr('id')
-  #     cliente_titolo: $('.full_name', container).text()
-  #     
-  #   $('.side-right .well').append JST['appunti/baule'](appunto)
-
 
 
 jQuery ->
@@ -92,16 +70,6 @@ jQuery ->
     $('#footer').html @selected_appunti.length 
     console.log @selected_appunti
     
-
-  # $('.appunto').live 'click', (e) ->
-  #   e.preventDefault()
-  #   $(@).toggleClass("selected")
-  #   pos = $('#appunti').scrollTop();
-  #   count_selected $(@)
-  #   #$('#footer').html $('.appunto.selected').length
-  #   $('#appunti').scrollTop(pos);
-
-
   $('#new_appunto_button').live 'click', (e) ->
 
     e.preventDefault()

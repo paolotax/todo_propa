@@ -23,8 +23,9 @@
       
 
   .side-right.span3.visible-desktop
-    .well
-      = link_to "Mostra Baule", baule_url
-      %p
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    .module
+      
+      #tag_cloud.content
+        - tag_cloud @appunti.tag_counts, %w[s m l] do |tag, css_class|
+          = link_to tag.name, tag_path(tag.name), class: css_class
 

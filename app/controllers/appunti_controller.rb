@@ -6,18 +6,24 @@ class AppuntiController < ApplicationController
 
   def index
     session[:return_to] = request.path
+    
     @search = current_user.appunti.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params)
-
     @in_corso = @search.in_corso.size
     @da_fare  = @search.da_fare.size
     @in_sospeso = @search.in_sospeso.size    
     @tutti = @search.size
    
-    @appunti = @search.recente.limit(30)
-    @appunti = @appunti.offset((params[:page].to_i-1)*30) if params[:page].present?
-
+    
+    if params[:tag]
+      @appunti = @search.tagged_with(params[:tag])
+    else  
+      @appunti = @search.recente.limit(30)
+      @appunti = @appunti.offset((params[:page].to_i-1)*30) if params[:page].present?
+    end
+      
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
     @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
+
   end
   
   def get_note

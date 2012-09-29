@@ -4,16 +4,16 @@
   .module.remote
     %ul.stats
       %li
-        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').except(:status) do
+        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json' ).except(:status) do
           %strong= @tutti
           appunti
 
       %li
-        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "da_fare") do
+        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json' ).merge(status: "da_fare") do
           %strong= @da_fare
           da fare
       %li
-        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json').merge(status: "in_sospeso") do
+        = link_to params.merge(:controller => :appunti, :action => :index, :format => 'json' ).merge(status: "in_sospeso") do
           %strong= @in_sospeso
           in sospeso
 

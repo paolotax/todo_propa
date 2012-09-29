@@ -8,7 +8,7 @@ jQuery ->
   $('#btn-pdf').live 'click', (e) ->
     e.preventDefault();
     params = $("#form_appunti").serialize()
-    $('#form_appunti').attr({'action': "/appunti/print_multiple", 'method': 'get'});
+    $('#form_appunti').attr({'action': "/appunti/print_multiple", 'method': 'post'});
     $('#form_appunti').submit();
     return false
    
@@ -85,11 +85,12 @@ jQuery ->
   String.prototype.capitalize = () ->
     this.charAt(0).toUpperCase() + this.slice(1)
   
-  $(".filters a, .module.remote a").live 'click', (e) ->
+  $(".filters a, .module.remote a, #tag_cloud a").live 'click', (e) ->
     e.preventDefault()
-  
-    cont = $(@).attr('href').split('?')[0] ||= ""
-    params = $(@).attr('href').split('?')[1] ||= ""
+    
+    url = $(@).attr('href')
+    cont = url.split('?')[0] ||= ""
+    params = url.split('?')[1] ||= ""
     
     if cont == '/clienti.json'
       controller = 'clienti'
@@ -103,12 +104,12 @@ jQuery ->
       localStorage[storageName] = JSON.stringify []
   
     $.get "/get_#{controller}_filters.js", params, (data) ->
-      console.log data
+      console.log "data"
     
-    $.getJSON $(@).attr('href'), (data) ->
+    $.getJSON url, (data) ->
       pending = $.parseJSON localStorage[storageName]
       appunti = pending.concat(data)
-  
+      
       $("##{controller}").empty()
       for obj in appunti
         if obj.data?
@@ -116,7 +117,8 @@ jQuery ->
           $(item).hide().appendTo("##{controller}").fadeIn()   
         else
           item = template(obj)
-          $(item).hide().appendTo("##{controller}").fadeIn('slow')   
+          $(item).hide().appendTo("##{controller}").fadeIn()   
         
         window.initializeAppunto($(".appunto:last-child"))
-
+      
+      # window.history.pushState null, "appunti", url;  

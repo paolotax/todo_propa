@@ -5,7 +5,7 @@ class Cliente < ActiveRecord::Base
   
   extend FriendlyId
   friendly_id :titolo, use: [:slugged, :history]
-
+  
   belongs_to :user
 
   has_many :appunti, dependent: :destroy
@@ -60,9 +60,7 @@ class Cliente < ActiveRecord::Base
 
   def self.grouped_by_provincia_and_comune
     clienti = scoped
-    clienti = clienti.group_by(&:provincia).each do |k, v|
-      
-    end  
+    clienti = clienti.group_by(&:provincia)
     clienti
   end
   
@@ -85,21 +83,6 @@ class Cliente < ActiveRecord::Base
     end
   end
   
-  # def self.con_appunti(appunti_relation)
-  #     ids = appunti_relation.pluck(:cliente_id).uniq
-  #     Cliente.where('clienti.id in (?)', ids)
-  #   end
-  # 
-  #   def self.with_objects(objects_relation)
-  #     ids = objects_relation.pluck(:cliente_id).uniq
-  #     Cliente.where('clienti.id in (?)', ids)
-  #   end
-  #     
-  #   def self.without_objects(objects_relation)
-  #     ids = objects_relation.pluck(:cliente_id).uniq
-  #     Cliente.where('clienti.id in (?)', ids)
-  #     
-  #   end
   
   #after_initialize :set_indirizzi
   
