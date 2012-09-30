@@ -3,7 +3,7 @@
 = new_button( new_appunto_url )
 
 
-.module.white
+.module
   .header
     .btn-toolbar.pull-right
       .btn-group
@@ -15,14 +15,14 @@
 
 .row.baule-page
   .span7
-    .module.white
+    .module
       .header
         = show_hide_tag
         %h3 Mappa
       = render 'baule/mappa_baule', clienti: @giro.clienti
 
   .span5
-    .module.white
+    .module
       .header
         = show_hide_tag
         %h4 scegli il giorno

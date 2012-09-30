@@ -6,10 +6,11 @@ code do |u|
     destinatario: u.destinatario.present? ? u.destinatario : "...",
     cliente_nome: u.cliente_nome,
     note:         markdown(u.note),
-    stato:        stato_to_s(u),
+    stato:        u.status,
     con_recapiti: u.has_recapiti?,
     nel_baule:    u.nel_baule,
-    con_righe:    u.has_righe?
+    con_righe:    u.has_righe?,
+    tag_list:     u.tag_list
   }
 end
 

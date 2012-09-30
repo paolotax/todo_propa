@@ -3,8 +3,13 @@
 / - else
 /   -favorited = ''
 
-/ %div[appunto]{ class: "#{stato_to_s(appunto)} #{favorited}" }
-%div[appunto]{ class: "#{stato_to_s(appunto)}" }
+/ %div[appunto]{ class: "#{appunto.status} #{favorited}" }
+
+
+
+- grouped = grouped ||= ""
+
+%div[appunto]{ class: "#{appunto.status} #{grouped}" }
   .content
     .dogear
     %small.time
@@ -20,8 +25,8 @@
         Chiudi
 
     .stato.dropdown
-      %a{ class: "dropdown-toggle #{stato_to_s(appunto)}", "data-toggle" => "dropdown" }
-        .icon-status{ class: "#{stato_to_s(appunto)}" }
+      %a{ class: "dropdown-toggle #{appunto.status}", "data-toggle" => "dropdown" }
+        .icon-status{ class: "#{appunto.status}" }
       %ul.dropdown-menu
         %li
           %a.change-status{ "data-status" => "",  "data-id" => "#{appunto.id}"} da fare                      
@@ -29,14 +34,29 @@
           %a.change-status{ "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
         %li
           %a.change-status{ "data-status" => "X", "data-id" => "#{appunto.id}"} completato
-
-    - if appunto.destinatario?
-      %span.destinatario
-        = "@#{appunto.destinatario}"
+    
+    
+    - if grouped == ""
+      = link_to appunto.cliente do
+        %strong.full_name= appunto.cliente.titolo 
+      %small.destinatario= "@#{appunto.destinatario}" if appunto.destinatario?
+    - else
+      %strong= "@#{appunto.destinatario}" if appunto.destinatario?
 
     %p
       = appunto.note
-
+    
+    - unless appunto.tag_list.empty?
+      %p
+        - for tag in appunto.tag_list do
+          .pull-left.tag-remove.label.label-warning{ style: "margin: 0 3px 3px 0"}
+            
+            %span.pull-left= tag
+            / = link_to tag, tag_path(tag: tag), class: "pull-left"
+            = form_for appunto, remote: true, html: {style: "display:inline; margin: 0 0 0 12px", class: "close"} do |f|
+              = hidden_field_tag "appunto[tag_list]", (appunto.tag_list - [tag]).join(', ')
+              = f.button "x"
+      
     = render "appunti/recapiti", appunto: appunto
     
     - if appunto.has_righe? && appunto.da_fatturare?

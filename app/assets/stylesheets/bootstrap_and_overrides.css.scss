@@ -29,6 +29,28 @@ body { padding-top: 60px; }
   font-size: 25px;
 }
 
+.baule form,
+.tag-remove form {
+  display: inline
+}
+
+.mostra-classi {
+  display: block;
+  float: right;
+}
+
+.baule button,
+.tag-remove button {
+  margin-top: -3px;
+  color: $linkColor;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  &:hover {
+    color: $linkColorHover;
+    text-decoration: underline;
+  }
+}
 
 input.numeric,
 input.decimal {
@@ -192,32 +214,8 @@ body {
   padding: 5px;
   background-color: white;
 }
-ol.clienti-baule,
-ol.clienti-list {
-  
-}
 
 
-.baule form {
-  display: inline
-}
-
-.mostra-classi {
-  display: block;
-  float: right;
-}
-
-.baule button {
-  margin-top: -3px;
-  color: $linkColor;
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  &:hover {
-    color: $linkColorHover;
-    text-decoration: underline;
-  }
-}
 
 .link {
   color: red;

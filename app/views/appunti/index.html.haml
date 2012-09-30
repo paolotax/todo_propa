@@ -4,7 +4,6 @@
 
 .row
   .side-bar.span3
-    = render :partial => 'shared/episode_views'
     = render :partial => 'shared/search_options'
   
   
@@ -17,15 +16,16 @@
       = render :partial => 'shared/filters'
 
     #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
-    / - @appunti.each do |appunto|
-    /   = render "appunto"
+      = render @appunti
+      / - @appunti.each do |appunto|
+      /   = render "appunto"
     .stream-loader
       
 
   .side-right.span3.visible-desktop
-    .module
+    .module.white
       
-      #tag_cloud.content
+      #tag_cloud
         - tag_cloud @appunti.tag_counts, %w[s m l] do |tag, css_class|
           = link_to tag.name, tag_path(tag.name), class: css_class
 

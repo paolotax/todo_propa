@@ -32,6 +32,11 @@
     
     %p
       != @note
+    %p
+      - for tag in @tag_list
+        .label.label-warning.pull-left
+          = tag
+        &nbsp
 
     %p
       - if @telefono

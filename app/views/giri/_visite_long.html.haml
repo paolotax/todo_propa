@@ -1,46 +1,47 @@
-= form_tag print_multiple_appunti_path, :method => :put, :id => "fom_appunti" do
-
-  .btn-toolbar
-    = submit_tag "Stampa Etichette",  id: "bt-pdf", class: "btn"
+.btn-toolbar
+  = form_tag print_multiple_appunti_path, :method => :put, target: "_blank", :id => "form_print_appunti" do
+    - for a in @giro.appunti_da_fare do
+      = hidden_field_tag "appunto_ids[]", a.id
+    = submit_tag "Stampa Etichette",  id: "bnt-pdf", class: "btn"
     = select_tag "tipo_etichetta", options_for_select(["2x4 con bordo", "2x4 senza bordo", "3x8", "2x6", "Dymo 99012"])
     = number_field_tag "etichetta_da", "", class: "input-mini", placeholder: "salta"
 
-  - for v in @giro.visite do
+- for v in @giro.visite do
 
-    .module{ id: "#{v.cliente.slug}", class: "#{dom_id(v)} white" }
-      .header
-        = show_hide_tag "down"
-        .break
-          = link_to image_tag(asset_path "PageBreak16.png"), "", class: "pull-right"
+  .module{ id: "#{v.cliente.slug}", class: "#{dom_id(v)} white" }
+    .header
+      = show_hide_tag "down"
+      .break
+        = link_to image_tag(asset_path "PageBreak16.png"), "", class: "pull-right"
+    
+      %h3
+        = link_to v.cliente.titolo, v.cliente
+    .more.hidden
+      %br
+      %table.table.table-bordered.classi-adozioni
+        - v.cliente.classi_adozioni_grouped.each do |k, classi|
+          %tr
+            %td.classe-group
+              .badge.badge-primary.pull-left= k
+            - classi.each do |c|
+              %td[c]
+                .pull-left
+                  .badge.badge-info.sezione
+                    =c[:sezione]
+                .pull-right
+                  = link_to new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe} #{c.sezione}"), class: "btn" do
+                    %i.icon-book
+            
+                .clearfix  
+                - unless c.adozioni.scolastico.empty?
+                  %ul.adozioni-list
+                    - for a in c.adozioni.scolastico do
+                      %li[a]
+                        %span.label.label-important= a.libro.sigla
+
+    .appunti.clearfix
+      - for a in v.appunti do
+        .span5
+          = check_box_tag "appunto_ids[]", a.id, a.da_consegnare?, {:class => 'cb-appunto'}
       
-        %h3
-          = link_to v.cliente.titolo, v.cliente
-      .more.hidden
-        %br
-        %table.table.table-bordered.classi-adozioni
-          - v.cliente.classi_adozioni_grouped.each do |k, classi|
-            %tr
-              %td.classe-group
-                .badge.badge-primary.pull-left= k
-              - classi.each do |c|
-                %td[c]
-                  .pull-left
-                    .badge.badge-info.sezione
-                      =c[:sezione]
-                  .pull-right
-                    = link_to new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe} #{c.sezione}"), class: "btn" do
-                      %i.icon-book
-              
-                  .clearfix  
-                  - unless c.adozioni.scolastico.empty?
-                    %ul.adozioni-list
-                      - for a in c.adozioni.scolastico do
-                        %li[a]
-                          %span.label.label-important= a.libro.sigla
-
-      .appunti.clearfix
-        - for a in v.appunti do
-          .span5
-            = check_box_tag "appunto_ids[]", a.id, a.da_consegnare?, {:class => 'cb-appunto'}
-        
-            = render a
+          = render a, grouped: "grouped"

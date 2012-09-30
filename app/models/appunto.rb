@@ -5,6 +5,9 @@ class Appunto < ActiveRecord::Base
   belongs_to :user
   belongs_to :cliente
   
+  STATUS       = ["da_fare", "in_sospeso", "preparato", "completato"]
+  STATUS_CODES = ["", "P", "S", "X"]
+
   has_many :righe, :dependent => :destroy
   has_many :fatture, through: :righe, uniq: true
   
@@ -19,9 +22,6 @@ class Appunto < ActiveRecord::Base
 
   scope :recente,  order("appunti.id desc")
   scope :in_corso,   where("appunti.stato <> 'X'")
-  scope :completo,   where("appunti.stato = 'X'")
-  scope :da_fare,    where("appunti.stato = ''")
-  scope :in_sospeso, where("appunti.stato = 'P'")
   
   scope :pop,        lambda { |id| where("appunti.cliente_id = ?", id) }
   
@@ -44,20 +44,28 @@ class Appunto < ActiveRecord::Base
     self.fatture[0] unless self.fatture.empty?
   end
   
+  STATUS.each_with_index do |status, index|
+    scope "#{status}", where("appunti.stato = ?", STATUS_CODES[index])
+    
+    define_method "#{status}?" do
+      self.stato == STATUS_CODES[index]
+    end
+  end
+  
+  def status
+    STATUS[STATUS_CODES.index(stato)]
+  end
+  
+  def status=(stato)
+    self.stato = STATUS_CODES[STATUS.index(stato)]
+  end  
+  
   def da_consegnare?
     self.stato.blank?
   end
   
-  def in_sospeso?
-    self.stato == "P"
-  end
-  
-  def completo?
-    self.stato == "X"
-  end
-  
   def consegnato?
-    in_sospeso? || completo?
+    in_sospeso? || completato?
   end
   
   def create_righe(scope)

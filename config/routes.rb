@@ -23,7 +23,7 @@ TodoPropa::Application.routes.draw do
   match '/crea_buoni_di_consegna', controller: 'magazzino', action: 'crea_buoni_di_consegna'
   match '/crea_fatture', controller: 'magazzino', action: 'crea_fatture'
   
-  match '/baule', controller: 'baule', action: 'show'
+  get '/baule', to: 'baule#show', as: 'baule'
   match '/baule/rimuovi', controller: 'baule', action: 'destroy'
   match '/baule/update',  controller: 'baule', action: 'update', :via => :put
   

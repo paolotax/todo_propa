@@ -74,7 +74,7 @@
           Modifica
             
   .row
-    .side-bar.span4
+    .side-bar.span3
       - unless @cliente.new_record?  
         - da_consegnare  = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
         = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_consegnare", collection: da_consegnare} unless da_consegnare.empty?
@@ -89,7 +89,7 @@
       - else
         &nbsp
         
-    .center.span4
+    .center.span5
       %header.content-header
         .header-inner
           %h2 Appunti
@@ -100,7 +100,7 @@
           .item
             %h3= anno
           - for a in values do
-            = render a
+            = render a, grouped: "grouped"
           
       .stream-loader
       

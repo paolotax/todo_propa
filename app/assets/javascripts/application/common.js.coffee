@@ -5,12 +5,24 @@
 
 jQuery ->
   
-  $('#btn-pdf').live 'click', (e) ->
+  
+  $(".cb-appunto").on "change", (e) ->
     e.preventDefault();
-    params = $("#form_appunti").serialize()
-    $('#form_appunti').attr({'action': "/appunti/print_multiple", 'method': 'post'});
-    $('#form_appunti').submit();
-    return false
+    if $(@).is(":checked") is false
+      $("input:hidden[name='appunto_ids[]'][value='#{$(@).val()}']").remove()
+    else
+      $("#form_print_appunti").prepend("<input type='hidden' name='appunto_ids[]' value='#{$(@).val()}' />")
+      
+      
+    
+  
+  
+  # $('#btn-pdf').live 'click', (e) ->
+  #   e.preventDefault();
+  #   params = $("#form_appunti").serialize()
+  #   $('#form_appunti').attr({'action': "/appunti/print_multiple", 'method': 'post'});
+  #   $('#form_appunti').submit();
+  #   return false
    
      
   
@@ -106,19 +118,25 @@ jQuery ->
     $.get "/get_#{controller}_filters.js", params, (data) ->
       console.log "data"
     
-    $.getJSON url, (data) ->
-      pending = $.parseJSON localStorage[storageName]
-      appunti = pending.concat(data)
-      
-      $("##{controller}").empty()
-      for obj in appunti
-        if obj.data?
-          item = template(obj)
-          $(item).hide().appendTo("##{controller}").fadeIn()   
-        else
-          item = template(obj)
-          $(item).hide().appendTo("##{controller}").fadeIn()   
+    $.ajax
+      url: controller + "?" + params
+      dataType: "script"
+      success: () ->
+        console.log "yeah"
         
-        window.initializeAppunto($(".appunto:last-child"))
+    # $.getJSON url, (data) ->
+    #   pending = $.parseJSON localStorage[storageName]
+    #   appunti = pending.concat(data)
+    #   
+    #   $("##{controller}").empty()
+    #   for obj in appunti
+    #     if obj.data?
+    #       item = template(obj)
+    #       $(item).hide().appendTo("##{controller}").fadeIn()   
+    #     else
+    #       item = template(obj)
+    #       $(item).hide().appendTo("##{controller}").fadeIn()   
+    #     
+    #     window.initializeAppunto($(".appunto:last-child"))
       
       # window.history.pushState null, "appunti", url;  

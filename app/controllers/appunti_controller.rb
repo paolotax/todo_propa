@@ -88,14 +88,15 @@ class AppuntiController < ApplicationController
 
   def update
     @appunto = current_user.appunti.find(params[:id])
-    
     respond_to do |format|
       if @appunto.update_attributes(params[:appunto])
         format.html   { redirect_to session[:return_to], notice: 'Appunto modificato.' }
         format.mobile { redirect_to appunti_url }
+        format.js
         format.json
       else
         format.html { render action: "edit" }
+        format.js
         format.json { render rabl: @appunto.errors, status: :unprocessable_entity }
       end
     end
@@ -104,7 +105,6 @@ class AppuntiController < ApplicationController
   def destroy
     @appunto = current_user.appunti.find(params[:id])
     @appunto.destroy
-
     respond_to do |format|
       format.html { redirect_to appunti_url }
       format.json { head :ok }

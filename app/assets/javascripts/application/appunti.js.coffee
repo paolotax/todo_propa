@@ -7,48 +7,73 @@ jQuery ->
   if $(".appunti").length > 0
     $(".appunti .appunto").each ->
       window.initializeAppunto($(@))
-      
-window.initializeAppunto = (appunto) ->
-
-  $('time.timeago', appunto).timeago();
-
-  $('.stato', appunto).bind 'click', (e) ->
-    e.stopPropagation()
-    $('.dropdown-toggle', appunto).dropdown().trigger 'click'
-
-  $('a.change-status', appunto).bind 'click', (e) ->
-    e.stopPropagation()
-    id = $(@).data('id')
-    stato = $(@).data('status')
-    opened = appunto.hasClass('opened')
-    $.ajax 
-      url: "/appunti/#{id}.json"  
-      data: { appunto: { stato: stato } }
-      type:  "PUT"
-      success: (data)->
-        $("#appunto_#{data.id}").replaceWith JST["appunti/appunto"](data)
-        if opened
-          $("#appunto_#{data.id}").toggleClass('opened')
-          
-        window.initializeAppunto($("#appunto_#{data.id}"))
-        params = $("#appunti").data('json-url').split('?')[1] ||= ""
-        $.get "/get_appunti_filters.js", params, (data) ->
-          console.log "data"
-
-  $('.show a', appunto).bind 'click', (e) ->
+  
+  $(document).on "click", ".show a", (e) ->
     e.stopPropagation()
     e.preventDefault()
     appunto = $(@).closest($('.appunto'))
     appunto.addClass('opened')
   
-  $('.chiudi a', appunto).bind 'click', (e) ->
+  $(document).on "click", '.chiudi a', (e) ->
     e.stopPropagation()
     e.preventDefault()
     appunto = $(@).closest($('.appunto'))
     appunto.removeClass('opened')
-    
-  $('.edit a, .print a', appunto).bind 'click', (e) ->
+
+  $(document).on "click", 'a.change-status', (e) ->
     e.stopPropagation()
+    appunto = $(@).closest($('.appunto'))
+    id = $(@).data('id')
+    stato = $(@).data('status')
+    opened = appunto.hasClass('opened')
+    $.ajax 
+      url: "/appunti/#{id}"  
+      data: { appunto: { stato: stato } }
+      type:  "PUT"
+      dataType: "script"
+      success: (data)->
+        params = $("#appunti").data('json-url').split('?')[1] ||= ""
+        $.get "/get_appunti_filters.js", params, (data) ->
+          console.log "data"
+
+
+window.initializeAppunto = (appunto) ->
+
+  $('time.timeago', appunto).timeago();
+
+  # $('.stato', appunto).bind 'click', (e) ->
+  #   e.stopPropagation()
+  #   $('.dropdown-toggle', appunto).dropdown().trigger 'click'
+  # 
+  # $('a.change-status', appunto).bind 'click', (e) ->
+  #   e.stopPropagation()
+  #   id = $(@).data('id')
+  #   stato = $(@).data('status')
+  #   opened = appunto.hasClass('opened')
+  #   $.ajax 
+  #     url: "/appunti/#{id}"  
+  #     data: { appunto: { stato: stato } }
+  #     type:  "PUT"
+  #     dataType: "script"
+  #     success: (data)->
+  #       params = $("#appunti").data('json-url').split('?')[1] ||= ""
+  #       $.get "/get_appunti_filters.js", params, (data) ->
+  #         console.log "data"
+  # 
+  # $('.show a', appunto).bind 'click', (e) ->
+  #   e.stopPropagation()
+  #   e.preventDefault()
+  #   appunto = $(@).closest($('.appunto'))
+  #   appunto.addClass('opened')
+  # 
+  # $('.chiudi a', appunto).bind 'click', (e) ->
+  #   e.stopPropagation()
+  #   e.preventDefault()
+  #   appunto = $(@).closest($('.appunto'))
+  #   appunto.removeClass('opened')
+  #   
+  # $('.edit a, .print a', appunto).bind 'click', (e) ->
+  #   e.stopPropagation()
 
 
 

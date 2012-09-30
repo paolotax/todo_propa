@@ -66,6 +66,8 @@ gem 'capistrano'
 gem 'unicorn'
 
 gem "acts-as-taggable-on"
+# gem "underscore-rails"
+# gem "turbolinks"
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'

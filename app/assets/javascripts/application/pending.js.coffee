@@ -43,29 +43,29 @@ jQuery ->
             $("#clienti").append JST['clienti/cliente'](obj)
 
 
-    $("#new_appunto_submit").live 'click', (e) ->
-      pendingAppunti = $.parseJSON localStorage["pendingAppunti"];
-      item = 
-        "data": $("#new_appunto").serialize()
-        "appunto": 
-          "cliente_id":   $("#appunto_cliente_id").val()
-          "cliente_nome": $("#appunto_cliente_id_chzn a span").text()
-          "id":           "pending_#{new Date().getTime()}"
-          "destinatario": $("#appunto_destinatario").val()
-          "note":         $("#appunto_note").val()
-          "telefono":     $("#appunto_telefono").val()
-          "email":        $("#appunto_email").val()
-          "stato":        "pending"
-          "con_recapiti": true
-          "con_righe":    false
-      
-      $("#appunti").prepend JST['appunti/appunto'](item.appunto)
-      pendingItems.push(item);
-      localStorage["pendingItems"] = JSON.stringify(pendingItems)
-      sendPending();
-      e.preventDefault();
-    
-      window.reset_appunto()
+    # $("#new_appunto_submit").live 'click', (e) ->
+    #   pendingAppunti = $.parseJSON localStorage["pendingAppunti"];
+    #   item = 
+    #     "data": $("#new_appunto").serialize()
+    #     "appunto": 
+    #       "cliente_id":   $("#appunto_cliente_id").val()
+    #       "cliente_nome": $("#appunto_cliente_id_chzn a span").text()
+    #       "id":           "pending_#{new Date().getTime()}"
+    #       "destinatario": $("#appunto_destinatario").val()
+    #       "note":         $("#appunto_note").val()
+    #       "telefono":     $("#appunto_telefono").val()
+    #       "email":        $("#appunto_email").val()
+    #       "stato":        "pending"
+    #       "con_recapiti": true
+    #       "con_righe":    false
+    #   
+    #   $("#appunti").prepend JST['appunti/appunto'](item.appunto)
+    #   pendingItems.push(item);
+    #   localStorage["pendingItems"] = JSON.stringify(pendingItems)
+    #   sendPending();
+    #   e.preventDefault();
+    # 
+    #   window.reset_appunto()
 
     sendPending = ->
       console.log('send pending')

@@ -1,10 +1,16 @@
 @import "application/mixins";
 @import "compass/utilities/lists/inline-list";
-
+@import "compass/css3/border-radius";
 
 .module.white {
   background-color: white;
+
+  padding: 12px;
+  @include border-radius(12px);
+
+
 }
+
 .more .more-actions {
   margin-top: 30px;
   @include clearfix;

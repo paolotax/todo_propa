@@ -1,8 +1,0 @@
-/ .episode_views
-/   View:
-/   %span.view
-/     = link_to_unless params[:view].blank?, image_tag("views/full.png", :size => "15x10"), params.merge(:view => nil, :page => nil), :title => "Full View"
-/   %span.view
-/     = link_to_unless params[:view] == "list", image_tag("views/list.png", :size => "14x10"), params.merge(:view => "list", :page => nil), :title => "List View"
-/   %span.view
-/     = link_to_unless params[:view] == "grid", image_tag("views/grid.png", :size => "11x10"), params.merge(:view => "grid", :page => nil), :title => "Grid View"
