@@ -19,18 +19,12 @@ jQuery ->
     else
       $("#form_print_appunti").prepend("<input type='hidden' name='appunto_ids[]' value='#{$(@).val()}' />")
       
-      
-    
-  
-  
   # $('#btn-pdf').live 'click', (e) ->
   #   e.preventDefault();
   #   params = $("#form_appunti").serialize()
   #   $('#form_appunti').attr({'action': "/appunti/print_multiple", 'method': 'post'});
   #   $('#form_appunti').submit();
   #   return false
-   
-     
   
   $(".mie-adozioni span.adozioni").live "click", (e) ->
     

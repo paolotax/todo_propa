@@ -30,8 +30,6 @@
 //= require fullcalendar
 //= require jquery.the-modal.js
 
-
-
 //= require_tree ../templates
 //= require_tree ./application
 //= require demo
