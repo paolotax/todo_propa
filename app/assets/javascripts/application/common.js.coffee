@@ -97,7 +97,7 @@ jQuery ->
   String.prototype.capitalize = () ->
     this.charAt(0).toUpperCase() + this.slice(1)
   
-  $(".filters a, .module.remote a, #tag_cloud a").live 'click', (e) ->
+  $(".filters a, .module.remote a").live 'click', (e) ->
     e.preventDefault()
     
     url = $(@).attr('href')

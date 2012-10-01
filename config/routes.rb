@@ -16,7 +16,7 @@ TodoPropa::Application.routes.draw do
   
   resources :materie
   
-  get 'tags/:tag', to: 'appunti#index', as: :tag, format: :json
+  get 'tags/:tag', to: 'appunti#index', as: :tag
   
   match '/vendite', controller: 'magazzino', action: 'vendite'
   match '/cassa',   controller: 'magazzino', action: 'cassa'
