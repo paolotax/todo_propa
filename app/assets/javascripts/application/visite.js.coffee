@@ -17,10 +17,6 @@ jQuery ->
       revert: true        # will cause the event to go back to its
       revertDuration: 0   #  original position after the drag
 
-
-
-
-
   $("#calendar").fullCalendar
     header:
       left: 'prev,next today',

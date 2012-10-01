@@ -111,18 +111,18 @@ jQuery ->
       controller = 'appunti'
       template = JST['appunti/appunto']    
   
-    storageName = "pending#{controller.capitalize()}"
-    if !localStorage[storageName]
-      localStorage[storageName] = JSON.stringify []
+    # storageName = "pending#{controller.capitalize()}"
+    # if !localStorage[storageName]
+    #   localStorage[storageName] = JSON.stringify []
   
-    $.get "/get_#{controller}_filters.js", params, (data) ->
-      console.log "data"
+
     
     $.ajax
       url: controller + "?" + params
       dataType: "script"
       success: () ->
-        console.log "yeah"
+        $.get "/get_#{controller}_filters.js", params, (data) ->
+          console.log "data"
         
     # $.getJSON url, (data) ->
     #   pending = $.parseJSON localStorage[storageName]

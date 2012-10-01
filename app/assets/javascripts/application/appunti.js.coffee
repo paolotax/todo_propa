@@ -14,7 +14,7 @@ jQuery ->
     appunto = $(@).closest($('.appunto'))
     appunto.addClass('opened')
   
-  $(document).on "click", '.chiudi a', (e) ->
+  $(document).on "click", '.appunto .chiudi a', (e) ->
     e.stopPropagation()
     e.preventDefault()
     appunto = $(@).closest($('.appunto'))
