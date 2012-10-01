@@ -38,7 +38,7 @@ if ($('.riepilogo-baule').length > 0) {
 <% @appunti.each do |a|  %>
   var appunto = $("#<%= dom_id(a) %>");
   appunto.toggleClass('favorited');
-  $('.baule', appunto).html("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>");
+  $('.baule-div', appunto).html("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>");
 <% end %>
 
 

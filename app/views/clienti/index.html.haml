@@ -15,8 +15,8 @@
       = render :partial => 'shared/filters'
 
     #clienti{ 'data-json-url' => "#{ clienti_url( params.merge(:format => :json)) }" }
-    / - @appunti.each do |appunto|
-    /   = render "appunto"
+      = render @clienti
+      
     .stream-loader
       
 

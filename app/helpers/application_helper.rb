@@ -41,7 +41,6 @@ module ApplicationHelper
     end  
   end  
 
-    
   
   def baule_tag(cliente, options = {})
     

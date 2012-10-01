@@ -35,7 +35,8 @@ jQuery ->
         params = $("#appunti").data('json-url').split('?')[1] ||= ""
         $.get "/get_appunti_filters.js", params, (data) ->
           console.log "data"
-
+  
+  $('time.timeago').timeago();
 
 window.initializeAppunto = (appunto) ->
 
