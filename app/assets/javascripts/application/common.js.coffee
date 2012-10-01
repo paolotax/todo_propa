@@ -5,6 +5,12 @@
 
 jQuery ->
   
+  $("#loading").bind "ajaxSend", () ->
+    $("#loading").show()
+  
+  $("#loading").bind "ajaxComplete", () ->
+    $("#loading").hide()
+  
   
   $(".cb-appunto").on "change", (e) ->
     e.preventDefault();

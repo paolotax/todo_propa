@@ -20,6 +20,9 @@
 
     = csrf_meta_tags
   %body
+    #loading
+      %strong Caricamento in corso
+      
     = render "shared/header"
   
     %div#wrapper(data-pjax-container)
@@ -36,4 +39,4 @@
         = yield
         = yield :scripts
   
-  #footer
+    #footer
