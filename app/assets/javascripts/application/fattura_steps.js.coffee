@@ -36,6 +36,5 @@ jQuery ->
   #   fattura = $(@).closest($('.fattura'))
   #   fattura.removeClass('opened')
   #   console.log "chiuso"
-    
-    
+
     

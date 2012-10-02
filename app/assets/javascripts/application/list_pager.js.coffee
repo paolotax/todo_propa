@@ -2,11 +2,23 @@ class ListPager
   constructor: (@page = 1, @list, @template, @model) ->
     $(window).bind 'scroll', @check
 
-  check: => 
+  check: =>
+    console.log "check" + @page 
     if @nearBottom()
       @page++
       $(window).unbind('scroll', @check)
       $.getJSON(@list.data('json-url'), {page: @page}, @render)
+      # $.ajax
+      #   url: @list.data('json-url')
+      #   data:
+      #     page: @page 
+      #   dataType: "script"
+      #   success: (data) ->
+      #     @render
+      #   complete: () ->  
+      #     console.log "complete"
+      #     $(window).bind('scroll', @check)
+      
       
   nearBottom: =>
     $(window).scrollTop() > $(document).height() - $(window).height() - 100  or $(window).scrollTop() + $(window).height() + 50 > @list.offset().top + @list.height() 
@@ -18,7 +30,7 @@ class ListPager
         window.initializeAppunto($(".appunto:last-child"))
     
     $(window).bind('scroll', @check) if objs.length > 0
-
+    
   reset: ->
     @page = 1
     $(window).bind('scroll', @check)

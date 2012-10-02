@@ -18,13 +18,13 @@
   .chiudi{ style: "float: right;"}
     %a
       Chiudi
-    
+     
   .causale
     %strong= @causale
   .consegnato
-  
+   
   .pagato
-
+  
   .numero
     %strong= @numero
     %br
@@ -39,23 +39,23 @@
     %strong= @importo_fattura 
     importo
   .clearfix  
-
+  
   - if @appunti?
     .table-righe-new
       %ul.unstyled
         - for appunto in @appunti
           %li
-            %a{href: "/appunti/#{appunto.id}"}
-              - c = new Date(appunto.updated_at)
-              = "Nr.#{appunto.id} del #{c.getDate()}/#{c.getMonth()+1}/#{c.getFullYear()}"
-            - for riga in appunto.righe
-              != JST['righe/riga'](riga)
+            %a{href: "/appunti/#{appunto.appunto.id}"}
+              - c = new Date(appunto.appunto.updated_at)
+              = "Nr.#{appunto.appunto.id} del #{c.getDate()}/#{c.getMonth()+1}/#{c.getFullYear()}"
+            - for riga in appunto.appunto.righe
+              != JST['righe/riga'](riga.riga)
   - else
     .table-righe-new
       %ul.unstyled
         - for riga in @righe
-          != JST['righe/riga'](riga)
-
+          != JST['righe/riga'](riga.riga)
+  
   .more-actions
     %ul.nav-fattura
       %li.delete
