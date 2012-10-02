@@ -1,6 +1,16 @@
-$("#fatture").append("<%= j render 'grouped_fatture' %>")
-<% if (@fatture.current_page < @fatture.num_pages) %>
-  $('.pagination').replaceWith('<%= j paginate(@fatture) %>');
-<% else %>
-  $('.pagination').remove();
+<% if params[:page] && params[:page].to_i > 1 %>
+  $("#fatture").append("<%= j render 'grouped_fatture' %>")
+  <% if (@fatture.current_page < @fatture.num_pages) %>
+    $('.pagination').replaceWith('<%= j paginate(@fatture) %>');
+  <% else %>
+    $('.pagination').remove();
+  <% end %>
+<% else %>  
+  $("#fatture").html("<%= j render 'grouped_fatture' %>")
+  $(".fatture-bar").replaceWith('<%= j render "fatture_bar" %>');
+  if ($(".pagination").length > 0) {
+    $('.pagination').replaceWith('<%= j paginate(@fatture) %>');
+  } else {
+    $("#fatture").after("<div class='pagination'>" + '<%= j paginate(@fatture) %>' + "</div>");
+  }
 <% end %>
