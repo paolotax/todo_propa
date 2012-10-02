@@ -6,16 +6,17 @@
       %ul.stats
         %li
           = link_to "" do
-            %strong= @fatture.size
+            %strong= @tot_fatture.size
             DOC
         %li
           = link_to "" do
-            %strong= @fatture.sum(&:totale_copie)
+            %strong= @tot_fatture.sum(&:totale_copie)
             copie
         %li
           = link_to "" do
-            %strong= @fatture.sum(&:importo_fattura)
+            %strong= @tot_fatture.sum(&:importo_fattura)
             importo
+    
     .module
       %ul
         %li{ class: "#{ params[:causale].present? ? '': 'active' }" }
