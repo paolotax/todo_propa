@@ -1,0 +1,4 @@
+- @fatture_per_anno.each do |a, fatture|
+  .item 
+    %h3= a.strftime("%Y")
+  = render fatture

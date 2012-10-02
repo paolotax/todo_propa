@@ -1,0 +1,6 @@
+$("#fatture").append("<%= j render 'grouped_fatture' %>")
+<% if (@fatture.current_page < @fatture.num_pages) %>
+  $('.pagination').replaceWith('<%= j paginate(@fatture) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>

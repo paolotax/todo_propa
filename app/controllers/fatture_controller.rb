@@ -11,12 +11,7 @@ class FattureController < ApplicationController
     
     @righe_da_pagare          = current_user.righe.includes(:libro, :appunto, appunto: [:cliente]).da_pagare.da_fatturare
     @clienti_righe_da_pagare  = @righe_da_pagare.group_by(&:cliente)
-    
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @fatture }
-    end
+
   end
 
   def show

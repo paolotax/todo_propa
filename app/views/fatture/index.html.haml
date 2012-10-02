@@ -57,12 +57,9 @@
       .header-inner
         %h2 Documenti
     #fatture.list
-      - @fatture_per_anno.each do |a, fatture|
-        .item 
-          %h3= a.strftime("%Y")
-        - fatture.each do |fattura|
-          = render fattura
-      = paginate @fatture
+      = render "grouped_fatture"
+      
+    = paginate @fatture
 
   .side-bar.span3
     .module
