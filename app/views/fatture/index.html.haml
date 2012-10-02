@@ -61,6 +61,7 @@
           %h3= a.strftime("%Y")
         - fatture.each do |fattura|
           = render fattura
+      = paginate @fatture
 
   .side-bar.span3
     .module

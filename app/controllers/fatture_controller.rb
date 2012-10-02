@@ -1,7 +1,8 @@
 class FattureController < ApplicationController
 
   def index
-    @fatture = current_user.fatture.filtra(params).includes(:cliente, :righe => [:libro]).per_numero
+    @fatture = current_user.fatture.filtra(params).includes(:cliente, :righe => [:libro]).per_numero.page(params[:page])
+   
     @fatture_per_anno = @fatture.group_by { |t| t.data.beginning_of_year }
     
     @righe_da_fatturare         = current_user.righe.includes(:libro, appunto: [:cliente]).pagata.da_fatturare
