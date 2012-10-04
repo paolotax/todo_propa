@@ -1,2 +1,0 @@
-%div.baule-item
-  = @cliente_titolo

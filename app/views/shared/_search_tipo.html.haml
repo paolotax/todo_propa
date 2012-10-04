@@ -1,0 +1,19 @@
+.module
+  %ul
+    %li{ class: "#{ params[:tipo].present? ? '': 'active' }" }
+      = filter_tag params.except(:tipo), "Tutti"
+
+    %li{ class: "#{ params[:tipo] == "scuole" ? 'active': '' }" }
+      = filter_tag params.merge(tipo: "scuole"), "Scuole"
+
+    %li{ class: "#{ params[:tipo] == "primarie" ? 'active': '' }" }
+      = filter_tag params.merge(tipo: "primarie"), "Primarie"
+      
+    %li{ class: "#{ params[:tipo] == "direzioni" ? 'active': '' }" }
+      = filter_tag params.merge(tipo: "direzioni"), "Direzioni"
+
+    %li{ class: "#{ params[:tipo] == "cartolerie" ? 'active': '' }" }
+      = filter_tag params.merge(tipo: "cartolerie"), "Cartolerie"
+
+    %li{ class: "#{ params[:tipo] == "altri" ? 'active': '' }" }
+      = filter_tag params.merge(tipo: "altri"), "Altri"

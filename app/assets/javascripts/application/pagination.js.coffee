@@ -10,6 +10,6 @@ jQuery ->
     $(window).scroll ->
       url = $('.pagination .next a').attr('href')
       if url && isScrolledIntoView('.pagination')
-        $('.pagination').text("Fetching more products...")
+        $('.pagination').text("Caricamento dati...")
         $.getScript(url)
     $(window).scroll()

@@ -3,25 +3,22 @@
 - title "Appunti"
 
 .row
-  .side-bar.span3
-    = render :partial => 'shared/search_options'
-  
+  = render :partial => 'appunti_side'
   
   .content-main.span6
     %header.content-header
       .header-inner
         %h2 Appunti
     
-    - if params[:provincia].present? || params[:citta].present? || params[:search].present? || params[:status].present?
-      = render :partial => 'shared/filters'
+    = render :partial => 'shared/filters'
 
-    #appunti{ 'data-json-url' => "#{ appunti_url( params.merge(:format => :json)) }" }
+    #appunti
       = render @appunti
 
     .stream-loader
-      
+      = paginate @appunti
 
-  .side-right.span3.visible-desktop
+  .side-right.span3
     .module.white
       
       #tag_cloud

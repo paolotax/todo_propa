@@ -13,6 +13,12 @@ module ApplicationHelper
     content_tag(:div, (f.label(attribute, "#{label_name}:" ) + f.send(type, attribute, options)), :class => "field")
   end
   
+  def filter_tag(url, title) 
+    link_to url, class: "list-link", remote: true  do
+      raw(title + content_tag( :i, "", class: "chev-right"))
+    end  
+  end
+  
   def show_hide_tag(up_down = 'up')
     link_to "", class: "pull-right show-hide" do
       haml_tag :i, class: "icon-caret-#{up_down}"

@@ -1,0 +1,8 @@
+.module
+  %ul
+    %li{ class: "#{ params[:provincia].present? ? '': 'active' }" }
+      = filter_tag params.except(:provincia), "Province"
+
+    - for p in @provincie
+      %li{ class: "#{ params[:provincia] == p.provincia ? 'active' : ''}" }
+        = filter_tag params.merge(:provincia => p.provincia, :page => nil), p.provincia

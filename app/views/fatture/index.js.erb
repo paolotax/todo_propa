@@ -7,7 +7,7 @@
   <% end %>
 <% else %>  
   $("#fatture").html("<%= j render 'grouped_fatture' %>")
-  $(".fatture-bar").replaceWith('<%= j render "fatture_bar" %>');
+  $(".fatture-side").replaceWith('<%= j render "fatture_side" %>');
   if ($(".pagination").length > 0) {
     $('.pagination').replaceWith('<%= j paginate(@fatture) %>');
   } else {

@@ -1,3 +1,21 @@
-if ($("#appunti").length > 0) {
+<% if params[:page] && params[:page].to_i > 1 %>
+  $("#appunti").append("<%= j render @appunti %>")
+  <% if (@appunti.current_page < @appunti.num_pages) %>
+    $('.pagination').replaceWith('<%= j paginate(@appunti) %>');
+  <% else %>
+    $('.pagination').remove();
+  <% end %>
+<% else %>  
   $("#appunti").html("<%= j render @appunti %>")
-}
+  $(".appunti-side").replaceWith('<%= j render "appunti_side" %>');
+  if ($(".pagination").length > 0) {
+    $('.pagination').replaceWith('<%= j paginate(@appunti) %>');
+  } else {
+    $(".stream-loader").append("<div class='pagination'>" + '<%= j paginate(@appunti) %>' + "</div>");
+  }
+  if ($(".filters").length > 0) {
+    $('.filters').replaceWith('<%= j render "shared/filters" %>');
+  } else {
+    $("#appunti").before('<%= j render "shared/filters" %>');
+  }
+<% end %>

@@ -1,16 +1,16 @@
-.fatture-bar.span3
+.fatture-side.span3
   .module
     %ul.stats
       %li
-        = link_to "" do
+        = link_to "", remote: true do
           %strong= @tot_fatture.size
           DOC
       %li
-        = link_to "" do
+        = link_to "", remote: true do
           %strong= @tot_fatture.sum(&:totale_copie)
           copie
       %li
-        = link_to "" do
+        = link_to "", remote: true do
           %strong= @tot_fatture.sum(&:importo_fattura)
           importo
   

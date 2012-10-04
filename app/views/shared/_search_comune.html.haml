@@ -1,0 +1,9 @@
+.module.hidden-phone
+  %ul
+    %li{ class: "#{ params[:comune].present? ? '': 'active' }" }
+      = filter_tag params.except(:comune), "Comuni"
+  
+    - for c in @citta
+      - unless c.nil? 
+        %li{ class: "#{ params[:comune] == c.comune ? 'active' : ''}"}
+          = filter_tag params.merge(:comune => c.comune, :page => nil), c.comune

@@ -5,7 +5,7 @@
 
 jQuery ->
   
-  $(".remove-fattura").on 'click', (e) ->
+  $(".remove-fattura").live 'click', (e) ->
     e.preventDefault()
     riga = $(@).closest(".riga")
     riga_id = $(riga).attr("id").split("_")[1];
@@ -30,11 +30,10 @@ jQuery ->
         fattura.replaceWith JST["fatture/fattura"](data)
         $("#fattura_#{data.id}").toggleClass('opened')
         
-  # $('.chiudi a').live 'click', (e) ->
-  #   e.stopPropagation()
-  #   e.preventDefault()
-  #   fattura = $(@).closest($('.fattura'))
-  #   fattura.removeClass('opened')
-  #   console.log "chiuso"
+  $('.fattura .chiudi a').live 'click', (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    fattura = $(@).closest($('.fattura'))
+    fattura.removeClass('opened')
 
     

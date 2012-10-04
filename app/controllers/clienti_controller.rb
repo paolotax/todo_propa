@@ -4,18 +4,18 @@ class ClientiController < ApplicationController
   
   def index
     session[:return_to] = request.path
-    @search = current_user.clienti.includes(:visite).per_localita.filtra(params)
-    @search_appunti = current_user.appunti.filtra(params.except(:status))
+    @search = current_user.clienti.per_localita.filtra(params)
+    @clienti = @search.includes(:visite).page(params[:page])
     
-    @in_corso   = Cliente.con_appunti(@search_appunti.in_corso).size
-    @da_fare    = Cliente.con_appunti(@search_appunti.da_fare).size
-    @in_sospeso = Cliente.con_appunti(@search_appunti.in_sospeso).size    
-    @tutti      = @search.size
-
-    @clienti = @search.limit(50)
-
-    @clienti = @clienti.offset((params[:page].to_i-1)*50) if params[:page].present?
-
+    # stats
+    @stat_clienti    = current_user.clienti.per_localita.filtra(params.except(:status))
+    @search_appunti  = current_user.appunti.filtra(params.except(:status))
+    @in_corso   = @stat_clienti.con_appunti(@search_appunti.in_corso).size
+    @da_fare    = @stat_clienti.con_appunti(@search_appunti.da_fare).size
+    @in_sospeso = @stat_clienti.con_appunti(@search_appunti.in_sospeso).size    
+    @tutti      = @stat_clienti.size 
+    
+    #filters
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
     @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
   end

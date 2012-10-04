@@ -1,3 +1,21 @@
-if ($("#clienti").length > 0) {
+<% if params[:page] && params[:page].to_i > 1 %>
+  $("#clienti").append("<%= j render @clienti %>")
+  <% if (@clienti.current_page < @clienti.num_pages) %>
+    $('.pagination').replaceWith('<%= j paginate(@clienti) %>');
+  <% else %>
+    $('.pagination').remove();
+  <% end %>
+<% else %>  
   $("#clienti").html("<%= j render @clienti %>")
-}
+  $(".clienti-side").replaceWith('<%= j render "clienti_side" %>');
+  if ($(".pagination").length > 0) {
+    $('.pagination').replaceWith('<%= j paginate(@clienti) %>');
+  } else {
+    $(".stream-loader").append("<div class='pagination'>" + '<%= j paginate(@clienti) %>' + "</div>");
+  }
+  if ($(".filters").length > 0) {
+    $('.filters').replaceWith('<%= j render "shared/filters" %>');
+  } else {
+    $("#clienti").before('<%= j render "shared/filters" %>');
+  }
+<% end %>

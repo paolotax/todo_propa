@@ -196,13 +196,18 @@ class Cliente < ActiveRecord::Base
     
     clienti = clienti.where("clienti.provincia = ?", params[:provincia])  if params[:provincia].present?
     clienti = clienti.where("clienti.comune = ?",    params[:comune])     if params[:comune].present?
-
+    
+    # %w(scuole primarie cartolerie direzioni altri).each do |tipos|
+    #   clienti = clienti.tipos if params[:tipo].present? && params[:tipo] == tipos
+    # end
+      
     clienti = clienti.scuole     if params[:tipo].present? && params[:tipo] == 'scuole'
     clienti = clienti.primarie   if params[:tipo].present? && params[:tipo] == "primarie"
     clienti = clienti.cartolerie if params[:tipo].present? && params[:tipo] == "cartolerie"
     clienti = clienti.direzioni  if params[:tipo].present? && params[:tipo] == "direzioni"
     clienti = clienti.altri      if params[:tipo].present? && params[:tipo] == "altri"
-
+    
+    # devo mettere l'utente
     clienti = clienti.con_appunti(Appunto.in_corso)   if params[:status].present? && params[:status] == 'in_corso'
     clienti = clienti.con_appunti(Appunto.completo)   if params[:status].present? && params[:status] == "completati"
     clienti = clienti.con_appunti(Appunto.da_fare)    if params[:status].present? && params[:status] == "da_fare"
