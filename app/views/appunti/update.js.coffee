@@ -25,14 +25,14 @@ incrementStatus = (status) ->
   value++
   $(".stats li.#{status} a strong").html(value)
   
-decremenStatus = (status) ->
+decrementStatus = (status) ->
   value = $(".stats li.#{status} a strong").text()
   value--
   $(".stats li.#{status} a strong").html(value)
   
 
 if old_status isnt new_status
-  decremenStatus("da-fare")    if old_status is "da_fare"
-  decremenStatus("in-sospeso") if old_status is "in_sospeso"
+  decrementStatus("da-fare")    if old_status is "da_fare"
+  decrementStatus("in-sospeso") if old_status is "in_sospeso"
   incrementStatus("da-fare")    if new_status is "da_fare"
   incrementStatus("in-sospeso") if new_status is "in_sospeso"

@@ -22,16 +22,12 @@ jQuery ->
     appunto = $(@).closest($('.appunto'))
     id = $(@).data('id')
     stato = $(@).data('status')
-    opened = appunto.hasClass('opened')
     $.ajax 
       url: "/appunti/#{id}"  
       data: { appunto: { stato: stato } }
       type:  "PUT"
       dataType: "script"
-      success: (data)->
-        params = $("#appunti").data('json-url').split('?')[1] ||= ""
-        $.get "/get_appunti_filters.js", params, (data) ->
-          console.log "data"
+
   
   $('time.timeago').timeago();
 
