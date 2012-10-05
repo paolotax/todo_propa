@@ -1,0 +1,46 @@
+var appunto, decrementStatus, grouped, incrementStatus, new_status, old_status, opened;
+
+appunto = $("#<%= dom_id(@appunto) %>");
+
+opened = appunto.hasClass("opened");
+
+grouped = appunto.hasClass("grouped");
+
+if (appunto.hasClass("da_fare")) {
+  old_status = "da_fare";
+} else if (appunto.hasClass("in_sospeso")) {
+  old_status = "in_sospeso";
+} else if (appunto.hasClass("completato")) {
+  old_status = "completato";
+}
+
+if (grouped) {
+  appunto.replaceWith("<%= j render @appunto, grouped: 'grouped' %>");
+} else {
+  appunto.replaceWith("<%= j render @appunto %>");
+}
+
+if (opened) $("#<%= dom_id(@appunto) %>").addClass("opened");
+
+new_status = "<%= @appunto.status %>";
+
+incrementStatus = function(status) {
+  var value;
+  value = $(".stats li." + status + " a strong").text();
+  value++;
+  return $(".stats li." + status + " a strong").html(value);
+};
+
+decrementStatus = function(status) {
+  var value;
+  value = $(".stats li." + status + " a strong").text();
+  value--;
+  return $(".stats li." + status + " a strong").html(value);
+};
+
+if (old_status !== new_status) {
+  if (old_status === "da_fare") decrementStatus("da-fare");
+  if (old_status === "in_sospeso") decrementStatus("in-sospeso");
+  if (new_status === "da_fare") incrementStatus("da-fare");
+  if (new_status === "in_sospeso") incrementStatus("in-sospeso");
+}
