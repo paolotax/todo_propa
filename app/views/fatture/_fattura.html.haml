@@ -1,4 +1,4 @@
-.item[fattura]{ data: { id: "#{fattura.id}"}}
+.item[fattura]{ class: "#{ fattura.pagata? ? '' : 'da_pagare'}", data: { id: "#{fattura.id}"} }
   .actions
     %ul.nav-fattura
       %li.print
@@ -26,7 +26,7 @@
     %strong= fattura.numero
     %br
     %span= l(fattura.data, format: :short).downcase
-  .cliente
+  .cliente-titolo
     = link_to fattura.titolo, fattura.cliente
   .copie
     %strong= fattura.totale_copie

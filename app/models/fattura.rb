@@ -40,6 +40,10 @@ class Fattura < ActiveRecord::Base
     end
   end
   
+  def pagata?
+    pagata
+  end
+  
   def self.filtra(params)
     fatture = scoped
     fatture = fatture.search(params[:search]) if params[:search].present?

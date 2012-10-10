@@ -4,6 +4,7 @@
 
 @import "compass/css3/border-radius";
 @import "application/mixins";
+@import "compass/utilities/text/ellipsis";
 
 .riepilogo-libri {
   
@@ -87,6 +88,25 @@
 
 
 .fattura {
+  
+  &.da_pagare {
+    color: white;
+    background-color: #7A43B6 !important;
+  }
+  
+  &.da_pagare .numero span,
+  &.da_pagare .numero strong,
+  &.da_pagare .copie,
+  &.da_pagare .importo-fattura,
+  &.da_pagare .copie strong,
+  &.da_pagare .importo-fattura strong,
+  &.da_pagare .cliente-titolo a {
+    color: white;
+  }
+  
+  .causale {
+    @include ellipsis();
+  }
   .causale,
   .numero {
     float: left;
@@ -100,7 +120,7 @@
       color: #999999;
     }
   }
-  .cliente {
+  .cliente-titolo {
     float: left;
     width: 25%;
   }
