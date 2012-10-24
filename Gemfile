@@ -27,7 +27,7 @@ gem 'redcarpet', '1.17.2'
 gem 'rabl'
 gem 'yajl-ruby'
 
-gem 'rmagick'
+gem 'mini_magick'
 gem 'fog'
 gem 'carrierwave'
 

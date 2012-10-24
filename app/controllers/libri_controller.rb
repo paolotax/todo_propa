@@ -53,8 +53,9 @@ class LibriController < ApplicationController
   end
 
   def destroy
-
-
+    @libro = Libro.find(params[:id])
+    @libro.destroy
+    redirect_to libri_url
   end
 
 end

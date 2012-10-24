@@ -4,7 +4,7 @@ development:
   reconnect: false
   database: todopropa_development
   pool: 5
-  username: paolotax
+  username: ptax
   password: ptax
   min_messages: warning
 

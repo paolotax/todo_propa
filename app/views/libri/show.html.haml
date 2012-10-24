@@ -8,7 +8,7 @@
   %section.well.show-page
     %article.row-fluid[@libro]
       .copertina.span2
-        / = image_tag @libro.image_url
+        = image_tag @libro.image_url
       .content-inner.span5
         %h1
           = @libro.titolo
@@ -22,10 +22,10 @@
           %dd= @libro.ean
 
         .prezzo-copertina
-          %strong= pretty_prezzo @libro.prezzo_copertina 
+          %strong= pretty_prezzo(@libro.prezzo_copertina) unless @libro.prezzo_copertina.nil? 
           COPERTINA
         .prezzo-consigiato
-          %strong= pretty_prezzo @libro.prezzo_consigliato
+          %strong= pretty_prezzo(@libro.prezzo_consigliato) unless @libro.prezzo_consigliato.nil?
           CONSIGLIATO
 
     %footer.show-toolbar
