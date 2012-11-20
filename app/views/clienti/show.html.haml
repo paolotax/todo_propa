@@ -72,6 +72,8 @@
         = link_to edit_cliente_url(@cliente), class: "btn btn-primary" do
           %i.icon-pencil
           Modifica
+
+        = link_to "Fattura",  new_fattura_url(causale: 1, cliente_id: @cliente.id), class: "btn btn-warning"
             
   .row
     .side-bar.span3

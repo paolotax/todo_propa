@@ -1,4 +1,3 @@
-
 jQuery ->
   
   $('.giunti-url').bind 'click', (e) ->
