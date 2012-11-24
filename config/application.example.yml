@@ -1,0 +1,10 @@
+secret_token: "..."
+development:
+  host: "localhost:3000"
+test:
+  host: "test.local"
+production:
+  host: "todopropa.com"
+wunderground_key: "..."
+aws_access_key_id: '...'
+aws_secret_access_key: '...'

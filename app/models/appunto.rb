@@ -14,6 +14,8 @@ class Appunto < ActiveRecord::Base
   has_many :visita_appunti, dependent: :destroy
   has_many :visite, :through => :visita_appunti
   
+  has_many :events, class_name: "AppuntoEvent", dependent: :destroy
+
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => true
   
   #  validates :user_id,  :presence => true
@@ -176,7 +178,36 @@ class Appunto < ActiveRecord::Base
                   })
     end
   end
+
+
+  STATES = %w[incompleto pronto consegnato spedito registrato pagato chiuso cancellato]
+  delegate :incompleto?, :pronto?, :consegnato?, :spedito?, 
+           :registrato?, :pagato?, :chiuso?, :cancellato?, to: :current_state
+
+  class << self
+    STATES.each do |state|
+      define_method "#{state}" do
+        joins(:events).merge AppuntoEvent.with_last_state(state)
+      end
+    end
+  end           
+
+  def current_state
+    (events.last.try(:state) || STATES.first).inquiry
+  end
+
+  def prepara(valid_payment = true)
+    if incompleto?
+      events.create! state: "pronto" if valid_payment
+    end
+  end
   
+  def consegna(valid_payment = true)
+    if incompleto? || pronto?
+      events.create! state: "consegnato" if valid_payment
+    end
+  end
+
   private
 
     def leggi

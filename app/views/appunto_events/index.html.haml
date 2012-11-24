@@ -1,0 +1,21 @@
+%h1 Listing appunto_events
+
+%table
+  %tr
+    %th Appunto
+    %th State
+    %th
+    %th
+    %th
+
+  - @appunto_events.each do |appunto_event|
+    %tr
+      %td= appunto_event.appunto
+      %td= appunto_event.state
+      %td= link_to 'Show', appunto_event
+      %td= link_to 'Edit', edit_appunto_event_path(appunto_event)
+      %td= link_to 'Destroy', appunto_event, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Appunto event', new_appunto_event_path

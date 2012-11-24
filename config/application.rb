@@ -9,6 +9,10 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+CONFIG = YAML.load(File.read(File.expand_path('../application.yml', __FILE__)))
+CONFIG.merge! CONFIG.fetch(Rails.env, {})
+CONFIG.symbolize_keys!
+
 module TodoPropa
   class Application < Rails::Application
     
@@ -57,6 +61,8 @@ module TodoPropa
     config.generators do |g|
       g.template_engine :haml
     end
+    
+    config.action_mailer.default_url_options = {host: CONFIG[:host]}
     
   end
 end

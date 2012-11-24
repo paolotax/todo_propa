@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Appunto:
+  = @appunto_event.appunto
+%p
+  %b State:
+  = @appunto_event.state
+
+= link_to 'Edit', edit_appunto_event_path(@appunto_event)
+\|
+= link_to 'Back', appunto_events_path

@@ -13,4 +13,18 @@ namespace :todopropa do
   end
   after "deploy:setup", "todopropa:dependencies"
 
+  desc "Generate the application.yml configuration file."
+  task :setup, roles: :app do
+    run "mkdir -p #{shared_path}/config"
+    put File.read("config/application.yml"), "#{shared_path}/config/application.yml"
+    puts "Now edit the config files in #{shared_path}."
+  end
+  after "deploy:setup", "todopropa:setup"
+
+  desc "Symlink the database.yml file into latest release"
+  task :symlink, roles: :app do
+    run "ln -nfs #{shared_path}/config/application.yml #{release_path}/config/application.yml"
+  end
+  after "deploy:finalize_update", "todopropa:symlink"
+
 end

@@ -22,6 +22,11 @@ class AppuntiController < ApplicationController
 
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
     @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
+
+    location = params[:comune] || "bologna"
+    location.split.join("_").downcase
+    @wunder = Wunderground.new location
+
   end
   
   def get_note

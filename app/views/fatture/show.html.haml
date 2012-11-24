@@ -13,8 +13,14 @@
             = @fattura.cliente.indirizzo
             %br
             = "#{@fattura.cliente.cap} #{@fattura.cliente.frazione} #{@fattura.cliente.comune} #{@fattura.cliente.provincia}"
+
+        = link_to fattura_url(@fattura, format: :pdf), class: "btn pull-right", title: "stampa #{@fattura.causale}", target: "_blank" do
+          %i.icon-tag
+          Stampa
+        .clearfix
+
       - unless @fattura.appunti.empty?
-        .table-righe-new
+        .table-righe-new.well
           %ul.unstyled
             - for appunto, righe in @fattura.righe.group_by(&:appunto)
               %li

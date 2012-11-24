@@ -1,0 +1,9 @@
+= simple_form_for(@appunto_event) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :appunto
+    = f.input :state
+
+  .form-actions
+    = f.button :submit

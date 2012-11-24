@@ -59,12 +59,8 @@
               = link_to giro_path(giorno: v.giorno) do
                 %span.label.label-important
                   = v.giorno.strftime("%d %B %Y")
-      
-      
       .pull-right
-        
         = baule_tag @cliente, class_scarica: "btn btn-warning"
-        
         - unless @cliente.has_documenti?
           = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
             %i.icon-trash
@@ -72,11 +68,13 @@
         = link_to edit_cliente_url(@cliente), class: "btn btn-primary" do
           %i.icon-pencil
           Modifica
-
         = link_to "Fattura",  new_fattura_url(causale: 1, cliente_id: @cliente.id), class: "btn btn-warning"
             
   .row
     .side-bar.span3
+      .module
+        = render partial: "fatture/fattura_item", collection: @cliente.fatture.per_numero, as: :fattura
+
       - unless @cliente.new_record?  
         - da_consegnare  = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
         = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_consegnare", collection: da_consegnare} unless da_consegnare.empty?

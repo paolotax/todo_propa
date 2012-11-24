@@ -539,6 +539,38 @@ ALTER SEQUENCE appunti_id_seq OWNED BY appunti.id;
 
 
 --
+-- Name: appunto_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE appunto_events (
+    id integer NOT NULL,
+    appunto_id integer,
+    state character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: appunto_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE appunto_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: appunto_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE appunto_events_id_seq OWNED BY appunto_events.id;
+
+
+--
 -- Name: classi; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1185,6 +1217,13 @@ ALTER TABLE appunti ALTER COLUMN id SET DEFAULT nextval('appunti_id_seq'::regcla
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE appunto_events ALTER COLUMN id SET DEFAULT nextval('appunto_events_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE classi ALTER COLUMN id SET DEFAULT nextval('classi_id_seq'::regclass);
 
 
@@ -1307,6 +1346,14 @@ ALTER TABLE ONLY adozioni
 
 ALTER TABLE ONLY appunti
     ADD CONSTRAINT appunti_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: appunto_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY appunto_events
+    ADD CONSTRAINT appunto_events_pkey PRIMARY KEY (id);
 
 
 --
@@ -1484,6 +1531,13 @@ CREATE INDEX index_appunti_on_stato ON appunti USING btree (stato);
 --
 
 CREATE INDEX index_appunti_on_user_id ON appunti USING btree (user_id);
+
+
+--
+-- Name: index_appunto_events_on_appunto_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_appunto_events_on_appunto_id ON appunto_events USING btree (appunto_id);
 
 
 --
@@ -1741,3 +1795,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120513083751');
 INSERT INTO schema_migrations (version) VALUES ('20120901074823');
 
 INSERT INTO schema_migrations (version) VALUES ('20120928162757');
+
+INSERT INTO schema_migrations (version) VALUES ('20121121122824');

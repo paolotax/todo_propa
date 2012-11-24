@@ -1,0 +1,8 @@
+.item[fattura]{ class: "#{ fattura.pagata? ? '' : 'da_pagare'}", data: { id: "#{fattura.id}"} }
+  = link_to fattura_url fattura do
+    #{fattura.causale} #{fattura.numero} del #{l(fattura.data).downcase}
+  %span.pull-right
+    %strong= fattura.totale_copie
+    copie
+    %strong= number_to_currency fattura.importo_fattura 
+  .clearfix

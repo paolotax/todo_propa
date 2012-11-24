@@ -1,5 +1,7 @@
 TodoPropa::Application.routes.draw do
   
+  resources :appunto_events
+
   mount WillFilter::Engine => "/will_filter"
   
   resources :classi do

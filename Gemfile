@@ -13,6 +13,10 @@ group :assets do
   gem 'jquery-ui-rails'
 end
 
+group :development, :test do
+  gem 'rspec-rails'
+end
+
 gem 'bootstrap-sass'
 gem "compass-rails"
 gem "haml-rails"
@@ -26,6 +30,7 @@ gem 'redcarpet', '1.17.2'
 
 gem 'rabl'
 gem 'yajl-ruby'
+gem 'json'
 
 gem 'mini_magick'
 gem 'fog'
