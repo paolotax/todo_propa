@@ -28,8 +28,8 @@ class Cliente < ActiveRecord::Base
   validates :provincia,    :presence => true, :length => { :is => 2 }
   validates :cliente_tipo, :inclusion => {:in => TIPI_CLIENTI, :message => "non hai scelto il tipo cliente" }
   
-  scope :select_provincia, select(:provincia).uniq
-  scope :select_citta,     select(:comune).uniq
+  scope :select_provincia, select("clienti.provincia").uniq
+  scope :select_citta,     select("clienti.comune").uniq
   scope :nel_baule,        joins(:visite).where("visite.baule = true")
     
   # scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")

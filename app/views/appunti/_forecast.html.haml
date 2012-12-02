@@ -1,10 +1,13 @@
 #forecast
-  %h3
-    = @wunder.conditions.display_location['full']
-  %ul
-    - (0..3).each do |d|
-      %li
-        = image_tag ( @wunder.try("day_#{d}_morning").try(:icon_url) )
-        %strong= l (Time.zone.now + d.days).to_date, format: :day_of_month
-        %br
-        = @wunder.try("day_#{d}_morning").try(:fcttext_metric)
+  - unless @wunder.non_trovato?
+    %h3
+      = @wunder.conditions.display_location['full']
+    %ul
+      - (0..3).each do |d|
+        %li
+          = image_tag ( @wunder.try("day_#{d}_morning").try(:icon_url) )
+          %strong= l (Time.zone.now + d.days).to_date, format: :day_of_month
+          %br
+          = @wunder.try("day_#{d}_morning").try(:fcttext_metric)
+  - else
+    %strong= @wunder.conditions.display_location

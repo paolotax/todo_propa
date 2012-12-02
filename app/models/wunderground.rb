@@ -54,7 +54,9 @@ class Wunderground
     @day_3_night   = OpenStruct.new(forecast[7]) 
   end
 
-
+  def non_trovato?
+    conditions.display_location == "Non sono stati trovati dati per #{@location}";
+  end
 end
 
 
