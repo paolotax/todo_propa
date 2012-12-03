@@ -1071,7 +1071,8 @@ CREATE TABLE users (
     last_sign_in_ip character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    properties hstore
+    properties hstore,
+    authentication_token character varying(255)
 );
 
 
@@ -1797,3 +1798,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120901074823');
 INSERT INTO schema_migrations (version) VALUES ('20120928162757');
 
 INSERT INTO schema_migrations (version) VALUES ('20121121122824');
+
+INSERT INTO schema_migrations (version) VALUES ('20121202100710');

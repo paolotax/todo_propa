@@ -1,5 +1,13 @@
 TodoPropa::Application.routes.draw do
   
+  namespace :api do
+    namespace :v1  do
+      resources :tokens,:only => [:create, :destroy]
+      resources :appunti,:only => [:index]
+    end
+  end
+
+
   resources :appunto_events
 
   mount WillFilter::Engine => "/will_filter"

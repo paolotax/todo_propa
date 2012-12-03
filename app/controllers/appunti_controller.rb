@@ -2,6 +2,8 @@ require "prawn/measurement_extensions"
 
 class AppuntiController < ApplicationController
   
+  #before_filter :authenticate_user!
+
   can_edit_on_the_spot
 
   def index
