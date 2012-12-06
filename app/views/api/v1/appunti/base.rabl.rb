@@ -5,7 +5,6 @@ code do |u|
     cliente_id:   u.cliente_id,
     destinatario: u.destinatario.present? ? u.destinatario : "...",
     cliente_nome: u.cliente_nome,
-    note:         u.note,
     stato:        u.status,
     con_recapiti: u.has_recapiti?,
     nel_baule:    u.nel_baule,
@@ -42,3 +41,4 @@ end
 
 child(:user)    { attributes :username }
 child(:cliente) { attributes :id, :titolo, :frazione, :comune, :provincia }
+
