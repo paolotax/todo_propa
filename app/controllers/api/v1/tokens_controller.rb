@@ -1,4 +1,4 @@
-class Api::V1::TokensController  < ApplicationController
+class Api::V1::TokensController  < BaseController
   
   skip_before_filter :verify_authenticity_token
   

@@ -25,6 +25,7 @@ gem 'font-awesome-sass-rails'
 gem 'jquery-rails'
 
 gem 'devise'
+gem 'doorkeeper'
 gem 'on_the_spot'
 gem 'redcarpet', '1.17.2'
 
