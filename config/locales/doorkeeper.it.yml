@@ -1,0 +1,5 @@
+it:
+  doorkeeper:
+    errors:
+      messages:
+        invalid_request: "richiesta non valida"

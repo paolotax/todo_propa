@@ -3,14 +3,29 @@ Doorkeeper.configure do
   # Currently supported options are :active_record, :mongoid2, :mongoid3, :mongo_mapper
   orm :active_record
 
-  # This block will be called to check whether the resource owner is authenticated or not.
-  resource_owner_authenticator do
-    current_user || warden.authenticate!(:scope => :user)
-    
-    # raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
+  resource_owner_authenticator do |routes|
     # Put your resource owner authentication logic here.
-    # Example implementation:
-    #   User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
+    # If you want to use named routes from your app you need
+    # to call them on routes object eg.
+    # routes.new_user_session_path
+    current_user || warden.authenticate!(:scope => :user)
+  end
+
+  # If you want to restrict the access to the web interface for
+  # adding oauth authorized applications you need to declare the
+  # block below
+  # admin_authenticator do |routes|
+  #   # Put your admin authentication logic here.
+  #   # If you want to use named routes from your app you need
+  #   # to call them on routes object eg.
+  #   # routes.new_admin_session_path
+  #   Admin.find_by_id(session[:admin_id]) || redirect_to routes.new_admin_session_path
+  # end
+
+  resource_owner_from_credentials do
+    #warden.authenticate!(:scope => :user)
+    u = User.find_for_database_authentication(:username => params[:username])
+    u if u && u.valid_password?(params[:password])
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
