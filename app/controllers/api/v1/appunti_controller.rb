@@ -10,8 +10,10 @@ class Api::V1::AppuntiController < Api::V1::BaseController
 	end
 
   def create
-    @appunto = current_resource_owner.appunti.create(params[:appunto])
-    respond_with @appunto
+    @appunto = current_resource_owner.appunti.build(params[:appunto])
+    if @appunto.save
+      respond_with @appunto
+    end
   end
 
 end
