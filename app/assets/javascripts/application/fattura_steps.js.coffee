@@ -2,7 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-
 jQuery ->
   
   $(".remove-fattura").live 'click', (e) ->
@@ -17,6 +16,8 @@ jQuery ->
       success: (data) ->
         $(riga).remove();
   
+
+  # chiama fattura show json
   
   $('.show-fattura a.apri-fattura').live 'click', (e) ->
     e.stopPropagation()
@@ -27,8 +28,8 @@ jQuery ->
       url: "/fatture/#{id}"  
       dataType: 'json'
       success: (data) ->
-        fattura.replaceWith JST["fatture/fattura"](data)
-        $("#fattura_#{data.id}").toggleClass('opened')
+        fattura.replaceWith JST["fatture/fattura"](data["fattura"])
+        $("#fattura_#{data['fattura'].id}").toggleClass('opened')
         
   $('.fattura .chiudi a').live 'click', (e) ->
     e.stopPropagation()

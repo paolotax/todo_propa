@@ -8,7 +8,7 @@
     .prezzo
       - unless @prezzo_unitario is 0
         = accounting.formatMoney(@prezzo_unitario, { symbol: '€',  format: '%s %v', decimal: ",", thousand: "." })
-        / !=  JST['shared/prezzo']( prezzo: @ ) 
+        / !=  JST['shared/prezzo']( prezzo: @prezzo_unitario ) 
       - else
         %span.badge.badge-info gratis
     .sconto

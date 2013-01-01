@@ -44,6 +44,7 @@
     .table-righe-new
       %ul.unstyled
         - for appunto in @appunti
+          - console.log appunto
           %li
             %a{href: "/appunti/#{appunto.appunto.id}"}
               - c = new Date(appunto.appunto.updated_at)

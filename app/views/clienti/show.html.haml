@@ -43,7 +43,8 @@
             %br
           
           - unless @cliente.latitude.nil?
-            %a.btn{ href: "navigon://coordinate/#{@cliente.titolo}/#{@cliente.longitude}/#{@cliente.latitude}" }
+            %a.btn{ href: "http://maps.apple.com/maps?q=#{@cliente.latitude},#{@cliente.longitude}" }
+              / %a.btn{ href: "navigon://coordinate/#{@cliente.titolo.parameterize}/#{@cliente.longitude}/#{@cliente.latitude}" }
               %i.icon-road
               Mostra percorso
 
