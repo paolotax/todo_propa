@@ -39,27 +39,22 @@ jQuery ->
   @selected_appunti = []
   
   count_selected = (last_clicked) =>
-
     if last_clicked.hasClass('selected')
       @selected_appunti.push last_clicked.attr('id')
     else
       for item in @selected_appunti
         if item is last_clicked.attr('id')
           @selected_appunti.splice(@selected_appunti.indexOf(item), 1)
-          
     $('#footer').html @selected_appunti.length 
-    console.log @selected_appunti
     
   $('#new_appunto_button').live 'click', (e) ->
-
     e.preventDefault()
     $('#appunto_cliente_id_chzn').addClass('chzn-container-active');  
     $('#appunto_cliente_id_chzn input').focus();
     $('#appunti').scrollTop(pos)  
     
   $('#appunto_cliente_id.chzn-select').live 'change', () ->
-    $.getJSON "/clienti/#{$('#appunto_cliente_id.chzn-select').val()}", (cliente) ->
-      $('#ordine h3').html cliente.nome
+    $.getJSON "/clienti/#{$('#appunto_cliente_id.chzn-select').val()}.json", (cliente) ->
       $('#appunto_cliente_id_chzn').removeClass 'validity-erroneous chzn-container-active'
       $('#appunto_destinatario').focus().select()
    

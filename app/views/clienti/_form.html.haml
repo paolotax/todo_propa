@@ -6,7 +6,7 @@
   = f.error_notification
   
   %fieldset
-    = f.input   :cliente_tipo, collection: Cliente::TIPI_CLIENTI, label: "Tipo Cliente",  input_html: { :class => 'chzn-select' }
+    = f.input   :cliente_tipo, collection: Cliente::TIPI_CLIENTI, label: "Tipo Cliente",  input_html: { :class => 'chzn-select', "data-placeholder" => "Seleziona tipo cliente..." }
     = f.input   :titolo, label: "Nome Cliente", hint: "Scegliere un nome univoco per indicare il cliente. Verrà aggiunto automaticamente il prefisso che ne indica il tipo"
 
   %fieldset
@@ -28,8 +28,8 @@
   
   %fieldset
     %legend Indirizzo
-    = f.input   :provincia,    collection: Comune.provincie.all.map(&:provincia),                  input_html: { :class => 'chzn-select' }  
-    = f.input   :comune,       collection: Comune.per_provincia(@cliente.provincia).map(&:comune), input_html: { :class => 'chzn-select' }
+    = f.input   :provincia,    collection: Comune.provincie.all.map(&:provincia),                  input_html: { :class => 'chzn-select', "data-placeholder" => "Seleziona la provincia..." }  
+    = f.input   :comune,       collection: Comune.per_provincia(@cliente.provincia).map(&:comune), input_html: { :class => 'chzn-select', "data-placeholder" => "Seleziona il comune..." }
     = f.input   :frazione
     = f.input   :indirizzo
     = f.input   :cap

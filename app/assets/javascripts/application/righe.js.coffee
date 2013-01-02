@@ -8,14 +8,12 @@ jQuery ->
   $.validity.setup outputMode: 'summary'
 
   $('#new_libro.chzn-select').bind 'change', () ->
-    console.log 'change'
     $('#new_libro_chzn').removeClass 'validity-erroneous chzn-container-active'
     $.getJSON "/libri/#{$(this).val()}", (libro) ->
-      console.log libro
       if $('input#prezzo_consigliato').is ':checked'
-        $('#new_prezzo').val(libro.prezzo_consigliato)
+        $('#new_prezzo').val(libro["libro"].prezzo_consigliato)
       else
-        $('#new_prezzo').val(libro.prezzo_copertina)
+        $('#new_prezzo').val(libro["libro"].prezzo_copertina)
         $('#new_sconto').val $('#prezzo').val()
       $('#new_quantita').focus().select()
   

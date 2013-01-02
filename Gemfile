@@ -73,6 +73,9 @@ gem 'capistrano'
 gem 'unicorn'
 
 gem "acts-as-taggable-on"
+
+gem 'chosen-rails'
+
 # gem "underscore-rails"
 # gem "turbolinks"
 
