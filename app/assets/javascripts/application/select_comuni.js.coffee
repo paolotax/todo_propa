@@ -23,16 +23,17 @@ class ListComuni
   render: (objs) =>
     @list_citta.empty().append("<option></option")
     @comuni = objs
+    console.log @comuni
     for c in @comuni
-      @list_citta.append("<option>#{c.comune}</option")
+      @list_citta.append("<option>#{c["comune"].comune}</option")
     @list_citta.trigger("liszt:updated")
 
   change: () =>
     @provincia = $(':selected', @list_provincia).text()
     @get_comuni()
-    $('#cliente_indirizzi_attributes_0_provincia').val ''
-    $('#cliente_indirizzi_attributes_0_citta').val     ''
-    $('#cliente_indirizzi_attributes_0_cap').val       ''
+    $('#cliente_provincia').val ''
+    $('#cliente_citta').val     ''
+    $('#cliente_cap').val       ''
 
   change_citta: () =>
     @comune = $(':selected', @list_citta).text()
@@ -44,9 +45,10 @@ class ListComuni
       @fill_address()
     
   fill_address:() =>  
-    for c in @comuni
+    for comune in @comuni
+      c = comune["comune"]
       if c.provincia is @provincia and c.comune is  @comune
-        $('#cliente_indirizzi_attributes_0_provincia').val @provincia
-        $('#cliente_indirizzi_attributes_0_citta').val     @comune
-        $('#cliente_indirizzi_attributes_0_cap').val       c.cap
+        $('#cliente_provincia').val @provincia
+        $('#cliente_citta').val     @comune
+        $('#cliente_cap').val       c.cap
 
