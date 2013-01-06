@@ -12,7 +12,6 @@ module Api
 		  end
 
       def show
-        sleep 1
         @cliente = current_resource_owner.clienti.find(params[:id])
         @appunti_in_corso = @cliente.appunti.in_corso.order("appunti.id desc")
         respond_with @cliente
