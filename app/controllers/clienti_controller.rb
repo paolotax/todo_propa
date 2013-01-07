@@ -21,11 +21,12 @@ class ClientiController < ApplicationController
   end
 
   def show
-    session[:return_to] = request.path
+
     @cliente = current_user.clienti.includes(:indirizzi, :appunti, :fatture, :righe, :visite).find(params[:id])
 
     respond_to do |format|
       format.html do
+        session[:return_to] = request.path
         @adozioni_per_scuola = @cliente.adozioni.joins(:classe).scolastico.order("classi.classe, classi.sezione").group_by(&:libro)
         @classi_inserter = ClassiInserter.new
         if request.path != cliente_path(@cliente)

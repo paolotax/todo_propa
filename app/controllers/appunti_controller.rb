@@ -82,7 +82,6 @@ class AppuntiController < ApplicationController
     respond_to do |format|
       if @appunto.save
         format.html   { redirect_to session[:return_to], notice: 'Appunto creato!' }
-        format.mobile { redirect_to  appunti_url }
         format.json
       else
         format.html { render action: "new" }
