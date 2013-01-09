@@ -5,8 +5,11 @@ jQuery ->
       console.log 'init maps events'
       Gmaps.map.HandleDragend = (pos) ->
         console.log pos
-        $('#cliente_latitude').val pos.Ra
-        $('#cliente_longitude').val pos.Sa
+
+        console.log pos.ab
+
+        $('#cliente_latitude').val pos.$a
+        $('#cliente_longitude').val pos.ab
 
       Gmaps.map.callback = ->
         for marker in this.markers

@@ -46,8 +46,8 @@
   %fieldset
     %legend Mappa
     = f.input :gmaps
-    = f.input :latitude
-    = f.input :longitude
+    = f.input :latitude, as: :string
+    = f.input :longitude, as: :string
     
   = f.error :base
         
