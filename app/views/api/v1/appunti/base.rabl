@@ -5,7 +5,7 @@ code do |u|
     cliente_id:   u.cliente_id,
     destinatario: u.destinatario.present? ? u.destinatario : "...",
     cliente_nome: u.cliente_nome,
-    stato:        u.status,
+    status:        u.status,
     con_recapiti: u.has_recapiti?,
     nel_baule:    u.nel_baule,
     con_righe:    u.has_righe?,

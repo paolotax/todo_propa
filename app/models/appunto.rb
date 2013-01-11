@@ -171,7 +171,7 @@ class Appunto < ActiveRecord::Base
                     "data" => { 
                       "url" => "appunti/#{id}",
                       "destinatario" => destinatario,
-                      "note" => note.squish,  
+                      "note" => "#{note}".squish,  
                       "titolo" => "#{cliente.titolo}", 
                       "citta" => "#{cliente.comune} #{cliente.frazione} #{cliente.provincia}".squish
                     }
@@ -212,16 +212,16 @@ class Appunto < ActiveRecord::Base
 
     def leggi
     
-      new_righe = self.note.lines.to_a
-      for r in self.note.lines do
-        riga = r.squish.split
-        if /\d{5}[A-Z]/.match riga.first
-          libro = Libro.find_or_create_by_cm( cm: riga.first, titolo: riga[1..-2].join(" "), prezzo_consigliato: 0, prezzo_copertina: 0 )
-          new_riga = self.righe.build( libro: libro, quantita:  riga.last, prezzo_unitario: libro.prezzo_copertina )
-          new_righe.delete(r)
-        end
-        self.note = new_righe.join() 
-      end
+      # new_righe = self.note.lines.to_a
+      # for r in self.note.lines do
+      #   riga = r.squish.split
+      #   if /\d{5}[A-Z]/.match riga.first
+      #     libro = Libro.find_or_create_by_cm( cm: riga.first, titolo: riga[1..-2].join(" "), prezzo_consigliato: 0, prezzo_copertina: 0 )
+      #     new_riga = self.righe.build( libro: libro, quantita:  riga.last, prezzo_unitario: libro.prezzo_copertina )
+      #     new_righe.delete(r)
+      #   end
+      #   self.note = new_righe.join() 
+      # end
     end
 
   

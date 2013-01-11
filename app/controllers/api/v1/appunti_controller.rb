@@ -10,10 +10,22 @@ class Api::V1::AppuntiController < Api::V1::BaseController
 	end
 
   def create
-    @appunto = current_resource_owner.appunti.build(params[:appunto])
+    @cliente = current_resource_owner.clienti.find(params[:appunto][:cliente_id])
+
+    @appunto =  @cliente.appunti.build(params[:appunto].except(:cliente_nome).except(:cliente_id))
     if @appunto.save
       respond_with @appunto
     end
   end
+
+  def update
+    @appunto = current_resource_owner.appunti.find(params[:id])
+    if @appunto.update_attributes(params[:appunto].except(:cliente_nome))
+      respond_with @appunto
+    else
+      respond_with json: { errors: @appunto.errors.full_messages, status: :unprocessable_entity }
+    end
+  end
+
 
 end
