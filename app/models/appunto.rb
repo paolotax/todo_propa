@@ -179,6 +179,9 @@ class Appunto < ActiveRecord::Base
     end
   end
 
+  #  TDOO
+  #  State Machine
+  # 
 
   STATES = %w[incompleto pronto consegnato spedito registrato pagato chiuso cancellato]
   delegate :incompleto?, :pronto?, :consegnato?, :spedito?, 

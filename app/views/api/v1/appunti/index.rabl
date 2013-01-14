@@ -1,3 +1,3 @@
-extends 'appunti/base'
+extends 'api/v1/appunti/base'
 
 collection @appunti

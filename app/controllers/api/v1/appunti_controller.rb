@@ -27,5 +27,11 @@ class Api::V1::AppuntiController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    @appunto = current_resource_owner.appunti.find(params[:id])
+    @appunto.destroy
+    respond_with json: { head: :no_content }
+  end
+
 
 end
