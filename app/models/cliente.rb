@@ -224,7 +224,7 @@ class Cliente < ActiveRecord::Base
     [self.indirizzo, self.cap, self.frazione, self.comune, self.provincia].join(', ')
   end
   
-  acts_as_gmappable :check_process => true, :checker => "gmaps"
+  acts_as_gmappable :validation => false, :check_process => true, :checker => "gmaps"
   
   def gmaps4rails_address
     "#{self.indirizzo}, #{self.frazione}, #{self.comune}, #{self.provincia}"
@@ -260,6 +260,43 @@ class Cliente < ActiveRecord::Base
   
   def self.search_mate(term, id_user)
     matches = Soulmate::Matcher.new("#{id_user}_cliente").matches_for_term(term)
+  end
+
+  def self.import(file, user_id)
+    current_user = User.find(user_id)
+    
+    spreadsheet = open_spreadsheet(file)
+    header = spreadsheet.row(1)
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      cliente = find_by_id(row["id"]) || new
+
+      #raise row.inspect
+
+      cliente.attributes = row.to_hash #.slice(*accessible_attributes)
+      cliente.user = current_user
+
+      # raise cliente.inspect
+      cliente.save!
+    end
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+    when ".csv" then Csv.new(file.path, nil, :ignore)
+    when ".xls" then Excel.new(file.path, nil, :ignore)
+    when ".xlsx" then Excelx.new(file.path, nil, :ignore)
+    else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |cliente|
+        csv << cliente.attributes.values_at(*column_names)
+      end
+    end
   end
   
   private

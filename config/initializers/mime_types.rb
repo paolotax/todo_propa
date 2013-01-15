@@ -7,3 +7,4 @@
 # Mime::Type.register "application/pdf", :pdf
 
 Mime::Type.register "text/cache-manifest", :appcache
+Mime::Type.register "application/xls", :xls

@@ -20,8 +20,13 @@
 
   .side-right.span3
     .well
-      = link_to "Mostra Baule", baule_url
-      %p
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      = form_tag import_clienti_path, multipart: true do
+        = file_field_tag :file
+        = submit_tag 'Importa', class: "btn pull-right"
+      .clearfix
+      Download:
+      = link_to "CSV", export_clienti_path(format: "csv")
+      |
+      = link_to "Excel", export_clienti_path(format: "xls")
 
 

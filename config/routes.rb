@@ -87,6 +87,8 @@ TodoPropa::Application.routes.draw do
     resources :classi_inserters
     
     collection do
+      get  :export
+      post :import
       put :update_attribute_on_the_spot
     end
   end

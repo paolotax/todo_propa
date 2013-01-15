@@ -75,6 +75,7 @@ gem 'unicorn'
 gem "acts-as-taggable-on"
 
 gem 'chosen-rails'
+gem 'roo'
 
 # gem "underscore-rails"
 # gem "turbolinks"

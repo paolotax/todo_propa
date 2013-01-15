@@ -92,4 +92,14 @@ class ClientiController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def import
+    Cliente.import(params[:file], current_user)
+    redirect_to clienti_url, notice: "Clienti Importati."
+  end
+
+  def export
+    @clienti = current_user.clienti.per_localita
+  end
+
 end
