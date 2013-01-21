@@ -76,6 +76,7 @@ gem "acts-as-taggable-on"
 
 gem 'chosen-rails'
 gem 'roo'
+gem "active_model_serializers"
 
 # gem "underscore-rails"
 # gem "turbolinks"
