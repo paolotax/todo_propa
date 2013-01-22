@@ -9,6 +9,7 @@ TodoPropa::Application.routes.draw do
         resources :righe
       end
       resources :clienti, :only => [:index, :show, :create, :update]
+      resources :libri
     end
   end
 

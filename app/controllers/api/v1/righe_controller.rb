@@ -20,6 +20,7 @@ module Api
       end
 	  	  
 	  	def create
+        raise params.inspect
         @riga =  @appunto.righe.build(params[:cliente])
 	      if @riga.save
 	        respond_with @riga
@@ -27,6 +28,7 @@ module Api
 		  end
 
 		  def update
+        raise params.inspect
 		    @riga = @appunto.righe.find(params[:id])
 	      if @riga.update_attributes(params[:riga])
 	      	respond_with @riga
