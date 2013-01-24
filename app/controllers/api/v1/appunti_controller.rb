@@ -11,6 +11,7 @@ class Api::V1::AppuntiController < Api::V1::BaseController
 	end
 
   def create
+
     @cliente = current_resource_owner.clienti.find(params[:appunto][:cliente_id])
 
     @appunto =  @cliente.appunti.build(params[:appunto].except(:cliente_nome).except(:cliente_id).except(:righe))
@@ -20,6 +21,19 @@ class Api::V1::AppuntiController < Api::V1::BaseController
   end
 
   def update
+
+        logger.debug ""
+        logger.debug ""
+        logger.debug ""
+        logger.debug ""
+        logger.debug params[:appunto]
+        logger.debug ""
+        logger.debug ""
+        logger.debug ""
+        logger.debug ""
+        logger.debug ""
+
+
     @appunto = current_resource_owner.appunti.find(params[:id])
     if @appunto.update_attributes(params[:appunto].except(:cliente_nome).except(:righe))
       respond_with @appunto

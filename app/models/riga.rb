@@ -39,7 +39,7 @@ class Riga < ActiveRecord::Base
   
   def cliente
    self.appunto.cliente || self.fattura.cliente
- end
+  end
   
   def prezzo
     if sconto == 0.0
@@ -68,12 +68,14 @@ class Riga < ActiveRecord::Base
   private
   
     def init
+      logger.debug "init"
       self.consegnato ||= false
       self.pagato     ||= false
       self.sconto ||= 0.0           #will set the default value only if it's nil
     end  
   
     def ricalcola_totali
+      logger.debug "ricalcola_totali"
       return true unless quantita_changed? || prezzo_unitario_changed? || fattura_id_changed? || sconto_changed?
       appunto.update_attributes(:totale_copie => appunto.righe.sum(:quantita), :totale_importo => appunto.righe.sum('righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100'))
       return true

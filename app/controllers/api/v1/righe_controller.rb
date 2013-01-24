@@ -1,7 +1,7 @@
 module Api
 	module V1
 
-		class RigheController < BaseController
+	 class RigheController < BaseController
       
 
       doorkeeper_for :all	
@@ -20,15 +20,13 @@ module Api
       end
 	  	  
 	  	def create
-        raise params.inspect
-        @riga =  @appunto.righe.build(params[:cliente])
+        @riga =  @appunto.righe.build(params[:riga])
 	      if @riga.save
 	        respond_with @riga
 	      end
 		  end
 
 		  def update
-        raise params.inspect
 		    @riga = @appunto.righe.find(params[:id])
 	      if @riga.update_attributes(params[:riga])
 	      	respond_with @riga
