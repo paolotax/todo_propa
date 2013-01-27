@@ -68,7 +68,6 @@ class Riga < ActiveRecord::Base
   private
   
     def init
-      logger.debug "init"
       self.consegnato ||= false
       self.pagato     ||= false
       self.sconto ||= 0.0           #will set the default value only if it's nil

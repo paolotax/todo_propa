@@ -1,9 +1,6 @@
 module Api
 	module V1
-
-	 class RigheController < BaseController
-      
-
+	  class RigheController < BaseController
       doorkeeper_for :all	
 		  respond_to :json
 
@@ -22,6 +19,8 @@ module Api
 	  	def create
         @riga =  @appunto.righe.build(params[:riga])
 	      if @riga.save
+	      	@appunto.ricalcola
+	      	@appunto.save
 	        respond_with @riga
 	      end
 		  end
@@ -29,11 +28,21 @@ module Api
 		  def update
 		    @riga = @appunto.righe.find(params[:id])
 	      if @riga.update_attributes(params[:riga])
+	      	@appunto.ricalcola
+	      	@appunto.save
 	      	respond_with @riga
       	else
         	respond_with json: { errors: @riga.errors.full_messages, status: :unprocessable_entity }
      	  end
     	end
+
+      def destroy
+    		@riga = @appunto.righe.find(params[:id])
+    		@riga.destroy
+    		@appunto.ricalcola
+	      @appunto.save
+    		respond_with json: { head: :no_content }
+  		end
 
       private 
 
