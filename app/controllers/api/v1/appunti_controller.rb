@@ -20,6 +20,11 @@ class Api::V1::AppuntiController < Api::V1::BaseController
     end
   end
 
+  def show
+    @appunto = current_resource_owner.appunti.includes(:cliente, :righe => :libro).find(params[:id])
+    respond_with @appunto
+  end
+
   def update
 
     @appunto = current_resource_owner.appunti.find(params[:id])
