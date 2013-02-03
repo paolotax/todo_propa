@@ -12,9 +12,8 @@ module Api
 		  end
 
       def show
-        @cliente = current_resource_owner.clienti.find(params[:id])
-        @appunti_in_corso = @cliente.appunti.in_corso.order("appunti.id desc")
-        respond_with @cliente
+        @cliente = current_resource_owner.clienti.includes(:appunti).find(params[:id])
+        respond_with @cliente, root: "cliente", :serializer => ClienteAppuntiSerializer
       end
 	  	  
 	  	def create
