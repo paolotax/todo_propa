@@ -3,7 +3,7 @@ module Api
 
 		class ClientiController < BaseController
       
-      doorkeeper_for :all	
+      #doorkeeper_for :all	
 		  respond_to :json
 
 		  def index
@@ -12,7 +12,7 @@ module Api
 		  end
 
       def show
-		    #current_resource_owner = User.find(1)
+		    current_resource_owner = User.find(1)
         @cliente = current_resource_owner.clienti.includes(:classi, :appunti => {:righe => :libro}).find(params[:id])
         respond_with @cliente, root: "cliente", :serializer => ClienteAppuntiSerializer
       end

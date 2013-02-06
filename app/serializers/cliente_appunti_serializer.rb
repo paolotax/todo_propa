@@ -7,6 +7,7 @@ class ClienteAppuntiSerializer < ActiveModel::Serializer
 
   has_many :appunti
   has_many :classi
+  #has_many :docenti
 
   def appunti
   	object.appunti.order("appunti.id desc")
@@ -14,6 +15,12 @@ class ClienteAppuntiSerializer < ActiveModel::Serializer
   
   def classi
   	object.classi.order("classi.classe, classi.sezione")
+  end
+
+  attributes :docenti
+
+  def docenti
+    object.appunti.select('appunti.destinatario as "docente", appunti.telefono').order(:destinatario).uniq
   end
 
 end
