@@ -12,7 +12,8 @@ module Api
 		  end
 
       def show
-        @cliente = current_resource_owner.clienti.includes(:appunti).find(params[:id])
+		    #current_resource_owner = User.find(1)
+        @cliente = current_resource_owner.clienti.includes(:classi, :appunti => {:righe => :libro}).find(params[:id])
         respond_with @cliente, root: "cliente", :serializer => ClienteAppuntiSerializer
       end
 	  	  
