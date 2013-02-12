@@ -19,13 +19,14 @@
     = javascript_include_tag "application"
 
     = csrf_meta_tags
-  %body
+  %body{ class: "#{Rails.env == 'development' ? 'dev' : ''}"}
     #loading
       %strong Caricamento in corso
       
     = render "shared/header"
   
-    %div#wrapper(data-pjax-container)
+    / %div#wrapper(data-pjax-container)
+    %div#wrapper
       / = render partial: "shared/test"
 
       

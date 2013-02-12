@@ -76,8 +76,11 @@ body {
   background-attachment: fixed;
   background-repeat: repeat;
   background-repeat: repeat;
-  // background-color: #C0DEED;
   background-color: #FFCC66;
+}
+
+body.dev {
+  background-color: #C0DEED;
 }
 
 .filters {
