@@ -6,10 +6,11 @@ TodoPropa::Application.routes.draw do
     namespace :v1  do
       #resources :tokens,  :only => [:create, :destroy]
       resources :appunti, :except => [:new, :edit] do
-        resources :righe
+        resources :righe, :except => :index
       end
       resources :clienti, :only => [:index, :show, :create, :update]
       resources :libri
+      resources :righe, :only => :index
     end
   end
 
