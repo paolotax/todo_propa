@@ -14,7 +14,7 @@ class FattureController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render rabl: @fatture }
+      format.js
       format.xls do
         @fatture = current_user.fatture.order("fatture.causale_id, fatture.data, fatture.numero")
       end
