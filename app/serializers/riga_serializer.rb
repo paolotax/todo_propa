@@ -8,10 +8,11 @@ class RigaSerializer < ActiveModel::Serializer
   			  :prezzo_unitario, 
   			  :prezzo_copertina, 
   			  :prezzo_consigliato,  
-  			  :sconto, :importo,
+  			  :sconto, 
+          :importo,
   			  :fattura_id
 
-  has_one :libro
-  has_one :appunto
+  has_one :libro, serializer: LibroShortSerializer
+  has_one :appunto, serializer: AppuntoShortSerializer
 
 end
