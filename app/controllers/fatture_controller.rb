@@ -12,6 +12,13 @@ class FattureController < ApplicationController
     @righe_da_pagare          = current_user.righe.includes(:libro, :appunto, appunto: [:cliente]).da_pagare.da_fatturare
     @clienti_righe_da_pagare  = @righe_da_pagare.group_by(&:cliente)
 
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render rabl: @fatture }
+      format.xls do
+        @fatture = current_user.fatture.order("fatture.causale_id, fatture.data, fatture.numero")
+      end
+    end
   end
 
   def show
@@ -20,6 +27,7 @@ class FattureController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render rabl: @fattura }
+
       format.pdf do
         # @fattura = Array(@fattura)
         pdf = FatturaPdf.new(@fattura, view_context)

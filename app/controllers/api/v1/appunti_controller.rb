@@ -6,7 +6,7 @@ class Api::V1::AppuntiController < Api::V1::BaseController
 
 	def index
     # current_resource_owner = User.find(1)
-		@appunti = current_resource_owner.appunti.includes(:cliente, :righe => :libro).recente
+		@appunti = current_resource_owner.appunti.includes(:cliente).recente
 		respond_with @appunti
 	end
 
@@ -26,10 +26,12 @@ class Api::V1::AppuntiController < Api::V1::BaseController
   end
 
   def update
-
     @appunto = current_resource_owner.appunti.find(params[:id])
-    if @appunto.update_attributes(params[:appunto].except(:cliente_nome).except(:righe))
-      respond_with @appunto
+    # solo nell'api
+    @appunto.righe.destroy_all
+
+    if @appunto.update_attributes(params[:appunto])
+      render json: @appunto
     else
       respond_with json: { errors: @appunto.errors.full_messages, status: :unprocessable_entity }
     end

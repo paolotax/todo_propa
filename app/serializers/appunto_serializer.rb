@@ -5,7 +5,6 @@ class AppuntoSerializer < ActiveModel::Serializer
   			  :created_at, :updated_at
 
   #has_many :righe
-
   has_one :cliente
 
 end
