@@ -3,7 +3,7 @@ class Api::V1::LibriController < Api::V1::BaseController
   respond_to :json
 
   def index
-    headers['Last-Modified'] = Time.now.httpdate
+    #headers['Last-Modified'] = Time.now.httpdate
     @libri = Libro.where("libri.settore <> 'Concorrenza'").order(:titolo)
     respond_with @libri
   end

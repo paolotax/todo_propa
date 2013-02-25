@@ -7,7 +7,7 @@ class Api::V1::RigheController < Api::V1::BaseController
   before_filter :get_appunto, except: :index
 
   def index
-    headers['Last-Modified'] = Time.now.httpdate
+    #headers['Last-Modified'] = Time.now.httpdate
   	# current_resource_owner = User.find(1)
 		@righe = current_resource_owner.righe.includes(:appunto, :libro)
     respond_with @righe
