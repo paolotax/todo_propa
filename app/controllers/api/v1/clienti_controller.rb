@@ -4,6 +4,7 @@ class Api::V1::ClientiController < Api::V1::BaseController
   respond_to :json
 
   def index
+    headers['Last-Modified'] = Time.now.httpdate
   	# current_resource_owner = User.find(1)
     @clienti = current_resource_owner.clienti.order(:titolo)
   end

@@ -5,6 +5,7 @@ class Api::V1::AppuntiController < Api::V1::BaseController
   respond_to :json
 
 	def index
+    headers['Last-Modified'] = Time.now.httpdate
     # current_resource_owner = User.find(1)
 		@appunti = current_resource_owner.appunti.includes(:cliente).recente
 		respond_with @appunti
