@@ -5,7 +5,13 @@ jQuery ->
     if type is "cliente"
       "<div class'cliente-item'>#{data.titolo} </br> #{data.citta}</div>"
     if type is "appunto"
-      "<div class'appunto-item'>#{data.destinatario} </br> #{data.titolo} #{data.citta} </br><small>#{data.note}</small></div>"
+      note = data.note
+      if data.note.length > 150
+        note = data.note.substring(0, 150) + "</br>(continua)"
+      else
+        note = data.note
+     
+      "<div class'appunto-item'>#{data.destinatario} </br> #{data.titolo} #{data.citta} </br><small>#{note}</small></div>"
     else
       term
   
