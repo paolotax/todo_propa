@@ -6,5 +6,8 @@ class AdozioneSerializer <  ActiveModel::Serializer
     object.libro.sigla
   end
 
+  has_one :classe, serializer: ClasseShortSerializer
+  has_one :libro,  serializer: LibroShortSerializer
+
 
 end

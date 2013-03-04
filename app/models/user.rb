@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :clienti
   has_many :appunti,  :through => :clienti
   has_many :righe,    :through => :appunti
+  has_many :classi,   :through => :clienti
   
   has_many :visite,   :through => :clienti
 
@@ -19,9 +20,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          
 
-
-  
-  
   validates :username, presence: true
   
   attr_accessor :login
