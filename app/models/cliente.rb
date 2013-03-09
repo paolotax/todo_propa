@@ -151,28 +151,36 @@ class Cliente < ActiveRecord::Base
   end
     
   def self.ricalcola_properties
-
     Cliente.all.each do |c|
-      prop = {}
-      if c.mie_adozioni.size > 0
-        prop = prop.merge(sezioni_adottate: c.mie_adozioni.size )
-      end
-      if c.righe.sum(:quantita) > 0
-        prop = prop.merge(copie_vendute:  c.righe.sum(:quantita) )
-      end
-      if c.appunti.in_corso.size > 0
-        prop = prop.merge(appunti_in_corso:  c.appunti.in_corso.size )
-      end
-      if c.righe.scarico.di_questa_propaganda.da_consegnare.sum(:quantita) > 0
-        prop = prop.merge(copie_da_consegnare:  c.righe.scarico.di_questa_propaganda.da_consegnare.sum(:quantita) )
-      end
-      
-      c.properties = prop
-      c.save   
+      c.ricalcola_properties
     end
   end  
+
+
+  # da rivedere non è certo ottimizzato
+  def ricalcola_properties
+    prop = {}
+    if mie_adozioni.size > 0
+      prop = prop.merge(sezioni_adottate: mie_adozioni.size )
+    end
+    if righe.scarico.da_consegnare.sum(:quantita) > 0
+      prop = prop.merge(copie_da_consegnare:  righe.scarico.da_consegnare.sum(:quantita) )
+    end
+    if righe.sum(:quantita) > 0
+      prop = prop.merge(copie_vendute:  righe.sum(:quantita) )
+    end
+    if appunti.da_fare.size > 0
+      prop = prop.merge(appunti_da_fare:  appunti.da_fare.size )
+    end
+    if appunti.in_sospeso.size > 0
+      prop = prop.merge(appunti_in_sospeso:  appunti.in_sospeso.size )
+    end
+   
+    self.properties = prop
+    save   
+  end
   
-  %w[sezioni_adottate copie_vendute appunti_in_corso].each do |key|
+  %w[sezioni_adottate copie_vendute copie_da_consegnare appunti_da_fare appunti_in_sospeso].each do |key|
     # attr_accessible key
     scope "has_#{key}", where("(properties -> '#{key}')::int > 0")
 

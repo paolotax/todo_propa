@@ -30,7 +30,6 @@ class Api::V1::AppuntiController < Api::V1::BaseController
     @appunto = current_resource_owner.appunti.find(params[:id])
     # solo nell'api
     @appunto.righe.destroy_all
-
     if @appunto.update_attributes(params[:appunto])
       render json: @appunto
     else
