@@ -157,6 +157,7 @@ class Appunto < ActiveRecord::Base
   after_save :update_righe_status
   after_save :load_into_soulmate
   after_save :update_cliente_properties
+  after_destroy :update_cliente_properties
 
   def self.search_mate(term, id_user)
     matches = Soulmate::Matcher.new("#{id_user}_appunto").matches_for_term(term)

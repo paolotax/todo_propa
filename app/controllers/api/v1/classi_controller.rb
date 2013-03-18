@@ -9,7 +9,7 @@ class Api::V1::ClassiController < Api::V1::BaseController
   def index
     # headers['Last-Modified'] = Time.now.httpdate
   	# current_resource_owner = User.find(1)
-		@classi = current_resource_owner.classi
+		@classi = current_resource_owner.classi.includes(:cliente)
     respond_with @classi
   end
 
