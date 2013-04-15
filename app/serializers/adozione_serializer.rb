@@ -1,7 +1,8 @@
 class AdozioneSerializer <  ActiveModel::Serializer
 
-  attributes :id, :classe_id, :libro_id, :sigla
-
+  attributes :id, :classe_id, :libro_id, :sigla,
+		     :kit_1, :kit_2,
+             :created_at, :updated_at
   def sigla
     object.libro.sigla
   end

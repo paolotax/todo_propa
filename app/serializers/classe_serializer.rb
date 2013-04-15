@@ -1,6 +1,9 @@
 class ClasseSerializer < ActiveModel::Serializer
 
-  attributes  :id, :classe, :sezione, :nr_alunni, :cliente_id
+  attributes  :id, :classe, :sezione, :nr_alunni, :cliente_id, 
+              :insegnanti, :note,
+              :libro_1, :libro_2, :libro_3, :libro_4,
+              :created_at, :updated_at
 
   #has_many :adozioni
 

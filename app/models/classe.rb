@@ -8,7 +8,6 @@ class Classe < ActiveRecord::Base
   
   after_save :update_nr_copie
 
-
   scope :per_scuola, lambda { 
     |sc| where('classi.cliente_id = ?', sc).order([:classe, :sezione])
   }
@@ -18,7 +17,7 @@ class Classe < ActiveRecord::Base
   end
   
   def update_nr_copie
-    self.adozioni.scolastico.each do |a|
+    self.adozioni.scolastico.readonly(false).each do |a|
       a.update_attributes(:nr_copie => self.nr_alunni)
     end
   end

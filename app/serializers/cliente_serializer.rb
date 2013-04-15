@@ -5,8 +5,17 @@ class ClienteSerializer < ActiveModel::Serializer
            :telefono, :telefono_2, :fax, :email, :latitude, :longitude,
            :partita_iva, :codice_fiscale,
            :appunti_in_sospeso,
-           :appunti_da_fare
+           :appunti_da_fare,
+           :nel_baule
 
   #has_many :appunti
+
+  def nel_baule
+  	if object.nel_baule.nil?
+  	  false
+  	else
+  	  true
+  	end
+  end
 
 end

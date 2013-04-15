@@ -472,7 +472,9 @@ CREATE TABLE adozioni (
     nr_sezioni integer DEFAULT 0,
     anno character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    kit_1 character varying(255),
+    kit_2 character varying(255)
 );
 
 
@@ -583,7 +585,13 @@ CREATE TABLE classi (
     spec_id character varying(255),
     sper_id character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    insegnanti character varying(255),
+    note text,
+    libro_1 character varying(255),
+    libro_2 character varying(255),
+    libro_3 character varying(255),
+    libro_4 character varying(255)
 );
 
 
@@ -1985,3 +1993,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120928162757');
 INSERT INTO schema_migrations (version) VALUES ('20121121122824');
 
 INSERT INTO schema_migrations (version) VALUES ('20121209194003');
+
+INSERT INTO schema_migrations (version) VALUES ('20130414143827');
