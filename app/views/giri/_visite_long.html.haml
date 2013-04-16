@@ -28,6 +28,12 @@
                 .pull-left
                   .badge.badge-info.sezione
                     =c[:sezione]
+
+                .insegnanti
+                  = c.insegnanti
+                .note
+                  = c.note
+
                 .pull-right
                   = link_to new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe} #{c.sezione}"), class: "btn" do
                     %i.icon-book
@@ -37,7 +43,18 @@
                   %ul.adozioni-list
                     - for a in c.adozioni.scolastico do
                       %li[a]
-                        %span.label.label-important= a.libro.sigla
+                        - if a.kit_1 == 'consegnato'
+                          %span.label.label-warning= "#{a.libro.sigla}"
+                        - else
+                          %span.label.label-important= "#{a.libro.sigla}"
+
+                - unless c.libro_1.blank? || c.libro_1 == 'vacanze_vuoto'
+                  = image_tag asset_path "#{c.libro_1}.png"
+                - unless c.libro_2.blank? || c.libro_2 == 'vacanze_vuoto'
+                  = image_tag asset_path "#{c.libro_2}.png"
+                - unless c.libro_3.blank? || c.libro_3 == 'vacanze_vuoto'
+                  = image_tag asset_path "#{c.libro_3}.png"
+
 
     .appunti.clearfix
       - for a in v.appunti do
