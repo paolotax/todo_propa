@@ -23,6 +23,15 @@ class GiriController < ApplicationController
                                   .filtra(params.except([:controller, :action]))
                                   .order("clienti.id")
     
+    # rimettere se solo scuole con adozioni
+    #.con_adozioni(current_user.adozioni.scolastico)
+    @scuole_da_fare_senza = current_user.clienti.primarie
+                                  .senza_visite(current_user.visite.settembre)
+                                  .senza_adozioni(current_user.adozioni.scolastico)
+                                  .includes(:appunti, :visite)
+                                  .filtra(params.except([:controller, :action]))
+                                  .order("clienti.id")                              
+
     @clienti_da_fare = current_user.clienti
                                   .con_appunti(current_user.appunti.da_fare)
                                   .includes(:appunti, :visite)

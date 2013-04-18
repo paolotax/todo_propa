@@ -32,9 +32,19 @@
             = show_hide_tag 'up'
             %h3
               = "#{pluralize @scuole_da_fare.length, "scuola"}"
-              %small da fare
+              %small da fare con adozioni
           .clienti.more
             = render @scuole_da_fare
+        
+        .module
+          .header
+            = show_hide_tag 'up'
+            %h3
+              = "#{pluralize @scuole_da_fare_senza.length, "scuola"}"
+              %small da fare senza adozioni
+          .clienti.more
+            = render @scuole_da_fare_senza
+
         .module 
           .header
             = show_hide_tag 'down'
