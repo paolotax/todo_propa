@@ -19,7 +19,7 @@ class Visita < ActiveRecord::Base
   scope :nel_baule,     where(baule: true)
   scope :non_nel_baule, where(baule: false)
   
-  scope :settembre, where("start > ?", Date.new(Time.now.year, 8, 31))
+  scope :settembre, where("start > ?", Date.new(Time.now.year, 4, 15))
   
   after_create :add_appunti
   
