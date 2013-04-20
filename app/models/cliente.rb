@@ -121,6 +121,16 @@ class Cliente < ActiveRecord::Base
     end 
     nel_baule
   end
+
+  def nel_baule=(baule)
+    if baule == true
+      self.visite.build(baule: 't')
+    else
+      self.visite.nel_baule.each do |v|
+        v.destroy
+      end
+    end
+  end
   
   def fatto?
     unless nel_baule
