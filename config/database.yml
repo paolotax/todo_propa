@@ -5,7 +5,7 @@ development:
   database: todopropa_development
   pool: 5
   username: paolotax
-  password: ptax
+  password: ptaxptax
   min_messages: warning
 
 test:

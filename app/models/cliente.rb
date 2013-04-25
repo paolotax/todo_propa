@@ -135,7 +135,7 @@ class Cliente < ActiveRecord::Base
   def fatto?
     unless nel_baule
       self.visite.each do |v|
-        if v.start > Date.new(2012, 8, 31)
+        if v.start > Date.new(2013, 4, 15)
           return true
         end
       end

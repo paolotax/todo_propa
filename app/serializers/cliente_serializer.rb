@@ -6,7 +6,8 @@ class ClienteSerializer < ActiveModel::Serializer
            :partita_iva, :codice_fiscale,
            :appunti_in_sospeso,
            :appunti_da_fare,
-           :nel_baule
+           :nel_baule,
+           :fatto
 
   #has_many :appunti
 
@@ -16,6 +17,10 @@ class ClienteSerializer < ActiveModel::Serializer
   	else
   	  true
   	end
+  end
+
+  def fatto
+    object.fatto?
   end
 
 end

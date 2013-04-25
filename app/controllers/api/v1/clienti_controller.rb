@@ -6,7 +6,7 @@ class Api::V1::ClientiController < Api::V1::BaseController
   def index
     #headers['Last-Modified'] = Time.now.httpdate
   	#current_resource_owner = User.find(1)
-    @clienti = current_resource_owner.clienti.order(:titolo)
+    @clienti = current_resource_owner.clienti.includes(:visite).order(:titolo)
     respond_with @clienti
   end
 
