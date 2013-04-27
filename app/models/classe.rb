@@ -21,5 +21,32 @@ class Classe < ActiveRecord::Base
       a.update_attributes(:nr_copie => self.nr_alunni)
     end
   end
+
+  def self.espandi_sezioni
+
+    classi_da_espandere = Classe.select { |c| c.sezione.length > 1 }
+
+    classi_da_espandere.each do |classe|
+
+      sez_ar = classe.sezione.split("")
+      alunni = classe.nr_alunni
+      media_alunni = alunni / sez_ar.size
+      resto_alunni = alunni % sez_ar.size
+      
+      sez_ar.each_with_index do |sezione, index| 
+        if index == 0
+          classe.update_attributes( sezione: sezione, nr_alunni: media_alunni + resto_alunni)
+        else
+          Classe.create(
+            cliente_id: classe.cliente_id,
+            classe: classe.classe,
+            sezione: sezione,
+            nr_alunni: media_alunni
+          )
+        end  
+      end  
+    end
+  end
+
   
 end
