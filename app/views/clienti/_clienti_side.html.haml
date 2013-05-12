@@ -8,11 +8,15 @@
       %li
         = link_to params.merge(status: "da_fare"), remote: true do
           %strong= @da_fare
-          da visitare
+          visitare
+      %li
+        = link_to params.merge(status: "preparati"), remote: true do
+          %strong= @preparati
+          pronti
       %li
         = link_to params.merge(status: "in_sospeso"), remote: true do
           %strong= @in_sospeso
-          in sospeso
+          sospeso
 
   = render "shared/search_tipo"
   = render 'shared/search_provincia'

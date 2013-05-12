@@ -120,7 +120,7 @@ input[type=number] {
     }
     .stato {
       position: absolute;
-      top: 0;
+      top: 5;
       left: 12px;
       display: inline-block;
       > a {
@@ -129,18 +129,22 @@ input[type=number] {
         cursor: pointer;
       }
       .icon-status {
-        width: 32px;
-        height: 32px;
+        margin: 5px;
+        width: 22px;
+        height: 22px;
         text-indent: -9999px;
         cursor: pointer;
         &.da_fare {
-          background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px 0 transparent;
+          background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -26px -2px transparent;
+        }
+        &.preparato {
+          background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -26px -26px transparent;
         }
         &.completato{
-          background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -34px transparent;
+          background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -2px -2px transparent;
         }
         &.in_sospeso {
-          background: url(<%= asset_path "task-status.png" %>) no-repeat scroll 7px -68px transparent;
+          background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -2px -26px transparent;
         }
       }
     }

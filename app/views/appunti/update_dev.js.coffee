@@ -5,6 +5,8 @@ grouped    = appunto.hasClass("grouped")
 
 if appunto.hasClass("da_fare")
   old_status = "da_fare"
+else if appunto.hasClass("preparato")
+  old_status = "preparato"
 else if appunto.hasClass("in_sospeso")
   old_status = "in_sospeso"
 else if appunto.hasClass("completato")  
@@ -33,6 +35,8 @@ decrementStatus = (status) ->
 
 if old_status isnt new_status
   decrementStatus("da-fare")    if old_status is "da_fare"
+  decrementStatus("preparato")  if old_status is "preparato"
   decrementStatus("in-sospeso") if old_status is "in_sospeso"
   incrementStatus("da-fare")    if new_status is "da_fare"
+  incrementStatus("preparato")    if new_status is "preparato"
   incrementStatus("in-sospeso") if new_status is "in_sospeso"

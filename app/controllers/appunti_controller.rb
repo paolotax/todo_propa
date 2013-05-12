@@ -19,7 +19,8 @@ class AppuntiController < ApplicationController
     @stat_appunti = current_user.appunti.filtra(params.except(:status))
     @in_corso     = @stat_appunti.in_corso.size
     @da_fare      = @stat_appunti.da_fare.size
-    @in_sospeso   = @stat_appunti.in_sospeso.size    
+    @in_sospeso   = @stat_appunti.in_sospeso.size
+    @preparati    = @stat_appunti.preparato.size    
     @tutti        = @stat_appunti.size
 
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)

@@ -230,6 +230,7 @@ class Cliente < ActiveRecord::Base
     clienti = clienti.con_appunti(Appunto.completo)   if params[:status].present? && params[:status] == "completati"
     clienti = clienti.con_appunti(Appunto.da_fare)    if params[:status].present? && params[:status] == "da_fare"
     clienti = clienti.con_appunti(Appunto.in_sospeso) if params[:status].present? && params[:status] == "in_sospeso"
+    clienti = clienti.con_appunti(Appunto.preparato)  if params[:status].present? && params[:status] == "preparati"
     clienti
   end
   

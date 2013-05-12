@@ -130,6 +130,7 @@ class Appunto < ActiveRecord::Base
     appunti = appunti.where("clienti.comune = ?",    params[:comune])    if params[:comune].present?
     appunti = appunti.in_corso   if params[:status].present? && params[:status] == 'in_corso'
     appunti = appunti.completo   if params[:status].present? && params[:status] == "completati"
+    appunti = appunti.preparato  if params[:status].present? && params[:status] == "preparati"
     appunti = appunti.da_fare    if params[:status].present? && params[:status] == "da_fare"
     appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
     

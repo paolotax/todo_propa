@@ -12,7 +12,8 @@ class ClientiController < ApplicationController
     @search_appunti  = current_user.appunti.filtra(params.except(:status))
     @in_corso   = @stat_clienti.con_appunti(@search_appunti.in_corso).size
     @da_fare    = @stat_clienti.con_appunti(@search_appunti.da_fare).size
-    @in_sospeso = @stat_clienti.con_appunti(@search_appunti.in_sospeso).size    
+    @in_sospeso = @stat_clienti.con_appunti(@search_appunti.in_sospeso).size 
+    @preparati  = @stat_clienti.con_appunti(@search_appunti.preparato).size    
     @tutti      = @stat_clienti.size 
     
     #filters

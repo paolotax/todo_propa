@@ -25,7 +25,9 @@
         .icon-status{ class: "#{appunto.status}" }
       %ul.dropdown-menu
         %li
-          %a.change-status{ "data-status" => "",  "data-id" => "#{appunto.id}"} da fare                      
+          %a.change-status{ "data-status" => "",  "data-id" => "#{appunto.id}"} da fare
+        %li
+          %a.change-status{ "data-status" => "S",  "data-id" => "#{appunto.id}"} preparato
         %li
           %a.change-status{ "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
         %li

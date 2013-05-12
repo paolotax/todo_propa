@@ -8,6 +8,8 @@ grouped = appunto.hasClass("grouped");
 
 if (appunto.hasClass("da_fare")) {
   old_status = "da_fare";
+} else if (appunto.hasClass("preparato")) {
+  old_status = "preparato";
 } else if (appunto.hasClass("in_sospeso")) {
   old_status = "in_sospeso";
 } else if (appunto.hasClass("completato")) {
@@ -40,7 +42,9 @@ decrementStatus = function(status) {
 
 if (old_status !== new_status) {
   if (old_status === "da_fare") decrementStatus("da-fare");
+  if (old_status === "preparato") decrementStatus("preparato");
   if (old_status === "in_sospeso") decrementStatus("in-sospeso");
   if (new_status === "da_fare") incrementStatus("da-fare");
+  if (new_status === "preparato") incrementStatus("preparato");
   if (new_status === "in_sospeso") incrementStatus("in-sospeso");
 }
