@@ -117,7 +117,7 @@ class AppuntoPdf < Prawn::Document
   
     bounding_box [bounds.width / 2.0, bounds.top - 150], :width => bounds.width / 2.0, :height => 100 do
       #stroke_bounds
-      text appunto.destinatario, :size => 14, :style => :bold, :spacing => 4
+      text "#{appunto.destinatario}", :size => 14, :style => :bold, :spacing => 4
       #move_down(3)
       text "#{appunto.cliente.cognome} #{appunto.cliente.nome}",  :size => 14, :style => :bold, :spacing => 4      
       text appunto.cliente.ragione_sociale,  :size => 14, :style => :bold, :spacing => 4
@@ -128,7 +128,7 @@ class AppuntoPdf < Prawn::Document
   end
   
   def current_user
-    @view.current_user
+    @view.current_user || @appunti.first.cliente.user
   end
 
 end

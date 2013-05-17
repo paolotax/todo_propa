@@ -118,7 +118,7 @@ class AppuntiController < ApplicationController
   end
   
   def print_multiple
-    # raise params.inspect
+    raise params.inspect
     @appunti = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids])
     
     respond_to do |format|

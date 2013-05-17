@@ -112,7 +112,7 @@ class EtichettaPdf < Prawn::Document
   end
 
   def current_user
-    @view.current_user
+    @view.current_user || User.find(1)
   end
     
 end

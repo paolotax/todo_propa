@@ -8,6 +8,10 @@ TodoPropa::Application.routes.draw do
       #resources :tokens,  :only => [:create, :destroy]
       resources :appunti, :except => [:new, :edit] do
         resources :righe,    :except => :index
+
+        collection do
+          put :print_multiple, format: :pdf
+        end
       end
       
       resources :clienti, :only => [:index, :show, :create, :update]

@@ -43,5 +43,26 @@ class Api::V1::AppuntiController < Api::V1::BaseController
     respond_with json: { head: :no_content }
   end
 
+  def print_multiple
+    # raise params.inspect
+    #current_resource_owner = User.find(1)
+    @appunti = current_resource_owner.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids])
+    
+    respond_to do |format|
+      format.pdf do
+        
+
+        #view_context.current_user = current_resource_owner
+         
+        puts view_context.current_user        
+        pdf = AppuntoPdf.new(@appunti, view_context)
+        send_data pdf.render, filename: "sovrapacchi_#{Time.now}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end   
+  end
+
+
 
 end
