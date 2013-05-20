@@ -2,7 +2,7 @@ class MagazzinoController < ApplicationController
   
   def vendite
     
-    @libri_vacanze = Libro.vacanze
+    @libri_vacanze = Libro.vacanze.order(:titolo)
 
     @da_consegnare = current_user.righe.includes(:appunto => :cliente).scarico.da_consegnare.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
     
@@ -13,8 +13,8 @@ class MagazzinoController < ApplicationController
     @consegnati    = current_user.righe.scarico.consegnata.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
     
     @cassa        =  current_user.appunti.
-                              completo.where("appunti.totale_importo > 0").
-                              where("appunti.created_at > '2012-05-01'").
+                              completato.where("appunti.totale_importo > 0").
+                              where("appunti.created_at > '2013-05-01'").
                               order("Date(appunti.updated_at) desc").
                               group("Date(appunti.updated_at)").
                               sum(:totale_importo)  
