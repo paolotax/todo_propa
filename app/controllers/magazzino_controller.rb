@@ -2,8 +2,10 @@ class MagazzinoController < ApplicationController
   
   def vendite
     
-    @libri_vacanze = Libro.vacanze.order(:titolo)
+    #@libri_vacanze = (Libro.vacanze.order(:titolo) + Libro.parascolastico.order(:titolo)).flatten
 
+    @libri_vacanze = current_user.righe.scarico.di_questa_propaganda.per_titolo.includes(:libro).map(&:libro).uniq
+    
     @da_consegnare = current_user.righe.includes(:appunto => :cliente).scarico.da_consegnare.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
     
     @in_ordine     = current_user.righe_fattura.carico.where("fatture.pagata = false").di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
