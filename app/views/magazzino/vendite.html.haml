@@ -57,9 +57,28 @@
               = carichi - da_consegnare - consegnati
               
           .clearfix
+      .item
+        .titolo
+          &nbsp
+        .quantita
+          = @da_consegnare.values.flatten.inject(0) {|r, q| r += q.quantita}
+        .righe
+          &nbsp
+
+        .in_ordine
+          = @in_ordine.values.flatten.inject(0) {|r, q| r += q.quantita}
+          %span= @carichi.values.flatten.inject(0) {|r, q| r += q.quantita}
+    
+        .consegnati
+          = @consegnati.values.flatten.inject(0) {|r, q| r += q.quantita}  
+        .giacenza
+          / = in_ordine + carichi - da_consegnare - consegnati
+          / %span
+          /   = carichi - da_consegnare - consegnati
 
   .side-bar.span4
-    - riep_copie = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * libri.coefficente", group: "libri.settore")
+    - riep_bamb = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * libri.coefficente", group: "libri.settore")
+    - riep_copie = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita", group: "libri.settore")
     - riep_fatturato = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
     - riep_carico = current_user.righe_fattura.joins(:libro).carico.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
     .module
@@ -72,7 +91,10 @@
         - for k in riep_copie.keys
           %tr
             %td= k
-            %td= riep_copie[k]
+            %td
+              = riep_bamb[k].to_i
+              %br
+              = riep_copie[k].to_i
             %td= pretty_prezzo riep_fatturato[k].to_f
             %td= pretty_prezzo riep_carico[k].to_f
             
