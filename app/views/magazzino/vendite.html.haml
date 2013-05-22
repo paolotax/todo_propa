@@ -80,7 +80,9 @@
     - riep_bamb = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * libri.coefficente", group: "libri.settore")
     - riep_copie = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita", group: "libri.settore")
     - riep_fatturato = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
-    - riep_carico = current_user.righe_fattura.joins(:libro).carico.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
+    - riep_carico = current_user.righe_fattura.joins(:libro).carico.di_quest_anno.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
+    - riep_carico_copie = current_user.righe_fattura.joins(:libro).carico.di_quest_anno.sum("righe.quantita", group: "libri.settore")
+
     .module
       %table.table
         %tr
@@ -96,7 +98,9 @@
               %br
               = riep_copie[k].to_i
             %td= pretty_prezzo riep_fatturato[k].to_f
-            %td= pretty_prezzo riep_carico[k].to_f
+            %td
+              = pretty_prezzo riep_carico[k].to_f
+              = riep_carico_copie[k].to_i
             
             
     - ids = current_user.righe.scarico.da_consegnare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
