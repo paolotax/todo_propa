@@ -21,8 +21,14 @@ class Riga < ActiveRecord::Base
   scope :da_pagare,     where("righe.pagato     = false")
   scope :da_fatturare,  where("righe.fattura_id is null")
   scope :fatturata,     where("righe.fattura_id is not null")
-  scope :consegnata,    where("righe.consegnato = true")
+  
+  #scope :consegnata,    where("righe.consegnato = true")
+  scope :consegnata,    scarico.where("appunti.stato in ('X', 'P')")
+
   scope :pagata,        where("righe.pagato = true")
+
+  # scope :consegnata,    where("righe.consegnato = true")
+  # scope :pagata,        where("righe.pagato = true")
   
   scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
   
