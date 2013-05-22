@@ -50,49 +50,73 @@
   
   .row-fluid
     .span4.carichi
-      .well
-        %h2 
-          Carichi
-          .pull-right
-            = @carichi.sum(&:quantita)
-        %h3 
-          copie acquistate
-          .pull-right
-            = @carichi.select {|r| r.fattura.condizioni_pagamento != "Contanti" }.sum(&:quantita)
-        %ul.unstyled
-          - for riga in @carichi.select {|r| r.fattura.condizioni_pagamento != "Contanti" } do
-            = render "riga", riga: riga
+      - @carichi.each do |anno, carichi|
+        .well
+          %h2 
+            = anno
+          %h2 
+            Carichi
+            .pull-right
+              = carichi.sum(&:quantita)
+          %h3 
+            copie acquistate
+            .pull-right
+              = carichi.select {|r| r.fattura.condizioni_pagamento != "Contanti" }.sum(&:quantita)
+          %ul.unstyled
+            - for riga in carichi.select {|r| r.fattura.condizioni_pagamento != "Contanti" } do
+              = render "riga", riga: riga
 
-        %h3 
-          copie in deposito
-          .pull-right
-            = @carichi.select {|r| r.fattura.condizioni_pagamento == "Contanti" }.sum(&:quantita)
-        %ul.unstyled
-          - for riga in @carichi.select {|r| r.fattura.condizioni_pagamento == "Contanti" } do
-            = render "riga", riga: riga
+          %h3 
+            copie in deposito
+            .pull-right
+              = carichi.select {|r| r.fattura.condizioni_pagamento == "Contanti" }.sum(&:quantita)
+          %ul.unstyled
+            - for riga in carichi.select {|r| r.fattura.condizioni_pagamento == "Contanti" } do
+              = render "riga", riga: riga
 
 
 
     .span4.scarichi
-      .well
-        %h2 Scarichi
-        
-        / - da_consegnare = @scarichi.select {|r| r.consegnato = true }
-        %h3 
-          copie da consegnare
-          .pull-right
-            = @scarichi.select {|r| r.appunto.stato.blank?   }.sum(&:quantita)
-        %ul.unstyled
-          - for riga in @scarichi.select {|r| r.appunto.stato.blank? } do
-            = render "riga", riga: riga  
-              
-        %h3 
-          copie consegnate
-          .pull-right
-            = @scarichi.select {|r| r.appunto.consegnato? }.sum(&:quantita)
-        %ul.unstyled
-          - for riga in @scarichi.select {|r| r.appunto.consegnato? } do
-            = render "riga", riga: riga  
+      - @scarichi.each do |anno, scarichi|
+
+        .well
+          %h2 
+            = anno
+          %h2 
+            Scarichi
+            .pull-right
+              = scarichi.sum(&:quantita)
+          %h3 
+            copie da consegnare
+            .pull-right
+              = scarichi.select {|r| r.appunto.da_fare? }.sum(&:quantita)
+          %ul.unstyled
+            - for riga in scarichi.select {|r| r.appunto.da_fare? } do
+              = render "riga", riga: riga  
+
+          %h3 
+            copie pronte
+            .pull-right
+              = scarichi.select {|r| r.appunto.preparato?   }.sum(&:quantita)
+          %ul.unstyled
+            - for riga in scarichi.select {|r| r.appunto.preparato? } do
+              = render "riga", riga: riga 
+
+          %h3 
+            copie in sospeso
+            .pull-right
+              = scarichi.select {|r| r.appunto.in_sospeso?   }.sum(&:quantita)
+          %ul.unstyled
+            - for riga in scarichi.select {|r| r.appunto.in_sospeso? } do
+              = render "riga", riga: riga 
+
+          %h3 
+            copie consegnate
+            .pull-right
+              = scarichi.select {|r| r.appunto.completato? }.sum(&:quantita)
+          %ul.unstyled
+            - for riga in scarichi.select {|r| r.appunto.completato? } do
+              = render "riga", riga: riga  
       
       
     .span4

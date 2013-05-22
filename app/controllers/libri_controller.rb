@@ -11,15 +11,16 @@ class LibriController < ApplicationController
 
   def show
     @libro = Libro.includes(righe: [ :libro, :appunto, :fattura ] ).find(params[:id])
+    
     @carichi = current_user.righe_fattura.includes(:fattura => [:cliente]).
                             carico.
                             where("righe.libro_id = ?", @libro.id).
-                            order("fatture.data")
+                            order("fatture.data desc").group_by(&:anno)
     
     @scarichi = current_user.righe.includes(:appunto => [:cliente]).
-                            di_questa_propaganda.scarico.
+                            scarico.
                             where("righe.libro_id = ?", @libro.id).
-                            order("appunti.created_at")
+                            order("appunti.created_at desc").group_by(&:anno)
     respond_to do |format|
       format.html
       format.json { render :rabl => @libro }
