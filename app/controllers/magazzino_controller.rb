@@ -8,8 +8,8 @@ class MagazzinoController < ApplicationController
     
     @da_consegnare = current_user.righe.includes(:appunto => :cliente).scarico.da_consegnare.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
     
-    @in_ordine     = current_user.righe_fattura.carico.where("fatture.pagata = false").di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
-    @carichi       = current_user.righe_fattura.carico.where("fatture.pagata = true").di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
+    @in_ordine     = current_user.righe_fattura.carico.where("fatture.pagata = false").di_quest_anno.per_titolo.includes(:libro).group_by(&:libro)
+    @carichi       = current_user.righe_fattura.carico.where("fatture.pagata = true").di_quest_anno.per_titolo.includes(:libro).group_by(&:libro)
     
     
     @consegnati    = current_user.righe.scarico.consegnata.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
