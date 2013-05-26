@@ -19,7 +19,13 @@
               = da_consegnare 
             - else
               &nbsp
-        
+            - preparato = 0
+            - if @preparato.keys.include?(libro)
+              - preparato = @preparato.values[@preparato.keys.index(libro)].sum(&:quantita)
+              %span= preparato 
+            - else
+              &nbsp
+
           .righe
             - if @da_consegnare.keys.include?(libro)
               - for riga in @da_consegnare.values[@da_consegnare.keys.index(libro)] do
@@ -52,9 +58,9 @@
               &nbsp
     
           .giacenza
-            = in_ordine + carichi - da_consegnare - consegnati
+            = in_ordine + carichi - da_consegnare - consegnati - preparato
             %span
-              = carichi - da_consegnare - consegnati
+              = carichi - da_consegnare - consegnati - preparato
               
           .clearfix
       .item
@@ -62,6 +68,7 @@
           &nbsp
         .quantita
           = @da_consegnare.values.flatten.inject(0) {|r, q| r += q.quantita}
+          %span= @preparato.values.flatten.inject(0) {|r, q| r += q.quantita}
         .righe
           &nbsp
 

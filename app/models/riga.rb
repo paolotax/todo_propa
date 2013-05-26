@@ -17,8 +17,12 @@ class Riga < ActiveRecord::Base
   
   scope :scarico,       joins(:appunto)
   
+  scope :da_fare,       scarico.where("appunti.stato = ''")
+  scope :preparato,       scarico.where("appunti.stato = 'S'")
+  
   scope :da_consegnare, where("righe.consegnato = false")
   scope :da_pagare,     where("righe.pagato     = false")
+  
   scope :da_fatturare,  where("righe.fattura_id is null")
   scope :fatturata,     where("righe.fattura_id is not null or righe.fattura_id = 0")
   

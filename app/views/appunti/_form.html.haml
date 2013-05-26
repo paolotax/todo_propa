@@ -29,7 +29,7 @@
       = f.input :telefono
       = f.input :email
       %hr
-      = f.input :stato,    collection: [["da fare", ""], ["preparato", "S"] ["in sospeso", "P"], ["completo", "X"] ], as: :radio_buttons
+      = f.input :stato,    collection: [["da fare", ""], ["preparato", "S"], ["in sospeso", "P"], ["completo", "X"] ], as: :radio_buttons
       = f.input :tag_list, inline_label: 'Tag (separati da virgola)'
       
     #dettaglio.tab-pane.fade
