@@ -14,10 +14,10 @@
     .actions
       %ul.nav-appunto
         %li.show
-          %a{ title: 'mostra dettagli'}
+          %a{ title: 'mostra dettagli', href: "#"}
             Apri
     .chiudi{ style: "float: right;"}
-      %a
+      %a{ title: 'chiudi', href: "#"}
         Chiudi
 
     .stato.dropdown
@@ -25,13 +25,13 @@
         .icon-status{ class: "#{appunto.status}" }
       %ul.dropdown-menu
         %li
-          %a.change-status{ "data-status" => "",  "data-id" => "#{appunto.id}"} da fare
+          %a.change-status{ href: "#", "data-status" => "",  "data-id" => "#{appunto.id}"} da fare
         %li
-          %a.change-status{ "data-status" => "S",  "data-id" => "#{appunto.id}"} preparato
+          %a.change-status{ href: "#", "data-status" => "S",  "data-id" => "#{appunto.id}"} preparato
         %li
-          %a.change-status{ "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
+          %a.change-status{ href: "#", "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
         %li
-          %a.change-status{ "data-status" => "X", "data-id" => "#{appunto.id}"} completato
+          %a.change-status{ href: "#", "data-status" => "X", "data-id" => "#{appunto.id}"} completato
     
     
     - if grouped == ""
@@ -90,10 +90,9 @@
 
     .footer-actions
       %ul.nav-actions
-        %li.delete
-          %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-            %i.icon-trash
-            Elimina
+        - unless appunto.status == "completato"
+          %li.baule-div
+            = baule_tag appunto.cliente
         %li.print
           %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
             %i.icon-tag
@@ -102,21 +101,10 @@
           %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
             %i.icon-pencil
             Modifica
-        - unless appunto.status == "completato"
-          %li.baule-div
-            = baule_tag appunto.cliente
-          
-          / %li.baule
-          /   - unless appunto.nel_baule == false
-          /     %a{ href: "/visite/#{appunto.nel_baule}", "data-method" => 'delete', "data-remote" => true, title: "Scarica il baule."}
-          /       %i.icon-shopping-cart
-          /       Scarica baule
-          /   - else
-          /     %form{ action: '/visite', method: 'post', 'data-remote' => true }
-          /       %input{ name: 'visita[cliente_id]', type: 'hidden', value: "#{appunto.cliente_id}"}
-          /       %input{ name: 'visita[baule]',      type: 'hidden', value: 't' }
-          /       %button{ title: 'metti nel baule!'}
-          /         %i.icon-shopping-cart
-          /         Nel baule
+
+        %li.delete
+          %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+            %i.icon-trash
+            Elimina
 
     .clearfix

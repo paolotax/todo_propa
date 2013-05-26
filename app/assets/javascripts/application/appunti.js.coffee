@@ -19,6 +19,7 @@ jQuery ->
 
   $(document).on "click", 'a.change-status', (e) ->
     e.stopPropagation()
+    e.preventDefault()
     appunto = $(@).closest($('.appunto'))
     id = $(@).data('id')
     stato = $(@).data('status')

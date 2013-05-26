@@ -46,7 +46,9 @@ appendRiga = (riga) ->
   if $("#righe").length == 0
     $('#create-riga').after("<div id='righe'></div>")
   riga.id = new_id  
+  
   new_riga = JST['righe/form'](riga)
+  
   $("#righe").prepend(new_riga).fadeIn()
   # $(new_riga).stop().effect("highlight", {}, 1000)
 

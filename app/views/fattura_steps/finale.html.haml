@@ -1,5 +1,7 @@
 = render layout: 'form' do |f|
   .control-group
+    = render 'righe/form'
+  .control-group
     #righe
       = f.simple_fields_for :righe do |riga|
         = div_for riga.object, class: 'form-inline' do

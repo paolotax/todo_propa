@@ -20,7 +20,7 @@ class FatturaStepsController < ApplicationController
         skip_step
       end
     when :vacanze
-      @libri = Libro.vacanze
+      @libri = Libro.vacanze.per_titolo
       @libri.all.each do |l|
         
         if !(["Cartolibreria", "Ditta"].include?  @fattura.cliente.cliente_tipo)
