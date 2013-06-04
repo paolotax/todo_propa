@@ -1,4 +1,9 @@
 .riga{ class: "riga_#{@id}"}
+  .consegnata
+    %input{type: "checkbox", value: "#{@consegnato}", name: "cx-consegnato"}
+  .pagata
+    %input{type: "checkbox", value: "#{@pagato}", name: "cx-pagato"}
+
   .titolo
     = @titolo
   .dati-riga

@@ -45,6 +45,8 @@ TodoPropa::Application.routes.draw do
   
   match '/vendite', controller: 'magazzino', action: 'vendite'
   match '/cassa',   controller: 'magazzino', action: 'cassa'
+  match '/incassi', controller: 'magazzino', action: 'incassi'
+  
   match '/crea_buoni_di_consegna', controller: 'magazzino', action: 'crea_buoni_di_consegna'
   match '/crea_fatture', controller: 'magazzino', action: 'crea_fatture'
   

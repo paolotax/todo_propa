@@ -28,6 +28,9 @@ class MagazzinoController < ApplicationController
     @incassi = current_user.fatture.where(causale_id: 1).order(:data).select("data, sum(importo_fattura) as incasso").group(:data)
   end  
   
+  def incassi
+    @completati = current_user.appunti.di_questa_propaganda.completato.order("appunti.updated_at desc")
+  end
   
   def crea_buoni_di_consegna
     @righe_da_registrare = current_user.righe.

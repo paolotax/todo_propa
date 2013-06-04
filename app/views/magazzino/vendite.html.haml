@@ -35,6 +35,14 @@
             - else
               &nbsp
 
+            - if @preparato.keys.include?(libro)
+              - for riga in @preparato.values[@preparato.keys.index(libro)] do
+                = link_to riga.appunto, class: "label label-warning", style: "display: block; float: left; margin-right: 3px; margin-bottom: 3px;" do
+                  %strong= riga.quantita
+                  = riga.appunto.cliente.titolo
+            - else
+              &nbsp
+
           .in_ordine
             - in_ordine = 0
             - if @in_ordine.keys.include?(libro)

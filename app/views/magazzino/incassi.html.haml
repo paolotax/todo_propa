@@ -1,0 +1,17 @@
+.row
+  .content-main.span6
+    %header.content-header
+      .header-inner
+        %h2 Incassi
+    
+    - @completati.group_by {|a| a.updated_at.to_date }.each do |giorno, appunti|
+      .item 
+        %h3
+          = giorno.strftime("%d %m %Y")
+          %small= appunti.sum(&:totale_importo)
+
+  
+        .appunti
+          = render appunti
+
+  .side-right.span3

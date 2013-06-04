@@ -30,7 +30,7 @@ child :appunti do |u|
 end    
 
 child :righe_per_titolo => :righe do |u|
-  attributes :id, :libro_id, :quantita
+  attributes :id, :libro_id, :quantita, :pagato, :consegnato
   node :prezzo_unitario do |u|
     u.prezzo_unitario.round(2)
   end
