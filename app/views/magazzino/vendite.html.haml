@@ -116,23 +116,12 @@
             %td
               = pretty_prezzo riep_carico[k].to_f
               = riep_carico_copie[k].to_i
-            
-            
-    - ids = current_user.righe.scarico.da_consegnare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
-    - grouped_clienti = Cliente.order(:id).find(ids).group_by(&:provincia)
-    .clienti-list
-      
-      - grouped_clienti.each do |provincia, clienti|
-        
-        .map-avatar
-          = gmaps({ :markers => {:data => clienti.to_gmaps4rails }, :map_options => { id: "map_#{provincia}", :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
-        
-        = provincia
-        .clienti-list
-          = render clienti
 
     .module
-      %h2 Cassa
+      .content-header
+        .header-inner
+          %h3 Incassi
+          
       %table.table
         %tr
           %th Data
@@ -141,18 +130,52 @@
           %tr
             %td= r[0]
             %td= number_to_currency r[1]
+        %tr
+          %td
+          %td= pretty_prezzo @cassa.values.sum
+
+            
+    - ids = current_user.righe.scarico.da_consegnare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
+    - grouped_clienti = Cliente.order(:id).find(ids).group_by(&:provincia)
+    
+      
+    - grouped_clienti.each do |provincia, clienti|
+      .module
+        .header
+          = show_hide_tag
+          %h3
+            = provincia
+            %small 
+              = pluralize clienti.size, "cliente"
+              da consegnare
+      
+        / .map-avatar.more
+        /   = gmaps({ :markers => {:data => clienti.to_gmaps4rails }, :map_options => { id: "map_#{provincia}", :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
+        
+        .clienti.more
+          = render clienti
+
+
+
 
 
     - ids = current_user.righe.scarico.da_pagare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
     - grouped_clienti = Cliente.order(:id).find(ids).group_by(&:provincia)
-    .clienti-list
-      - grouped_clienti.each do |provincia, clienti|
 
-        .map-avatar
-          = gmaps({ :markers => {:data => clienti.to_gmaps4rails }, :map_options => { id: "map_#{provincia}_da_pagare", :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
+    - grouped_clienti.each do |provincia, clienti|
+      .module
+        .header
+          = show_hide_tag
+          %h3
+            = provincia
+            %small
+              = pluralize clienti.size, "cliente"  
+              in sospeso
+    
+        / .map-avatar.more
+        /   = gmaps({ :markers => {:data => clienti.to_gmaps4rails }, :map_options => { id: "map_#{provincia}_da_pagare", :type => "ROADMAP", :zoom => 15, :auto_zoom => true } }, false, false)
 
-        = provincia
-        .clienti-list
+        .clienti.more
           = render clienti
 
 

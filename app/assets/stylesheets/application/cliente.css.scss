@@ -31,15 +31,21 @@
 
 div.cliente {
   @include clearfix();
-  padding: 3px 12px 3px 12px;
+  padding: 3px 0 3px 0;
   background-color: white;
   border-bottom: 1px solid #ccc;
   > div {
     float: left;
     
   }
+  .cliente-inner {
+    width: 90%;
+    > div {
+      float: left;
+    }
+  }
   .titolo {
-    width: 60%;
+    width: 50%;
     line-height: 28px;
     text-indent: 5px;
   }
@@ -50,6 +56,11 @@ div.cliente {
     width: 10%;
     line-height: 28px;
   }
+  .importo-in-sospeso {
+    text-align: center;
+    width: 20%;
+    line-height: 28px;
+  }
   .baule-div {
     text-align: left;
     width: 10%;
@@ -57,5 +68,5 @@ div.cliente {
 }
 
 .cliente.fatto {
-  background-color: #AAAAAA;
+  background-color: #FFFFFF;
 }
