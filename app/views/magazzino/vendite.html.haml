@@ -118,18 +118,19 @@
               = riep_carico_copie[k].to_i
 
     .module
-      .content-header
-        .header-inner
-          %h3 Incassi
-          
-      %table.table
+      .header
+        
+        = show_hide_tag
+        %h3 Incassi
+
+      %table.table.more
         %tr
           %th Data
           %th Incasso
         - for r in @cassa
           %tr
-            %td= r[0]
-            %td= number_to_currency r[1]
+            %td= l Date.parse(r[0]), format: :long
+            %td= pretty_prezzo r[1]
         %tr
           %td
           %td= pretty_prezzo @cassa.values.sum

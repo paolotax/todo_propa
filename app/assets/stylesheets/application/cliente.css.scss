@@ -31,15 +31,15 @@
 
 div.cliente {
   @include clearfix();
-  padding: 3px 0 3px 0;
+  padding: 3px 12px 3px 12px;
   background-color: white;
   border-bottom: 1px solid #ccc;
-  > div {
-    float: left;
+  // > div {
+  //   float: left;
     
-  }
+  // }
   .cliente-inner {
-    width: 90%;
+    margin-left: 40px;
     > div {
       float: left;
     }
@@ -62,8 +62,9 @@ div.cliente {
     line-height: 28px;
   }
   .baule-div {
+    float: left;
     text-align: left;
-    width: 10%;
+    width: 34px;
   }
 }
 
