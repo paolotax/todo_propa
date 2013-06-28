@@ -3,65 +3,67 @@
 .row
   = render 'fatture_side'
 
-  .content-main.span6
+  .content-main.span5
     %header.content-header
       .header-inner
         %h2 Documenti
+    
+    = render :partial => 'shared/filters'
+
     #fatture.list
       = render "grouped_fatture"
       
     = paginate @fatture
 
-  .side-bar.span3
+  .side-bar.span4
     .module
-      %ul
-        %li
-          %span.list-link.active 
-            Pagamenti da registrare
-            .pull-right
-              = number_to_currency @righe_da_fatturare.sum(&:importo)
-              
-              
+      .header
+        = show_hide_tag
+        %h3
+          = number_to_currency @righe_da_fatturare.sum(&:importo)
+          %small pagati da registrare
+      .more
+                      
         - unless @clienti_righe_da_fatturare.empty?
           - for c, r in @clienti_righe_da_fatturare do
-            %li
-              = link_to  c, class: "list-link" do
+            .cliente
+              = link_to  c do
                 %span.titolo= c[:titolo]
-                .pull-right
-                  %span.importo
-                    %small= number_to_currency r.sum(&:importo)
-                    %i.icon-file
-                    
-              = link_to "Registra",  new_fattura_url(causale: 1, cliente_id: c[:id]) 
-            %ol
+              .pull-right  
+                = link_to "Registra",  new_fattura_url(causale: 1, cliente_id: c[:id]) 
+              .pull-right
+                %span.importo
+                  %small= pretty_prezzo r.sum(&:importo)  
+
+
               - for a, righe in r.group_by(&:appunto) do
-                %li.list-fixed= render "appunti/item", appunto: a
+                = render "appunti/item", appunto: a
         - else
           %span.list-link 
             %small non ci sono appunti pagati da registrare 
 
 
     .module
-      %ul
-        %li
-          %span.list-link.active 
-            Da incassare e registrare
-            .pull-right
-              = number_to_currency @righe_da_pagare.sum(&:importo)
-              
+      .header
+        = show_hide_tag
+        %h3
+          = number_to_currency @righe_da_pagare.sum(&:importo)
+          %small da incassare e registrare
+      .more
+
         - unless @clienti_righe_da_pagare.empty?
           - for c, r in @clienti_righe_da_pagare do
-            %li
-              = link_to  c, class: "list-link" do
+            .cliente
+              = link_to  c do
                 %span.titolo= c[:titolo]
-                .pull-right
-                  %span.importo
-                    %small= number_to_currency r.sum(&:importo)
-                    %i.icon-file
-            = link_to "Registra",  new_fattura_url(causale: 1, cliente_id: c[:id]) 
-            %ol
+              .pull-right
+                = link_to "Registra",  new_fattura_url(causale: 1, cliente_id: c[:id]) 
+              .pull-right
+                %span.importo
+                  %small= pretty_prezzo r.sum(&:importo)
+
               - for a, righe in r.group_by(&:appunto) do
-                %li.list-fixed= render "appunti/item", appunto: a
+                = render "appunti/item", appunto: a
         - else
           %span.list-link 
             %small non ci sono appunti da incassare e registrare 

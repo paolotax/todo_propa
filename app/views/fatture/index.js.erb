@@ -14,3 +14,9 @@
     $("#fatture").after("<div class='pagination'>" + '<%= j paginate(@fatture) %>' + "</div>");
   }
 <% end %>
+
+if ($(".filters").length > 0) {
+  $('.filters').replaceWith('<%= j render "shared/filters" %>');
+} else {
+  $("#fatture").before('<%= j render "shared/filters" %>');
+}

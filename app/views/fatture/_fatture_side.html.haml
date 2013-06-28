@@ -13,7 +13,7 @@
         = link_to "", remote: true do
           %strong= @tot_fatture.sum(&:importo_fattura)
           importo
-  
+
   .module
     %ul
       %li{ class: "#{ params[:causale].present? ? '': 'active' }" }
@@ -25,6 +25,24 @@
           = link_to fatture_url(params.merge(:causale => c)), class: "list-link", remote: true  do
             = c.pluralize
             %i.chev-right
+
+  .module
+    %ul
+      %li{ class: "#{ params[:pagata].present? ? '': 'active' }" }
+        = link_to params.except(:pagata), class: "list-link", remote: true  do
+          Tutti 
+          %i.chev-right
+
+      %li{ class: "#{ params[:pagata] == 'false' ? 'active' : ''}"}
+        = link_to fatture_url(params.merge(:pagata => false)), class: "list-link", remote: true  do
+          non pagato
+          %i.chev-right
+
+      %li{ class: "#{ params[:pagata] == 'true' ? 'active' : ''}"}
+        = link_to fatture_url(params.merge(:pagata => true)), class: "list-link", remote: true  do
+          pagato
+          %i.chev-right
+
   .module
     %ul
       %li{ class: "#{ params[:anno].present? ? '': 'active' }" }

@@ -50,6 +50,8 @@ class Fattura < ActiveRecord::Base
     fatture = fatture.where("causale_id = ?", TIPO_FATTURA.index(params[:causale])) if params[:causale].present?
     fatture = fatture.where("extract(year  from data) = ? ", params[:anno] ) if params[:anno].present?
     fatture = fatture.where("condizioni_pagamento = ?", params[:pagamento]) if params[:pagamento].present?
+    fatture = fatture.where("pagata = ?", params[:pagata]) if params[:pagata].present?
+    
     fatture
     # raise fatture.inspect  if params[:search].present?
   end
@@ -78,21 +80,15 @@ class Fattura < ActiveRecord::Base
     status == 'active'
   end
   
-  def add_righe_from_cliente(cliente) 
+  def add_righe_from_cliente(cliente)
+    self.totale_copie = self.totale_copie || 0
+    self.importo_fattura = self.importo_fattura || 0.0 
     cliente.righe.da_fatturare.each do |riga|
       self.totale_copie += riga.quantita || 0
       self.importo_fattura += riga.quantita * riga.prezzo_unitario || 0
       self.righe << riga
     end
   end
-  
-  def doc_id
-    if data == nil
-      self.id
-    else  
-      "#{causale}-#{data.year}-#{numero}"
-    end
-  end 
   
   def add_righe_from_appunto(appunto)
     self.totale_copie = self.totale_copie || 0
@@ -104,6 +100,16 @@ class Fattura < ActiveRecord::Base
     end
   end
 
+  def doc_id
+    if data == nil
+      self.id
+    else  
+      "#{causale}-#{data.year}-#{numero}"
+    end
+  end 
+  
+
+
   def ricalcola
     self.totale_copie    = righe.map(&:quantita).sum
     self.importo_fattura = righe.map(&:importo).sum
@@ -113,10 +119,18 @@ class Fattura < ActiveRecord::Base
         self.totale_iva += r.importo / 100 * r.libro.iva.to_f
       end
     end 
+    appunti.each do |a|
+      if self.pagata == true
+        a.stato = "X"
+      else
+        a.stato = "P"
+      end 
+      a.save 
+    end
   end
     
   def get_new_id(user)
-    last_id = Fattura.where("user_id = ? and data >= ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
+    last_id = Fattura.where("user_id = ? and data > ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
     if last_id.empty?
       return 1
     else

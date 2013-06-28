@@ -23,8 +23,8 @@ class Riga < ActiveRecord::Base
   scope :da_consegnare, where("righe.consegnato = false")
   scope :da_pagare,     where("righe.pagato     = false")
   
-  scope :da_fatturare,  where("righe.fattura_id is null")
-  scope :fatturata,     where("righe.fattura_id is not null or righe.fattura_id = 0")
+  scope :da_fatturare,  where("righe.fattura_id is null or righe.fattura_id = 0")
+  scope :fatturata,     where("righe.fattura_id is not null or righe.fattura_id != 0")
   
   #scope :consegnata,    where("righe.consegnato = true")
   scope :consegnata,    scarico.where("appunti.stato in ('X', 'P')")

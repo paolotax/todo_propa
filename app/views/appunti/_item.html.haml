@@ -1,11 +1,14 @@
-.appunto-item[appunto]
-  = link_to appunto, class: "item-link" do
+.appunto-item.clearfix[appunto]
+  = link_to appunto, class: "pull-left" do
     = "Nr.#{appunto.id} del #{l appunto.created_at, format: :only_date}"
-  
-  .destinatario= appunto.destinatario
+
   - if appunto.stato == "X"
-    .pagato
+    .pagato.pull-left
       %small= "pagato il #{l appunto.updated_at, format: :only_date}"
-  .totali
+  
+  .destinatario.pull-left= appunto.destinatario
+
+  .totali.pull-right
     = appunto.totale_copie
     = number_to_currency appunto.totale_importo
+
