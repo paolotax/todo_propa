@@ -29,12 +29,22 @@ jQuery ->
       dataType: 'json'
       success: (data) ->
         fattura.replaceWith JST["fatture/fattura"](data["fattura"])
-        $("#fattura_#{data['fattura'].id}").toggleClass('opened')
-        
+        fattura = $("#fattura_#{data['fattura'].id}")
+        fattura.toggleClass('opened')
+        if fattura.data("pagata") == true
+          fattura.removeClass("da_pagare")
+        else
+          fattura.addClass("da_pagare")        
+  
   $('.fattura .chiudi a').live 'click', (e) ->
     e.stopPropagation()
     e.preventDefault()
     fattura = $(@).closest($('.fattura'))
     fattura.removeClass('opened')
+    if fattura.data("pagata") == true
+      fattura.removeClass("da_pagare")
+    else
+      fattura.addClass("da_pagare")
+
 
     

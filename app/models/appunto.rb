@@ -156,6 +156,21 @@ class Appunto < ActiveRecord::Base
       save
     end
   end
+
+  def self.check_status_fattura
+    errors = []
+    Appunto.all.each do |a|
+      unless a.fattura.nil?
+        if a.stato == 'X' && a.fattura.pagata != true
+          errors << "errore X #{a.fattura.doc_id} appunto #{a.id} "
+        end
+        if a.stato == 'P' && a.fattura.pagata != false
+          errors << "errore P #{a.fattura.doc_id} appunto #{a.id} "
+        end
+      end
+    end
+    puts errors.sort
+  end
   
   after_save :update_righe_status
   after_save :load_into_soulmate

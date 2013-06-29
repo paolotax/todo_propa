@@ -1,6 +1,8 @@
 .item[fattura]{ class: "#{ fattura.pagata? ? '' : 'da_pagare'}", data: { id: "#{fattura.id}"} }
   .actions
     %ul.nav-fattura
+      %li.baule-div
+        = paga_tag fattura
       %li.print
         %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.causale}", target: "_blank" }
           %i.icon-tag
@@ -15,31 +17,43 @@
       %li.show-fattura
         %a.apri-fattura{ title: 'mostra dettagli'}
           Apri
+  
   .chiudi{ style: "float: right;"}
     %a
       Chiudi
+  
+
   .causale
-    %strong= fattura.causale
-  .consegnato
-  .pagato
-  .numero
-    %strong= fattura.numero
-    %br
-    %span= l(fattura.data, format: :short).downcase
+    %h4
+      = "#{fattura.causale} #{fattura.numero}"
+      %small= "del #{l(fattura.data, format: :short).downcase}" 
+  .clearfix    
   .cliente-titolo
-    = link_to fattura.titolo, fattura.cliente
+    %strong= link_to fattura.titolo, fattura.cliente
+
+  .consegnato
+  
+  .pagato
+
   .copie
     %strong= fattura.totale_copie
     copie
   .importo-fattura
     %strong= number_to_currency fattura.importo_fattura 
     importo
-  .righe.loading
-  / %table.table
-  /   - for r in fattura.righe
-  /     = render r
+  .clearfix
+  GINO
+  .morte
+    .table-righe-new
+      
+      
+      
+      = render fattura.righe_per_titolo
+  
   .more-actions
     %ul.nav-fattura
+
+      
       %li.delete
         %a{ href: "/fatture/#{fattura.slug}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
           %i.icon-trash

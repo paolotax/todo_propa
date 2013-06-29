@@ -44,6 +44,10 @@ class Fattura < ActiveRecord::Base
     pagata
   end
   
+  def anno
+    data.year
+  end
+  
   def self.filtra(params)
     fatture = scoped
     fatture = fatture.search(params[:search]) if params[:search].present?
@@ -109,7 +113,7 @@ class Fattura < ActiveRecord::Base
   end 
   
 
-
+  # ricalcola i totali e cambia stato degli appunti
   def ricalcola
     self.totale_copie    = righe.map(&:quantita).sum
     self.importo_fattura = righe.map(&:importo).sum

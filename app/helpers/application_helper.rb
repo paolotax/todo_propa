@@ -58,6 +58,14 @@ module ApplicationHelper
       render "visite/nel_baule", cliente: cliente
     end
   end
+
+  def paga_tag(fattura, options = {})    
+    if fattura.pagata? == true
+      render "fatture/non_paga", fattura: fattura  
+    else
+      render "fatture/paga", fattura: fattura
+    end
+  end
     
   def stampami_tag(options = {})
     link_to "", class: "btn btn-stampami pull-right", onclick: "window.print();return false;" do

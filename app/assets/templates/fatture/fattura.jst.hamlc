@@ -1,4 +1,4 @@
-.item.fattura{ id: "fattura_#{@id}", "data-id" => "#{@id}" }
+.item.fattura{ id: "fattura_#{@id}", "data-id" => "#{@id}", "data-pagata" => "#{@pagata}" }
   .actions
     %ul.nav-fattura
       %li.print
@@ -20,18 +20,19 @@
       Chiudi
      
   .causale
-    %strong= @causale
+    %h4
+      = "#{@causale} #{@numero}"
+      %small= "del #{@data}" 
+  .clearfix     
+  .cliente-titolo
+    %a{ href: @cliente.url, title: 'scheda cliente'}
+      %strong= @cliente.titolo
+  
   .consegnato
    
   .pagato
   
-  .numero
-    %strong= @numero
-    %br
-    %span= @data
-  .cliente
-    %a{ href: @cliente.url, title: 'scheda cliente'}
-      = @cliente.titolo
+  
   .copie
     %strong= @totale_copie
     copie
@@ -47,8 +48,8 @@
           - console.log appunto
           %li
             %a{href: "/appunti/#{appunto.appunto.id}"}
-              - c = new Date(appunto.appunto.updated_at)
-              = "Nr.#{appunto.appunto.id} del #{c.getDate()}/#{c.getMonth()+1}/#{c.getFullYear()}"
+              - c = new Date(appunto.appunto.created_at)
+              = "Nr.#{appunto.appunto.id} del #{c.getDate()}-#{c.getMonth()+1}-#{c.getFullYear()} #{appunto.appunto.stato}"
             - for riga in appunto.appunto.righe
               != JST['righe/riga'](riga.riga)
   - else

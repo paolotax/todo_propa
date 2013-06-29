@@ -1,0 +1,6 @@
+= form_for fattura, method: :put, remote: true, html: { style: "display:inline;" }, class: "baule_btn" do |f|
+  = f.hidden_field :pagata, value: 't'
+  = f.hidden_field :id, value: fattura.id
+  %button.btn{ title: 'Pagato!' }
+    %i.icon-money
+    
