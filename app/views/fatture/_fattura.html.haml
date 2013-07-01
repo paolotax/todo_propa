@@ -14,12 +14,12 @@
       
       %li
         = " | "
-      %li.show-fattura
-        %a.apri-fattura{ title: 'mostra dettagli'}
+      %li.show
+        %a.apri{ title: 'mostra dettagli', href: "#"}
           Apri
   
   .chiudi{ style: "float: right;"}
-    %a
+    %a{href: "#"}
       Chiudi
   
 
@@ -42,22 +42,23 @@
     %strong= number_to_currency fattura.importo_fattura 
     importo
   .clearfix
-  GINO
-  .morte
+
+  - unless fattura.appunti.empty?
     .table-righe-new
-      
-      
-      
-      = render fattura.righe_per_titolo
-  
+      - for appunto, righe in fattura.righe.group_by(&:appunto)
+        = link_to appunto do
+          = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
+        - for riga in righe
+          = render riga
+  - else
+    .table-righe-new
+      - for riga in fattura.righe
+        = render riga
+            
   .more-actions
     %ul.nav-fattura
-
-      
-      %li.delete
-        %a{ href: "/fatture/#{fattura.slug}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-          %i.icon-trash
-          Elimina
+      %li.baule-div
+        = paga_tag fattura     
       %li.print
         %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.causale}", target: "_blank" }
           %i.icon-tag
@@ -66,5 +67,9 @@
         %a{ href: "/fatture/#{fattura.slug}/fattura_steps/intestazione", title: 'modifica appunto'}
           %i.icon-pencil
           Modifica
+      %li.delete
+        %a{ href: "/fatture/#{fattura.slug}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+          %i.icon-trash
+          Elimina
     
   

@@ -25,7 +25,7 @@
             - for appunto, righe in @fattura.righe.group_by(&:appunto)
               %li
                 = link_to appunto do
-                  = "Nr.#{appunto.id} del #{l appunto.created_at, format: :only_date}"
+                  = "##{appunto.id} del #{l appunto.created_at, format: :only_date}"
                 - for riga in righe
                   = render riga
       - else

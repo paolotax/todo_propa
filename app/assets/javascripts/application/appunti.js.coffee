@@ -5,17 +5,17 @@
 
 jQuery ->
   
-  $(document).on "click", ".show a", (e) ->
+  $(document).on "click", ".item .show a", (e) ->
     e.stopPropagation()
     e.preventDefault()
-    appunto = $(@).closest($('.appunto'))
-    appunto.addClass('opened')
+    item = $(@).closest($('.item'))
+    item.addClass('opened')
   
-  $(document).on "click", '.appunto .chiudi a', (e) ->
+  $(document).on "click", '.item .chiudi a', (e) ->
     e.stopPropagation()
     e.preventDefault()
-    appunto = $(@).closest($('.appunto'))
-    appunto.removeClass('opened')
+    item = $(@).closest($('.item'))
+    item.removeClass('opened')
 
   $(document).on "click", 'a.change-status', (e) ->
     e.stopPropagation()
