@@ -72,16 +72,22 @@ class FattureController < ApplicationController
 
     @fattura = Fattura.find(params[:id])
 
-    if @fattura.update_attributes(params[:fattura])
-      session[:fattura_id] = @fattura.id
-      redirect_to fattura_fattura_steps_path(@fattura)
+    if @fattura.update_attributes(params[:fattura])      
+      respond_to do |format|
+        format.html do
+          session[:fattura_id] = @fattura.id
+          redirect_to fattura_fattura_steps_path(@fattura)
+        end
+        format.js
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.html { render :edit }
+        format.js
+      end      
     end
   end
 
-  # DELETE /fatture/1
-  # DELETE /fatture/1.json
   def destroy
     @fattura = current_user.fatture.find(params[:id])
     @fattura.destroy

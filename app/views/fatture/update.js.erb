@@ -1,0 +1,9 @@
+var fattura
+
+fattura = $("#<%= dom_id(@fattura) %>");
+
+opened = fattura.hasClass("opened");
+
+fattura.replaceWith("<%= j render @fattura %>");
+
+if (opened) $("#<%= dom_id(@fattura) %>").addClass("opened");

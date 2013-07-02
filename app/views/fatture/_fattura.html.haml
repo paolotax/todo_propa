@@ -1,4 +1,4 @@
-.item[fattura]{ class: "#{ fattura.pagata? ? '' : 'da_pagare'}", data: { id: "#{fattura.id}"} }
+.item[fattura]{ class: "#{ fattura.coerente? ? '' : 'non_coerente'} #{ fattura.pagata? ? '' : 'da_pagare'}", data: { id: "#{fattura.id}"} }
   .actions
     %ul.nav-fattura
       %li.baule-div

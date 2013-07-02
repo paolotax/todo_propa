@@ -44,6 +44,18 @@ class Fattura < ActiveRecord::Base
     pagata
   end
   
+  def coerente?
+    true
+    unless appunti.empty?
+      appunti.each do |a|
+        return false if a.stato == 'X' && pagata != true
+        return false if a.stato == "P" && pagata != false
+      end
+    else
+      true
+    end
+  end
+
   def anno
     data.year
   end
@@ -81,6 +93,7 @@ class Fattura < ActiveRecord::Base
   
   
   def active?
+    # che cazzo è questo qui
     status == 'active'
   end
   

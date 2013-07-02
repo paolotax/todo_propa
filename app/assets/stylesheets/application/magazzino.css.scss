@@ -98,6 +98,11 @@
     color: white;
     background-color: #7A43B6 !important;
   }
+
+  &.non_coerente {
+    color: white;
+    background-color: #b62c42 !important;
+  }
   
   &.da_pagare .numero span,
   &.da_pagare .numero strong,
