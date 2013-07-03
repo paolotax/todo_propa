@@ -14,6 +14,12 @@
           %strong= @tot_fatture.sum(&:importo_fattura)
           importo
 
+      = form_tag fatture_path, method:'get', id: 'fatture_search', class: "form-search", remote: true do
+
+        = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca fattura"
+        = button_tag class: "btn", name: nil do
+          %i.icon-search
+
   .module
     %ul
       %li{ class: "#{ params[:causale].present? ? '': 'active' }" }

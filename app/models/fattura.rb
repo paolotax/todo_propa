@@ -63,13 +63,24 @@ class Fattura < ActiveRecord::Base
   def self.filtra(params)
     fatture = scoped
     fatture = fatture.search(params[:search]) if params[:search].present?
-    fatture = fatture.where("causale_id = ?", TIPO_FATTURA.index(params[:causale])) if params[:causale].present?
+    fatture = fatture.where("fatture.causale_id = ?", TIPO_FATTURA.index(params[:causale])) if params[:causale].present?
     fatture = fatture.where("extract(year  from data) = ? ", params[:anno] ) if params[:anno].present?
     fatture = fatture.where("condizioni_pagamento = ?", params[:pagamento]) if params[:pagamento].present?
     fatture = fatture.where("pagata = ?", params[:pagata]) if params[:pagata].present?
     
     fatture
     # raise fatture.inspect  if params[:search].present?
+  end
+
+
+  def self.search(search)
+    if search
+      fatture = scoped
+      fatture = fatture.joins(:cliente).where('clienti.titolo ilike ? or clienti.comune ilike ? or clienti.frazione ilike ? or fatture.slug ilike ?', 
+                    "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
+    else        
+      scoped
+    end
   end
 
   
