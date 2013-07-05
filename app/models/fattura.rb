@@ -23,6 +23,12 @@ class Fattura < ActiveRecord::Base
   
   before_save :ricalcola
   # before_create :init
+
+  # include PgSearch
+  # pg_search_scope :search, against: [:slug],
+  #   using: {tsearch: {dictionary: "italian"}},
+  #   associated_against: {cliente: [ :titolo, :comune, :frazione, :provincia ] },
+  #   order_within_rank: "data DESC, numero DESC"
   
   TIPO_FATTURA.each do |tipo|
     scope "#{tipo.downcase.split.join('_')}", where("causale_id = ?", TIPO_FATTURA.index(tipo))
