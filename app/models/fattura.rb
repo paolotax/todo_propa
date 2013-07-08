@@ -176,7 +176,7 @@ class Fattura < ActiveRecord::Base
     if causale
       last_numero = Fattura.where("user_id = ? and data > ? and data < ? and causale_id = ?", user.id, data.beginning_of_year, data.end_of_year, causale_id).order('numero desc').limit(1)
       if last_numero.empty?
-        return 1
+        return 0
       else
         return last_numero[0][:numero]  
       end
