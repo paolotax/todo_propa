@@ -187,7 +187,7 @@ class Fattura < ActiveRecord::Base
     if causale
       last_data = Fattura.where("user_id = ? and data > ? and data < ? and causale_id = ?", user.id, data.beginning_of_year, data.end_of_year, causale_id).order('numero desc').limit(1)
       if last_data.empty?
-        return 1
+        return Time.now
       else
         return last_data[0][:data]  
       end
