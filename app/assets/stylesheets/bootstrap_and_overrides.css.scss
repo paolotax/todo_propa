@@ -7,6 +7,9 @@ $navbarBackgroundHighlight: #888;
 $navbarText: #eee;
 $navbarLinkColor: #eee;
 
+$baseFontSize: 14px;
+$baseLineHeight: 20px;
+
 @import "bootstrap";
 @import "font-awesome";
 
@@ -14,11 +17,68 @@ body { padding-top: 60px; }
 
 @import "bootstrap-responsive";
 
+// HEADINGS
+// --------
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: $headingsFontFamily;
+  font-weight: $headingsFontWeight;
+  color: $headingsColor;
+  text-rendering: optimizelegibility; // Fix the character spacing for headings
+  small {
+    font-weight: normal;
+    color: $grayLight;
+  }
+}
+h1 {
+  font-size: 30px;
+  line-height: $baseLineHeight * 2;
+  small {
+    font-size: 18px;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: $baseLineHeight * 2;
+  small {
+    font-size: 18px;
+  }
+}
+h3 {
+  font-size: 18px;
+  line-height: $baseLineHeight * 1.5;
+  small {
+    font-size: 14px;
+  }
+}
+h4, h5, h6 {
+  line-height: $baseLineHeight;
+}
+h4 {
+  font-size: 14px;
+  small {
+    font-size: 12px;
+  }
+}
+h5 {
+  font-size: 12px;
+}
+h6 {
+  font-size: 11px;
+  color: $grayLight;
+  text-transform: uppercase;
+}
+
+
+///////////////////
+
+
+
 .the-modal {
   background: #eee;
   width: 80%;
   margin: 150px auto;
-
   border: 3px solid #666;
   padding: 20px;
 }

@@ -98,6 +98,7 @@
 
 #create-riga {
   margin: auto;
+  margin-right: 10px;
 }
 
 .modal #righe {
@@ -128,6 +129,7 @@
   }
   .riga {
     padding: 3px;
+    margin: 0 10px 0 10px;
     background-color: #FFFFFF;
     overflow: auto;
     .remove_button {

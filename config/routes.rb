@@ -95,6 +95,10 @@ TodoPropa::Application.routes.draw do
   end
   
   resources :clienti do
+
+    member do
+      put :registra_documento
+    end
     
     resources :indirizzi
 

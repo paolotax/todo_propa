@@ -17,7 +17,7 @@ jQuery ->
         $('#new_sconto').val $('#prezzo').val()
       $('#new_quantita').focus().select()
   
-  $("#add-riga").live 'click', (e) ->
+  $(document).on "click", "#add-riga", (e) ->
     e.preventDefault()
     if validateRiga()
       riga =

@@ -2,6 +2,9 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.2'
 
+gem "haml", "~> 3.1.7"
+gem "sass", "~> 3.2"
+
 group :assets do
 
   gem 'haml_coffee_assets'
@@ -17,7 +20,7 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', "~> 2.3"
 gem "compass-rails"
 gem "haml-rails"
 gem 'font-awesome-sass-rails'

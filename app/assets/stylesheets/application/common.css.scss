@@ -1,4 +1,5 @@
 @import "mixins";
+@import "compass/css3/border-radius";
 
 #loading{
   position: fixed;
@@ -71,4 +72,8 @@
 .show-toolbar {
   margin-top: 19px;
 }
+
+// .form-search input.search-query {
+//   @include border-radius(14px);
+// }
 

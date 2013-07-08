@@ -103,4 +103,45 @@ class ClientiController < ApplicationController
     @clienti = current_user.clienti.per_localita
   end
 
+  def registra_documento
+    @cliente = current_user.clienti.find(params[:id])
+    
+    @fattura = @cliente.fatture.build(causale_id: params[:causale_id])
+
+    @appunti = current_user.appunti.includes(:righe).find(params[:appunto_ids])
+    
+    @appunti.each do |a|
+      @fattura.righe << a.righe
+      if a.stato == 'X'
+        @fattura.pagata = true
+      else
+        @fattura.pagata = false
+      end
+    end 
+
+    @fattura.numero = 
+    @fattura.user_id = current_user.id
+
+    if params[:data_documento] == 'ultima'
+      data = @fattura.last_data(current_user, Time.now)
+    else
+      data = Time.now
+    end
+
+    @fattura.data = data
+    @fattura.numero = @fattura.last_numero(current_user, Time.now) + 1
+    
+    
+    respond_to do |format|
+      if @fattura.save
+        format.html { redirect_to fatture_url }
+        format.json { head :ok }
+      else
+        raise "GINO".inspect
+      end
+    end   
+    #raise @fattura.righe.inspect  
+  end  
+    
+
 end
