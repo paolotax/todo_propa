@@ -17,6 +17,29 @@ body { padding-top: 60px; }
 
 @import "bootstrap-responsive";
 
+
+.dropdown-menu li .btn-link {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: $baseLineHeight;
+  color: $dropdownLinkColor;
+  white-space: nowrap;
+}
+
+
+// Hover/Focus state
+// -----------
+.dropdown-menu  li form:hover,
+.dropdown-menu  li form:focus {
+  text-decoration: none;
+  @include gradient-vertical($dropdownLinkBackgroundHover, darken($dropdownLinkBackgroundHover, 5%));
+  .btn-link {
+    color: $dropdownLinkColorHover;
+  }  
+}
+
 // HEADINGS
 // --------
 

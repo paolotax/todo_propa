@@ -1,6 +1,7 @@
 .appunto-item.clearfix[appunto]
+  = check_box_tag "appunto_ids[]", appunto.id, true, {:class => 'cb-appunto-item pull-left'}
   = link_to appunto, class: "pull-left" do
-    = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
+    = "  ##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
 
   / - if appunto.stato == "X"
   /   .pagato.pull-left

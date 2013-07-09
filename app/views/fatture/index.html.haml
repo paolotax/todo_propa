@@ -85,7 +85,9 @@
 
 
               - for a, righe in r.group_by(&:appunto) do
+                
                 = render "appunti/item", appunto: a
+        
         - else
           %span.list-link 
             %small non ci sono appunti pagati da registrare 

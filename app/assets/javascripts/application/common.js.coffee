@@ -18,6 +18,18 @@ jQuery ->
       $("input:hidden[name='appunto_ids[]'][value='#{$(@).val()}']").remove()
     else
       $("#form_print_appunti").prepend("<input type='hidden' name='appunto_ids[]' value='#{$(@).val()}' />")
+
+
+  $(".cb-appunto-item").on "change", (e) ->
+    e.preventDefault();
+    if $(@).is(":checked") is false
+      $("input:hidden[name='appunto_ids[]'][value='#{$(@).val()}']").remove()
+    else
+      cliente = $(@).closest($('.cliente'))
+
+      console.log cliente
+      # $("form", cliente).remove()
+      $("form", cliente).prepend("<input type='hidden' name='appunto_ids[]' value='#{$(@).val()}' />")
       
   # $('#btn-pdf').live 'click', (e) ->
   #   e.preventDefault();
