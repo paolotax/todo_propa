@@ -37,6 +37,9 @@ TodoPropa::Application.routes.draw do
     collection do
       post 'destroy_all'
     end
+    collection do
+      put 'print_multiple', format: :pdf
+    end
   end
   
   resources :materie

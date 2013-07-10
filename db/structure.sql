@@ -597,7 +597,8 @@ CREATE TABLE classi (
     libro_1 character varying(255),
     libro_2 character varying(255),
     libro_3 character varying(255),
-    libro_4 character varying(255)
+    libro_4 character varying(255),
+    anno character varying(255)
 );
 
 
@@ -2001,3 +2002,5 @@ INSERT INTO schema_migrations (version) VALUES ('20121121122824');
 INSERT INTO schema_migrations (version) VALUES ('20121209194003');
 
 INSERT INTO schema_migrations (version) VALUES ('20130414143827');
+
+INSERT INTO schema_migrations (version) VALUES ('20130710125622');

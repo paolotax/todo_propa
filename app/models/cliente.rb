@@ -56,7 +56,21 @@ class Cliente < ActiveRecord::Base
     else
       frazione
     end
-  end      
+  end 
+
+  def anno_scolastico
+    anno = classi.pluck("classi.anno").uniq[0]
+    anno
+  end 
+
+  def da_scorrere?
+    anno = anno_scolastico
+    if anno && anno < Time.now.year.to_s && Time.now > Date.new(Time.now.year, 6, 1)
+      true
+    else
+      false
+    end
+  end    
 
   def self.grouped_by_provincia_and_comune
     clienti = scoped

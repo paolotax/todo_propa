@@ -102,7 +102,7 @@ class ClientiController < ApplicationController
   def export
     @clienti = current_user.clienti.per_localita
   end
-
+  
   def registra_documento
     @cliente = current_user.clienti.find(params[:id])
     
@@ -157,6 +157,7 @@ class ClientiController < ApplicationController
       end
 
       c.classe += 1
+      c.anno = Time.now.year.to_s
       c.save
 
       old_adozioni.select do |old| 
@@ -189,13 +190,8 @@ class ClientiController < ApplicationController
           )
         end
       end
-
-
     end
-
-
-    redirect_to @cliente
-    
+    redirect_to @cliente    
   end  
     
 
