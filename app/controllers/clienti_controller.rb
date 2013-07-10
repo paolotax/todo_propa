@@ -141,6 +141,61 @@ class ClientiController < ApplicationController
       end
     end   
     #raise @fattura.righe.inspect  
+  end
+
+  def scorri_classi
+
+    @cliente = current_user.clienti.find(params[:id])
+
+    old_adozioni = []
+    
+    @cliente.classi.order("classi.classe desc").each do |c|
+      
+      c.adozioni.each do |a|
+        old_adozioni << { libro_id: a.libro_id, classe: c.classe, sezione: c.sezione, kit_1: a.kit_1, kit_2: a.kit_2 }
+        a.destroy
+      end
+
+      c.classe += 1
+      c.save
+
+      old_adozioni.select do |old| 
+        old[:classe] == c.classe && old[:sezione] == c.sezione
+      end.each do |ado|
+        c.adozioni.create!(
+          libro_id: ado[:libro_id],
+          nr_copie: c.nr_alunni,
+          nr_sezioni: 1,
+          kit_1: ado[:kit_1],
+          kit_2: ado[:kit_2]
+        )
+      end
+    
+    end
+    
+    @cliente.classi.order("classi.classe desc").each do |c|
+      if c.classe == 6
+        c.classe = 1
+        c.save
+        old_adozioni.select do |old| 
+          old[:classe] == c.classe && old[:sezione] == c.sezione
+        end.each do |ado|
+          c.adozioni.create!(
+            libro_id: ado[:libro_id],
+            nr_copie: c.nr_alunni,
+            nr_sezioni: 1,
+            kit_1: ado[:kit_1],
+            kit_2: ado[:kit_2]
+          )
+        end
+      end
+
+
+    end
+
+
+    redirect_to @cliente
+    
   end  
     
 

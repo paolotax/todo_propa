@@ -70,11 +70,111 @@
           %i.icon-pencil
           Modifica
         = link_to "Fattura",  new_fattura_url(causale: 1, cliente_id: @cliente.id), class: "btn btn-warning"
+
+  - if @cliente.cliente_tipo == "Scuola Primaria"
+    
+    .row
+      .module.span12
+        .header
+          = show_hide_tag  "down"
+          %h3.pull-left Foglio Scuola
+          .pull-right
+            = link_to "Scorri classi", scorri_classi_cliente_url(@cliente), class: "btn btn-danger", confirm: "Sei sicuro?"
+          .clearfix
+        
+
+        .more.classi.hidden
+          .classi-adozioni.clearfix
+            - coef = @cliente.max_classi
+            - @cliente.classi_adozioni_grouped.each do |k, classi|
+              .row-classe.clearfix{style: "width: 100%;  border-bottom: solid 1px #999;"}
+                .pull-left{style: "width: 10%; text-align: center"}
+                  %h1= k
+                - classi.each do |c|
+                  .classe.pull-left{style: "width: #{90/coef}%; text-align: left;"}
+                    .inner-classe{style: "padding: 3px 5px; border-left: solid 1px #999;"}
+
+                      .pull-right
+                        = link_to new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe}#{c.sezione} #{c.insegnanti}"), class: "btn", tile: "nuovo appunto" do
+                          %i.icon-book
+
+                      .foglio-sezione.pull-left
+                        .badge.badge-info.sezione
+                          =c[:sezione]
+                      .insegnanti
+                        = on_the_spot_edit c, :insegnanti, tooltip: "..." 
+                      .note
+                        = on_the_spot_edit c, :note, tooltip: "...", type: :textarea
+
+                  
+                      .clearfix  
+                      - unless c.adozioni.scolastico.empty?
+                        %ul.adozioni-list
+                          - for a in c.adozioni.scolastico do
+                            %li[a]
+                              - if a.kit_1 == 'consegnato'
+                                %span.label.label-warning= "#{a.libro.sigla}"
+                              - else
+                                %span.label.label-important= "#{a.libro.sigla}"
+
+                      - unless c.libro_1.blank? || c.libro_1 == 'vacanze_vuoto'
+                        = image_tag asset_path "#{c.libro_1}.png"
+                      - unless c.libro_2.blank? || c.libro_2 == 'vacanze_vuoto'
+                        = image_tag asset_path "#{c.libro_2}.png"
+                      - unless c.libro_3.blank? || c.libro_3 == 'vacanze_vuoto'
+                        = image_tag asset_path "#{c.libro_3}.png"
+
+
+          / %table.table.table-bordered.classi-adozioni
+          /   - @cliente.classi_adozioni_grouped.each do |k, classi|
+          /     %tr
+          /       %td.classe-group{style: "width: 10%;"}
+          /         .badge.badge-primary.pull-left= k
+          /       - classi.each do |c|
+          /         %td[c]{style: "width: #{90/coef}%;"}
+          /           .pull-left
+          /             .badge.badge-info.sezione
+          /               =c[:sezione]
+
+          /           .insegnanti
+
+          /             %strong= c.insegnanti
+          /           .note
+          /             = c.note
+
+          /           .pull-right
+          /             = link_to new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe}#{c.sezione} #{c.insegnanti}"), class: "btn", tile: "nuovo appunto" do
+          /               %i.icon-book
+                
+          /           .clearfix  
+          /           - unless c.adozioni.scolastico.empty?
+          /             %ul.adozioni-list
+          /               - for a in c.adozioni.scolastico do
+          /                 %li[a]
+          /                   - if a.kit_1 == 'consegnato'
+          /                     %span.label.label-warning= "#{a.libro.sigla}"
+          /                   - else
+          /                     %span.label.label-important= "#{a.libro.sigla}"
+
+          /           - unless c.libro_1.blank? || c.libro_1 == 'vacanze_vuoto'
+          /             = image_tag asset_path "#{c.libro_1}.png"
+          /           - unless c.libro_2.blank? || c.libro_2 == 'vacanze_vuoto'
+          /             = image_tag asset_path "#{c.libro_2}.png"
+          /           - unless c.libro_3.blank? || c.libro_3 == 'vacanze_vuoto'
+          /             = image_tag asset_path "#{c.libro_3}.png"
+
+
             
   .row
     .side-bar.span3
+      
       .module
-        = render partial: "fatture/fattura_item", collection: @cliente.fatture.per_numero, as: :fattura
+        .header
+          = show_hide_tag
+          %h3 Documenti
+        .more.riepilogo-libri  
+          %ul
+            = render partial: "fatture/fattura_item", collection: @cliente.fatture.per_numero, as: :fattura
 
       - unless @cliente.new_record?  
         - da_consegnare  = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")

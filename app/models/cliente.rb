@@ -159,7 +159,18 @@ class Cliente < ActiveRecord::Base
   def classi_adozioni_grouped
     classi = self.classi.includes(:adozioni).order("classi.classe, classi.sezione").all.group_by(&:classe)
   end
-    
+  
+  def max_classi
+    max_classi = 0
+    temp = classi_adozioni_grouped
+    temp.each do |k, v|
+      if v.size > max_classi
+        max_classi = v.size
+      end
+    end
+    max_classi
+  end
+  
   def self.ricalcola_properties
     Cliente.all.each do |c|
       c.ricalcola_properties

@@ -97,6 +97,7 @@ TodoPropa::Application.routes.draw do
   resources :clienti do
 
     member do
+      get :scorri_classi
       put :registra_documento
     end
     

@@ -1,4 +1,6 @@
 class ClassiController < ApplicationController
+
+  can_edit_on_the_spot
  
   def destroy_all
     @classi = Classe.destroy(params[:classi][:classe_ids])

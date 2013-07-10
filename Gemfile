@@ -29,7 +29,7 @@ gem 'jquery-rails'
 
 gem 'devise'
 gem 'doorkeeper'
-gem 'on_the_spot'
+gem 'on_the_spot', "~> 1.0.1"
 gem 'redcarpet', '1.17.2'
 
 gem 'rabl'
