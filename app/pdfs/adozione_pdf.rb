@@ -47,6 +47,13 @@ class AdozionePdf < Prawn::Document
     text "Materiale abbinato all'adozione del testo #{adozione.libro.titolo}", :size => 13
     move_down 10
     stroke_horizontal_rule
+    move_down 40
+
+    if adozione.libro.titolo == "NEL GIARDINO 1"
+      text "Il fascicolo blu NEL GIARDINO SCOPRO 1 non è al momento disponibile.", :size => 13
+      text "Sarà mia premura consegnarlo a Settembre con le agende.", :size => 13
+    end
+
   end
     
   def l(data)
@@ -69,7 +76,7 @@ class AdozionePdf < Prawn::Document
       #stroke_bounds
       text "Classe #{adozione.classe.classe} #{adozione.classe.sezione}", :size => 25, :style => :bold, :spacing => 4
       #move_down(3)
-      text "#{adozione.classe.insegnanti}",  :size => 14, :style => :bold, :spacing => 4      
+      #text "#{adozione.classe.insegnanti}",  :size => 14, :style => :bold, :spacing => 4      
       text adozione.classe.cliente.ragione_sociale,  :size => 14, :style => :bold, :spacing => 4
       text adozione.classe.cliente.indirizzo,  :size => 12
       text adozione.classe.cliente.cap + ' ' + adozione.classe.cliente.frazione  + ' ' + adozione.classe.cliente.comune  + ' ' + adozione.classe.cliente.provincia,  :size => 12

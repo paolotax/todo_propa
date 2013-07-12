@@ -1,0 +1,99 @@
+.foglio-scuola.module.span12
+
+  .header
+    = show_hide_tag  "down"
+
+    %h2.pull-left Foglio Scuola
+
+    .pull-right
+      = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
+        - for a in cliente.mie_adozioni do
+          = hidden_field_tag "adozione_ids[]", a.id
+        = submit_tag "Stampa Adozioni",  id: "bnt-pdf", class: "btn"
+        / = select_tag "tipo_etichetta", options_for_select(["2x4 con bordo", "2x4 senza bordo", "3x8", "2x6", "Dymo 99012"])
+        / = number_field_tag "etichetta_da", "", class: "input-mini", placeholder: "salta"
+
+
+
+    - if cliente.da_scorrere?
+      = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger pull-right", confirm: "Sei sicuro?"
+    .clearfix
+
+
+
+  .more.hidden.clearfix
+
+    - coef = cliente.max_classi
+
+    - cliente.classi_adozioni_grouped.each do |k, classi|
+
+      .row-classi.clearfix
+
+        .header-classi
+          .inner
+            %h1= k
+
+        - classi.each do |c|
+
+          .classe{style: "width: #{90/coef}%;"}
+
+            .inner
+
+              .dropdown.pull-right
+                = link_to "...",  "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown" 
+
+                %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+
+                  %li= link_to 'nuovo appunto', new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe}#{c.sezione} #{c.insegnanti}"), title: "nuovo appunto"
+                  / %li.dropdown-submenu.pull-left
+
+
+                  /   %ul.dropdown-menu
+                  /     %li
+                  /       = form_for c, url: registra_documento_cliente_path(c), method: "put", html: {class: "form-inline"} do |f|
+                  /         = hidden_field_tag 'data_documento', "ultima"
+                  /         = hidden_field_tag 'causale_id', 0
+                  /         - for a, righe in r.group_by(&:appunto) do
+                  /           = hidden_field_tag "appunto_ids[]", a.id 
+                  /         = f.submit "ultima data inserita", class: "btn btn-link"
+
+                  /     %li.divider
+
+                  /     %li
+                  /       = form_for c, url: registra_documento_cliente_path(c), method: "put" do |f|
+                  /         = hidden_field_tag 'causale_id', 0
+                  /         - for a, righe in r.group_by(&:appunto) do
+                  /           = hidden_field_tag "appunto_ids[]", a.id 
+                  /         = f.submit "oggi", class: "btn btn-link"
+
+
+
+              .sezione
+                %h1
+                  =c[:sezione]
+                  %small
+                    = on_the_spot_edit c, :nr_alunni, tooltip: "#"
+
+              .insegnanti
+                = on_the_spot_edit c, :insegnanti, tooltip: "..." 
+              .note
+                = on_the_spot_edit c, :note, tooltip: "...", type: :textarea
+
+
+              .clearfix  
+
+              - unless c.adozioni.scolastico.empty?
+                %ul.inline
+                  - for a in c.adozioni.scolastico do
+                    %li[a]
+                      - if a.kit_1 == 'consegnato'
+                        %span.label.label-warning= "#{a.libro.sigla}"
+                      - else
+                        %span.label.label-important= "#{a.libro.sigla}"
+
+                  - unless c.libro_1.blank? || c.libro_1 == 'vacanze_vuoto'
+                    %li.vacanza= image_tag asset_path "#{c.libro_1}.png"
+                  - unless c.libro_2.blank? || c.libro_2 == 'vacanze_vuoto'
+                    %li.vacanza= image_tag asset_path "#{c.libro_2}.png"
+                  - unless c.libro_3.blank? || c.libro_3 == 'vacanze_vuoto'
+                    %li.vacanza= image_tag asset_path "#{c.libro_3}.png"
