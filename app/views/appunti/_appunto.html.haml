@@ -60,9 +60,9 @@
       
     = render "appunti/recapiti", appunto: appunto
     
-    - if appunto.has_righe? && appunto.da_fatturare?
+    - if appunto.completato? && appunto.has_righe? && appunto.da_fatturare?
       %p
-        da fatturare
+        da registrare
     
 
   .clearfix      

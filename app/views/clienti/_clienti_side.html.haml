@@ -17,13 +17,12 @@
         = link_to params.merge(status: "in_sospeso"), remote: true do
           %strong= @in_sospeso
           sospeso
-    %ul
-      %li
-        = form_tag clienti_path, method:'get', id: 'clienti_search', class: "form-search", remote: true do
-          .input-append
-            = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca clienti"
-            = button_tag class: "btn", name: nil do
-              %i.icon-search
+    .search-box  
+      = form_tag clienti_path, method:'get', id: 'clienti_search', class: "form-search", remote: true do
+        .input-append
+          = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca clienti"
+          = button_tag class: "btn", name: nil do
+            %i.icon-search
 
 
   = render "shared/search_tipo"

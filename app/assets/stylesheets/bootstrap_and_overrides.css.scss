@@ -312,7 +312,7 @@ body.dev {
 
 
 
-ul.stats {
+.module ul.stats {
   background-color: #F9F9F9;
   overflow: hidden;
   border-top: 1px solid #E8E8E8;
@@ -332,6 +332,7 @@ ul.stats {
   font-size: 10px;
   line-height: 16px;
   text-transform: uppercase;
+  border-left: 1px solid #E8E8E8;
   strong {
     display: block;
     color: #333;
@@ -346,8 +347,18 @@ ul.stats {
 }
 
 .stats li {
-  border-left: 1px solid #E8E8E8;
   display: inline;
+  &:first-child a {
+    border-left: 0;
+  }
+}
+
+.search-box {
+  padding: 12px 8px;
+  form {
+    margin: 0
+  }
+
 }
 
 

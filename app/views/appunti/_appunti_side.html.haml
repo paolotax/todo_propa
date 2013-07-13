@@ -17,11 +17,12 @@
         = link_to params.merge(status: "in_sospeso"), remote: true do
           %strong= @in_sospeso
           sospeso
-    = form_tag appunti_path, method:'get', id: 'appunti_search', class: "form-search", remote: true do
-      .input-append
-        = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca appunti"
-        = button_tag class: "btn", name: nil do
-          %i.icon-search
+    .search-box
+      = form_tag appunti_path, method:'get', id: 'appunti_search', class: "form-search", remote: true do
+        .input-append
+          = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca appunti"
+          = button_tag class: "btn", name: nil do
+            %i.icon-search
 
   = render 'shared/search_provincia'
   = render "shared/search_comune"

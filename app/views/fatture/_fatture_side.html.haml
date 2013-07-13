@@ -1,4 +1,5 @@
 .fatture-side.span3
+  
   .module
     %ul.stats
       %li
@@ -11,9 +12,10 @@
           copie
       %li
         = link_to "", remote: true do
-          %strong= @tot_fatture.sum(&:importo_fattura)
+          %strong= number_to_currency @tot_fatture.sum(&:importo_fattura)
           importo
-
+      
+    .search-box
       = form_tag fatture_path, method:'get', id: 'fatture_search', class: "form-search", remote: true do
         .input-append
           = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca documenti"
