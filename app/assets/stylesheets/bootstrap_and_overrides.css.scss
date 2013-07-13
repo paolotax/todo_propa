@@ -356,7 +356,7 @@ body.dev {
 .search-box {
   padding: 12px 8px;
   form {
-    margin: 0
+    margin: 0;
   }
 
 }
@@ -402,6 +402,8 @@ td.gratis {
 
 // Landscape phones and down
 @media (max-width: 480px) {
+
+
   
   body {
     font-size: 14px;
@@ -411,6 +413,7 @@ td.gratis {
     margin-right: -20px;
     
   }
+
   #soulmate {
     margin: auto;
     padding: 0 10px;
@@ -423,7 +426,15 @@ td.gratis {
       width: 70%;
     }
   }
+
+  .search-box form input.search-query {
+    width: 220px;
+  }
+
 }
+
+
+
 
 @media (min-width: 480px) and (max-width: 768px) {
   .content-main.span6 {
@@ -431,11 +442,17 @@ td.gratis {
     float: left;
     width: 520px !important;
   }
+  .search-box form input.search-query {
+    width: 338px;
+  }
 }
+
+
+
+
 // Landscape phone to portrait tablet
 @media (max-width: 768px) {
   
-
   div.location {
     padding-bottom: 10px;
   }
@@ -443,7 +460,6 @@ td.gratis {
     display: block;
     
   }
-
   #soulmate {
     margin: auto;
     padding: 0 10px;
@@ -460,18 +476,36 @@ td.gratis {
 
 // Portrait tablet to landscape and desktop
 @media (min-width: 768px) and (max-width: 980px) {
+  .search-box form input.search-query {
+    width: 75px;
+  }
 
+  #soulmate {
+    margin: auto;
+    padding: 0 10px;
+    position: fixed;
+    width: 98%;
+    top: 2px;
+    left: 2px;
+    z-index: 99999;
+    .soulmate-type-suggestions {
+      width: 70%;
+    }
+  }
 }
- 
+
+// medium desktop
+@media (min-width: 980px) and (max-width: 1200px) { 
+  .search-box form input.search-query {
+    width: 137px;
+  }
+}
+
 // Large desktop
-@media (min-width: 980px) { 
-  
-  // .modal {
-  //   width: 70%; 
-  //   max-height: 700px; 
-  //   top: 40%; 
-  //   left: 30%;
-  // }
-
-
+@media (min-width: 1200px) { 
+  .search-box form input.search-query {
+    width: 185px;
+  }
 }
+
+
