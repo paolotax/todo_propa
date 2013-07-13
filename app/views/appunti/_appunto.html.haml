@@ -5,7 +5,7 @@
 
 - grouped = grouped ||= ""
 
-.item[appunto]{ class: "#{appunto.status} #{grouped} #{favorited}" }
+.item.clearfix[appunto]{ class: "#{appunto.status} #{grouped} #{favorited}" }
   .content
     .dogear
     %small.time
@@ -62,7 +62,7 @@
     
     - if appunto.has_righe? && appunto.da_fatturare?
       %p
-        DA FATTURARE
+        da fatturare
     
 
   .clearfix      
@@ -75,6 +75,12 @@
         %span= l appunto.created_at, format: :only_date
         %span= "- modificato il"
         %span= l appunto.updated_at, format: :only_date
+
+        - if appunto.fattura
+          = '-'
+          = link_to appunto.fattura do
+            = "#{appunto.fattura.causale} #{appunto.fattura.numero}" 
+            = l appunto.fattura.data, format: :only_date
         
     .table-righe-new
       - if appunto.has_righe?
@@ -107,5 +113,3 @@
           %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
             %i.icon-trash
             Elimina
-
-    .clearfix

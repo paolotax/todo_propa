@@ -82,8 +82,9 @@
 
               .clearfix  
 
-              - unless c.adozioni.scolastico.empty?
-                %ul.inline
+              %ul.inline
+                - unless c.adozioni.scolastico.empty?
+                
                   - for a in c.adozioni.scolastico do
                     %li[a]
                       - if a.kit_1 == 'consegnato'
@@ -91,9 +92,9 @@
                       - else
                         %span.label.label-important= "#{a.libro.sigla}"
 
-                  - unless c.libro_1.blank? || c.libro_1 == 'vacanze_vuoto'
-                    %li.vacanza= image_tag asset_path "#{c.libro_1}.png"
-                  - unless c.libro_2.blank? || c.libro_2 == 'vacanze_vuoto'
-                    %li.vacanza= image_tag asset_path "#{c.libro_2}.png"
-                  - unless c.libro_3.blank? || c.libro_3 == 'vacanze_vuoto'
-                    %li.vacanza= image_tag asset_path "#{c.libro_3}.png"
+                - unless c.libro_1.blank? || c.libro_1 == 'vacanze_vuoto'
+                  %li.vacanza= image_tag asset_path "#{c.libro_1}.png"
+                - unless c.libro_2.blank? || c.libro_2 == 'vacanze_vuoto'
+                  %li.vacanza= image_tag asset_path "#{c.libro_2}.png"
+                - unless c.libro_3.blank? || c.libro_3 == 'vacanze_vuoto'
+                  %li.vacanza= image_tag asset_path "#{c.libro_3}.png"
