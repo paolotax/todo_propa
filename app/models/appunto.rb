@@ -138,10 +138,25 @@ class Appunto < ActiveRecord::Base
     
     #appunti = appunti.pop(params[:cliente_id].to_i) if params[:cliente_id].present?
     appunti
-    
-    # raise appunti.inspect  if params[:search].present?
+
   end
   
+  def self.ordina(params)
+    appunti = scoped
+    unless params[:ordine].present?
+      appunti = appunti.recente
+    else
+      appunti = appunti.joins(:cliente).order('clienti.titolo, appunti.created_at desc') if params[:ordine] == "cliente"
+
+      appunti = appunti.joins(:cliente).order('clienti.provincia, clienti.comune, clienti.titolo, appunti.created_at desc') if params[:ordine] == "comune"
+
+      appunti = appunti.order('cliente_id, appunti.created_at desc') if params[:ordine] == "cliente_id"
+  
+
+    end 
+    appunti
+  end
+
   before_save :ricalcola
   def ricalcola
     self.totale_copie   = righe.map(&:quantita).sum

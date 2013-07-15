@@ -66,11 +66,12 @@ jQuery ->
     else
       $(@).text("mostra")
 
+  
+
   $(".show-hide").on "click", (e) ->
     e.preventDefault();
-    $(".more", $(@).parent().parent()).toggleClass("hidden");
-    
-    if $("i", $(@)).hasClass('icon-caret-down')
+    $(@).closest('.header').next(".more").toggleClass("hidden")
+    if $("i", $( @)).hasClass('icon-caret-down')
       $("i", $(@)).removeClass('icon-caret-down');
       $("i", $(@)).addClass('icon-caret-up');
     else

@@ -1,16 +1,13 @@
 - title "Giri"
 
 .row
-
   .span12
     .module
       .header
-        = link_to "", class: "pull-right show-hide btn" do
-          %i.icon-caret-down
+        = show_hide_tag
         %h2 Agenda
-      .more.content
-        #calendar
-      
+      .more#calendar
+              
     .row
       .span4
         .module
@@ -29,23 +26,41 @@
 
         .module
           .header
-            = show_hide_tag 'up'
-            %h4
+            = show_hide_tag 'down'
+            %h3
+              = "#{pluralize @clienti_da_fare.length, "cliente"}"
+              %small con appunti da consegnare
+          .clienti.more.hidden   
+            = render @clienti_da_fare
+            
+
+          .header
+            = show_hide_tag 'down'
+            %h3
+              = "#{pluralize @clienti_in_sospeso.length, "cliente"}"
+              %small con appunti in sospeso
+          .clienti.more.hidden    
+            = render @clienti_in_sospeso
+
+
+          .header
+            = show_hide_tag 'down'
+            %h3
               = "#{pluralize @scuole_da_fare.length, "scuola"}"
               %small da fare con adozioni
-          .clienti.more
+          .clienti.more.hidden
             = render @scuole_da_fare
         
-        .module
+
           .header
-            = show_hide_tag 'up'
+            = show_hide_tag 'down'
             %h3
               = "#{pluralize @scuole_da_fare_senza.length, "scuola"}"
               %small da fare senza adozioni
-          .clienti.more
+          .clienti.more.hidden
             = render @scuole_da_fare_senza
 
-        .module 
+
           .header
             = show_hide_tag 'down'
             %h3 
@@ -56,24 +71,16 @@
 
       .span4
         .module
-          .content
-            = render 'baule/mappa_baule', clienti: @nel_baule
-            .item.clearfix
-              .riepilogo.pull-left
-                = render 'baule/riepilogo_baule'
-              .well.pull-right
-                = render "baule/form"
-        .module
           .header
-            = link_to "", class: "pull-right show-hide btn" do
-              %i.icon-caret-up
+            = show_hide_tag
             %h3
               Giri
               %small= @visite_grouped.keys.size
-            
+
           .more.content
             - @visite_grouped.each do |k, v|
-              .giro.clearfix{ class: "giro_#{k.parameterize} #{ (v[0].start.to_date == Time.now.to_date) ? 'oggi' : ''}"}
+              .giro.header.clearfix{ class: "giro_#{k.parameterize} #{ (v[0].start.to_date == Time.now.to_date) ? 'oggi' : ''}"}
+                
                 %strong= link_to k, giro_url(giorno: "#{v[0].start.to_date}")
                 %span= "#{pluralize(v.count, "tappa")}"
                 
@@ -83,37 +90,37 @@
                     = render "visite/destroy_all", visite: v
   
                     
-                .more.hidden  
-                  %table.table
-                    %tbody
-                      - for visita in v.sort_by(&:start) do
-                        %tr[visita]
-                          %td= visita.start.try(:strftime, "%H:%M")
-                          %td= link_to visita.cliente.titolo, visita.cliente
-                          %td{ class: "cliente #{dom_id(visita.cliente)}" }
-                            = baule_tag visita.cliente
-                          %td
-                            = link_to visita, method: :delete, remote: true, class: "close" do
-                              &times;
+              .more.hidden  
+                %table.table
+                  %tbody
+                    - for visita in v.sort_by(&:start) do
+                      %tr[visita]
+                        %td= visita.start.try(:strftime, "%H:%M")
+                        %td= link_to visita.cliente.titolo, visita.cliente
+                        %td{ class: "cliente #{dom_id(visita.cliente)}" }
+                          = baule_tag visita.cliente
+                        %td
+                          = link_to visita, method: :delete, remote: true, class: "close" do
+                            &times;
         
       .side-bar.span4
-        .module 
+        .module
           .header
             = show_hide_tag
-            %h3
-              = "#{pluralize @clienti_da_fare.length, "cliente"}"
-              %small con appunti da consegnare
-          .clienti.more    
-            = render @clienti_da_fare
-            
-        .module 
-          .header
-            = show_hide_tag
-            %h3
-              = "#{pluralize @clienti_in_sospeso.length, "cliente"}"
-              %small con appunti in sospeso
-          .clienti.more    
-            = render @clienti_in_sospeso
+            %h3 Nel Baule
+          .more
+            .riepilogo.clearfix
+              = render 'baule/riepilogo_baule'
+            .well
+              = render "baule/form"
+
+            .header
+              = show_hide_tag
+              %h3 Mappa
+            .more
+              = render 'baule/mappa_baule', clienti: @nel_baule
+
+        
             
 
 .the-modal{style: "display: none;"}

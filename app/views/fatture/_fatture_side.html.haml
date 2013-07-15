@@ -16,7 +16,7 @@
           importo
       
     .search-box
-      = form_tag fatture_path, method:'get', id: 'fatture_search', class: "form-search", remote: true do
+      = form_tag params, method:'get', id: 'fatture_search', class: "form-search", remote: true do
         .input-append
           = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca documenti"
           = button_tag class: "btn", name: nil do

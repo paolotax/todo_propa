@@ -9,12 +9,12 @@ class AppuntiController < ApplicationController
   def index
     session[:return_to] = request.path
 
-    @search = current_user.appunti.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params)
+    @search = current_user.appunti.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params).ordina(params)
     if params[:tag]
       @search = @search.tagged_with(params[:tag])
     end
-    
-    @appunti = @search.recente.page(params[:page])
+
+    @appunti = @search.page(params[:page])
     
     @stat_appunti = current_user.appunti.filtra(params.except(:status))
     @in_corso     = @stat_appunti.in_corso.size
