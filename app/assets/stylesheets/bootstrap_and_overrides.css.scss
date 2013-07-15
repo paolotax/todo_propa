@@ -440,11 +440,12 @@ td.gratis {
 
 
 @media (min-width: 480px) and (max-width: 768px) {
-  .content-main.span6 {
-    display: block;
-    float: left;
-    width: 520px !important;
-  }
+  
+  // .content-main.span6 {
+  //   display: block;
+  //   float: left;
+  //   width: 520px !important;
+  // }
   .search-box form input.search-query {
     width: 338px;
   }
