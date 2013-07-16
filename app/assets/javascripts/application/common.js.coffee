@@ -67,8 +67,7 @@ jQuery ->
       $(@).text("mostra")
 
   
-
-  $(".show-hide").on "click", (e) ->
+  $(document).on "click", ".show-hide", (e) ->
     e.preventDefault();
     $(@).closest('.header').next(".more").toggleClass("hidden")
     if $("i", $( @)).hasClass('icon-caret-down')
