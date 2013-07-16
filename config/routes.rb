@@ -28,6 +28,10 @@ TodoPropa::Application.routes.draw do
   mount WillFilter::Engine => "/will_filter"
   
   resources :classi do
+    member do
+      get :copia_adozioni
+      get :aggiungi_sezione
+    end
     collection do
       post 'destroy_all'
     end

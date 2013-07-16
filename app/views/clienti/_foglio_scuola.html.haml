@@ -39,14 +39,14 @@
 
             .inner
 
-              .dropdown.pull-right
+              .dropdown.clearfix.pull-right
                 = link_to "...",  "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown" 
 
                 %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
 
                   %li= link_to 'nuovo appunto', new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe}#{c.sezione} #{c.insegnanti}"), title: "nuovo appunto"
-                  / %li.dropdown-submenu.pull-left
-
+                  %li= link_to "copia adozioni", copia_adozioni_classe_path(c)
+                  %li= link_to "aggiungi sezione", aggiungi_sezione_classe_path(c)
 
                   /   %ul.dropdown-menu
                   /     %li
