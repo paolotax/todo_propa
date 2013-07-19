@@ -12,6 +12,21 @@ module ApplicationHelper
     type = options.delete(:type) || :text_field
     content_tag(:div, (f.label(attribute, "#{label_name}:" ) + f.send(type, attribute, options)), :class => "field")
   end
+
+
+  def vacanze_image_url(vacanza, stato)
+     
+    if stato.nil?
+      asset_path "vacanze_vuoto.png"
+    else
+      if stato == 'vacanze_vuoto'
+        asset_path "vacanze_vuoto.png"
+      else  
+        asset_path "#{stato}.png"
+      end
+    end
+
+  end
   
   def filter_tag(url, title) 
     link_to url, class: "list-link", remote: true  do

@@ -1,6 +1,22 @@
 class ClassiController < ApplicationController
 
   can_edit_on_the_spot
+
+  def update
+    @classe = current_user.classi.find(params[:id])    
+    @cliente = @classe.cliente
+
+    respond_to do |format|
+      if @classe.update_attributes(params[:classe])
+        format.html { redirect_to :back }
+        format.js
+      else
+        #correggere
+        format.html { redirect_to :back }
+        format.js
+      end
+    end
+  end
   
   def copia_adozioni
     @classe = current_user.classi.find(params[:id])    

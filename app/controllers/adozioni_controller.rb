@@ -12,6 +12,24 @@ class AdozioniController < ApplicationController
     end    
   end
 
+  def update
+    @adozione = current_user.adozioni.find(params[:id])    
+    @classe = @adozione.classe
+    @cliente = @classe.cliente
+
+    respond_to do |format|
+      if @adozione.update_attributes(params[:adozione])
+        format.html { redirect_to :back }
+        format.js
+      else
+        #correggere
+        format.html { redirect_to :back }
+        format.js
+      end
+    end
+  end
+
+
   def destroy_all
     @adozioni = Adozione.destroy(params[:adozioni][:adozione_ids])
 

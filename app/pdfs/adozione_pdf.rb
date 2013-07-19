@@ -54,6 +54,10 @@ class AdozionePdf < Prawn::Document
       text "Sarà mia premura consegnarlo a Settembre con le agende.", :size => 13
     end
 
+    if adozione.kit_1 == "consegnato"
+      text "saggio già consegnato", :size => 13
+    end  
+
   end
     
   def l(data)

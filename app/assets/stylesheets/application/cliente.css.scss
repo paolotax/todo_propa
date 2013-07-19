@@ -16,6 +16,10 @@
   background-color: white;
 }
 
+.header form {
+  margin-bottom: 0;
+}
+
 .giro {
   padding: 12px;
   
@@ -94,6 +98,17 @@ div.cliente {
     
     .classe {
       float: left;
+      .nr_alunni form.on_the_spot_editing {
+        
+        // margin-left: 50px;
+      }
+      .nr_alunni .on_the_spot_editing input {
+        float: left;
+        min-width: 50px;
+      }
+      .insegnanti .on_the_spot_editing input {
+        min-width: 200px;
+      }
       .inner {
         padding: 3px 5px; 
         border-right: solid 1px #E8E8E8;
@@ -110,6 +125,10 @@ div.cliente {
               height: 32px;
             }
           }
+        }
+
+        .vacanza .btn {
+          padding: 0;
         }
       }
       

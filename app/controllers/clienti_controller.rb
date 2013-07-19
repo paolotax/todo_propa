@@ -71,7 +71,7 @@ class ClientiController < ApplicationController
 
 
   def update
-    @cliente = Cliente.find(params[:id])
+    @cliente = current_user.clienti.find(params[:id])
     
     respond_to do |format|
       if @cliente.update_attributes(params[:cliente])
@@ -85,7 +85,7 @@ class ClientiController < ApplicationController
   end
 
   def destroy
-    @cliente = Cliente.find(params[:id])
+    @cliente = current_user.clienti.find(params[:id])
     @cliente.destroy
 
     respond_to do |format|

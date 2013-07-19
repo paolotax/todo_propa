@@ -1,2 +1,4 @@
 $(".foglio-scuola").replaceWith("<%= j render 'clienti/foglio_scuola', cliente: @cliente %>");
 $(".foglio-scuola .more").removeClass("hidden")
+
+$('.on_the_spot_editing').each(initializeOnTheSpot);

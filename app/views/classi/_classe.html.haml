@@ -1,7 +1,5 @@
 .classe{style: "width: #{90/coef}%;"}[c]
-
   .inner
-
     .dropdown.clearfix.pull-right
       = link_to "...",  "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown" 
 
@@ -12,54 +10,67 @@
         %li= link_to "aggiungi sezione", aggiungi_sezione_classe_path(c), remote: 'true'
         %li.divider
         %li= link_to "elimina", c, method: :delete, remote: true, confirm: "Sei sicuro?"
-
-        /   %ul.dropdown-menu
-        /     %li
-        /       = form_for c, url: registra_documento_cliente_path(c), method: "put", html: {class: "form-inline"} do |f|
-        /         = hidden_field_tag 'data_documento', "ultima"
-        /         = hidden_field_tag 'causale_id', 0
-        /         - for a, righe in r.group_by(&:appunto) do
-        /           = hidden_field_tag "appunto_ids[]", a.id 
-        /         = f.submit "ultima data inserita", class: "btn btn-link"
-
-        /     %li.divider
-
-        /     %li
-        /       = form_for c, url: registra_documento_cliente_path(c), method: "put" do |f|
-        /         = hidden_field_tag 'causale_id', 0
-        /         - for a, righe in r.group_by(&:appunto) do
-        /           = hidden_field_tag "appunto_ids[]", a.id 
-        /         = f.submit "oggi", class: "btn btn-link"
-
-
-
     .sezione
-      %h1
+      %h1.nr_alunni.pull-left
         =c[:sezione]
         %small
-          = on_the_spot_edit c, :nr_alunni, tooltip: "#"
-
+          = on_the_spot_edit c, :nr_alunni, tooltip: "#", url: '/clienti/update_attribute_on_the_spot' 
+    .clearfix
     .insegnanti
-      = on_the_spot_edit c, :insegnanti, tooltip: "..." 
+      = on_the_spot_edit c, :insegnanti, tooltip: "...", url: '/clienti/update_attribute_on_the_spot'  
     .note
-      = on_the_spot_edit c, :note, tooltip: "...", type: :textarea
-
-
+      = on_the_spot_edit c, :note, tooltip: "...", type: :textarea, url: '/clienti/update_attribute_on_the_spot', rows: 2 
     .clearfix  
-
+    
     %ul.inline
       - unless c.adozioni.scolastico.empty?
 
         - for a in c.adozioni.scolastico do
-          %li[a]
-            - if a.kit_1 == 'consegnato'
-              %span.label.label-warning= "#{a.libro.sigla}"
-            - else
-              %span.label.label-important= "#{a.libro.sigla}"
+          %li.dropdown[a]
+            = link_to "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown" do
+              - if a.kit_1 == 'consegnato' && a.kit_2 == 'consegnato'
+                %span.label.label-success= "#{a.libro.sigla}"
+              - elsif a.kit_1 == 'consegnato' && a.kit_2.blank?
+                %span.label.label-warning= "#{a.libro.sigla}"
+              - else
+                %span.label= "#{a.libro.sigla}"
+            %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+              %li
+                = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
+                  = hidden_field_tag "adozione[kit_1]", ""
+                  = hidden_field_tag "adozione[kit_2]", ""
+                  = f.submit "(vuoto)", class: "btn btn-link"
+                = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
+                  = hidden_field_tag "adozione[kit_1]", "consegnato"
+                  = hidden_field_tag "adozione[kit_2]", ""
+                  = f.submit "saggio", class: "btn btn-link"
+                = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
+                  = hidden_field_tag "adozione[kit_1]", "consegnato"
+                  = hidden_field_tag "adozione[kit_2]", "consegnato"
+                  = f.submit "kit", class: "btn btn-link"
 
-      - unless c.libro_1.blank? || c.libro_1 == 'vacanze_vuoto'
-        %li.vacanza= image_tag asset_path "#{c.libro_1}.png"
-      - unless c.libro_2.blank? || c.libro_2 == 'vacanze_vuoto'
-        %li.vacanza= image_tag asset_path "#{c.libro_2}.png"
-      - unless c.libro_3.blank? || c.libro_3 == 'vacanze_vuoto'
-        %li.vacanza= image_tag asset_path "#{c.libro_3}.png"
+
+      - ["fiuto", "castelli", "tutto"].each_with_index do |titolo, index|
+        %li.vacanza.dropdown
+          = link_to image_tag(vacanze_image_url(titolo, c.send("libro_#{index + 1}"))), "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown"
+          
+          %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+            %li
+              = form_for c, method: "put", html: {class: "form-inline"}, remote: true do |f|
+                = hidden_field_tag "classe[libro_#{index + 1}]", "vacanze_vuoto"
+                = f.submit "(vuoto)", class: "btn btn-link"
+            %li
+              = form_for c, method: "put", html: {class: "form-inline"}, remote: true do |f|
+                = hidden_field_tag "classe[libro_#{index + 1}]", "vacanze_#{titolo}"
+                = f.submit "in sospeso", class: "btn btn-link"
+            %li
+              = form_for c, method: "put", html: {class: "form-inline"}, remote: true do |f|
+                = hidden_field_tag "classe[libro_#{index + 1}]", "vacanze_#{titolo}_adottato"
+                = f.submit "adottato", class: "btn btn-link"
+            %li
+              = form_for c, method: "put", html: {class: "form-inline"}, remote: true do |f|
+                = hidden_field_tag "classe[libro_#{index + 1}]", "vacanze_#{titolo}_ritirato"
+                = f.submit "omaggio", class: "btn btn-link"
+
+            %li= link_to "pippo", "#"
+      
