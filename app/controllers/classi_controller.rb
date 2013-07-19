@@ -18,27 +18,6 @@ class ClassiController < ApplicationController
     end
   end
   
-  def copia_adozioni
-    @classe = current_user.classi.find(params[:id])    
-    @cliente = @classe.cliente
-
-    @classe.adozioni.each  { |a| a.destroy }
-
-    libri = Libro.joins(:adozioni => :classe).where('classi.cliente_id = ?', @cliente.id).where("classi.classe = ?", @classe.classe).where("classi.id != ?", @classe.id).where(settore: 'Scolastico').uniq
-
-    libri.each do |l|      
-      @classe.adozioni.create! ({        
-              libro_id: l.id,
-              nr_copie: @classe.nr_alunni
-            })
-    end    
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.json { head :ok }
-      format.js
-    end   
-  end
-
   def aggiungi_sezione
     
     @classe = current_user.classi.find(params[:id])   

@@ -21,7 +21,7 @@ body { padding-top: 60px; }
 .dropdown-menu li .btn-link {
   display: block;
   padding: 3px 20px;
-  text-indent: 20px;
+  // text-indent: 20px;
   clear: both;
   font-weight: normal;
   line-height: $baseLineHeight;
@@ -39,7 +39,7 @@ body { padding-top: 60px; }
   .btn-link {
     text-decoration: none;
     font-weight: normal;
-    text-indent: 20px;
+
     color: $dropdownLinkColorHover;
   }  
 }

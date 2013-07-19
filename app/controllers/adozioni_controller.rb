@@ -12,6 +12,22 @@ class AdozioniController < ApplicationController
     end    
   end
 
+  def create
+    @classe = current_user.classi.find(params[:classe_id])    
+    
+    @adozione = @classe.adozioni.build(params[:adozione])
+
+    respond_to do |format|
+      if @adozione.save
+        format.html   { redirect_to :back }
+        format.js
+      else
+        format.html   { redirect_to :back }
+        format.js
+      end
+    end
+  end
+
   def update
     @adozione = current_user.adozioni.find(params[:id])    
     @classe = @adozione.classe
@@ -29,6 +45,15 @@ class AdozioniController < ApplicationController
     end
   end
 
+  def destroy
+    @adozione = current_user.adozioni.find(params[:id])
+    @classe = @adozione.classe
+    @adozione.destroy
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js
+    end    
+  end
 
   def destroy_all
     @adozioni = Adozione.destroy(params[:adozioni][:adozione_ids])

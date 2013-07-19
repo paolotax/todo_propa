@@ -6,9 +6,8 @@
       %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
 
         %li= link_to 'nuovo appunto', new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe}#{c.sezione} #{c.insegnanti}"), title: "nuovo appunto"
-        %li= link_to "copia adozioni", copia_adozioni_classe_path(c), remote: 'true'
-        %li= link_to "aggiungi sezione", aggiungi_sezione_classe_path(c), remote: 'true'
         %li.divider
+        %li= link_to "aggiungi sezione", aggiungi_sezione_classe_path(c), remote: 'true'
         %li= link_to "elimina", c, method: :delete, remote: true, confirm: "Sei sicuro?"
     .sezione
       %h1.nr_alunni.pull-left
@@ -23,11 +22,24 @@
     .clearfix  
     
     %ul.inline
-      - unless c.adozioni.scolastico.empty?
 
+      %li.dropdown
+        - unless c.libri_adottabili.empty?
+          = link_to "#", class: "dropdown-toggle", "data-toggle" => "dropdown" do
+            %i.icon-plus
+          %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+            - for l in c.libri_adottabili
+              %li
+                = form_for c.adozioni.build, html: {class: "form-inline"}, remote: true do |f|
+                  = hidden_field_tag "classe_id", c.id
+                  = f.hidden_field :libro_id, value: l.id
+                  = f.submit l.titolo, class: "btn btn-link"
+
+
+      - unless c.adozioni.scolastico.empty?        
         - for a in c.adozioni.scolastico do
           %li.dropdown[a]
-            = link_to "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown" do
+            = link_to "#", class: "dropdown-toggle", "data-toggle" => "dropdown" do
               - if a.kit_1 == 'consegnato' && a.kit_2 == 'consegnato'
                 %span.label.label-success= "#{a.libro.sigla}"
               - elsif a.kit_1 == 'consegnato' && a.kit_2.blank?
@@ -40,19 +52,25 @@
                   = hidden_field_tag "adozione[kit_1]", ""
                   = hidden_field_tag "adozione[kit_2]", ""
                   = f.submit "(vuoto)", class: "btn btn-link"
+              %li
                 = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
                   = hidden_field_tag "adozione[kit_1]", "consegnato"
                   = hidden_field_tag "adozione[kit_2]", ""
                   = f.submit "saggio", class: "btn btn-link"
+              %li
                 = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
                   = hidden_field_tag "adozione[kit_1]", "consegnato"
                   = hidden_field_tag "adozione[kit_2]", "consegnato"
                   = f.submit "kit", class: "btn btn-link"
+              
+              %li.divider
+              %li
+                = link_to "elimina", a, method: :delete, remote: true
 
 
       - ["fiuto", "castelli", "tutto"].each_with_index do |titolo, index|
         %li.vacanza.dropdown
-          = link_to image_tag(vacanze_image_url(titolo, c.send("libro_#{index + 1}"))), "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown"
+          = link_to image_tag(vacanze_image_url(titolo, c.send("libro_#{index + 1}"))), "#", class: "dropdown-toggle", "data-toggle" => "dropdown"
           
           %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
             %li

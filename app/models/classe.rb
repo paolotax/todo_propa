@@ -16,6 +16,13 @@ class Classe < ActiveRecord::Base
     "#{self.classe} #{self.sezione}"
   end
   
+  def libri_adottabili
+    libri = Libro.scolastico.where(classe: classe).order(:materia_id)
+    materie = adozioni.joins(:libro).pluck("libri.materia_id").uniq
+    libri_adottabili = libri.select {|l| materie.include?(l.materia_id) == false } 
+    libri_adottabili
+  end
+
   def update_nr_copie
     self.adozioni.scolastico.readonly(false).each do |a|
       a.update_attributes(:nr_copie => self.nr_alunni)

@@ -29,7 +29,6 @@ TodoPropa::Application.routes.draw do
   
   resources :classi do
     member do
-      get :copia_adozioni
       get :aggiungi_sezione
     end
     collection do

@@ -1,0 +1,3 @@
+$("#<%= dom_id(@classe) %>").replaceWith("<%= j render 'classi/classe', c: @classe, coef: @classe.cliente.max_classi %>");
+
+$('.on_the_spot_editing').each(initializeOnTheSpot);
