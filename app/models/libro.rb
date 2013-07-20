@@ -41,6 +41,10 @@ class Libro < ActiveRecord::Base
   
   SETTORI.each do |settore|
     scope "#{settore.downcase}", where("libri.settore = ?", settore)
+
+    define_method "#{settore.split.join.underscore}?" do
+      self.settore == settore
+    end
   end
   
   #fratelli usato per option group

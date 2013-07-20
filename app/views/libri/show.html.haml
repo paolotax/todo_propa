@@ -79,49 +79,59 @@
     .span4.scarichi
       - @scarichi.each do |anno, scarichi|
 
-        .well
-          %h2 
-            = anno
-          %h2 
-            Scarichi
-            .pull-right
-              = scarichi.sum(&:quantita)
-          %h3 
-            copie da consegnare
-            .pull-right
-              = scarichi.select {|r| r.appunto.da_fare? }.sum(&:quantita)
-          %ul.unstyled
-            - for riga in scarichi.select {|r| r.appunto.da_fare? } do
-              = render "riga", riga: riga  
+        .module
+          .header
+            - if anno == Time.now.year
+              = show_hide_tag
+            - else
+              = show_hide_tag "down"
+            %h2 
+              = anno
+          
+          .more
+            .header
+              = show_hide_tag
+              %h3 
+                Scarichi
+                .pull-right
+                  = scarichi.sum(&:quantita)
+            .more{ class: "#{anno == Time.now.year ? '' : 'hidden'}" }
+              
+              - ["completato", "in_sospeso", "preparato", "da_fare"].each do |stato|
+                - righe = scarichi.select {|r| r.appunto.try("#{stato}?") }
+                - if righe.sum(&:quantita) > 0
+                  .header
+                    = show_hide_tag
+                    %h4 
+                      = stato
+                      .pull-right
+                        %small
+                          = righe.sum(&:quantita)
+                  %ul.unstyled.more
+                    - for riga in righe do
+                      = render "riga", riga: riga  
 
-          %h3 
-            copie pronte
-            .pull-right
-              = scarichi.select {|r| r.appunto.preparato?   }.sum(&:quantita)
-          %ul.unstyled
-            - for riga in scarichi.select {|r| r.appunto.preparato? } do
-              = render "riga", riga: riga 
-
-          %h3 
-            copie in sospeso
-            .pull-right
-              = scarichi.select {|r| r.appunto.in_sospeso?   }.sum(&:quantita)
-          %ul.unstyled
-            - for riga in scarichi.select {|r| r.appunto.in_sospeso? } do
-              = render "riga", riga: riga 
-
-          %h3 
-            copie consegnate
-            .pull-right
-              = scarichi.select {|r| r.appunto.completato? }.sum(&:quantita)
-          %ul.unstyled
-            - for riga in scarichi.select {|r| r.appunto.completato? } do
-              = render "riga", riga: riga  
       
+    .side-bar.span4
       
-    .span4
-      .well
-        %h2 Si sboccia
+      - if @libro.scolastico?
+        .module
+          .header
+            = show_hide_tag
+            %h3= pluralize(@adozioni.size, "Adozione")
+          .more
+            - for stato, adoz in @adozioni.group_by {|a| a.stato } do
+              .header
+                = show_hide_tag
+                %h3
+                  = stato
+                  %small= adoz.size
+              .more
+                - for cliente, a in adoz.group_by { |a| a.classe.cliente } do
+                  .cliente.item
+                    = link_to cliente.titolo, cliente
+                    = a.first.classe.classe
+                    = a.map {|a| a.classe.sezione}.join
       
 
           

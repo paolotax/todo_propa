@@ -21,6 +21,9 @@ class LibriController < ApplicationController
                             scarico.
                             where("righe.libro_id = ?", @libro.id).
                             order("appunti.created_at desc").group_by(&:anno)
+    
+    @adozioni = current_user.adozioni.includes(:classe => :cliente).del_libro(@libro.id).per_scuola
+
     respond_to do |format|
       format.html
       format.json { render :rabl => @libro }

@@ -14,11 +14,15 @@ class Adozione < ActiveRecord::Base
   
   scope :per_classe_e_sezione, joins(:classe).order("classi.classe, classi.sezione, adozioni.materia_id")
   
+  scope :per_scuola, joins(:classe => :cliente).order("clienti.provincia, clienti.id, classi.classe, classi.sezione, adozioni.materia_id")
+  
   scope :con_kit,    where("kit_1 == 'consegnato' AND kit_2 == 'consegnato'")
   scope :con_saggio, where("kit_1 == 'consegnato' AND kit_2 != 'consegnato'")
   scope :vuota,      where("kit_1 != 'consegnato' AND kit_2 != 'consegnato'")
 
+  scope :del_libro,  lambda { |l| where("adozioni.libro_id = ?", l) }
 
+  
   def importo
     libro.prezzo_copertina * classe.nr_alunni
   end
@@ -31,6 +35,18 @@ class Adozione < ActiveRecord::Base
     1
   end
   
+  def stato
+    if kit_1 == "consegnato" && kit_2 == "consegnato"
+      "kit"
+    elsif kit_1 == "consegnato" && kit_2 != "consegnato"
+      "saggio"
+    elsif kit_1 != "consegnato" && kit_2 == "consegnato"
+      "kit no saggio"
+    else 
+      "da consegnare"
+    end        
+  end  
+  
   def after_save
     self.update_counter_cache
   end
@@ -39,6 +55,7 @@ class Adozione < ActiveRecord::Base
     self.update_counter_cache
   end
 
+  
   def update_counter_cache
     self.classe.cliente.mie_adozioni_counter = Adozione.joins(:classe).scolastico.where("classi.cliente_id = ?", self.classe.cliente.id).count
     self.classe.cliente.save
