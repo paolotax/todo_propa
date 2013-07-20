@@ -14,6 +14,11 @@ class Adozione < ActiveRecord::Base
   
   scope :per_classe_e_sezione, joins(:classe).order("classi.classe, classi.sezione, adozioni.materia_id")
   
+  scope :con_kit,    where("kit_1 == 'consegnato' AND kit_2 == 'consegnato'")
+  scope :con_saggio, where("kit_1 == 'consegnato' AND kit_2 != 'consegnato'")
+  scope :vuota,      where("kit_1 != 'consegnato' AND kit_2 != 'consegnato'")
+
+
   def importo
     libro.prezzo_copertina * classe.nr_alunni
   end

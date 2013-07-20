@@ -1,10 +1,61 @@
-.well.span5
+.well.span7
   %h2 Riepilogo Adozioni
+  %br
   %table.table.adozioni-nel-baule
-    - for libro in @adozioni do
+    %tr
+      %th Materia
+      %th 
+        Titolo
+        %span.pull-right.label.label-warning saggio
+        %span.pull-right.label no saggio
+
+      %th Sezioni
+      %th
+        %span.label no kit
+      %th
+        %span.label.label-success kit
+
+    - for materia, adozioni in @adozioni.group_by { |a| a.libro.materia_id } do
       %tr
-        %td= image_tag(libro[:image]) unless libro[:image].blank?
-        %td= libro[:materia_id]
-        %td= libro[:titolo]
         %td
-          .pull-right= libro[:quantita]
+          = materia
+        %td
+          %table.table
+            - for libro, adoz in adozioni.group_by(&:libro) do
+              %tr
+                %td= link_to libro.titolo, libro
+                %td
+                  .pull-right
+                    %strong= adoz.size
+                %td
+                  - no_saggio = adoz.select {|a| a.kit_1 != 'consegnato'}.size
+                  - if no_saggio > 0
+                    .pull-right
+                      %span.label= no_saggio
+                %td
+                  - saggio = adoz.select {|a| a.kit_1 == 'consegnato'}.size
+                  - if saggio > 0
+                    .pull-right
+                      %span.label.label-warning=  saggio
+
+        %td
+          .pull-right
+            %strong= adozioni.size
+        %td
+          .pull-right= adozioni.select {|a| a.kit_2 != 'consegnato'}.size
+        %td
+          .pull-right= adozioni.select {|a| a.kit_2 == 'consegnato'}.size
+
+    / - for libro, adozioni in @adozioni.group_by(&:libro) do
+    /   %tr
+    /     %td= image_tag libro.image_url
+    /     %td= libro[:materia_id]
+    /     %td= link_to libro.titolo, libro
+    /     %td
+    /       .pull-right= adozioni.size
+    /     %td
+    /       .pull-right= adozioni.select {|a| a.kit_1 != 'consegnato' && a.kit_2 != 'consegnato'}.size
+    /     %td
+    /       .pull-right= adozioni.select {|a| a.kit_1 == 'consegnato' && a.kit_2 != 'consegnato'}.size
+    /     %td
+    /       .pull-right= adozioni.select {|a| a.kit_1 == 'consegnato' && a.kit_2 == 'consegnato'}.size

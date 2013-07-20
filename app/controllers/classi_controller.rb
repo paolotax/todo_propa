@@ -34,7 +34,7 @@ class ClassiController < ApplicationController
     respond_to do |format|
       format.html { redirect_to :back }
       format.json { head :ok }
-      format.js { @cliente.reload }
+      format.js
     end     
   end
 
