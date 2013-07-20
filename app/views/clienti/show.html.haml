@@ -71,7 +71,8 @@
 
   - if @cliente.cliente_tipo == "Scuola Primaria"    
     .row
-      = render 'foglio_scuola', cliente: @cliente
+      .span12
+        = render 'foglio_scuola', cliente: @cliente
             
   .row
     .side-bar.span3

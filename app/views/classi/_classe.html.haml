@@ -65,6 +65,12 @@
               
               %li.divider
               %li
+                = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
+
+                  = hidden_field_tag "adozione_ids[]", a.id
+                  = submit_tag "stampa",  id: "bnt-pdf", class: "btn btn-link"
+
+              %li
                 = link_to "elimina", a, method: :delete, remote: true
 
 
@@ -90,5 +96,4 @@
                 = hidden_field_tag "classe[libro_#{index + 1}]", "vacanze_#{titolo}_ritirato"
                 = f.submit "omaggio", class: "btn btn-link"
 
-            %li= link_to "pippo", "#"
       

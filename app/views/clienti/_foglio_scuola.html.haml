@@ -1,9 +1,9 @@
-.foglio-scuola.module.span12
+.foglio-scuola.module{ id: "foglio_scuola_#{cliente.id}"}
 
   .header
     = show_hide_tag  "down"
 
-    %h2.pull-left Foglio Scuola
+    %h3.pull-left Foglio Scuola
 
     .pull-right
       = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
@@ -16,7 +16,7 @@
 
 
     - if cliente.da_scorrere?
-      = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger pull-right", confirm: "Sei sicuro?"
+      = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger pull-right", confirm: "Sei sicuro?", remote: true
     .clearfix
 
 

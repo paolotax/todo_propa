@@ -16,7 +16,7 @@ class AdozioniController < ApplicationController
     @classe = current_user.classi.find(params[:classe_id])    
     
     @adozione = @classe.adozioni.build(params[:adozione])
-
+    @adozione.nr_copie = @classe.nr_alunni
     respond_to do |format|
       if @adozione.save
         format.html   { redirect_to :back }

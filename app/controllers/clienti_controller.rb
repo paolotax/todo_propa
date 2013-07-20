@@ -181,7 +181,11 @@ class ClientiController < ApplicationController
       end
     end
 
-    redirect_to @cliente    
+    respond_to do |format|
+      format.html { redirect_to :back}
+      format.js
+    end
+       
   end  
     
 
