@@ -44,6 +44,9 @@
                 %span.label.label-success= "#{a.libro.sigla}"
               - elsif a.kit_1 == 'consegnato' && a.kit_2.blank?
                 %span.label.label-warning= "#{a.libro.sigla}"
+              - elsif a.kit_1.blank? && a.kit_2 == "consegnato"
+                %span.label.label-important= "#{a.libro.sigla}"
+
               - else
                 %span.label= "#{a.libro.sigla}"
             %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
@@ -51,17 +54,23 @@
                 = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
                   = hidden_field_tag "adozione[kit_1]", ""
                   = hidden_field_tag "adozione[kit_2]", ""
-                  = f.submit "(vuoto)", class: "btn btn-link"
+                  = f.submit "no saggio no kit", class: "btn btn-link"
               %li
                 = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
                   = hidden_field_tag "adozione[kit_1]", "consegnato"
                   = hidden_field_tag "adozione[kit_2]", ""
-                  = f.submit "saggio", class: "btn btn-link"
+                  = f.submit "si saggio no kit", class: "btn btn-link"
               %li
                 = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
                   = hidden_field_tag "adozione[kit_1]", "consegnato"
                   = hidden_field_tag "adozione[kit_2]", "consegnato"
-                  = f.submit "kit", class: "btn btn-link"
+                  = f.submit "si kit si saggio", class: "btn btn-link"
+
+              %li
+                = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
+                  = hidden_field_tag "adozione[kit_1]", ""
+                  = hidden_field_tag "adozione[kit_2]", "consegnato"
+                  = f.submit "si kit no saggio", class: "btn btn-link"
               
               %li.divider
               %li
