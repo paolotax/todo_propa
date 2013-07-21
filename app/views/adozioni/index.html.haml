@@ -1,61 +1,73 @@
-.well.span7
-  %h2 Riepilogo Adozioni
-  %br
-  %table.table.adozioni-nel-baule
-    %tr
-      %th Materia
-      %th 
-        Titolo
-        %span.pull-right.label.label-warning saggio
-        %span.pull-right.label no saggio
+.row
 
-      %th Sezioni
-      %th
-        %span.label no kit
-      %th
-        %span.label.label-success kit
-
-    - for materia, adozioni in @adozioni.group_by { |a| a.libro.materia_id } do
+  .well.span7
+    %h2 Riepilogo Adozioni
+    %br
+    %table.table.adozioni-nel-baule
       %tr
-        %td
-          = materia
-        %td
-          %table.table
-            - for libro, adoz in adozioni.group_by(&:libro) do
-              %tr
-                %td= link_to libro.titolo, libro
-                %td
-                  .pull-right
-                    %strong= adoz.size
-                %td
-                  - no_saggio = adoz.select {|a| a.kit_1 != 'consegnato'}.size
-                  - if no_saggio > 0
-                    .pull-right
-                      %span.label= no_saggio
-                %td
-                  - saggio = adoz.select {|a| a.kit_1 == 'consegnato'}.size
-                  - if saggio > 0
-                    .pull-right
-                      %span.label.label-warning=  saggio
+        %th Materia
+        %th 
+          Titolo
+          %span.pull-right.label.label-warning saggio
+          %span.pull-right.label no saggio
 
-        %td
-          .pull-right
-            %strong= adozioni.size
-        %td
-          .pull-right= adozioni.select {|a| a.kit_2 != 'consegnato'}.size
-        %td
-          .pull-right= adozioni.select {|a| a.kit_2 == 'consegnato'}.size
+        %th Sezioni
+        %th
+          %span.label no kit
+        %th
+          %span.label.label-success kit
 
-    / - for libro, adozioni in @adozioni.group_by(&:libro) do
-    /   %tr
-    /     %td= image_tag libro.image_url
-    /     %td= libro[:materia_id]
-    /     %td= link_to libro.titolo, libro
-    /     %td
-    /       .pull-right= adozioni.size
-    /     %td
-    /       .pull-right= adozioni.select {|a| a.kit_1 != 'consegnato' && a.kit_2 != 'consegnato'}.size
-    /     %td
-    /       .pull-right= adozioni.select {|a| a.kit_1 == 'consegnato' && a.kit_2 != 'consegnato'}.size
-    /     %td
-    /       .pull-right= adozioni.select {|a| a.kit_1 == 'consegnato' && a.kit_2 == 'consegnato'}.size
+      - for materia, adozioni in @adozioni_per_titolo.group_by { |a| a.libro.materia_id } do
+        %tr
+          %td
+            = link_to materia, params.except(:titolo).merge(materia: materia)
+          %td
+            %table.table
+              - for libro, adoz in adozioni.group_by(&:libro) do
+                %tr
+                  %td= link_to libro.titolo, params.except(:materia).merge(titolo: libro.titolo)
+                  %td
+                    .pull-right
+                      %strong= adoz.size
+                  %td
+                    - no_saggio = adoz.select {|a| a.kit_1 != 'consegnato'}.size
+                    - if no_saggio > 0
+                      .pull-right
+                        %span.label= no_saggio
+                  %td
+                    - saggio = adoz.select {|a| a.kit_1 == 'consegnato'}.size
+                    - if saggio > 0
+                      .pull-right
+                        %span.label.label-warning=  saggio
+
+          %td
+            .pull-right
+              %strong= adozioni.size
+          %td
+            .pull-right= adozioni.select {|a| a.kit_2 != 'consegnato'}.size
+          %td
+            .pull-right= adozioni.select {|a| a.kit_2 == 'consegnato'}.size
+
+  .sidebar.span4
+    .module
+      
+      .header
+        = show_hide_tag
+        
+
+        %h3
+          = params[:materia] || params[:titolo] || pluralize(@adozioni.size, "Adozione")
+      .more
+        - for stato, adoz in @adozioni.group_by {|a| a.stato } do
+          .header
+            = show_hide_tag
+            %h3
+              = stato
+              %small= adoz.size
+          .more
+            - for cliente, a in adoz.group_by { |a| a.classe.cliente } do
+              .cliente.item
+                = link_to cliente.titolo, cliente
+                = a.first.classe.classe
+                = a.map {|a| a.classe.sezione}.join
+

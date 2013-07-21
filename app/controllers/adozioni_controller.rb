@@ -2,15 +2,9 @@ class AdozioniController < ApplicationController
 
   def index
 
-    # @libri = Libro.scolastico.includes(:adozioni).order(:materia_id, :titolo)
-    @adozioni =  current_user.adozioni.scolastico.includes(:libro, :classe).order("libri.materia_id, libri.titolo")
-    #     materia_id: libro.materia_id, 
-    #     id: libro.id, 
-    #     titolo: libro.titolo, 
-    #     image: libro.image_url(:small_thumb), 
-    #     quantita: adozioni.count(&:classe) 
-    #   }
-    # end    
+    @adozioni_per_titolo =  current_user.adozioni.scolastico.includes(:libro, :classe => :cliente).order("libri.materia_id, libri.titolo")
+    @adozioni = current_user.adozioni.scolastico.includes(:libro, :classe => :cliente).per_stato.per_scuola.filtra(params)
+    
   end
 
   def create

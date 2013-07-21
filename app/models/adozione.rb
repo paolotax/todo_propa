@@ -14,6 +14,7 @@ class Adozione < ActiveRecord::Base
   
   scope :per_classe_e_sezione, joins(:classe).order("classi.classe, classi.sezione, adozioni.materia_id")
   
+  scope :per_stato,  order("kit_1, kit_2")
   scope :per_scuola, joins(:classe => :cliente).order("clienti.provincia, clienti.id, classi.classe, classi.sezione, adozioni.materia_id")
   
   scope :con_kit,    where("kit_1 == 'consegnato' AND kit_2 == 'consegnato'")
@@ -45,7 +46,15 @@ class Adozione < ActiveRecord::Base
     else 
       "da consegnare"
     end        
-  end  
+  end
+
+  def self.filtra(params)
+    adozioni = scoped
+    adozioni = adozioni.joins(:libro).where("libri.materia_id = ?", params[:materia])  if params[:materia].present?
+    adozioni = adozioni.joins(:libro).where("libri.titolo = ?", params[:titolo])  if params[:titolo].present?    
+    adozioni
+  end
+  
   
   def after_save
     self.update_counter_cache
