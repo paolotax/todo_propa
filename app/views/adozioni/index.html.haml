@@ -79,6 +79,8 @@
               .cliente.item
                 = baule_tag cliente
                 = link_to cliente.titolo, cliente
+                - if cliente.preparato?
+                  = image_tag asset_path "task-preparato.png"
                 .pull-right
                   - if params[:titolo]
                     %small

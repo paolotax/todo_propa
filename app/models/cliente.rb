@@ -156,6 +156,10 @@ class Cliente < ActiveRecord::Base
     end
     false      
   end
+
+  def preparato?
+    !appunti.select {|a| a.status == "preparato"}.empty?
+  end
   
   def mie_adozioni_grouped
     adozioni = self.mie_adozioni.
