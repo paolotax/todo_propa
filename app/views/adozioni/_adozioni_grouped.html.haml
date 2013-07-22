@@ -15,19 +15,23 @@
           = adozioni.size
       - else
         = pluralize(adozioni.size, "Adozione")
-        - if @giro
-          .pull-right
+        .pull-right
+          %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
+          - if @giro
             %small= "#{@giro.adozioni.size} nel baule"
+        
   .more
     - for stato, adoz in adozioni.group_by {|a| a.stato } do
+      - per_cliente = adoz.group_by { |a| a.classe.cliente }
       .header
         = show_hide_tag
         %h3
           = stato
-          .pull-right
+          .pull-right            
+            %small= "#{pluralize per_cliente.keys.size, "scuola"}" 
             = adozione_stato_label stato, adoz.size
       .more
-        - for cliente, a in adoz.group_by { |a| a.classe.cliente } do
+        - for cliente, a in per_cliente do
           .cliente.item{ class: "#{dom_id(cliente)}"}
             = baule_tag cliente
             = link_to cliente.titolo, cliente
