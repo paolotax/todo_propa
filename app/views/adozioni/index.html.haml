@@ -1,5 +1,4 @@
 .row
-
   .well.span7
     %h2 Riepilogo Adozioni
     %br
@@ -49,44 +48,6 @@
             .pull-right= adozioni.select {|a| a.kit_2 == 'consegnato'}.size
 
   .sidebar.span4
-    .module
-      
-      .header
-        = show_hide_tag
-        %h3
-          - if params[:materia] 
-            = params[:materia]
-            .pull-right
-              = @adozioni.size
-          - elsif params[:titolo] 
-            = link_to params[:titolo], @libro
-            .pull-right
-              = @adozioni.size
-          - else
-            = pluralize(@adozioni.size, "Adozione")
-            .pull-right
-              %small= "#{@giro.adozioni.size} nel baule"
-      .more
-        - for stato, adoz in @adozioni.group_by {|a| a.stato } do
-          .header
-            = show_hide_tag
-            %h3
-              = stato
-              .pull-right
-                %small= adoz.size
-          .more
-            - for cliente, a in adoz.group_by { |a| a.classe.cliente } do
-              .cliente.item
-                = baule_tag cliente
-                = link_to cliente.titolo, cliente
-                - if cliente.preparato?
-                  = image_tag asset_path "task-preparato.png"
-                .pull-right
-                  - if params[:titolo]
-                    %small
-                      = a.first.classe.classe
-                      = a.map {|a| a.classe.sezione}.join
-                      = "-"
+    = render 'adozioni/adozioni_grouped', adozioni: @adozioni
 
-                  %small= a.size
                   

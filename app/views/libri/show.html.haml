@@ -112,26 +112,10 @@
                       = render "riga", riga: riga  
 
       
-    .side-bar.span4
-      
-      - if @libro.scolastico?
-        .module
-          .header
-            = show_hide_tag
-            %h3= pluralize(@adozioni.size, "Adozione")
-          .more
-            - for stato, adoz in @adozioni.group_by {|a| a.stato } do
-              .header
-                = show_hide_tag
-                %h3
-                  = stato
-                  %small= adoz.size
-              .more
-                - for cliente, a in adoz.group_by { |a| a.classe.cliente } do
-                  .cliente.item
-                    = link_to cliente.titolo, cliente
-                    = a.first.classe.classe
-                    = a.map {|a| a.classe.sezione}.join
+    .side-bar.span4      
+      - if @libro.scolastico?        
+        = render "adozioni/adozioni_grouped", adozioni: @adozioni
+
       
 
           

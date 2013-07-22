@@ -1,0 +1,42 @@
+.module.adozioni-grouped
+
+  - # occhio ai params[:] da adozioni controller
+
+  .header
+    = show_hide_tag
+    %h3
+      - if params[:materia] 
+        = params[:materia]
+        .pull-right
+          = adozioni.size
+      - elsif params[:titolo] 
+        = link_to params[:titolo], @libro
+        .pull-right
+          = adozioni.size
+      - else
+        = pluralize(adozioni.size, "Adozione")
+        - if @giro
+          .pull-right
+            %small= "#{@giro.adozioni.size} nel baule"
+  .more
+    - for stato, adoz in adozioni.group_by {|a| a.stato } do
+      .header
+        = show_hide_tag
+        %h3
+          = stato
+          .pull-right
+            = adozione_stato_label stato, adoz.size
+      .more
+        - for cliente, a in adoz.group_by { |a| a.classe.cliente } do
+          .cliente.item{ class: "#{dom_id(cliente)}"}
+            = baule_tag cliente
+            = link_to cliente.titolo, cliente
+            - if cliente.preparato?
+              = image_tag asset_path "task-preparato.png"
+            .pull-right
+              - if params[:titolo] || !@giro
+                %small
+                  = a.first.classe.classe
+                  = a.map {|a| a.classe.sezione}.join
+                  = "-"
+              = adozione_stato_label stato, a.size
