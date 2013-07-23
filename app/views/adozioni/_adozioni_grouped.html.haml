@@ -8,11 +8,15 @@
       - if params[:materia] 
         = params[:materia]
         .pull-right
+          %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
           = adozioni.size
+      
       - elsif params[:titolo] 
         = link_to params[:titolo], @libro
         .pull-right
+          %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
           = adozioni.size
+      
       - else
         = pluralize(adozioni.size, "Adozione")
         .pull-right
