@@ -28,13 +28,13 @@
     - for stato, adoz in adozioni.group_by {|a| a.stato } do
       - per_cliente = adoz.group_by { |a| a.classe.cliente }
       .header
-        = show_hide_tag
+        = show_hide_tag 'down'
         %h3
           = stato
           .pull-right            
             %small= "#{pluralize per_cliente.keys.size, "scuola"}" 
             = adozione_stato_label stato, adoz.size
-      .more
+      .more.hidden
         - for cliente, a in per_cliente do
           .cliente.item{ class: "#{dom_id(cliente)}"}
             = baule_tag cliente
