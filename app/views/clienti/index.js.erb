@@ -1,12 +1,12 @@
 <% if params[:page] && params[:page].to_i > 1 %>
-  $("#clienti").append("<%= j render @clienti %>")
+  $("#clienti").append("<%= j render partial: 'cliente_big', collection: @clienti, as: :cliente %>")
   <% if (@clienti.current_page < @clienti.num_pages) %>
     $('.pagination').replaceWith('<%= j paginate(@clienti) %>');
   <% else %>
     $('.pagination').remove();
   <% end %>
 <% else %>  
-  $("#clienti").html("<%= j render @clienti %>")
+  $("#clienti").html("<%= j render partial: 'cliente_big', collection: @clienti, as: :cliente %>")
   $(".clienti-side").replaceWith('<%= j render "clienti_side" %>');
   if ($(".pagination").length > 0) {
     $('.pagination').replaceWith('<%= j paginate(@clienti) %>');

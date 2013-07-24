@@ -1,0 +1,26 @@
+= form_tag update_multiple_adozioni_path, method: "put", html: { class: "form-inline" }, remote: true do |f|
+
+  - adozioni.each do |adozione|
+    = hidden_field_tag "adozione_ids[]", adozione.id
+
+  - if stato == "da consegnare"
+
+    = hidden_field_tag "adozione[kit_1]", ""
+    = hidden_field_tag "adozione[kit_2]", ""
+
+  - elsif stato == "saggio"
+
+    = hidden_field_tag "adozione[kit_1]", "consegnato"
+    = hidden_field_tag "adozione[kit_2]", ""
+
+  - elsif stato == "kit"
+
+    = hidden_field_tag "adozione[kit_1]", "consegnato"
+    = hidden_field_tag "adozione[kit_2]", "consegnato"
+
+  - elsif stato == "kit no saggio"
+
+    = hidden_field_tag "adozione[kit_1]", ""
+    = hidden_field_tag "adozione[kit_2]", "consegnato"
+
+  = submit_tag stato, class: "btn btn-link"

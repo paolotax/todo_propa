@@ -1,0 +1,17 @@
+%div{ class: "cliente big #{dom_id(cliente)} #{cliente.fatto? ? "fatto" : "" }", data: {id: "#{cliente.id}"}}
+
+  .scorri-div  
+    - if cliente.da_scorrere?
+      .pull-right
+        = link_to "scorri", scorri_classi_cliente_url(cliente), class: "btn btn-danger pull-right", confirm: "Sei sicuro?", remote: true
+
+  .baule-div
+    = baule_tag cliente
+
+  - if cliente.preparato?
+    = image_tag asset_path "task-preparato.png"
+
+  .cliente-inner.clearfix
+    .titolo
+      = link_to cliente.titolo, cliente
+    

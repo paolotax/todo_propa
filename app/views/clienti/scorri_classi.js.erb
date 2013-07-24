@@ -1,4 +1,14 @@
-$("#foglio_scuola_<%= @cliente.id %>").replaceWith("<%= j render 'clienti/foglio_scuola', cliente: @cliente %>");
-$("#foglio_scuola_<%= @cliente.id %> .more").removeClass("hidden")
 
-$('#foglio_scuola_<%= @cliente.id %> .on_the_spot_editing').each(initializeOnTheSpot);
+var foglio = $("#foglio_scuola_<%= @cliente.id %>")
+var cliente = $(".cliente.big.cliente_<%= @cliente.id %>")
+
+if (foglio != null) {
+	foglio.replaceWith("<%= j render 'clienti/foglio_scuola', cliente: @cliente %>");
+	$("#foglio_scuola_<%= @cliente.id %> .more").removeClass("hidden")
+	$('#foglio_scuola_<%= @cliente.id %> .on_the_spot_editing').each(initializeOnTheSpot);
+};
+
+if (cliente != null) {
+	cliente.replaceWith("<%= j render 'cliente_big', cliente: @cliente %>");
+};
+

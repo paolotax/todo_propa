@@ -45,6 +45,24 @@ class AdozioniController < ApplicationController
     end
   end
 
+  def update_multiple
+    @adozioni = current_user.adozioni.find(params[:adozione_ids]) 
+    @classe = @adozioni[0].classe
+       
+    @adozioni.reject! do |adozione|
+      adozione.update_attributes(params[:adozione])
+    end
+    if @adozioni.empty?
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js
+      end 
+    else
+      # @product = Product.new(params[:product])
+      # render "edit_multiple"
+    end
+  end
+
   def destroy
     @adozione = current_user.adozioni.find(params[:id])
     @classe = @adozione.classe

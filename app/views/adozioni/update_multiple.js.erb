@@ -1,0 +1,6 @@
+var classe = $("#<%= dom_id(@classe) %>")
+
+if (classe != null) {
+	classe.replaceWith("<%= j render 'classi/classe', c: @classe, coef: @classe.cliente.max_classi %>");
+	$('#<%= dom_id(@classe) %> .on_the_spot_editing').each(initializeOnTheSpot);
+};

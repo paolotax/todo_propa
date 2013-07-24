@@ -38,6 +38,7 @@
 
       - unless c.adozioni.scolastico.empty?        
         - for a in c.adozioni.scolastico do
+
           %li.dropdown[a]
             = link_to "#", class: "dropdown-toggle", "data-toggle" => "dropdown" do
               - if a.kit_1 == 'consegnato' && a.kit_2 == 'consegnato'
@@ -50,27 +51,10 @@
               - else
                 %span.label= "#{a.libro.sigla}"
             %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
-              %li
-                = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
-                  = hidden_field_tag "adozione[kit_1]", ""
-                  = hidden_field_tag "adozione[kit_2]", ""
-                  = f.submit "no saggio no kit", class: "btn btn-link"
-              %li
-                = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
-                  = hidden_field_tag "adozione[kit_1]", "consegnato"
-                  = hidden_field_tag "adozione[kit_2]", ""
-                  = f.submit "si saggio no kit", class: "btn btn-link"
-              %li
-                = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
-                  = hidden_field_tag "adozione[kit_1]", "consegnato"
-                  = hidden_field_tag "adozione[kit_2]", "consegnato"
-                  = f.submit "si kit si saggio", class: "btn btn-link"
-
-              %li
-                = form_for a, method: "put", html: {class: "form-inline"}, remote: true do |f|
-                  = hidden_field_tag "adozione[kit_1]", ""
-                  = hidden_field_tag "adozione[kit_2]", "consegnato"
-                  = f.submit "si kit no saggio", class: "btn btn-link"
+              %li= adozioni_stato_tag "da consegnare", [a]
+              %li= adozioni_stato_tag "saggio", [a]            
+              %li= adozioni_stato_tag "kit", [a]            
+              %li= adozioni_stato_tag "kit no saggio", [a]            
               
               %li.divider
               %li

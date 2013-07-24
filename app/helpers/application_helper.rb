@@ -33,20 +33,6 @@ module ApplicationHelper
       raw(title + content_tag( :i, "", class: "chev-right"))
     end  
   end
-
-  def adozione_stato_label(stato, value)
-    
-    label_class = ''
-    if stato == "kit"
-      label_class = "label-success"
-    elsif stato == "saggio"
-      label_class = "label-warning"
-    elsif stato == "kit no saggio"
-      label_class = "label-important"
-    end
-    
-    content_tag :span, value, class: "label #{label_class}" 
-  end
   
   def show_hide_tag(up_down = 'up')
     link_to "", class: "pull-right show-hide" do

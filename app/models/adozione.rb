@@ -25,7 +25,7 @@ class Adozione < ActiveRecord::Base
 
   
   def importo
-    libro.prezzo_copertina * classe.nr_alunni
+    libro.prezzo_copertina * nr_copie ||= 0
   end
   
   def titolo

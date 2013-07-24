@@ -38,6 +38,7 @@ TodoPropa::Application.routes.draw do
   
   resources :adozioni do
     collection do
+      put 'update_multiple'
       post 'destroy_all'
     end
     collection do
