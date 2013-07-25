@@ -17,6 +17,15 @@ body { padding-top: 60px; }
 
 @import "bootstrap-responsive";
 
+.btn-group > form {
+  display: inline;
+}
+.btn-group > form:last-child > button:last-of-type {
+  // Rounding
+}
+div > button:last-child {
+  // Rounding
+}
 
 .dropdown-menu li .btn-link {
   display: block;

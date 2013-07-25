@@ -86,7 +86,7 @@ class AdozioniController < ApplicationController
   end
 
   def print_multiple
-    @adozioni = current_user.adozioni.joins(:classe).find(params[:adozione_ids], order: "classi.classe, adozioni.libro_id, classi.sezione")    
+    @adozioni = current_user.adozioni.joins(:classe).find(params[:adozione_ids], order: "classi.cliente_id, classi.classe, adozioni.libro_id, classi.sezione")    
     respond_to do |format|
       format.pdf do         
         pdf = AdozionePdf.new(@adozioni, view_context)

@@ -2,26 +2,19 @@
 
   .header
     = show_hide_tag  "down"
-
-    %h3.pull-left Foglio Scuola
-
     .pull-right
-      = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
-        - for a in cliente.mie_adozioni do
-          = hidden_field_tag "adozione_ids[]", a.id
-        = submit_tag "Stampa Adozioni",  id: "bnt-pdf", class: "btn"
-        / = select_tag "tipo_etichetta", options_for_select(["2x4 con bordo", "2x4 senza bordo", "3x8", "2x6", "Dymo 99012"])
-        / = number_field_tag "etichetta_da", "", class: "input-mini", placeholder: "salta"
+      .btn-group
+        = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
+          - for a in cliente.mie_adozioni do
+            = hidden_field_tag "adozione_ids[]", a.id
+          = submit_tag "Stampa Adozioni",  id: "bnt-pdf", class: "btn", placeholder: "salta"
+      - if cliente.da_scorrere?
+        .btn-group
+          = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger", confirm: "Sei sicuro?", remote: true
 
+    %h3 Foglio Scuola
 
-
-    - if cliente.da_scorrere?
-      = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger pull-right", confirm: "Sei sicuro?", remote: true
-    .clearfix
-
-
-
-  .more.hidden.clearfix
+  .more.hidden
 
     - coef = cliente.max_classi
 

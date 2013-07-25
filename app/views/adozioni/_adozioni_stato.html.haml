@@ -1,4 +1,4 @@
-= form_tag update_multiple_adozioni_path, method: "put", html: { class: "form-inline" }, remote: true do |f|
+= form_tag update_multiple_adozioni_path, method: "put", html: { class: "form-inline" }, remote: remote do |f|
 
   - adozioni.each do |adozione|
     = hidden_field_tag "adozione_ids[]", adozione.id

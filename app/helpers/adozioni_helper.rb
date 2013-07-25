@@ -13,8 +13,8 @@ module AdozioniHelper
     content_tag :span, value, class: "label #{label_class}" 
   end
 
-  def adozioni_stato_tag(stato, adozioni)
- 	render 'adozioni/adozioni_stato', stato: stato, adozioni: adozioni 
+  def adozioni_stato_tag(stato, adozioni, remote = true)
+ 	  render 'adozioni/adozioni_stato', stato: stato, adozioni: adozioni, remote: remote 
   end
 
 end
