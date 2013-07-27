@@ -9,10 +9,10 @@ jQuery ->
     e.stopPropagation()
     $(@).toggleClass('opened')
 
-  $(document).on 'touchstart' , ".appunto.item", (e) ->
-    e.stopPropagation()
-    console.log 'touchstart'
-    $(@).toggleClass('opened')
+  # $(document).on 'touchstart' , ".appunto.item", (e) ->
+  #   e.stopPropagation()
+  #   console.log 'touchstart'
+  #   $(@).toggleClass('opened')
   
   $(document).on "click", ".appunto.item input[type='checkbox'], .appunto.item a, .appunto-item button, .nav-actions li a, .nav-actions li button", (e) ->
     e.stopPropagation()
