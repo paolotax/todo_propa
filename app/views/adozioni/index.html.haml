@@ -49,16 +49,6 @@
 
   .sidebar.span4
 
-    .module
-      .sort-box.clearfix
-        %strong filtra scuole
-        .btn-group.pull-right
-          = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}"
-          - for provincia in @provincie
-            = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}"
- 
-
-    
     = render 'adozioni/adozioni_grouped', adozioni: @adozioni
 
                   

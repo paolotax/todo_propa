@@ -1,50 +1,61 @@
-.module.adozioni-grouped
+.adozioni-grouped
+  
+  .module
+    .sort-box.clearfix
+      %strong filtra scuole
+      .btn-group.pull-right
+        = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: true
+        - for provincia in @provincie
+          = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: true
 
-  - # occhio ai params[:] da adozioni controller
 
-  .header
-    = show_hide_tag
-    %h3
-      - if params[:materia] 
-        = params[:materia]
-        .pull-right
-          %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
-          = adozioni.size
-      
-      - elsif params[:titolo] 
-        = link_to params[:titolo], @libro
-        .pull-right
-          %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
-          = adozioni.size
-      
-      - else
-        = pluralize(adozioni.size, "Adozione")
-        .pull-right
-          %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
-          - if @giro
-            %small= "#{@giro.adozioni.size} nel baule"
+  .module
+
+    - # occhio ai params[:] da adozioni controller
+
+    .header
+      = show_hide_tag
+      %h3
+        - if params[:materia] 
+          = params[:materia]
+          .pull-right
+            %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
+            = adozioni.size
         
-  .more
-    - for stato, adoz in adozioni.group_by {|a| a.stato } do
-      - per_cliente = adoz.group_by { |a| a.classe.cliente }
-      .header
-        = show_hide_tag 'down'
-        %h3
-          = stato
-          .pull-right            
-            %small= "#{pluralize per_cliente.keys.size, "scuola"}" 
-            = adozione_stato_label stato, adoz.size
-      .more.hidden
-        - for cliente, a in per_cliente do
-          .cliente.item{ class: "#{dom_id(cliente)}"}
-            = baule_tag cliente
-            = link_to cliente.titolo, cliente
-            - if cliente.preparato?
-              = image_tag asset_path "task-preparato.png"
-            .pull-right
-              - if params[:titolo] || !@giro
-                %small
-                  = a.first.classe.classe
-                  = a.map {|a| a.classe.sezione}.join
-                  = "-"
-              = adozione_stato_label stato, a.size
+        - elsif params[:titolo] 
+          = link_to params[:titolo], @libro
+          .pull-right
+            %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
+            = adozioni.size
+        
+        - else
+          = pluralize(adozioni.size, "Adozione")
+          .pull-right
+            %small= "#{pluralize adozioni.joins(:classe => :cliente).pluck("clienti.id").uniq.size, "scuola"}"
+            - if @giro
+              %small= "#{@giro.adozioni.size} nel baule"
+          
+    .more
+      - for stato, adoz in adozioni.group_by {|a| a.stato } do
+        - per_cliente = adoz.group_by { |a| a.classe.cliente }
+        .header
+          = show_hide_tag 'down'
+          %h3
+            = stato
+            .pull-right            
+              %small= "#{pluralize per_cliente.keys.size, "scuola"}" 
+              = adozione_stato_label stato, adoz.size
+        .more.hidden
+          - for cliente, a in per_cliente do
+            .cliente.item{ class: "#{dom_id(cliente)}"}
+              = baule_tag cliente
+              = link_to cliente.titolo, cliente
+              - if cliente.preparato?
+                = image_tag asset_path "task-preparato.png"
+              .pull-right
+                - if params[:titolo] || !@giro
+                  %small
+                    = a.first.classe.classe
+                    = a.map {|a| a.classe.sezione}.join
+                    = "-"
+                = adozione_stato_label stato, a.size
