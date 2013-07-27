@@ -51,7 +51,8 @@ class Adozione < ActiveRecord::Base
   def self.filtra(params)
     adozioni = scoped
     adozioni = adozioni.joins(:libro).where("libri.materia_id = ?", params[:materia])  if params[:materia].present?
-    adozioni = adozioni.joins(:libro).where("libri.titolo = ?", params[:titolo])  if params[:titolo].present?    
+    adozioni = adozioni.joins(:libro).where("libri.titolo = ?", params[:titolo])  if params[:titolo].present?
+    adozioni = adozioni.joins(:classe => :cliente).where("clienti.provincia = ?", params[:provincia])  if params[:provincia].present?    
     adozioni
   end
   

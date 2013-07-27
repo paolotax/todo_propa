@@ -3,7 +3,10 @@ class AdozioniController < ApplicationController
   def index
 
     @adozioni_per_titolo =  current_user.adozioni.scolastico.includes(:libro, :classe => :cliente).order("libri.materia_id, libri.titolo")
+    
     @adozioni = current_user.adozioni.scolastico.includes(:libro, :classe => :cliente).per_scuola.filtra(params)
+    
+    @provincie = current_user.adozioni.scolastico.joins(:classe => :cliente).per_scuola.pluck("clienti.provincia").uniq
     
     @giro = Giro.new(user_id: current_user.id, baule: true) 
 
