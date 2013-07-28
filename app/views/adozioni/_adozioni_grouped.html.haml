@@ -36,6 +36,7 @@
               %small= "#{@giro.adozioni.size} nel baule"
           
     .more
+
       - for stato, adoz in adozioni.group_by {|a| a.stato } do
         - per_cliente = adoz.group_by { |a| a.classe.cliente }
         .header
@@ -52,6 +53,15 @@
               = link_to cliente.titolo, cliente
               - if cliente.preparato?
                 = image_tag asset_path "task-preparato.png"
+
+              .pull-right
+                = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni", style: "display: inline;" do
+                  - for ado in a do
+                    = hidden_field_tag "adozione_ids[]", ado.id
+                  %button.btn.btn-link{ title: 'stampa adozioni' }
+                    %i.icon-cog
+
+
               .pull-right
                 - if params[:titolo] || !@giro
                   %small
