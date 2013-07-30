@@ -30,6 +30,8 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'buono di consegna', 'buoni di consegna'
   inflect.irregular 'nota di accredito', 'note di accredito'
   inflect.irregular 'ordine', 'ordini'
+  inflect.irregular 'documento', 'documenti'
+  
   # inflect.plural /^([\w]*)a/i, '\1e'
   # inflect.singular /^([\w]*)e/i, '\1a'
   # inflect.plural /^([\w]*)o/i, '\1i'

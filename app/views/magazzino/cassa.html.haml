@@ -5,12 +5,12 @@
       - for month, values in @incassi.group_by {|f| f.data.beginning_of_month} do
         .page-break
         %li
-          %strong= month
+          %strong= l month, format: :month_year
         - for i in values do
           %li
             .data.pull-left{ style: "width: 50%"}
               = link_to "#", class: "trigger" do
-                = i.data.strftime("%A %e")
+                = l i.data, format: :day_of_month
               
             .pull-right{ style: "text-align: right; width:50%"}
               = number_to_currency i.incasso

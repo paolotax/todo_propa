@@ -1,6 +1,12 @@
 var classe = $("#<%= dom_id(@classe) %>")
+var adozioniGroup = $(".adozioni-grouped")
 
 if (classe != null) {
 	classe.replaceWith("<%= j render 'classi/classe', c: @classe, coef: @classe.cliente.max_classi %>");
 	$('#<%= dom_id(@classe) %> .on_the_spot_editing').each(initializeOnTheSpot);
+};
+
+if (adozioniGroup != null) {
+	console.log("SI");
+	adozioniGroup.replaceWith("<%= j render 'adozioni/adozioni_grouped', adozioni: @adozioni %>");
 };

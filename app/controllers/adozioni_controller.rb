@@ -58,7 +58,11 @@ class AdozioniController < ApplicationController
     if @adozioni.empty?
       respond_to do |format|
         format.html { redirect_to :back }
-        format.js
+        format.js do
+          @provincie = current_user.adozioni.scolastico.joins(:classe => :cliente).per_scuola.pluck("clienti.provincia").uniq
+          @adozioni = current_user.adozioni.find(params[:adozione_ids]) 
+        end
+     
       end 
     else
       # @product = Product.new(params[:product])

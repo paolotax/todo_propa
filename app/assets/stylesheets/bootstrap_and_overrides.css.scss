@@ -30,6 +30,8 @@ div > button:last-child {
 .dropdown-menu li .btn-link {
   display: block;
   padding: 3px 20px;
+  width: 100%;
+  text-align: left;
   // text-indent: 20px;
   clear: both;
   font-weight: normal;

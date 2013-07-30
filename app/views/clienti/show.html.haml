@@ -57,7 +57,8 @@
             %li{ style: "margin-right: 5px"}
               = link_to giro_path(giorno: v.giorno) do
                 %span.label.label-important
-                  = v.giorno.strftime("%d %B %Y")
+                  = l v.giorno, format: :long
+      
       .pull-right
         = baule_tag @cliente, class_scarica: "btn btn-warning"
         - unless @cliente.has_documenti?
@@ -77,13 +78,14 @@
   .row
     .side-bar.span3
       
-      .module
-        .header
-          = show_hide_tag
-          %h3= pluralize(@cliente.fatture.size, "documento")
-        .more.riepilogo-libri  
-          %ul
-            = render partial: "fatture/fattura_item", collection: @cliente.fatture.per_numero, as: :fattura
+      - unless @cliente.fatture.size.zero?
+        .module
+          .header
+            = show_hide_tag
+            %h3= pluralize(@cliente.fatture.size, "documento")
+          .more.riepilogo-libri  
+            %ul
+              = render partial: "fatture/fattura_item", collection: @cliente.fatture.per_numero, as: :fattura
 
       - unless @cliente.new_record?  
         - da_consegnare  = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
