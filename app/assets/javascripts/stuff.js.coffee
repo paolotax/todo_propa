@@ -8,7 +8,14 @@ jQuery ->
     e.preventDefault()
     $.modal().close()
   
+
+
   $('.trigger').live 'click', (e) ->
+    
     e.preventDefault();
-    $('.the-modal').modal().open();
+    $("#cassa.the-modal").modal().open
+    	onOpen: (el, options) ->
+    		console.log el
+    		$.get '/appunti', (data) ->
+        	el.html("ciao");
     

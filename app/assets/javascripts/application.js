@@ -28,7 +28,10 @@
 //= require jquery_nested_form
 //= require jquery.soulmate
 //= require fullcalendar
+
 //= require jquery.the-modal.js
+//= require bootstrap-modal
+//= require bootstrap-modalmanager
 
 //= require_tree ../templates
 //= require_tree ./application

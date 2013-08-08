@@ -1,15 +1,13 @@
 = new_button( new_libro_url )
 
 - title @libro.titolo
-
-= link_to "click me", "#", class: "click-me"
  
 .content
   %section.well.show-page
     %article.row-fluid[@libro]
       .copertina.span2
         = image_tag @libro.image_url
-      .content-inner.span5
+      .content-inner.span7
         %h1
           = @libro.titolo
           %small= @libro.settore
@@ -19,14 +17,11 @@
           %dt cm      
           %dd= @libro.cm
           %dt ean
-          %dd= @libro.ean
-
-        .prezzo-copertina
-          %strong= pretty_prezzo(@libro.prezzo_copertina) unless @libro.prezzo_copertina.nil? 
-          COPERTINA
-        .prezzo-consigiato
-          %strong= pretty_prezzo(@libro.prezzo_consigliato) unless @libro.prezzo_consigliato.nil?
-          CONSIGLIATO
+          %dd= @libro.ean ||= "gino"
+          %dt prezzo di copertina
+          %dd= number_to_currency @libro.prezzo_copertina
+          %dt prezzo consigliato
+          %dd= number_to_currency @libro.prezzo_consigliato
 
     %footer.show-toolbar
       

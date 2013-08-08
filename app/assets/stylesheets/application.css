@@ -12,6 +12,8 @@
  *= require the-modal
  *= require jquery.ui.datepicker
  *= require fullcalendar
+ *= require bootstrap-modal
+
  *= require_tree ./application
  
-*/
+ */

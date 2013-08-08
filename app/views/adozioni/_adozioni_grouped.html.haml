@@ -1,12 +1,14 @@
 .adozioni-grouped
   
   .module
-    .sort-box.clearfix
-      %strong filtra scuole
-      .btn-group.pull-right
-        = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: true
-        - for provincia in @provincie
-          = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: true
+    - if @provincie
+
+      .sort-box.clearfix
+        %strong filtra scuole
+        .btn-group.pull-right
+          = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: true
+          - for provincia in @provincie
+            = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: true
 
 
   .module

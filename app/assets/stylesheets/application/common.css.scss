@@ -1,7 +1,7 @@
 @import "mixins";
 @import "compass/css3/border-radius";
 
-#loading{
+#loading {
   position: fixed;
   right: 10px;
   top: 10px;
@@ -25,6 +25,13 @@
 
 .inline li {
   display: inline;
+}
+
+// fix empty dd if nil
+.dl-horizontal > dd:after {
+  display: table;
+  content: "";
+  clear: both;
 }
 
 
