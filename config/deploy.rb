@@ -35,9 +35,9 @@ ssh_options[:forward_agent] = true
 #set :local_repository, 'ssh://xxx/var/git/repositories/xxx.git' # Your development machine points to the remote machine 
 
 # SSH settings, also see ~/.ssh/config
-#set :user, "jebus"
-#set :domain, 'xxx.com'
-#set :port, 666
+set :user, "deployer"
+set :domain, 'youpropa.com'
+set :port, 666
 
 # Other settings worth checking
 #ssh_options[:forward_agent] = true
