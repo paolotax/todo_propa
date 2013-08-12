@@ -2,31 +2,22 @@
 
 - title "Libri"
 
-#libri.well
-  %table.table
-    %thead
-      %tr
-        %th Id
-        %th Titolo
-        %th Settore
-        %th cm
-        %th Sigla
-        %th Prezzo
-        %th Consigliato
-    %tbody
-      - for libro in @libri do
-        %tr
-          %td= link_to image_tag(libro.image_url(:small_thumb)), libro
-          %td= on_the_spot_edit libro, :titolo
-          %td= on_the_spot_edit libro, :settore, type: :select, data: ::Libro::SETTORI_OPT
-          %td= on_the_spot_edit libro, :cm,      selected: true
-          %td= on_the_spot_edit libro, :sigla,   selected: true
-          %td
-            / = on_the_spot_edit libro, :prezzo_copertina,   selected: true
-            - unless libro.prezzo_copertina.nil?
-              = pretty_prezzo libro.prezzo_copertina
-          %td
-            / .pull-right= on_the_spot_edit libro, :prezzo_consigliato, selected: true
-            - unless libro.prezzo_consigliato.nil?
-              = pretty_prezzo libro.prezzo_consigliato
+.row
+  = render :partial => 'libri_side'
+  
+  .content-main.span6
+    %header.content-header
+      .header-inner
+        %h2 Libri
+    
+    = render :partial => 'shared/filters'
 
+    #libri.list
+      = render @libri
+
+    .stream-loader
+      = paginate @libri
+
+  / .side-right.span3.only_desktop    
+  /   .module.white
+  /     = render 'forecast'

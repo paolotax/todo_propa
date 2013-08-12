@@ -1,0 +1,21 @@
+<% if params[:page] && params[:page].to_i > 1 %>
+  $("#libri").append("<%= j render @libri %>")
+  <% if (@libri.current_page < @libri.num_pages) %>
+    $('.pagination').replaceWith('<%= j paginate(@libri) %>');
+  <% else %>
+    $('.pagination').remove();
+  <% end %>
+<% else %>  
+  $("#libri").html("<%= j render @libri %>")
+  $(".libri-side").replaceWith('<%= j render "libri_side" %>');
+  if ($(".pagination").length > 0) {
+    $('.pagination').replaceWith('<%= j paginate(@libri) %>');
+  } else {
+    $(".stream-loader").append("<div class='pagination'>" + '<%= j paginate(@libri) %>' + "</div>");
+  }
+  if ($(".filters").length > 0) {
+    $('.filters').replaceWith('<%= j render "shared/filters" %>');
+  } else {
+    $("#libri").before('<%= j render "shared/filters" %>');
+  }
+<% end %>

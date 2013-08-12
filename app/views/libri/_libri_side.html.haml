@@ -1,0 +1,50 @@
+.libri-side.span3
+  .module
+
+    %ul
+      %li{ class: "#{ params[:settore].present? ? '': 'active' }" }
+        = filter_tag params.except(:settore), "Settori"
+
+      - for s in Libro::SETTORI
+        %li{ class: "#{ params[:settore] == s ? 'active' : ''}" }
+          = filter_tag params.merge(:settore => s, :page => nil), s
+
+  /   %ul.stats
+  /     %li.tutti
+  /       = link_to params.except(:status), remote: true do
+  /         %strong= @tutti
+  /         appunti
+  /     %li.da-fare
+  /       = link_to params.merge(status: "da_fare"), remote: true do
+  /         %strong= @da_fare
+  /         fare
+  /     %li.preparato
+  /       = link_to params.merge(status: "preparati"), remote: true do
+  /         %strong= @preparati
+  /         pronti
+  /     %li.in-sospeso
+  /       = link_to params.merge(status: "in_sospeso"), remote: true do
+  /         %strong= @in_sospeso
+  /         sospeso
+    
+  /   .search-box
+  /     = form_tag params, method:'get', id: 'appunti_search', class: "form-search", remote: true do
+  /       .input-append
+  /         = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca appunti"
+  /         = button_tag class: "btn", name: nil do
+  /           %i.icon-search
+
+  /   .sort-box.clearfix
+  /     ordine
+  /     .btn-group.pull-right
+      
+  /       = link_to "data", params.except(:ordine), remote: true, class: "btn #{params[:ordine].present?  ? '' : 'btn-primary'}"
+  /       = link_to "cliente", params.merge(ordine: "cliente_id"), remote: true, class: "btn #{params[:ordine] == 'cliente_id'  ? 'btn-primary' : ''}"
+  /       = link_to "comune", params.merge(ordine: "comune"), remote: true, class: "btn #{params[:ordine] == 'comune'  ? 'btn-primary' : ''}"
+
+  / - unless current_user.appunti.tag_counts.empty?
+  /   .module.white
+  /     #tag_cloud
+  /       - tag_cloud current_user.appunti.tag_counts, %w[s m l] do |tag, css_class|
+  /         = link_to tag.name, tag_path(tag.name), class: css_class, remote: true
+

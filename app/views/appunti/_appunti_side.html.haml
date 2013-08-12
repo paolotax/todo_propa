@@ -33,5 +33,12 @@
         = link_to "cliente", params.merge(ordine: "cliente_id"), remote: true, class: "btn #{params[:ordine] == 'cliente_id'  ? 'btn-primary' : ''}"
         = link_to "comune", params.merge(ordine: "comune"), remote: true, class: "btn #{params[:ordine] == 'comune'  ? 'btn-primary' : ''}"
 
+  - unless current_user.appunti.tag_counts.empty?
+    .module.white
+      #tag_cloud
+        - tag_cloud current_user.appunti.tag_counts, %w[s m l] do |tag, css_class|
+          = link_to tag.name, tag_path(tag.name), class: css_class, remote: true
+
+
   = render 'shared/search_provincia'
   = render "shared/search_comune"

@@ -5,9 +5,12 @@
 
 - grouped = grouped ||= ""
 
-.item.clearfix[appunto]{ class: "#{appunto.status} #{grouped} #{favorited}" }
+.item[appunto]{ class: "#{appunto.status} #{grouped} #{favorited}" }
+  
   .content
+    
     .dogear
+    
     %small.time
       %time.timeago{ datetime: "#{appunto.updated_at || appunto.created_at}" }
     
@@ -16,6 +19,7 @@
         %li.show
           %a{ title: 'mostra dettagli', href: "#"}
             Apri
+    
     .chiudi{ style: "float: right;"}
       %a{ title: 'chiudi', href: "#"}
         Chiudi
@@ -36,8 +40,9 @@
     
     - if grouped == ""
       = link_to appunto.cliente do
-        %strong.full_name= appunto.cliente.titolo 
+        %strong.full_name= appunto.cliente.titolo       
       %small.destinatario= "@#{appunto.destinatario}" if appunto.destinatario?
+    
     - else
       -  if appunto.destinatario?
         %strong= "@#{appunto.destinatario}"
@@ -48,26 +53,24 @@
       = appunto.note
     
     - unless appunto.tag_list.empty?
-      %p
-        - for tag in appunto.tag_list do
-          .pull-left.tag-remove.label.label-warning{ style: "margin: 0 3px 3px 0"}
-            
-            %span.pull-left= tag
-            / = link_to tag, tag_path(tag: tag), class: "pull-left"
-            = form_for appunto, remote: true, html: {style: "display:inline; margin: 0 0 0 12px", class: "close"} do |f|
-              = hidden_field_tag "appunto[tag_list]", (appunto.tag_list - [tag]).join(', ')
-              = f.button "x"
-      
+      - for tag in appunto.tag_list do
+        .pull-left.tag-remove.label.label-warning{ style: "margin: 0 3px 3px 0"}
+          
+          %span.pull-left= tag
+          / = link_to tag, tag_path(tag: tag), class: "pull-left"
+          = form_for appunto, remote: true, html: {style: "display:inline; margin: 0 0 0 12px", class: "close"} do |f|
+            = hidden_field_tag "appunto[tag_list]", (appunto.tag_list - [tag]).join(', ')
+            = f.button "x"
+      .clearfix
+
     = render "appunti/recapiti", appunto: appunto
     
     - if appunto.completato? && appunto.has_righe? && appunto.da_fatturare?
       %p
         da registrare
-    
 
-  .clearfix      
-  
   .more
+    
     .dates
       %small
         %span= "##{appunto.id} - "
@@ -82,20 +85,25 @@
             = "#{appunto.fattura.causale} #{appunto.fattura.numero}" 
             = l appunto.fattura.data, format: :only_date
         
-    .table-righe-new
-      - if appunto.has_righe?
-        = render appunto.righe
-
-  %footer
+    
     - if appunto.has_righe?
-      .totali-new.pull-right
-        %span.totale-copie= "#{appunto.totale_copie} copie"
-        = "-"
-        %span.totale-importo= number_to_currency appunto.totale_importo
-    - else
-      &nbsp  
+      .table-righe-new
+        = render appunto.righe
+  
+  %footer
+    
+    - if appunto.has_righe?
+
+      .copie
+        %strong= appunto.totale_copie
+        copie
+      .importo-totale
+        %strong= pretty_prezzo appunto.totale_importo
+        importo
+
 
     .footer-actions
+      
       %ul.nav-actions
         - unless appunto.status == "completato"
           %li.baule-div
@@ -113,3 +121,4 @@
           %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
             %i.icon-trash
             Elimina
+

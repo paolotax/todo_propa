@@ -1,28 +1,15 @@
+
+
 .item[fattura]{ class: "#{ fattura.coerente? ? '' : 'non_coerente'} #{ fattura.pagata? ? '' : 'da_pagare'}", data: { id: "#{fattura.id}"} }
+  
   .actions
     %ul.nav-fattura
-      %li.baule-div
-        = paga_tag fattura
-      %li.print
-        %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.causale}", target: "_blank" }
-          %i.icon-tag
-          Stampa
-      %li.edit
-        %a{ href: "/fatture/#{fattura.slug}/fattura_steps/intestazione", title: 'modifica appunto'}
-          %i.icon-pencil
-          Modifica
-      
-      %li
-        = " | "
       %li.show
         %a.apri{ title: 'mostra dettagli', href: "#"}
-          Apri
-  
+          Apri  
   .chiudi{ style: "float: right;"}
     %a{href: "#"}
       Chiudi
-  
-
   .causale
     %h4
       = "#{fattura.causale} #{fattura.numero}"
@@ -30,16 +17,11 @@
   .clearfix    
   .cliente-titolo
     %strong= link_to fattura.titolo, fattura.cliente
-
-  .consegnato
-  
-  .pagato
-
   .copie
     %strong= fattura.totale_copie
     copie
-  .importo-fattura
-    %strong= number_to_currency fattura.importo_fattura 
+  .importo-totale
+    %strong= pretty_prezzo fattura.importo_fattura
     importo
   .clearfix
 
@@ -54,22 +36,24 @@
     .table-righe-new
       - for riga in fattura.righe
         = render riga
-            
-  .more-actions
-    %ul.nav-fattura
-      %li.baule-div
-        = paga_tag fattura     
-      %li.print
-        %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.causale}", target: "_blank" }
-          %i.icon-tag
-          Stampa
-      %li.edit
-        %a{ href: "/fatture/#{fattura.slug}/fattura_steps/intestazione", title: 'modifica appunto'}
-          %i.icon-pencil
-          Modifica
-      %li.delete
-        %a{ href: "/fatture/#{fattura.slug}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-          %i.icon-trash
-          Elimina
+  
+  %footer
+
+    .footer-actions
+      %ul.nav-actions
+        %li.baule-div
+          = paga_tag fattura     
+        %li.print
+          %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.causale}", target: "_blank" }
+            %i.icon-tag
+            Stampa
+        %li.edit
+          %a{ href: "/fatture/#{fattura.slug}/fattura_steps/intestazione", title: 'modifica appunto'}
+            %i.icon-pencil
+            Modifica
+        %li.delete
+          %a{ href: "/fatture/#{fattura.slug}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+            %i.icon-trash
+            Elimina
     
   

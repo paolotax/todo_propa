@@ -21,40 +21,11 @@ input[type=number] {
 }
 
 
-.appunti > div,
-#appunti > div,
-#clienti > div {
-
-  position: relative;
-  min-height: 51px;
-  padding: 9px 12px 9px;
-  border-bottom: 1px solid #E8E8E8;
-  
-  background: white;
-  border-left: 1px solid #E8E8E8;
-  border-right: 1px solid #E8E8E8;
-
-
-  // border-right: 1px solid rgba(0, 0, 0, .1);
-
-
-  -webkit-background-clip: padding-box;
-  -moz-background-clip: padding;
-  background-clip: padding-box;
-
-}
 
 
 
-.time {
-  position: absolute;
-  right: 12px;
-  font-size: 12px;
-  color: #999;
-  -webkit-transition: opacity .15s ease-in-out;
-  -moz-transition: opacity .2s ease-in-out;
-  transition: opacity .15s ease-in-out;
-}
+
+
 
 .select-check {
   position: absolute;
@@ -67,7 +38,7 @@ input[type=number] {
   color: #999;
 }
 
-.fattura, .appunto, .cliente {
+.item {
   position: relative;
   .actions {
     position: absolute;
@@ -84,11 +55,9 @@ input[type=number] {
 .table-righe-new {
   padding: 5px 0 10px;
 }
-.appunti,
-#appunti,
-#clienti {
-  .appunto, 
-  .cliente {
+
+.list {
+  .item {
     .content {
       margin-left: 46px;
     }
@@ -164,25 +133,6 @@ input[type=number] {
   }
 }
 
-
-.appunto {
-  footer {
-    line-height: 32px;
-    margin-top: 2px;
-    padding: 1px;
-  }
-  .footer-actions ul.nav-actions {
-    @include inline-list;
-  }
-  .footer-actions {
-    display: none;
-  }
-  &:hover .footer-actions,
-  &.opened .footer-actions {
-    float: left;
-    display: block;
-  }
-}
 
 .appunto.in_sospeso {
   .totale-copie,
@@ -276,10 +226,10 @@ input[type=number] {
   clear: both;
 }
 
-a[href^="mailto:"]:before { 
-  content: "\2709";
-  padding-right: 5px;
-}
+// a[href^="mailto:"]:before { 
+//   content: "\2709";
+//   padding-right: 5px;
+// }
 
 
 #appunto-small {

@@ -1,12 +1,14 @@
-%p
-  - unless appunto.telefono.blank?
-    %a.btn{ href: "tel:#{appunto.telefono}" }
+
+- unless appunto.telefono.blank?
+  .btn-group
+    %a.btn.pull-left{ href: "tel:#{appunto.telefono}" }
       %i.icon-phone
       = appunto.telefono
-    %br
 
-  - unless appunto.email.blank?
-    %a.btn{ href: "mailto:#{appunto.email}" }
+- unless appunto.email.blank?
+  .btn-group
+    %a.btn.pull-left{ href: "mailto:#{appunto.email}" }
       %i.icon-envelope
       = appunto.email
-    %br
+
+.clearfix

@@ -5,8 +5,22 @@ class LibriController < ApplicationController
   can_edit_on_the_spot
   
   def index
-    @libri = Libro.per_settore.per_titolo
-    respond_with @libri
+
+    session[:return_to] = request.path
+
+    @search = Libro.filtra(params).ordina(params)
+    @libri = @search.page(params[:page])
+    
+    # @stat_appunti = current_user.appunti.filtra(params.except(:status))
+    # @in_corso     = @stat_appunti.in_corso.size
+    # @da_fare      = @stat_appunti.da_fare.size
+    # @in_sospeso   = @stat_appunti.in_sospeso.size
+    # @preparati    = @stat_appunti.preparato.size    
+    # @tutti        = @stat_appunti.size
+
+    # @libri = Libro.per_settore.per_titolo
+    # respond_with @libri
+
   end
 
   def show

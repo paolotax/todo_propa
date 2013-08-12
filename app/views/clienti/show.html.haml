@@ -107,7 +107,7 @@
           %h2 Appunti
         
       - @appunti_per_anno = @cliente.appunti.recente.group_by { |t| t.created_at.year }
-      .appunti
+      .appunti.list
         - for anno, values in @appunti_per_anno do
           .item
             %h3= anno

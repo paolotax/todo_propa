@@ -123,7 +123,7 @@ module ApplicationHelper
       content_tag :strong do
         raw(
           "€ #{prezzo.to_i.to_s}," +
-          content_tag( :sup, ((prezzo - prezzo.to_i) * 100).to_i.to_s.ljust(2, '0')  )
+          content_tag( :sup, ((prezzo.abs - prezzo.abs.to_i) * 100).to_i.to_s.ljust(2, '0')  )
         )
       end  
     end

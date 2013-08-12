@@ -75,6 +75,29 @@ class Libro < ActiveRecord::Base
                   }
                 })
   end
+
+  def self.filtra(params)
+    libri = scoped
+    libri = libri.search(params[:search]) if params[:search].present?
+    if params[:settore].present?
+      libri = libri.try(params[:settore].downcase)
+    end
+    libri
+  end
+  
+  def self.ordina(params)
+    libri = scoped
+    unless params[:ordine].present?
+      libri = libri.per_titolo
+    else
+      # libri = libri.joins(:cliente).order('clienti.titolo, libri.created_at desc') if params[:ordine] == "cliente"
+
+      # libri = libri.joins(:cliente).order('clienti.provincia, clienti.comune, clienti.titolo, libri.created_at desc') if params[:ordine] == "comune"
+
+      # libri = libri.order('cliente_id, appunti.created_at desc') if params[:ordine] == "cliente_id"
+    end 
+    libri
+  end
   
 
 end
