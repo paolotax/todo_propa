@@ -1,4 +1,19 @@
 .libri-side.span3
+  
+  .module
+    %ul.stats
+      %li.tutti
+        = link_to libri_path, remote: true do
+          %strong= @tutti
+          libri
+    .search-box
+      = form_tag params, method:'get', id: 'libri_search', class: "form-search", remote: true do
+        .input-append
+          = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca libri"
+          = button_tag class: "btn", name: nil do
+            %i.icon-search
+
+
   .module
 
     %ul
@@ -9,30 +24,19 @@
         %li{ class: "#{ params[:settore] == s ? 'active' : ''}" }
           = filter_tag params.merge(:settore => s, :page => nil), s
 
-  /   %ul.stats
-  /     %li.tutti
-  /       = link_to params.except(:status), remote: true do
-  /         %strong= @tutti
-  /         appunti
-  /     %li.da-fare
-  /       = link_to params.merge(status: "da_fare"), remote: true do
-  /         %strong= @da_fare
-  /         fare
-  /     %li.preparato
-  /       = link_to params.merge(status: "preparati"), remote: true do
-  /         %strong= @preparati
-  /         pronti
-  /     %li.in-sospeso
-  /       = link_to params.merge(status: "in_sospeso"), remote: true do
-  /         %strong= @in_sospeso
-  /         sospeso
+      / %li.da-fare
+      /   = link_to params.merge(status: "da_fare"), remote: true do
+      /     %strong= @da_fare
+      /     fare
+      / %li.preparato
+      /   = link_to params.merge(status: "preparati"), remote: true do
+      /     %strong= @preparati
+      /     pronti
+      / %li.in-sospeso
+      /   = link_to params.merge(status: "in_sospeso"), remote: true do
+      /     %strong= @in_sospeso
+      /     sospeso
     
-  /   .search-box
-  /     = form_tag params, method:'get', id: 'appunti_search', class: "form-search", remote: true do
-  /       .input-append
-  /         = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca appunti"
-  /         = button_tag class: "btn", name: nil do
-  /           %i.icon-search
 
   /   .sort-box.clearfix
   /     ordine

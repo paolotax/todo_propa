@@ -10,12 +10,10 @@
     .chiudi{ style: "float: right;"}
       %a{ title: 'chiudi', href: "#"}
         Chiudi    
-    = link_to image_tag(libro.image_url(:small_thumb)), libro
+    .stato
+      = link_to image_tag(libro.image_url(:small_thumb)), libro
     = libro.titolo
 
-    = libro.settore
-    = libro.cm
-    = libro.sigla
 	  
     - unless libro.prezzo_copertina.nil?
       = pretty_prezzo libro.prezzo_copertina
@@ -24,6 +22,11 @@
       = pretty_prezzo libro.prezzo_consigliato
 
   .more
+    .content
+      = libro.settore
+      = libro.cm
+      = libro.sigla
+
     
     / .dates
     /   %small
@@ -56,25 +59,22 @@
     /     importo
 
 
-    / .footer-actions
+    .footer-actions
       
-    /   %ul.nav-actions
-    /     - unless appunto.status == "completato"
-    /       %li.baule-div
-    /         = baule_tag appunto.cliente
-    /     %li.print
-    /       %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
-    /         %i.icon-tag
-    /         Stampa
-    /     %li.edit
-    /       %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
-    /         %i.icon-pencil
-    /         Modifica
+      %ul.nav-actions
+        / %li.print
+        /   %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
+        /     %i.icon-tag
+        /     Stampa
+        %li.edit
+          = link_to edit_libro_path(libro), title: 'modifica libro' do
+            %i.icon-pencil
+            Modifica
 
-    /     %li.delete
-    /       %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-    /         %i.icon-trash
-    /         Elimina
+        %li.delete
+          = link_to libro, title: 'elimina libro', method: :delete, confirm: "Sei sicuro?", remote: true do
+            %i.icon-trash
+            Elimina
 
 
 

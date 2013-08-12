@@ -16,7 +16,7 @@ class LibriController < ApplicationController
     # @da_fare      = @stat_appunti.da_fare.size
     # @in_sospeso   = @stat_appunti.in_sospeso.size
     # @preparati    = @stat_appunti.preparato.size    
-    # @tutti        = @stat_appunti.size
+    @tutti        = Libro.all.size
 
     # @libri = Libro.per_settore.per_titolo
     # respond_with @libri

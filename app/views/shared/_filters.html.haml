@@ -1,4 +1,4 @@
-- if params[:search].present? || params[:tag].present? || params[:tipo].present? || params[:status].present? || params[:provincia].present? ||  params[:comune].present?  || params[:causale].present? ||  params[:anno].present?  || params[:pagamento].present? ||  params[:pagata].present?
+- if params[:search].present? || params[:tag].present? || params[:tipo].present? || params[:status].present? || params[:provincia].present? ||  params[:comune].present?  || params[:causale].present? ||  params[:anno].present?  || params[:pagamento].present? ||  params[:pagata].present? ||  params[:settore].present?
   
   .filters
     - if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
@@ -54,3 +54,9 @@
       %span.filter
         = params[:pagata] == 'true' ? 'pagato' : 'non pagato'
         = link_to "x", params.merge(:pagata => nil, :page => nil), remote: true
+
+    - if params[:settore].present?
+      %span.filter
+        = params[:settore] 
+        = link_to "x", params.merge(:settore => nil, :page => nil), remote: true
+

@@ -16,6 +16,13 @@ class Libro < ActiveRecord::Base
 
   extend FriendlyId
   friendly_id :titolo, use: [:slugged, :history]
+
+  mount_uploader :image, ImageUploader
+
+  include PgSearch
+  pg_search_scope :search, against: [:titolo, :settore, :sigla, :cm, :ean],
+    using: { tsearch: { dictionary: "italian", prefix: true } }
+
   
   has_many :righe
   has_many :adozioni, dependent: :nullify
@@ -27,7 +34,7 @@ class Libro < ActiveRecord::Base
                                            where('classi.classe = ?', cl).
                                            where('adozioni.materia_id = ?', mat) }
   
-  mount_uploader :image, ImageUploader
+
   
   scope :per_settore, unscoped.order(:settore)
   scope :per_titolo,  unscoped.order(:titolo)
