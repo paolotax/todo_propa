@@ -1,6 +1,6 @@
 class LibriController < ApplicationController
   
-  respond_to :html, :js, :json 
+  # respond_to :html, :js, :json 
   
   can_edit_on_the_spot
   
@@ -61,13 +61,22 @@ class LibriController < ApplicationController
   end
 
   def edit
+    session[:return_to] = request.referer
     @libro = Libro.find(params[:id])
   end
 
   def update
     @libro = Libro.find(params[:id])
-    @libro.update_attributes(params[:libro])
-    respond_with @libro
+    respond_to do |format|
+      if @libro.update_attributes(params[:libro])
+        format.html   { redirect_to session[:return_to], notice: 'Libro modificato.' }
+        format.js
+      else
+        format.html { render action: "edit" }
+        format.js
+        format.json { render rabl: @libro.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy

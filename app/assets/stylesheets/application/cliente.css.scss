@@ -1,5 +1,36 @@
 @import "application/mixins";
 
+
+.cliente-vendite {
+  @include clearfix();
+  padding: 3px 12px 3px 12px;
+  background-color: white;
+  border-bottom: 1px solid #ccc; 
+
+  header, footer, 
+  .appunto.appunto-item {
+    @include clearfix();
+    line-height: 22px;
+  } 
+
+  span.importo {
+    display: inline-block;
+    text-align: right;
+    min-width: 70px;
+  }
+  .totale-importo {
+    min-width: 70px;
+    border-top: 3px double black;
+    text-align: right;
+  }
+  .totale-copie {
+    min-width: 40px;
+    border-top: 3px double black;
+    text-align: right;
+  }
+
+}
+
 .module .header {
   background-color: white;
   min-height: 20px;

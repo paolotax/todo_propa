@@ -17,107 +17,41 @@
       = paginate @fatture
 
   .side-bar.span4
-    .module
-      .header
-        = show_hide_tag
-        %h3
-          = number_to_currency @righe_da_fatturare.sum(&:importo)
-          %small pagati da registrare
-      .more
-                      
-        - unless @clienti_righe_da_fatturare.empty?
+    
+    - [@righe_da_fatturare, @righe_da_pagare ].each_with_index do |righe, index|
+
+      - index == 0 ? label = "pagati da registrare" : label = "da incassare e registrare" 
+
+      .module
+        .header
+          = show_hide_tag
+          %h3
+            = number_to_currency righe.sum(&:importo)
+            %small= label
+        .more
+                        
+          - unless righe.empty?
+            
+            - for c, r in righe.group_by(&:cliente) do
+              .cliente-vendite
+                %header
+                  = link_to  c do
+                    %span.titolo= c[:titolo]
+                
+                - for a, righe in r.group_by(&:appunto) do               
+                  = render "appunti/item", appunto: a
+
+                %footer.clearfix
+                  .pull-left
+                    = render 'registra', c: c, r: r
+                  .totale-importo.pull-right
+                    %strong= number_to_currency r.sum(&:importo)
+                  .totale-copie.pull-right
+                    %strong= r.sum(&:quantita)
           
-          - for c, r in @clienti_righe_da_fatturare do
-            .cliente
-              = link_to  c do
-                %span.titolo= c[:titolo]
-              .dropdown.pull-right
-                = link_to "Registra",  "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown" 
-
-                %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
-
-                  %li.dropdown-submenu.pull-left
-                    %a{ tabindex: "-1", href: "#"}
-                      Fattura
-                    %ul.dropdown-menu
-                      %li
-                        = form_for c, url: registra_documento_cliente_path(c), method: "put", html: {class: "form-inline"} do |f|
-                          = hidden_field_tag 'data_documento', "ultima"
-                          = hidden_field_tag 'causale_id', 0
-                          - for a, righe in r.group_by(&:appunto) do
-                            = hidden_field_tag "appunto_ids[]", a.id 
-                          = f.submit "ultima data inserita", class: "btn btn-link"
-                      
-                      %li.divider
-                      
-                      %li
-                        = form_for c, url: registra_documento_cliente_path(c), method: "put" do |f|
-                          = hidden_field_tag 'causale_id', 0
-                          - for a, righe in r.group_by(&:appunto) do
-                            = hidden_field_tag "appunto_ids[]", a.id 
-                          = f.submit "oggi", class: "btn btn-link"
-                  
-                  %li.divider
-                  
-                  %li.dropdown-submenu.pull-left
-                    %a{ tabindex: "-1", href: "#"}
-                      Buono di consegna
-                    %ul.dropdown-menu
-                      %li
-                        = form_for c, url: registra_documento_cliente_path(c), method: "put" do |f|
-                          = hidden_field_tag 'data_documento', "ultima"
-                          = hidden_field_tag 'causale_id', 1
-                          - for a, righe in r.group_by(&:appunto) do
-                            = hidden_field_tag "appunto_ids[]", a.id 
-                          = f.submit "ultima data inserita", class: "btn btn-link"
-                      %li.divider
-                      %li
-                        = form_for c, url: registra_documento_cliente_path(c), method: "put" do |f|
-                          = hidden_field_tag 'causale_id', 1
-                          - for a, righe in r.group_by(&:appunto) do
-                            = hidden_field_tag "appunto_ids[]", a.id 
-                          = f.submit "oggi", class: "btn btn-link"
- 
-                
-              .pull-right
-                = pretty_prezzo r.sum(&:importo)
-              .clearfix  
-
-
-              - for a, righe in r.group_by(&:appunto) do
-                
-                = render "appunti/item", appunto: a
-        
-        - else
-          %span.list-link 
-            %small non ci sono appunti pagati da registrare 
-
-
-    .module
-      .header
-        = show_hide_tag
-        %h3
-          = number_to_currency @righe_da_pagare.sum(&:importo)
-          %small da incassare e registrare
-      .more
-
-        - unless @clienti_righe_da_pagare.empty?
-          - for c, r in @clienti_righe_da_pagare do
-            .cliente
-              = link_to  c do
-                %span.titolo= c[:titolo]
-              .pull-right
-                = link_to "Registra",  new_fattura_url(causale: 1, cliente_id: c[:id]) 
-              .pull-right
-                = pretty_prezzo r.sum(&:importo)
-
-              - for a, righe in r.group_by(&:appunto) do
-                = render "appunti/item", appunto: a
-        - else
-          %span.list-link 
-            %small non ci sono appunti da incassare e registrare 
-
-        
+          - else
+            %span.list-link 
+              %small= "non ci sono appunti #{label}"
 
 
 

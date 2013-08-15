@@ -6,11 +6,8 @@ class FattureController < ApplicationController
     @fatture = @tot_fatture.includes(:cliente, :righe => [:libro]).per_numero.page(params[:page])
     @fatture_per_anno = @fatture.group_by { |t| t.data.beginning_of_year }
     
-    @righe_da_fatturare         = current_user.righe.includes(:libro, appunto: [:cliente]).pagata.da_fatturare.order("appunto_id desc")
-    @clienti_righe_da_fatturare = @righe_da_fatturare.group_by(&:cliente)
-    
-    @righe_da_pagare          = current_user.righe.includes(:libro, :appunto, appunto: [:cliente]).da_pagare.da_fatturare.order("appunto_id desc")
-    @clienti_righe_da_pagare  = @righe_da_pagare.group_by(&:cliente)
+    @righe_da_fatturare = current_user.righe.joins(appunto: :cliente).includes(:libro, appunto: [:cliente]).pagata.da_fatturare.order("clienti.id, appunto_id desc")    
+    @righe_da_pagare    = current_user.righe.joins(appunto: :cliente).includes(:libro, :appunto, appunto: [:cliente]).da_pagare.da_fatturare.order("clienti.id, appunto_id desc")
 
     respond_to do |format|
       format.html # show.html.erb

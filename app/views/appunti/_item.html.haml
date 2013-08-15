@@ -1,15 +1,14 @@
-.appunto-item.clearfix[appunto]
-  = check_box_tag "appunto_ids[]", appunto.id, true, {:class => 'cb-appunto-item pull-left'}
-  = link_to appunto, class: "pull-left" do
+.appunto-item[appunto]
+  = check_box_tag "appunto_ids[]", appunto.id, true, {:class => 'cb-appunto-item'}
+  
+  = link_to appunto do
     = "  ##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
 
-  / - if appunto.stato == "X"
-  /   .pagato.pull-left
-  /     %small= "pagato il #{l appunto.updated_at, format: :only_date}"
-  
-  / .destinatario.pull-left= appunto.destinatario
-
   .totali.pull-right
-    = appunto.totale_copie
-    = number_to_currency appunto.totale_importo
+
+    %span.copie= appunto.totale_copie
+
+    %span.importo= number_to_currency appunto.totale_importo
+
+
 

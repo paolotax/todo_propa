@@ -77,6 +77,24 @@
             
   .row
     .side-bar.span3
+      - unless @righe_da_registrare.empty?
+        .module
+          .header
+            = show_hide_tag
+            %h3 Appunti da registrare
+          .more.cliente-vendite
+            
+            - for a, r in @righe_da_registrare.group_by(&:appunto) do               
+              = render "appunti/item", appunto: a
+
+            %footer.clearfix
+              .pull-left
+                = render 'fatture/registra', c: @cliente, r: r
+              .totale-importo.pull-right
+                %strong= number_to_currency r.sum(&:importo)
+              .totale-copie.pull-right
+                %strong= r.sum(&:quantita)
+
       
       - unless @cliente.fatture.size.zero?
         .module

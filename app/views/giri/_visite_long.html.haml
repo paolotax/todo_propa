@@ -35,7 +35,7 @@
       %h3
         = link_to v.cliente.titolo, v.cliente
 
-    .more.appunti.clearfix
+    .more.appunti.list.clearfix
       - for a in v.appunti do
         .span5
           = check_box_tag "appunto_ids[]", a.id, a.da_consegnare?, {:class => 'cb-appunto'}

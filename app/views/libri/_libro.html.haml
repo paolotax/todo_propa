@@ -12,60 +12,39 @@
         Chiudi    
     .stato
       = link_to image_tag(libro.image_url(:small_thumb)), libro
-    = libro.titolo
+    
+    %strong= link_to libro.titolo, libro
 
-	  
-    - unless libro.prezzo_copertina.nil?
-      = pretty_prezzo libro.prezzo_copertina
-	  
-    - unless libro.prezzo_consigliato.nil?
-      = pretty_prezzo libro.prezzo_consigliato
+  %dl.dl-horizontal
+    %dt settore
+    %dd= libro.settore
+    %dt prezzo di copertina
+    %dd= number_to_currency libro.prezzo_copertina
+    %dt prezzo consigliato
+    %dd= number_to_currency libro.prezzo_consigliato
 
   .more
-    .content
-      = libro.settore
-      = libro.cm
-      = libro.sigla
 
-    
-    / .dates
-    /   %small
-    /     %span= "##{appunto.id} - "
-    /     %span creato il
-    /     %span= l appunto.created_at, format: :only_date
-    /     %span= "- modificato il"
-    /     %span= l appunto.updated_at, format: :only_date
-
-    /     - if appunto.fattura
-    /       = '-'
-    /       = link_to appunto.fattura do
-    /         = "#{appunto.fattura.causale} #{appunto.fattura.numero}" 
-    /         = l appunto.fattura.data, format: :only_date
-        
-    
-    / - if appunto.has_righe?
-    /   .table-righe-new
-    /     = render appunto.righe
+    %dl.dl-horizontal
+      %dt sigla
+      %dd= libro.sigla
+      %dt cm      
+      %dd= libro.cm
+      %dt ean
+      %dd= libro.ean
+      %dt materia
+      %dd= libro.materia_id
+      %dt classe
+      %dd= libro.classe
+      %dt coefficente
+      %dd= libro.coefficente
   
   %footer
     
-    / - if appunto.has_righe?
-
-    /   .copie
-    /     %strong= appunto.totale_copie
-    /     copie
-    /   .importo-totale
-    /     %strong= pretty_prezzo appunto.totale_importo
-    /     importo
-
-
     .footer-actions
       
       %ul.nav-actions
-        / %li.print
-        /   %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
-        /     %i.icon-tag
-        /     Stampa
+
         %li.edit
           = link_to edit_libro_path(libro), title: 'modifica libro' do
             %i.icon-pencil

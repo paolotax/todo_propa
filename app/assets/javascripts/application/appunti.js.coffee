@@ -17,8 +17,8 @@ jQuery ->
   $(document).on "click", ".appunto.item input[type='checkbox'], .appunto.item a, .appunto-item button, .nav-actions li a, .nav-actions li button", (e) ->
     e.stopPropagation()
 
-  $(document).on "touchstart", ".appunto.item input[type='checkbox'], .appunto.item a, .appunto-item button, .nav-actions li a, .nav-actions li button", (e) ->
-    e.stopPropagation()
+  # $(document).on "touchstart", ".appunto.item input[type='checkbox'], .appunto.item a, .appunto-item button, .nav-actions li a, .nav-actions li button", (e) ->
+  #   e.stopPropagation()
   
   $(document).on "click", ".item .show a", (e) ->
     e.stopPropagation()
