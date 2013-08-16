@@ -4,8 +4,8 @@ jQuery ->
     $(".collection_checkbox label.checkbox").addClass("hidden")
     classe = $(@).val()
     if classe
-      $(".more").removeClass("hidden")
+      $(".insert-classi .more").removeClass("hidden")
     else
-      $(".more").addClass("hidden")
+      $(".insert-classi .more").addClass("hidden")
           
     $("*[data-classe='#{classe}']").removeClass("hidden")

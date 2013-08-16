@@ -68,7 +68,6 @@
         = link_to edit_cliente_url(@cliente), class: "btn btn-primary" do
           %i.icon-pencil
           Modifica
-        = link_to "Fattura",  new_fattura_url(causale: 1, cliente_id: @cliente.id), class: "btn btn-warning"
 
   - if @cliente.cliente_tipo == "Scuola Primaria"    
     .row
@@ -91,9 +90,9 @@
               .pull-left
                 = render 'fatture/registra', c: @cliente, r: r
               .totale-importo.pull-right
-                %strong= number_to_currency r.sum(&:importo)
+                %strong= number_to_currency @righe_da_registrare.sum(&:importo)
               .totale-copie.pull-right
-                %strong= r.sum(&:quantita)
+                %strong= @righe_da_registrare.sum(&:quantita)
 
       
       - unless @cliente.fatture.size.zero?

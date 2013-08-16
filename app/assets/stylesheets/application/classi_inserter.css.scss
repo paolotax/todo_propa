@@ -6,7 +6,7 @@
   -webkit-border-radius: 5px 5px 5px 5px;
   -moz-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  border: 1px solid #E6B96F;
+  border: 1px solid #E8E8E8;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   
@@ -16,8 +16,15 @@
     text-align: center;
     margin-bottom: 15px;
   }
+
+  input[type=text] {
+    width: 145px;
+  }
 }
 
+select#classi_inserter_classe {
+  width: 100%;
+}
 
 .new_classi_inserter.form-horizontal {
   .control-label {

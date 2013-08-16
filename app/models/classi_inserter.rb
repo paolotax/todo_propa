@@ -54,12 +54,18 @@ class ClassiInserter
   
   def insert_classi
     self.sezioni_alunni_mappings.each_with_index do |m|
-      nuova_classe = Classe.create(
-        cliente_id: self.cliente_id,
-        classe: self.classe,
-        sezione: m.keys[0].upcase,
-        nr_alunni: m.values[0]
-      )
+      
+      # deprecated Rails4
+      nuova_classe = Classe.find_or_initialize_by_cliente_id_and_classe_and_sezione( self.cliente_id, self.classe, m.keys[0].upcase)
+      nuova_classe.nr_alunni =  m.values[0]
+      nuova_classe.save
+
+      # nuova_classe = Classe.create(
+      #   cliente_id: self.cliente_id,
+      #   classe: self.classe,
+      #   sezione: m.keys[0].upcase,
+      #   nr_alunni: m.values[0]
+      # )
       
       return false unless nuova_classe.errors.empty?
       
