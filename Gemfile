@@ -20,6 +20,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'guard-livereload'
 end
 
 gem 'bootstrap-sass', "~> 2.3"

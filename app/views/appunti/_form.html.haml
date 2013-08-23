@@ -59,7 +59,7 @@
                 .titolo= riga.object.libro.titolo
                 .pull-right
                   = riga.number_field :quantita, class: 'input-mini riga_quantita'
-                  = riga.number_field :prezzo,   class: 'input-mini riga_prezzo'
+                  = riga.number_field :prezzo,   class: 'input-mini riga_prezzo', data: {copertina: riga.object.libro.prezzo_copertina.to_f, consigliato: riga.object.libro.prezzo_consigliato.to_f }
                   = riga.number_field :sconto,   class: 'input-mini riga_sconto'
                   = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"
     

@@ -5,8 +5,8 @@ class Riga < ActiveRecord::Base
   belongs_to :fattura
   
   after_initialize :init
-  # after_save :ricalcola_totali
-  # after_destroy :ricalcola_totali
+  after_save    :ricalcola_after_update
+  after_destroy :ricalcola_after_destroy
 
   delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :iva, :to => :libro
 
@@ -26,13 +26,9 @@ class Riga < ActiveRecord::Base
   scope :da_fatturare,  where("righe.fattura_id is null or righe.fattura_id = 0")
   scope :fatturata,     where("righe.fattura_id is not null or righe.fattura_id != 0")
   
-  #scope :consegnata,    where("righe.consegnato = true")
   scope :consegnata,    scarico.where("appunti.stato in ('X', 'P')")
 
   scope :pagata,        where("righe.pagato = true")
-
-  # scope :consegnata,    where("righe.consegnato = true")
-  # scope :pagata,        where("righe.pagato = true")
   
   scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
   
@@ -91,10 +87,16 @@ class Riga < ActiveRecord::Base
       self.sconto ||= 0.0           #will set the default value only if it's nil
     end  
   
-    def ricalcola_totali
-      logger.debug "ricalcola_totali"
+    def ricalcola_after_update
+      logger.debug "total_recalc"
       return true unless quantita_changed? || prezzo_unitario_changed? || fattura_id_changed? || sconto_changed?
-      appunto.update_attributes(:totale_copie => appunto.righe.sum(:quantita), :totale_importo => appunto.righe.sum('righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100'))
+      appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
+      return true
+    end
+
+    def ricalcola_after_destroy
+      logger.debug "riga destroy"
+      appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
       return true
     end
 

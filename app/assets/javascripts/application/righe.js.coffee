@@ -7,10 +7,33 @@ jQuery ->
 
   $.validity.setup outputMode: 'summary'
 
+  $('input#prezzo_consigliato').on "change", () ->
+    if $('input#prezzo_consigliato').is ':checked'
+      $(".input-mini.riga_prezzo").each ->
+        prezzo = $(@).data('consigliato')
+        $(@).val(prezzo)
+        $(@).siblings(".input-mini.riga_sconto").val 0.00
+  
+  $('input#prezzo_con_sconto').on "change", () ->
+    if $('input#prezzo_con_sconto').is ':checked'
+      $(".input-mini.riga_prezzo").each ->
+        prezzo = $(@).data('copertina')
+        sconto = $("select#prezzo").val()
+        $(@).siblings(".input-mini.riga_sconto").val sconto
+        $(@).val(prezzo)
+
+  $("select#prezzo").on "change", () ->
+    if $('input#prezzo_con_sconto').is ':checked'
+      $(".input-mini.riga_sconto").each ->
+        sconto = $("select#prezzo").val()
+        $(@).val sconto
+
+ 
   $('#new_libro.chzn-select').bind 'change', () ->
     $('#new_libro_chzn').removeClass 'validity-erroneous chzn-container-active'
     $.getJSON "/libri/#{$(this).val()}", (libro) ->
       if $('input#prezzo_consigliato').is ':checked'
+        console.log libro["libro"].prezzo_consigliato
         $('#new_prezzo').val(libro["libro"].prezzo_consigliato)
       else
         $('#new_prezzo').val(libro["libro"].prezzo_copertina)
@@ -45,6 +68,9 @@ appendRiga = (riga) ->
   new_id   = new Date().getTime()
   if $("#righe").length == 0
     $('#create-riga').after("<div id='righe'></div>")
+  
+  console.log new_id 
+  
   riga.id = new_id  
   
   new_riga = JST['righe/form'](riga)

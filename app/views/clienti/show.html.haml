@@ -88,7 +88,7 @@
 
             %footer.clearfix
               .pull-left
-                = render 'fatture/registra', c: @cliente, r: r
+                = render 'fatture/registra', c: @cliente, r: @righe_da_registrare
               .totale-importo.pull-right
                 %strong= number_to_currency @righe_da_registrare.sum(&:importo)
               .totale-copie.pull-right

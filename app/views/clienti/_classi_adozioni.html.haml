@@ -3,7 +3,7 @@
   - unless adozioni_grouped.empty?
     %header.content-header
       .header-inner  
-        %h2 Adozioni
+        %h3= pluralize  @cliente.mie_adozioni.size, "adozione"
     %ul.adozioni.unstyled.list
       - for libro, adozioni in adozioni_grouped do
         %li.item.classi-group.clearfix
@@ -17,7 +17,7 @@
   - unless classi_grouped.empty?
     %header.content-header
       .header-inner  
-        %h2 Classi
+        %h3= pluralize  @cliente.classi.size, "classe"
     %ul.classi.unstyled.list
       - for classe, sezioni in classi_grouped do
         %li.classi-group.clearfix.item

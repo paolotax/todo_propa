@@ -105,13 +105,16 @@
     .footer-actions
       
       %ul.nav-actions
+        
         - unless appunto.status == "completato"
           %li.baule-div
             = baule_tag appunto.cliente
+        
         %li.print
           %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
             %i.icon-tag
             Stampa
+
         %li.edit
           %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
             %i.icon-pencil

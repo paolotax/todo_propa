@@ -142,9 +142,6 @@
         display: inline;
       }
     }
-    &:nth-child(even) {
-      background-color: #EEEEEE;
-    }
     .titolo {
       float:left;
       width: 50%;
@@ -153,5 +150,10 @@
       margin-right:10px;
     }
   }
+}
+
+#righe .fields:nth-child(even),
+#righe .fields:nth-child(even) .riga {
+  background-color: #EEEEEE;
 }
 

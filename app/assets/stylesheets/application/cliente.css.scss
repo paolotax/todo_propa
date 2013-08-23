@@ -1,5 +1,10 @@
 @import "application/mixins";
 
+.cliente.big {
+  img {
+    margin-left: 10px;
+  }  
+}
 
 .cliente-vendite {
   @include clearfix();
@@ -28,7 +33,6 @@
     border-top: 3px double black;
     text-align: right;
   }
-
 }
 
 .module .header {

@@ -85,7 +85,10 @@ class AppuntiController < ApplicationController
         format.html   { redirect_to session[:return_to], notice: 'Appunto creato!' }
         format.json
       else
-        format.html { render action: "new" }
+        format.html do 
+          render action: "new"
+          logger.debug "giunti"
+        end
         format.json { render rabl: @appunto.errors, status: :unprocessable_entity }
       end
     end
@@ -118,7 +121,7 @@ class AppuntiController < ApplicationController
   end
   
   def print_multiple
-    raise params.inspect
+    
     @appunti = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids])
     
     respond_to do |format|

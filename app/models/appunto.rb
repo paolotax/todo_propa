@@ -75,7 +75,7 @@ class Appunto < ActiveRecord::Base
   def create_righe(scope)
     libri = scope.order(:titolo)
     libri.all.each do |l|
-    
+      
       prezzo = l.prezzo_copertina
       sconto = 20  
       if cliente.present? && !(["Cartolibreria", "Ditta"].include?  cliente.cliente_tipo)
@@ -157,20 +157,22 @@ class Appunto < ActiveRecord::Base
     appunti
   end
 
-  before_save :ricalcola
-  def ricalcola
-    self.totale_copie   = righe.map(&:quantita).sum
-    self.totale_importo = righe.map(&:importo).sum
-  end
+  # before_save :ricalcola
+  # def ricalcola
+  #   logger.debug "ricalcola"
+  #   self.totale_copie   = righe.map(&:quantita).sum
+  #   self.totale_importo = righe.map(&:importo).sum
+  # end
 
-  after_save :check_importo
-  def check_importo
-    if righe.empty? && !self.totale_importo.zero? 
-      self.totale_copie   = 0
-      self.totale_importo = 0
-      save
-    end
-  end
+  # after_save :check_importo
+  # def check_importo
+  #   logger.debug "check_importo"
+  #   if righe.empty? && !self.totale_importo.zero? 
+  #     self.totale_copie   = 0
+  #     self.totale_importo = 0
+  #     save
+  #   end
+  # end
 
   def self.check_status_fattura
     errors = []
