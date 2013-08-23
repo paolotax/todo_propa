@@ -32,8 +32,9 @@ jQuery ->
   $('#new_libro.chzn-select').bind 'change', () ->
     $('#new_libro_chzn').removeClass 'validity-erroneous chzn-container-active'
     $.getJSON "/libri/#{$(this).val()}", (libro) ->
+      $('#new_copertina').val(libro["libro"].prezzo_copertina)
+      $('#new_consigliato').val(libro["libro"].prezzo_consigliato)
       if $('input#prezzo_consigliato').is ':checked'
-        console.log libro["libro"].prezzo_consigliato
         $('#new_prezzo').val(libro["libro"].prezzo_consigliato)
       else
         $('#new_prezzo').val(libro["libro"].prezzo_copertina)
@@ -49,7 +50,9 @@ jQuery ->
         prezzo:   $('#new_prezzo').val()
         sconto:   $('#new_sconto').val()
         libro_id: $('#create-riga .chzn-select').val()
-      
+        copertina:   $('#new_copertina').val()
+        consigliato: $('#new_consigliato').val()
+
       $('.empty').hide()
       
       appendRiga riga

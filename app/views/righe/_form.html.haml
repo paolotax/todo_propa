@@ -6,6 +6,8 @@
   = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :settore, :id, :titolo), {:include_blank => true, :class => 'chzn-select', 'data-placeholder' => "Seleziona un titolo...", :style => "width: 240px;"}
 
   .pull-right
+    = hidden_field_tag "new_copertina", nil
+    = hidden_field_tag "new_consigliato", nil
     = number_field_tag "new_quantita", nil, :class => 'input-mini', placeholder: "quantità"
     = number_field_tag "new_prezzo", nil,   :class => 'input-mini', placeholder: "prezzo"
     = number_field_tag "new_sconto", nil,   :class => 'input-mini', placeholder: "sconto"
