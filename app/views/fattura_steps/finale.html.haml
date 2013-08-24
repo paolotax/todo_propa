@@ -1,6 +1,9 @@
 = render layout: 'form' do |f|
-  .control-group
-    = render 'righe/form'
+  
+  - if @fattura.ordine?
+    .control-group
+      = render 'righe/form', model: 'fattura'
+  
   .control-group
     #righe
       = f.simple_fields_for :righe do |riga|

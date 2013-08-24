@@ -1,6 +1,7 @@
 = render layout: 'form' do |f|
-  = nested_righe_per_appunto(@righe)
   
+  = nested_righe_per_appunto(@righe)
+
   .control-group
     .controls
       = link_to "Passaggio precedente", previous_wizard_path, class: "btn"

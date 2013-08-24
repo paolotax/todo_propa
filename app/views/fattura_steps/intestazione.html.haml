@@ -1,9 +1,12 @@
 = render layout: 'form' do |f|
+  
   - # encoding: utf-8
+  
   %fieldset
     %legend= "Intestazione #{@fattura.causale}"
     = f.input :numero
     = f.input :data, input_html: {class: "input-small"}
+  
   %fieldset
     %legend Modalità pagamento
     = f.input :condizioni_pagamento, collection: Fattura::TIPO_PAGAMENTO

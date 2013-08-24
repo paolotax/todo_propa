@@ -87,17 +87,21 @@ class Riga < ActiveRecord::Base
       self.sconto ||= 0.0           #will set the default value only if it's nil
     end  
   
-    def ricalcola_after_update
-      logger.debug "total_recalc"
-      return true unless quantita_changed? || prezzo_unitario_changed? || fattura_id_changed? || sconto_changed?
-      appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
-      return true
+    def ricalcola_after_update      
+      unless appunto.nil? # non ricalcola ordine
+        logger.debug "total_recalc"
+        return true unless quantita_changed? || prezzo_unitario_changed? || fattura_id_changed? || sconto_changed?
+        appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
+        return true
+      end
     end
 
     def ricalcola_after_destroy
-      logger.debug "riga destroy"
-      appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
-      return true
+      unless appunto.nil?
+        logger.debug "riga destroy"
+        appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
+        return true
+      end
     end
 
 end

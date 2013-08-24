@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class FatturaStepsController < ApplicationController
+  
   include Wicked::Wizard
   steps :intestazione, :scegli_appunti, :vacanze, :finale 
 
@@ -15,24 +16,29 @@ class FatturaStepsController < ApplicationController
         @fattura.data   = Time.now
       end
     when :scegli_appunti
-      @righe = @fattura.cliente.righe.da_fatturare 
-      if @righe.empty?
+      unless @fattura.ordine?
+        @righe = @fattura.cliente.righe.da_fatturare 
+        if @righe.empty?
+          skip_step
+        end
+      else
         skip_step
       end
     when :vacanze
       @libri = Libro.vacanze.per_titolo
       @libri.all.each do |l|
         
-        if !(["Cartolibreria", "Ditta"].include?  @fattura.cliente.cliente_tipo)
-          prezzo = l.prezzo_consigliato
-          sconto = 0.0
-        else
-           prezzo = l.prezzo_copertina
-           if @fattura.causale == "Ordine"
-             sconto = 43
-           else 
-             sconto = 20
-           end
+        if @fattura.ordine?
+          prezzo = l.prezzo_copertina
+          sconto = 43
+        else          
+          if !(["Cartolibreria", "Ditta"].include?  @fattura.cliente.cliente_tipo)
+            prezzo = l.prezzo_consigliato
+            sconto = 0.0
+          else
+            prezzo = l.prezzo_copertina
+            sconto = 20
+          end
         end
 
         @fattura.righe.build(libro: l, prezzo_unitario: prezzo, sconto: sconto)

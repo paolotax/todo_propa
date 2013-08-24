@@ -30,19 +30,33 @@ jQuery ->
 
  
   $('#new_libro.chzn-select').bind 'change', () ->
+
     $('#new_libro_chzn').removeClass 'validity-erroneous chzn-container-active'
+    
     $.getJSON "/libri/#{$(this).val()}", (libro) ->
+
       $('#new_copertina').val(libro["libro"].prezzo_copertina)
       $('#new_consigliato').val(libro["libro"].prezzo_consigliato)
-      if $('input#prezzo_consigliato').is ':checked'
-        $('#new_prezzo').val(libro["libro"].prezzo_consigliato)
-      else
+      
+      if $("#add-riga").hasClass('fattura')
         $('#new_prezzo').val(libro["libro"].prezzo_copertina)
-        $('#new_sconto').val $('#prezzo').val()
-      $('#new_quantita').focus().select()
+        $('#new_sconto').val 43.00
+      else
+        if $('input#prezzo_consigliato').is ':checked'
+          $('#new_prezzo').val(libro["libro"].prezzo_consigliato)
+        else
+          $('#new_prezzo').val(libro["libro"].prezzo_copertina)
+          $('#new_sconto').val $('#prezzo').val()
+        $('#new_quantita').focus().select()
   
   $(document).on "click", "#add-riga", (e) ->
     e.preventDefault()
+
+    if $(@).hasClass('appunto')
+      tipo = 'appunto'
+    else
+      tipo = 'fattura'
+
     if validateRiga()
       riga =
         titolo:   $('#new_libro_chzn span').text()
@@ -52,6 +66,7 @@ jQuery ->
         libro_id: $('#create-riga .chzn-select').val()
         copertina:   $('#new_copertina').val()
         consigliato: $('#new_consigliato').val()
+        tipo: tipo
 
       $('.empty').hide()
       

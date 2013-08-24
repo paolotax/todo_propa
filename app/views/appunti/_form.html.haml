@@ -45,7 +45,7 @@
             = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43], 20), class: 'input-mini'
       
       .control-group
-        = render 'righe/form'
+        = render 'righe/form', model: 'appunto'
         
         #righe
           - if f.object.righe.empty?
