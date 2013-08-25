@@ -91,6 +91,10 @@ class Appunto < ActiveRecord::Base
     self.has_righe? && self.fatture.empty? 
   end
 
+  def fatturato?
+    self.has_righe? && !self.fatture.empty? 
+  end
+  
   def has_righe?
     !self.righe.empty?
   end
@@ -220,38 +224,37 @@ class Appunto < ActiveRecord::Base
   #  State Machine
   # 
 
-  STATES = %w[incompleto pronto consegnato spedito registrato pagato chiuso cancellato]
-  delegate :incompleto?, :pronto?, :consegnato?, :spedito?, 
-           :registrato?, :pagato?, :chiuso?, :cancellato?, to: :current_state
+  # STATES = %w[incompleto pronto consegnato spedito registrato pagato chiuso cancellato]
+  # delegate :incompleto?, :pronto?, :consegnato?, :spedito?, 
+  #          :registrato?, :pagato?, :chiuso?, :cancellato?, to: :current_state
 
-  class << self
-    STATES.each do |state|
-      define_method "#{state}" do
-        joins(:events).merge AppuntoEvent.with_last_state(state)
-      end
-    end
-  end           
+  # class << self
+  #   STATES.each do |state|
+  #     define_method "#{state}" do
+  #       joins(:events).merge AppuntoEvent.with_last_state(state)
+  #     end
+  #   end
+  # end           
 
-  def current_state
-    (events.last.try(:state) || STATES.first).inquiry
-  end
+  # def current_state
+  #   (events.last.try(:state) || STATES.first).inquiry
+  # end
 
-  def prepara(valid_payment = true)
-    if incompleto?
-      events.create! state: "pronto" if valid_payment
-    end
-  end
+  # def prepara(valid_payment = true)
+  #   if incompleto?
+  #     events.create! state: "pronto" if valid_payment
+  #   end
+  # end
   
-  def consegna(valid_payment = true)
-    if incompleto? || pronto?
-      events.create! state: "consegnato" if valid_payment
-    end
-  end
+  # def consegna(valid_payment = true)
+  #   if incompleto? || pronto?
+  #     events.create! state: "consegnato" if valid_payment
+  #   end
+  # end
 
   private
 
-    def leggi
-    
+    def leggi    
       # new_righe = self.note.lines.to_a
       # for r in self.note.lines do
       #   riga = r.squish.split

@@ -115,13 +115,15 @@
             %i.icon-tag
             Stampa
 
-        %li.edit
-          %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
-            %i.icon-pencil
-            Modifica
+        - unless appunto.fatturato?
+          
+          %li.edit
+            %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
+              %i.icon-pencil
+              Modifica
 
-        %li.delete
-          %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-            %i.icon-trash
-            Elimina
+          %li.delete
+            %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+              %i.icon-trash
+              Elimina
 

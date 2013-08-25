@@ -1,10 +1,10 @@
 = render layout: 'form' do |f|
+  
   .control-group
-
     #righe
       - if f.object.righe.empty?
         .empty
-          Nessuna riga in questo appunto...
+          Nessuna riga in questo documento...
       - else
         = f.simple_fields_for :righe do |riga|          
           - if riga.object.new_record?

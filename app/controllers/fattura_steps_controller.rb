@@ -3,8 +3,11 @@
 class FatturaStepsController < ApplicationController
   
   include Wicked::Wizard
+  
   steps :intestazione, :scegli_appunti, :vacanze, :finale 
-
+  
+  after_filter :generate_appunto, :only => [:update]
+  
   def show
     
     @fattura = current_user.fatture.find(params[:fattura_id])
@@ -15,6 +18,7 @@ class FatturaStepsController < ApplicationController
         @fattura.numero = @fattura.get_new_id(current_user)
         @fattura.data   = Time.now
       end
+    
     when :scegli_appunti
       unless @fattura.ordine?
         @righe = @fattura.cliente.righe.da_fatturare 
@@ -24,7 +28,9 @@ class FatturaStepsController < ApplicationController
       else
         skip_step
       end
+    
     when :vacanze
+      
       @libri = Libro.vacanze.per_titolo
       @libri.all.each do |l|
         
@@ -49,6 +55,7 @@ class FatturaStepsController < ApplicationController
   end
 
   def update
+    
     @fattura = current_user.fatture.find(params[:fattura_id])
     @fattura.attributes = params[:fattura]
     
@@ -67,6 +74,27 @@ class FatturaStepsController < ApplicationController
 
     def redirect_to_finish_wizard
       redirect_to fatture_url, notice: "Fattura inserita"
+    end
+
+    def generate_appunto
+      unless @fattura.ordine?
+        case step
+        when :vacanze, :finale
+          @righe_nuove = @fattura.righe.where("appunto_id is null")
+          unless @righe_nuove.empty?
+            @new_appunto = @fattura.cliente.appunti.build
+            @new_appunto.righe << @righe_nuove
+            @new_appunto.totale_copie   = @righe_nuove.map(&:quantita).sum
+            @new_appunto.totale_importo = @righe_nuove.map(&:importo).sum
+            if @fattura.pagata?
+              @new_appunto.status = "completato"
+            else
+              @new_appunto.status = "in_sospeso"
+            end
+            @new_appunto.save
+          end
+        end
+      end
     end
 
 end
