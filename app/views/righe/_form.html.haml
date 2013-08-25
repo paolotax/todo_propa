@@ -1,14 +1,15 @@
-#create-riga
-  - @vendibili = Libro.unscoped.vendibili.select('distinct settore').order(:settore)
-  = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :settore, :id, :titolo), {:include_blank => true, :class => 'chzn-select', 'data-placeholder' => "Seleziona un titolo...", :style => "width: 240px;"}
-
+= div_for riga.object, class: 'form-inline' do
+  = riga.hidden_field :id
+  = riga.hidden_field :libro_id
+  .titolo= riga.object.libro.titolo
   .pull-right
-    = hidden_field_tag "new_copertina", nil
-    = hidden_field_tag "new_consigliato", nil
-    = number_field_tag "new_quantita", nil, :class => 'input-mini', placeholder: "quantità"
-    = number_field_tag "new_prezzo", nil,   :class => 'input-mini', placeholder: "prezzo"
-    = number_field_tag "new_sconto", nil,   :class => 'input-mini', placeholder: "sconto"
-    = link_to 'javascript:void(0)', { id: "add-riga", :class => "btn btn-success btn-mini #{model}" } do
-      %i.icon-plus
-  
-  .clearfix  
+    = riga.number_field :quantita, class: 'input-mini riga_quantita'
+    = riga.number_field :prezzo,   class: 'input-mini riga_prezzo',  value: number_with_precision(riga.object.prezzo, precision: 2), data: {copertina: number_with_precision(riga.object.libro.prezzo_copertina, precision: 2), consigliato: number_with_precision(riga.object.libro.prezzo_consigliato, precision: 2) }
+    = riga.number_field :sconto, value: number_with_precision(riga.object.sconto, precision: 2), class: 'input-mini riga_sconto'
+    
+    - if remove == true
+      = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"
+    - elsif remove == 'fattura'
+      = link_to "#", class: "btn btn-danger btn-mini remove-fattura" do
+        %i.icon-minus
+

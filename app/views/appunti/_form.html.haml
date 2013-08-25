@@ -1,4 +1,5 @@
 = simple_nested_form_for @appunto do |f|
+  
   = f.error_notification
   = f.input :cliente_id, :collection => current_user.clienti.order(:titolo), :label_method => :titolo, :value_method => :id, :input_html => { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
 
@@ -10,16 +11,15 @@
     %li
       %a{ href: "#parascolastico", "data-toggle" => "tab"} Parascolastico  
     %li
+      %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
+    %li
       %a{ href: "#scolastico",     "data-toggle" => "tab"} Scolastico  
+    %li
+      %a{ href: "#varia",          "data-toggle" => "tab"} Varia  
     %li
       %a{ href: "#adozionale",     "data-toggle" => "tab"} Adozionale  
     %li
       %a{ href: "#guide",          "data-toggle" => "tab"} Guide  
-    %li
-      %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
-    %li
-      %a{ href: "#varia",          "data-toggle" => "tab"} Varia  
-
 
   .tab-content
 
@@ -33,8 +33,9 @@
       = f.input :tag_list, inline_label: 'Tag (separati da virgola)'
       
     #dettaglio.tab-pane.fade
+      
       .control-group
-        %label.control-label Condizioni di pagamento:
+        %label.control-label Imposta prezzo o sconto:
         .controls
           %label.radio.inline
             = radio_button_tag 'prezzo', 'consigliato', true
@@ -42,26 +43,29 @@
           %label.radio.inline
             = radio_button_tag 'prezzo', 'con_sconto', false
             sconto
-            = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43], 20), class: 'input-mini'
+            = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43, 100], 20), class: 'input-mini'
+          %label.radio.inline
+            %button#modifica-prezzo.btn.btn-mini Modifica tutti
       
       .control-group
-        = render 'righe/form', model: 'appunto'
-        
+        = render 'righe/form_create', model: 'appunto'        
         #righe
           - if f.object.righe.empty?
             .empty
-              Nessuna riga in questo ordine...
+              Nessuna riga in questo appunto...
           - else
             = f.simple_fields_for :righe do |riga|
-              = div_for riga.object, class: 'form-inline' do
-                = riga.hidden_field :id
-                = riga.hidden_field :libro_id
-                .titolo= riga.object.libro.titolo
-                .pull-right
-                  = riga.number_field :quantita, class: 'input-mini riga_quantita'
-                  = riga.number_field :prezzo,   class: 'input-mini riga_prezzo', data: {copertina: riga.object.libro.prezzo_copertina.to_f, consigliato: riga.object.libro.prezzo_consigliato.to_f }
-                  = riga.number_field :sconto,   class: 'input-mini riga_sconto'
-                  = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"
+              = render 'righe/form', riga: riga, remove: true
+
+    #varia.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.varia
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Varia" }
+
+    #vacanze.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.vacanze
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
     
     #parascolastico.tab-pane.fade
       .control-group
@@ -77,21 +81,13 @@
       .control-group
         - @appunto.create_righe Libro.adozionale
         = render partial: 'libri_riga_form', locals: { f: f, settore: "Adozionale" }
+
         
     #guide.tab-pane.fade
       .control-group
         - @appunto.create_righe Libro.guide
         = render partial: 'libri_riga_form', locals: { f: f, settore: "Guide" }
 
-    #vacanze.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.vacanze
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
-
-    #varia.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.varia
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Varia" }
 
       
   = f.error :base

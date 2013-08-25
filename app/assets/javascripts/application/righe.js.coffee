@@ -7,26 +7,47 @@ jQuery ->
 
   $.validity.setup outputMode: 'summary'
 
-  $('input#prezzo_consigliato').on "change", () ->
+  $('button#modifica-prezzo').on "click", (e) ->
+    e.preventDefault()
+    console.log "modifica"
     if $('input#prezzo_consigliato').is ':checked'
       $(".input-mini.riga_prezzo").each ->
         prezzo = $(@).data('consigliato')
-        $(@).val(prezzo)
-        $(@).siblings(".input-mini.riga_sconto").val 0.00
-  
-  $('input#prezzo_con_sconto').on "change", () ->
-    if $('input#prezzo_con_sconto').is ':checked'
+        sconto = 0.0
+        $(@).val(prezzo.toFixed(2))
+        $(@).siblings(".input-mini.riga_sconto").val sconto.toFixed(2)
+    else if $('input#prezzo_con_sconto').is ':checked'
       $(".input-mini.riga_prezzo").each ->
         prezzo = $(@).data('copertina')
-        sconto = $("select#prezzo").val()
-        $(@).siblings(".input-mini.riga_sconto").val sconto
-        $(@).val(prezzo)
-
+        sconto = parseFloat($("select#prezzo").val())
+        $(@).siblings(".input-mini.riga_sconto").val sconto.toFixed(2)
+        $(@).val(prezzo.toFixed(2))
   $("select#prezzo").on "change", () ->
-    if $('input#prezzo_con_sconto').is ':checked'
-      $(".input-mini.riga_sconto").each ->
-        sconto = $("select#prezzo").val()
-        $(@).val sconto
+    $('input#prezzo_con_sconto').attr('checked', true)
+
+
+  # modifica automatica senza pulsante
+
+  # $('input#prezzo_consigliato').on "change", () ->
+  #   if $('input#prezzo_consigliato').is ':checked'
+  #     $(".input-mini.riga_prezzo").each ->
+  #       prezzo = $(@).data('consigliato')
+  #       $(@).val(prezzo)
+  #       $(@).siblings(".input-mini.riga_sconto").val 0.00
+  
+  # $('input#prezzo_con_sconto').on "change", () ->
+  #   if $('input#prezzo_con_sconto').is ':checked'
+  #     $(".input-mini.riga_prezzo").each ->
+  #       prezzo = $(@).data('copertina')
+  #       sconto = $("select#prezzo").val()
+  #       $(@).siblings(".input-mini.riga_sconto").val sconto
+  #       $(@).val(prezzo)
+
+  # $("select#prezzo").on "change", () ->
+  #   if $('input#prezzo_con_sconto').is ':checked'
+  #     $(".input-mini.riga_sconto").each ->
+  #       sconto = $("select#prezzo").val()
+  #       $(@).val sconto
 
  
   $('#new_libro.chzn-select').bind 'change', () ->
@@ -35,18 +56,19 @@ jQuery ->
     
     $.getJSON "/libri/#{$(this).val()}", (libro) ->
 
-      $('#new_copertina').val(libro["libro"].prezzo_copertina)
-      $('#new_consigliato').val(libro["libro"].prezzo_consigliato)
+      $('#new_copertina').val(parseFloat(libro["libro"].prezzo_copertina).toFixed(2))
+      $('#new_consigliato').val(parseFloat(libro["libro"].prezzo_consigliato).toFixed(2))
       
       if $("#add-riga").hasClass('fattura')
-        $('#new_prezzo').val(libro["libro"].prezzo_copertina)
-        $('#new_sconto').val 43.00
+        $('#new_prezzo').val(parseFloat(libro["libro"].prezzo_copertina).toFixed(2))
+        $('#new_sconto').val 43.00.toFixed(2)
       else
         if $('input#prezzo_consigliato').is ':checked'
-          $('#new_prezzo').val(libro["libro"].prezzo_consigliato)
+          $('#new_prezzo').val(parseFloat(libro["libro"].prezzo_consigliato).toFixed(2))
+          $('#new_sconto').val 0.0.toFixed(2)
         else
-          $('#new_prezzo').val(libro["libro"].prezzo_copertina)
-          $('#new_sconto').val $('#prezzo').val()
+          $('#new_prezzo').val(parseFloat(libro["libro"].prezzo_copertina).toFixed(2))
+          $('#new_sconto').val parseFloat($('#prezzo').val()).toFixed(2)
         $('#new_quantita').focus().select()
   
   $(document).on "click", "#add-riga", (e) ->

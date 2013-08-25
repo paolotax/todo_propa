@@ -1,8 +1,8 @@
 %div.clearfix[riga]
-  .consegnata
-    = check_box_tag "cx-consegnato", riga.consegnato, riga.consegnato
-  .pagata
-    = check_box_tag "cx-pagato", riga.pagato, riga.pagato
+  / .consegnata
+  /   = check_box_tag "cx-consegnato", riga.consegnato, riga.consegnato
+  / .pagata
+  /   = check_box_tag "cx-pagato", riga.pagato, riga.pagato
   .titolo
     = link_to riga.titolo, riga.libro
   .dati-riga
@@ -10,16 +10,18 @@
       %strong
         = riga.quantita
     .prezzo
-      - unless riga.prezzo_unitario.zero?
-        = number_to_currency riga.prezzo_unitario
+      - unless riga.importo.zero?
+        = number_to_currency riga.prezzo_unitario, unit: ''
+      - else
+        &nbsp
+    .sconto
+      - unless riga.importo.zero?
+        = "- #{riga.sconto}%" unless riga.sconto.zero?
       - else
         %span.badge.badge-info gratis
-    .sconto
-      = "- #{riga.sconto}%" unless riga.sconto.zero?
     .importo
       - unless riga.importo.zero?
-        = number_to_currency riga.importo
-      - else
-        %span.badge.badge-info gratis
+        = number_to_currency riga.importo, unit: ''
+
 
     

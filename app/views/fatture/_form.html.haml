@@ -3,7 +3,7 @@
 
   = f.hidden_field :user_id, value: current_user.id
   = f.input :cliente_id, :collection => current_user.clienti.order(:titolo), :label_method => :titolo, :value_method => :id, :input_html => { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
-  = f.input :causale, :collection => Fattura::TIPO_FATTURA
+  = f.input :causale, :collection => Fattura::TIPO_FATTURA, prompt: "Seleziona causale"
 
   %hr
 
