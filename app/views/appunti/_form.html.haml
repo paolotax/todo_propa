@@ -35,17 +35,7 @@
     #dettaglio.tab-pane.fade
       
       .control-group
-        %label.control-label Imposta prezzo o sconto:
-        .controls
-          %label.radio.inline
-            = radio_button_tag 'prezzo', 'consigliato', true
-            prezzo consigliato
-          %label.radio.inline
-            = radio_button_tag 'prezzo', 'con_sconto', false
-            sconto
-            = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 25, 30, 35, 43, 100], 20), class: 'input-mini'
-          %label.radio.inline
-            %button#modifica-prezzo.btn.btn-mini Modifica tutti
+        = render 'righe/select_prezzo'
       
       .control-group
         = render 'righe/form_create', model: 'appunto'        

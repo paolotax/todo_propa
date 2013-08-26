@@ -1,6 +1,9 @@
 = render layout: 'form' do |f|
   
   .control-group
+    = render 'righe/select_prezzo'
+
+  .control-group
     #righe
       - if f.object.righe.empty?
         .empty

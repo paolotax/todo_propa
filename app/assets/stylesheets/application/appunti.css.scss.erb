@@ -118,33 +118,21 @@ input[type=number] {
       font-weight: bold;
       color: #333;
     }
-    a:hover .full_name {
-      color: #999;
+    a:hover {
       text-decoration: none;
+      .full_name {
+        color: #999;        
+      }
     }
   }
 }
 
-
 .appunto.in_sospeso {
-  .totale-copie,
-  .totale-copie strong {
-    color: #999 !important;
+  footer .copie strong {
+    color: #d71322;
   }
-  .totale-importo,
-  .totale-importo strong{
-    color: red !important;
-  }
-}
-
-.appunto.completato {
-  .totale-copie,
-  .totale-copie strong {
-    color: #999 !important;
-  }
-  .totale-importo,
-  .totale-importo strong{
-    color: #999 !important;
+   footer .importo-totale strong{
+    color: #d71322;
   }
 }
 

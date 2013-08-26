@@ -28,8 +28,9 @@
   - unless fattura.appunti.empty?
     .table-righe-new
       - for appunto, righe in fattura.righe.group_by(&:appunto)
-        = link_to appunto do
-          = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
+        .rif-appunto
+          = link_to appunto do
+            = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
         - for riga in righe
           = render riga
   - else

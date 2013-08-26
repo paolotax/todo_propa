@@ -157,8 +157,34 @@ class Cliente < ActiveRecord::Base
     false      
   end
 
+  def has_adozioni?
+    self.scuola_primaria? && !self.mie_adozioni.empty?
+  end
+
   def preparato?
     !appunti.select {|a| a.status == "preparato"}.empty?
+  end
+
+  # meglio questo delle query?
+  def vacanze_da_ritirare
+    if self.scuola_primaria?
+      vacanze_fiuto    = self.classi.select { |c| c.libro_1 == 'vacanze_fiuto' }.size
+      vacanze_castelli = self.classi.select { |c| c.libro_2 == 'vacanze_castelli' }.size
+      vacanze_tutto    = self.classi.select { |c| c.libro_3 == 'vacanze_tutto' }.size      
+      da_ritirare = vacanze_fiuto + vacanze_castelli + vacanze_tutto
+    end
+  end
+
+  def saggi_da_consegnare
+    if self.scuola_primaria?
+      saggi_da_consegnare = self.mie_adozioni.select { |a| a.kit_1 != 'consegnato' }.size
+    end
+  end
+  
+  def kit_da_consegnare
+    if self.scuola_primaria?
+      kit_da_consegnare = self.mie_adozioni.select { |a| a.kit_2 != 'consegnato' }.size
+    end
   end
   
   def mie_adozioni_grouped
