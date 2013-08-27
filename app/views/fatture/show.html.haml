@@ -1,8 +1,10 @@
+- title @fattura.slug.capitalize
+
 .content
   .row
-    %section.offset2.span8
-      %header
-      %article.fattura.well
+    %section.offset2.span8.fattura
+      %header.well
+
         %div{ style: "margin-left: 80px"}  
           %h2= "#{@fattura.causale} Nr. #{@fattura.numero} del #{l @fattura.data}"
           %address
@@ -19,19 +21,26 @@
           Stampa
         .clearfix
 
+
       - unless @fattura.appunti.empty?
-        .table-righe-new.well
-          %ul.unstyled
-            - for appunto, righe in @fattura.righe.group_by(&:appunto)
-              %li
-                = link_to appunto do
-                  = "##{appunto.id} del #{l appunto.created_at, format: :only_date}"
-                - for riga in righe
-                  = render riga
+        %article.table-righe-new.well
+          - for appunto, righe in @fattura.righe.group_by(&:appunto)
+            .rif-appunto
+              = link_to appunto do
+                = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
+            = render righe
+
       - else
-        .table-righe-new
-          %ul.unstyled
-            - for riga in @fattura.righe
-              = render riga
-        
+        %article.table-righe-new.well
+          = render @fattura.righe
+  
+      %footer.well
+        .copie
+          %strong= @fattura.totale_copie
+          copie
+        .importo-totale
+          %strong= pretty_prezzo @fattura.importo_fattura
+          importo
+
+  
           

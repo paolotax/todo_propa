@@ -10,6 +10,7 @@ class AppuntiController < ApplicationController
     session[:return_to] = request.path
 
     @search = current_user.appunti.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params).ordina(params)
+    
     if params[:tag]
       @search = @search.tagged_with(params[:tag])
     end

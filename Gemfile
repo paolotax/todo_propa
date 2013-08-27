@@ -86,7 +86,8 @@ gem 'roo'
 gem "active_model_serializers"
 
 # gem "underscore-rails"
-# gem "turbolinks"
+gem "turbolinks"
+gem 'jquery-turbolinks'
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'

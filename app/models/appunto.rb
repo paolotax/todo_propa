@@ -155,8 +155,7 @@ class Appunto < ActiveRecord::Base
       appunti = appunti.joins(:cliente).order('clienti.provincia, clienti.comune, clienti.titolo, appunti.created_at desc') if params[:ordine] == "comune"
 
       appunti = appunti.order('cliente_id, appunti.created_at desc') if params[:ordine] == "cliente_id"
-  
-
+      
     end 
     appunti
   end

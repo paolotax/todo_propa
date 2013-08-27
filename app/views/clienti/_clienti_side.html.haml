@@ -24,6 +24,15 @@
           = button_tag class: "btn", name: nil do
             %i.icon-search
 
+    .sort-box.clearfix
+      ordine
+      .btn-group.pull-right
+      
+        = link_to "codice", params.except(:ordine), remote: true, class: "btn #{params[:ordine].present? ? '' : 'btn-primary'}"        
+        = link_to "comune", params.merge(ordine: "comune"), remote: true, class: "btn #{params[:ordine] == 'comune'  ? 'btn-primary' : ''}"
+        = link_to "nome", params.merge(ordine: "nome"), remote: true, class: "btn #{params[:ordine] == 'nome'  ? 'btn-primary' : ''}"
+
+
 
   = render "shared/search_tipo"
   = render 'shared/search_provincia'

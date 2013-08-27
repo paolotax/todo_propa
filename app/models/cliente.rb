@@ -114,14 +114,6 @@ class Cliente < ActiveRecord::Base
     !self.appunti.empty? || !self.fatture.empty?
   end
   
-  class << self
-    # TIPI_CLIENTI.each do |tc|
-    #   define_method "#{tc.split.join.underscore}" do
-    #     cliente_tipo
-    #   end
-    # end
-  end  
-  
   def to_s
     "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end
@@ -261,9 +253,7 @@ class Cliente < ActiveRecord::Base
   end
 
   def self.filtra(params)
-    
-    # user = User.find(params[:user_id])
-    
+        
     clienti = scoped
     clienti = clienti.where("clienti.titolo ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ?", 
                           "%#{params[:search]}%", "%#{params[:search]}%", "#{params[:search]}%") if params[:search].present?
@@ -287,6 +277,20 @@ class Cliente < ActiveRecord::Base
     clienti = clienti.con_appunti(Appunto.da_fare)    if params[:status].present? && params[:status] == "da_fare"
     clienti = clienti.con_appunti(Appunto.in_sospeso) if params[:status].present? && params[:status] == "in_sospeso"
     clienti = clienti.con_appunti(Appunto.preparato)  if params[:status].present? && params[:status] == "preparati"
+    clienti
+  end
+
+  def self.ordina(params)
+    clienti = scoped
+    unless params[:ordine].present?
+      clienti = clienti.order("clienti.id")
+    else
+
+      clienti = clienti.order('clienti.provincia, clienti.comune, clienti.id') if params[:ordine] == "comune"
+
+      clienti = clienti.order('clienti.titolo') if params[:ordine] == "nome"
+      
+    end 
     clienti
   end
   

@@ -6,8 +6,13 @@
 //
 //= require jquery
 
+
+
 //= require jquery-offline
 //= require jquery_ujs
+
+
+
 //= require jquery.ui.datepicker
 //= require jquery.ui.datepicker-it
 //= require jquery.ui.draggable
@@ -39,7 +44,6 @@
 //= require accounting
 //= require gmaps
 //= require stuff
-
 
 
 
