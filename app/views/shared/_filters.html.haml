@@ -1,62 +1,62 @@
 - if params[:search].present? || params[:tag].present? || params[:tipo].present? || params[:status].present? || params[:provincia].present? ||  params[:comune].present?  || params[:causale].present? ||  params[:anno].present?  || params[:pagamento].present? ||  params[:pagata].present? ||  params[:settore].present?
   
   .filters
-    - if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
-      - @controller = 'appunti'
-    - elsif params[:action] == "get_clienti_filters" || params[:controller] == 'clienti'
-      - @controller = 'clienti'
+    / - if params[:action] == "get_appunti_filters" || params[:controller] == 'appunti'
+    /   - @controller = 'appunti'
+    / - elsif params[:action] == "get_clienti_filters" || params[:controller] == 'clienti'
+    /   - @controller = 'clienti'
 
     .pull-right
-      = link_to "x", "", class: "close", remote: true
+      = link_to "x", {controller: controller_name, action: :index} , class: "close", remote: false
 
     %strong Filtri: 
     - if params[:search].present?
       %span.filter
         = params[:search]
-        = link_to "x", params.merge(:search => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:search => nil, :page => nil), remote: false
     - if params[:tag].present?
       %span.filter
         = params[:tag]
-        = link_to "x", params.merge(:tag => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:tag => nil, :page => nil), remote: false
     - if params[:tipo].present?
       %span.filter
         = params[:tipo].humanize.downcase
-        = link_to "x", params.merge(:tipo => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:tipo => nil, :page => nil), remote: false
     - if params[:status].present?
       %span.filter
         = params[:status].humanize.downcase
-        = link_to "x", params.merge(:status => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:status => nil, :page => nil), remote: false
     - if params[:provincia].present?
       %span.filter
         = params[:provincia] 
-        = link_to "x", params.merge(:provincia => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:provincia => nil, :page => nil), remote: false
     - if params[:comune].present?
       %span.filter
         = params[:comune] 
-        = link_to "x", params.merge(:comune => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:comune => nil, :page => nil), remote: false
     
     - if params[:anno].present?
       %span.filter
         = params[:anno] 
-        = link_to "x", params.merge(:anno => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:anno => nil, :page => nil), remote: false
 
     - if params[:causale].present?
       %span.filter
         = params[:causale] 
-        = link_to "x", params.merge(:causale => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:causale => nil, :page => nil), remote: false
 
     - if params[:pagamento].present?
       %span.filter
         = params[:pagamento] 
-        = link_to "x", params.merge(:pagamento => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:pagamento => nil, :page => nil), remote: false
 
     - if params[:pagata].present?
       %span.filter
         = params[:pagata] == 'true' ? 'pagato' : 'non pagato'
-        = link_to "x", params.merge(:pagata => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:pagata => nil, :page => nil), remote: false
 
     - if params[:settore].present?
       %span.filter
         = params[:settore] 
-        = link_to "x", params.merge(:settore => nil, :page => nil), remote: true
+        = link_to "x", params.merge(:settore => nil, :page => nil), remote: false
 

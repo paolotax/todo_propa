@@ -3,16 +3,15 @@
   .module
     %ul.stats
       %li.tutti
-        = link_to libri_path, remote: true do
+        = link_to libri_path, remote: false do
           %strong= @tutti
           libri
     .search-box
-      = form_tag params, method:'get', id: 'libri_search', class: "form-search", remote: true do
+      = form_tag params, method:'get', id: 'libri_search', class: "form-search", remote: false do
         .input-append
           = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca libri"
           = button_tag class: "btn", name: nil do
             %i.icon-search
-
 
   .module
 
@@ -23,32 +22,3 @@
       - for s in Libro::SETTORI
         %li{ class: "#{ params[:settore] == s ? 'active' : ''}" }
           = filter_tag params.merge(:settore => s, :page => nil), s
-
-      / %li.da-fare
-      /   = link_to params.merge(status: "da_fare"), remote: true do
-      /     %strong= @da_fare
-      /     fare
-      / %li.preparato
-      /   = link_to params.merge(status: "preparati"), remote: true do
-      /     %strong= @preparati
-      /     pronti
-      / %li.in-sospeso
-      /   = link_to params.merge(status: "in_sospeso"), remote: true do
-      /     %strong= @in_sospeso
-      /     sospeso
-    
-
-  /   .sort-box.clearfix
-  /     ordine
-  /     .btn-group.pull-right
-      
-  /       = link_to "data", params.except(:ordine), remote: true, class: "btn #{params[:ordine].present?  ? '' : 'btn-primary'}"
-  /       = link_to "cliente", params.merge(ordine: "cliente_id"), remote: true, class: "btn #{params[:ordine] == 'cliente_id'  ? 'btn-primary' : ''}"
-  /       = link_to "comune", params.merge(ordine: "comune"), remote: true, class: "btn #{params[:ordine] == 'comune'  ? 'btn-primary' : ''}"
-
-  / - unless current_user.appunti.tag_counts.empty?
-  /   .module.white
-  /     #tag_cloud
-  /       - tag_cloud current_user.appunti.tag_counts, %w[s m l] do |tag, css_class|
-  /         = link_to tag.name, tag_path(tag.name), class: css_class, remote: true
-

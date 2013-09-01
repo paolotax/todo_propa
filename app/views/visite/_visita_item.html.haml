@@ -8,6 +8,46 @@
         / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
         %i.icon-road
 
+  %td.vacanze
+    - if visita.cliente.vacanze_da_ritirare > 0
+      %span.label= visita.cliente.vacanze_da_ritirare
+
+
+
+  - libri_adottati = visita.cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)
+
+  - (1..5).each do |classe|
+
+    %td.adozione-image{class: "classe_#{classe}"}
+      - libri = libri_adottati.keys.select {|l| l.classe == classe }
+      
+      - unless libri.empty?
+        - libri.each do |libro|
+          .adozione-copertina
+            
+            = image_tag libro.image_url(:small_thumb)
+    
+            - saggi = libri_adottati.values.flatten.select {|a| a.libro == libro && a.kit_1 != 'consegnato' }
+            - kit = libri_adottati.values.flatten.select {|a| a.libro == libro && a.kit_2 != 'consegnato' }
+
+            - if saggi.size > 0
+              .saggi.pull-left
+                %span.label.label-warning=saggi.size
+            - if kit.size > 0
+              .kit.pull-right
+                %span.label.label-success=kit.size
+
+     
+  
+
+  / %td.saggio
+  /   - unless visita.cliente.saggi_da_consegnare.empty?
+  /     %span.label.label-warning= visita.cliente.saggi_da_consegnare.size
+  
+  / %td.kit
+  /   - unless visita.cliente.kit_da_consegnare.empty?
+  /     %span.label.label-success= visita.cliente.kit_da_consegnare.size
+  
   %td
     = link_to visita, method: :delete, remote: true, class: "close" do
       &times;

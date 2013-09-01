@@ -169,13 +169,13 @@ class Cliente < ActiveRecord::Base
 
   def saggi_da_consegnare
     if self.scuola_primaria?
-      saggi_da_consegnare = self.mie_adozioni.select { |a| a.kit_1 != 'consegnato' }.size
+      saggi_da_consegnare = self.mie_adozioni.select { |a| a.kit_1 != 'consegnato' }
     end
   end
   
   def kit_da_consegnare
     if self.scuola_primaria?
-      kit_da_consegnare = self.mie_adozioni.select { |a| a.kit_2 != 'consegnato' }.size
+      kit_da_consegnare = self.mie_adozioni.select { |a| a.kit_2 != 'consegnato' }
     end
   end
   

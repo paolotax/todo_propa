@@ -1,3 +1,30 @@
+@import "application/mixins";
+
 .item span.label {
 	margin-top: 5px;
+}
+
+.adozione-cliente {
+  padding: 3px 0px 3px 12px;
+  background-color: white;
+  border-bottom: 1px solid #ccc; 
+}
+
+td.adozione-image {
+  width: 35px;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 5px;
+  .adozione-copertina {
+    @include clearfix;
+    margin-top: 5px;
+    margin-right: 5px;
+  }
+
+
+  img {
+    width: 32px;
+    margin-top: 2px;
+    margin-right: 3px;
+  }
 }

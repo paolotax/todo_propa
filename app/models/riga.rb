@@ -78,6 +78,7 @@ class Riga < ActiveRecord::Base
     sconto.nil? ? sc = 0.0 : sc = sconto
     prezzo_unitario * quantita * (100.0 - sc) / 100
   end
+
   
   private
   

@@ -20,6 +20,7 @@
 
   .side-right.span3.only_desktop    
     .module.white
-      = render 'forecast'
+      - cache id: 'wunderground', expires_in: 1.minutes do
+        = render 'forecast'
 
 

@@ -3,12 +3,20 @@
 #   html = converter.makeHtml value
 #   $(object).html html
 
-jQuery ->
+document.addEventListener "page:fetch", ->
+  $("#loading").show()
+
+document.addEventListener "page:receive", ->
+  $("#loading").hide()
   
-  $("#loading").bind "ajaxSend", () ->
+
+jQuery ->
+
+  
+  $("#loading").on "ajaxSend", () ->
     $("#loading").show()
   
-  $("#loading").bind "ajaxComplete", () ->
+  $("#loading").on "ajaxComplete", () ->
     $("#loading").hide()
   
   
@@ -67,7 +75,7 @@ jQuery ->
       $(@).text("mostra")
 
   
-  $(document).on "click", ".show-hide", (e) ->
+  $(".show-hide").on "click", (e) ->
     e.preventDefault();
     $(@).closest('.header').next(".more").toggleClass("hidden")
     if $("i", $( @)).hasClass('icon-caret-down')

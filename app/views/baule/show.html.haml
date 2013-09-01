@@ -2,7 +2,6 @@
 
 = new_button( new_appunto_url )
 
-
 .module
   .header
     .btn-toolbar.pull-right
@@ -30,12 +29,12 @@
         = render "form"
 
 .row.baule-page
-  .span4
+  .span6
     = render :partial => 'giri/list_giro'
   .span4
-    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
+    = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
   .span4
-    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
+    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
     
 
 .visite-long.baule-page

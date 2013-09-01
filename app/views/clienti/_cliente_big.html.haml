@@ -20,10 +20,10 @@
     
     - if cliente.has_adozioni?
       .adozioni-da-consegnare
-        - if cliente.saggi_da_consegnare > 0
-          %span.label.label-warning= cliente.saggi_da_consegnare
-        - if cliente.kit_da_consegnare > 0
-          %span.label.label-success= cliente.kit_da_consegnare
+        - unless cliente.saggi_da_consegnare.empty?
+          %span.label.label-warning= cliente.saggi_da_consegnare.size
+        - unless cliente.kit_da_consegnare.empty?
+          %span.label.label-success= cliente.kit_da_consegnare.size
 
     - if cliente.preparato?
       .stato-cliente

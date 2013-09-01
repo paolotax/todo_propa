@@ -6,7 +6,7 @@ if (classe != null) {
 	$('#<%= dom_id(@classe) %> .on_the_spot_editing').each(initializeOnTheSpot);
 };
 
-if (adozioniGroup != null) {
-	console.log("SI");
-	adozioniGroup.replaceWith("<%= j render 'adozioni/adozioni_grouped', adozioni: @adozioni %>");
+
+if ($(".adozioni-grouped").length != 0) {
+	$(".adozione-cliente.<%= dom_id(@adozioni.first.classe.cliente) %>").replaceWith("<%= j render 'adozioni/adozione_cliente', cliente: @adozioni.first.classe.cliente, a: @adozioni, stato: @adozioni.first.stato %>");
 };

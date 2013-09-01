@@ -15,6 +15,8 @@ class AppuntiController < ApplicationController
       @search = @search.tagged_with(params[:tag])
     end
 
+
+
     @appunti = @search.page(params[:page])
     
     @stat_appunti = current_user.appunti.filtra(params.except(:status))
@@ -27,7 +29,11 @@ class AppuntiController < ApplicationController
     @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
     @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
 
+
+    # attenzione remote: true per filter_tag se non non funziona
     location = params[:comune] || "bologna"
+    expire_fragment "wunderground" if location != "bologna"
+    
     location = location.split.join("_").downcase
     @wunder = Wunderground.new location
 

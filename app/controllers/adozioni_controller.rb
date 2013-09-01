@@ -33,7 +33,7 @@ class AdozioniController < ApplicationController
 
   def update
     @adozione = current_user.adozioni.find(params[:id])    
-    @classe = @adozione.classe
+    @classe  = @adozione.classe
     @cliente = @classe.cliente
 
     respond_to do |format|

@@ -95,5 +95,107 @@ class FattureController < ApplicationController
       format.js
     end
   end
+
+  def create_multiple
+
+    righe = current_user.righe.joins(appunto: :cliente).da_fatturare
+
+    if params[:pagamento] == 'In sospeso'
+      righe = righe.where("appunti.stato = 'P'")
+    end
+
+    if params[:pagamento] == 'Pagati'
+      righe = righe.where("appunti.stato = 'X'")
+    end
+
+    if params[:tipo_cliente] == 'Scuole'
+      righe = righe.where("clienti.cliente_tipo = 'Scuola Primaria'")
+    end
+
+    if params[:tipo_cliente] == 'Altri'
+      righe = righe.where("clienti.cliente_tipo != 'Scuola Primaria'")
+    end
+    
+    if params[:data] == 'data pagamento'
+      righe = righe.order("appunti.updated_at desc, appunti.id desc")
+    else
+      righe = righe.order("appunti.id desc")
+    end
+
+    if params[:raggruppa]
+      righe = righe.group_by(&:cliente)
+    else
+      righe = righe.group_by(&:appunto)
+    end
+
+    #raise righe.inspect   
+
+    crea_documenti righe, params[:causale_id], params[:data]
+
+    redirect_to fatture_url
+
+  end
+
+  def modifica_nr_bolle
+
+  end
+
+  private
+
+    def crea_documenti(righe_da_registrare, causale_id, data)
+
+      # last_id = Fattura.where("user_id = ? and data > ? and data < ? and causale_id = ?", current_user.id, data.beginning_of_year, data.end_of_year, causale_id).order('numero desc').limit(1)
+      
+      # if last_id.empty?
+      #   numero_fattura = 1
+      # else
+      #   numero_fattura = last_id[0][:numero] + 1  
+      # end
+
+      righe_da_registrare.reverse_each do |key, righe|
+        
+        new_righe = righe.sort { |a, b| a.id <=> b.id }
+
+        if key.is_a? Cliente
+          cliente_id = key.id
+        else
+          cliente_id = key.cliente.id
+        end
+
+        if data == 'oggi'
+          data_documento = Time.now
+        elsif data == 'data pagamento'
+          data_documento = righe.first.appunto.updated_at
+        elsif data == 'data creazione'
+          data_documento = righe.first.appunto.created_at
+        end
+          
+        if righe.first.appunto.stato == 'X'
+          pagato = true
+        else
+          pagato = false
+        end
+
+        fattura = Fattura.new( 
+            user_id:    current_user.id, 
+            causale_id: causale_id, 
+            cliente_id: cliente_id, 
+            data:       data_documento, 
+            numero:     999,
+            pagata:     pagato
+        )
+
+        new_righe.each do |riga|
+          r = Riga.find riga.id
+          fattura.righe << r
+        end
+
+                                         
+        fattura.save!
+
+      end 
+
+    end
+
   
 end

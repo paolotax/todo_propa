@@ -55,5 +55,44 @@
             %span.list-link 
               %small= "non ci sono appunti #{label}"
 
+    .well
 
+      = form_tag :create_multiple_fatture, method: :put, class: 'form-horizontal', id: "form-genera-documenti" do
+
+        %h3 Genera documenti
+
+        %hr
+
+        .control-group
+          %label.control-label{ for: 'inputCausale' } Tipo documento
+          .controls
+            = select_tag "causale_id", options_for_select([["Buoni di consegna", 1], ["Fatture", 0]]), class: "input", id: 'inputCausale'
+
+        .control-group
+          %label.control-label{ for: 'inputClienti' } Clienti
+          .controls
+            = select_tag "tipo_cliente", options_for_select(["Scuole", "Altri", "Tutti"]), class: "input-medium", id: 'inputClienti'
+
+        .control-group
+          %label.control-label{ for: 'inputPagamento' } Pagamento
+          .controls
+            = select_tag "pagamento", options_for_select(['Pagati', 'In sospeso', 'Tutti']), class: "input-medium", id: 'inputPagamento'
+
+        .control-group
+          %label.control-label{ for: 'inputData' } Data documenti
+          .controls
+            = select_tag "data", options_for_select(['data pagamento', 'data creazione', 'ultima data', 'oggi']), class: "input-medium", id: 'inputData'
+
+        .contol-group
+          .controls
+            %label.checkbox
+              = check_box_tag "raggruppa" 
+              raggruppa per cliente
+        
+        %hr
+
+        .contol-group
+        
+          .controls
+            = submit_tag "Genera", class: "btn btn-primary", confirm: "Sei sicuro"
 

@@ -6,7 +6,7 @@
 //
 //= require jquery
 
-
+//= require jquery.turbolinks
 
 //= require jquery-offline
 //= require jquery_ujs
@@ -45,6 +45,7 @@
 //= require gmaps
 //= require stuff
 
+//= require turbolinks
 
 
 

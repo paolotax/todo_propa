@@ -53,10 +53,7 @@ TodoPropa::Application.routes.draw do
   match '/vendite', controller: 'magazzino', action: 'vendite'
   match '/cassa',   controller: 'magazzino', action: 'cassa'
   match '/incassi', controller: 'magazzino', action: 'incassi'
-  
-  match '/crea_buoni_di_consegna', controller: 'magazzino', action: 'crea_buoni_di_consegna'
-  match '/crea_fatture', controller: 'magazzino', action: 'crea_fatture'
-  
+    
   get '/baule', to: 'baule#show', as: 'baule'
   match '/baule/rimuovi', controller: 'baule', action: 'destroy'
   match '/baule/update',  controller: 'baule', action: 'update', :via => :put
@@ -87,6 +84,9 @@ TodoPropa::Application.routes.draw do
 
   resources :fatture do
     resources :fattura_steps
+    collection do
+      put 'create_multiple'
+    end
   end
 
   devise_for :users

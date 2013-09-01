@@ -71,7 +71,7 @@ jQuery ->
           $('#new_sconto').val parseFloat($('#prezzo').val()).toFixed(2)
         $('#new_quantita').focus().select()
   
-  $(document).on "click", "#add-riga", (e) ->
+  $("#add-riga").on "click", (e) ->
     e.preventDefault()
 
     if $(@).hasClass('appunto')

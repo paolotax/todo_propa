@@ -2,23 +2,23 @@
   .module
     %ul.stats
       %li
-        = link_to params.except(:status), remote: true do
+        = link_to params.except(:status), remote: false do
           %strong= @tutti
           clienti
       %li
-        = link_to params.merge(status: "da_fare"), remote: true do
+        = link_to params.merge(status: "da_fare"), remote: false do
           %strong= @da_fare
           visitare
       %li
-        = link_to params.merge(status: "preparati"), remote: true do
+        = link_to params.merge(status: "preparati"), remote: false do
           %strong= @preparati
           pronti
       %li
-        = link_to params.merge(status: "in_sospeso"), remote: true do
+        = link_to params.merge(status: "in_sospeso"), remote: false do
           %strong= @in_sospeso
           sospeso
     .search-box  
-      = form_tag params, method:'get', id: 'clienti_search', class: "form-search", remote: true do
+      = form_tag params, method:'get', id: 'clienti_search', class: "form-search", remote: false do
         .input-append
           = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca clienti"
           = button_tag class: "btn", name: nil do
@@ -28,9 +28,9 @@
       ordine
       .btn-group.pull-right
       
-        = link_to "codice", params.except(:ordine), remote: true, class: "btn #{params[:ordine].present? ? '' : 'btn-primary'}"        
-        = link_to "comune", params.merge(ordine: "comune"), remote: true, class: "btn #{params[:ordine] == 'comune'  ? 'btn-primary' : ''}"
-        = link_to "nome", params.merge(ordine: "nome"), remote: true, class: "btn #{params[:ordine] == 'nome'  ? 'btn-primary' : ''}"
+        = link_to "codice", params.except(:ordine), remote: false, class: "btn #{params[:ordine].present? ? '' : 'btn-primary'}"        
+        = link_to "comune", params.merge(ordine: "comune"), remote: false, class: "btn #{params[:ordine] == 'comune'  ? 'btn-primary' : ''}"
+        = link_to "nome", params.merge(ordine: "nome"), remote: false, class: "btn #{params[:ordine] == 'nome'  ? 'btn-primary' : ''}"
 
 
 

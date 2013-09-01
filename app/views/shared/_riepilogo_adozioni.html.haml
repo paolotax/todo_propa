@@ -1,0 +1,40 @@
+- if collection.empty?
+  .module.hidden{ class: "list-#{tipo_riepilogo}" }
+- else  
+  .module{ class: "list-#{tipo_riepilogo}" }
+    .header
+      = show_hide_tag
+      %h3
+        = collection.size 
+        %small= tipo_riepilogo.humanize.downcase
+    .more.riepilogo-libri
+      %ul
+        - for libro, righe in collection.group_by(&:libro) do
+          %li
+            %span.titolo= link_to libro.titolo, libro
+            %span.quantita= righe.sum(&:quantita)
+
+            - saggi = collection.select {|a| a.libro == libro && a.kit_1 != 'consegnato' }
+            - kit = collection.select {|a| a.libro == libro && a.kit_2 != 'consegnato' }
+
+            - completo = collection.select {|a| a.libro == libro && a.kit_2 == 'consegnato' }
+
+            - if completo.size > 0
+              .completo.pull-right
+                %span.label=completo.size
+
+            - if kit.size > 0
+              .kit.pull-right
+                %span.label.label-success=kit.size
+
+            - if saggi.size > 0
+              .saggi.pull-right
+                %span.label.label-warning=saggi.size
+
+
+        / %li.totali
+        /   %span.totale Totale
+        /   %span.quantita
+        /     %strong= collection.sum(&:quantita)
+        /   %span.importo
+        /     %strong= number_to_currency collection.sum(&:importo)

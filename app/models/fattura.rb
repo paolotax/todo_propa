@@ -114,25 +114,25 @@ class Fattura < ActiveRecord::Base
     status == 'active'
   end
   
-  def add_righe_from_cliente(cliente)
-    self.totale_copie = self.totale_copie || 0
-    self.importo_fattura = self.importo_fattura || 0.0 
-    cliente.righe.da_fatturare.each do |riga|
-      self.totale_copie += riga.quantita || 0
-      self.importo_fattura += riga.quantita * riga.prezzo_unitario || 0
-      self.righe << riga
-    end
-  end
+  # def add_righe_from_cliente(cliente)
+  #   self.totale_copie = self.totale_copie || 0
+  #   self.importo_fattura = self.importo_fattura || 0.0 
+  #   cliente.righe.da_fatturare.each do |riga|
+  #     self.totale_copie += riga.quantita || 0
+  #     self.importo_fattura += riga.quantita * riga.prezzo_unitario || 0
+  #     self.righe << riga
+  #   end
+  # end
   
-  def add_righe_from_appunto(appunto)
-    self.totale_copie = self.totale_copie || 0
-    self.importo_fattura = self.importo_fattura || 0.0
-    appunto.righe.each do |riga|
-      self.totale_copie += riga.quantita
-      self.importo_fattura += riga.quantita * riga.prezzo_unitario
-      self.righe << riga
-    end
-  end
+  # def add_righe_from_appunto(appunto)
+  #   self.totale_copie = self.totale_copie || 0
+  #   self.importo_fattura = self.importo_fattura || 0.0
+  #   appunto.righe.each do |riga|
+  #     self.totale_copie += riga.quantita
+  #     self.importo_fattura += riga.quantita * riga.prezzo_unitario
+  #     self.righe << riga
+  #   end
+  # end
 
   def doc_id
     if data == nil
