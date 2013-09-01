@@ -396,7 +396,6 @@ DEPENDENCIES
   rabl
   rack-contrib
   rails (= 3.2.2)
-  rb-fsevent
   redcarpet (= 1.17.2)
   roo
   routing-filter
