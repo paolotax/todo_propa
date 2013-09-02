@@ -26,15 +26,22 @@
           .adozione-copertina
             
             = image_tag libro.image_url(:small_thumb)
-    
-            - saggi = libri_adottati.values.flatten.select {|a| a.libro == libro && a.kit_1 != 'consegnato' }
-            - kit = libri_adottati.values.flatten.select {|a| a.libro == libro && a.kit_2 != 'consegnato' }
+
+            - saggi = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'saggio' }
+            - kit = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit' }
+
+            - tutto = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'da consegnare' }
+
+            - if tutto.size > 0
+              .tutto.pull-left
+                %span.label=tutto.size
 
             - if saggi.size > 0
               .saggi.pull-left
                 %span.label.label-warning=saggi.size
+
             - if kit.size > 0
-              .kit.pull-right
+              .kit.pull-left
                 %span.label.label-success=kit.size
 
      

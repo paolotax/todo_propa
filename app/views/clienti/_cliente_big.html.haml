@@ -16,14 +16,16 @@
     - if cliente.scuola_primaria?
       .vacanze-da-ritirare
         - if cliente.vacanze_da_ritirare > 0
-          %span.label= cliente.vacanze_da_ritirare
+          %span.label.label-inverse= cliente.vacanze_da_ritirare
     
     - if cliente.has_adozioni?
       .adozioni-da-consegnare
-        - unless cliente.saggi_da_consegnare.empty?
-          %span.label.label-warning= cliente.saggi_da_consegnare.size
-        - unless cliente.kit_da_consegnare.empty?
-          %span.label.label-success= cliente.kit_da_consegnare.size
+        - unless cliente.adozioni_da_consegnare.empty?
+          %span.label= cliente.adozioni_da_consegnare.size
+        - unless cliente.adozioni_saggi.empty?
+          %span.label.label-warning= cliente.adozioni_saggi.size
+        - unless cliente.adozioni_kit.empty?
+          %span.label.label-success= cliente.adozioni_kit.size
 
     - if cliente.preparato?
       .stato-cliente

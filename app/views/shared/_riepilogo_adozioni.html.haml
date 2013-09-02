@@ -14,22 +14,22 @@
             %span.titolo= link_to libro.titolo, libro
             %span.quantita= righe.sum(&:quantita)
 
-            - saggi = collection.select {|a| a.libro == libro && a.kit_1 != 'consegnato' }
-            - kit = collection.select {|a| a.libro == libro && a.kit_2 != 'consegnato' }
+            - saggi = collection.select {|a| a.libro == libro && a.stato == 'saggio' }
+            - kit = collection.select {|a| a.libro == libro && a.stato == 'kit' }
 
-            - completo = collection.select {|a| a.libro == libro && a.kit_2 == 'consegnato' }
-
-            - if completo.size > 0
-              .completo.pull-right
-                %span.label=completo.size
+            - tutto = collection.select {|a| a.libro == libro && a.stato == 'da consegnare' }
 
             - if kit.size > 0
               .kit.pull-right
                 %span.label.label-success=kit.size
-
             - if saggi.size > 0
               .saggi.pull-right
                 %span.label.label-warning=saggi.size
+            - if tutto.size > 0
+              .tutto.pull-right
+                %span.label=tutto.size
+
+
 
 
         / %li.totali

@@ -9,8 +9,10 @@
         %th Materia
         %th 
           Titolo
+          %span.pull-right.label.label-success kit
           %span.pull-right.label.label-warning saggio
-          %span.pull-right.label no saggio
+          %span.pull-right.label no
+
 
         %th Sezioni
         %th
@@ -31,15 +33,21 @@
                     .pull-right
                       %strong= adoz.size
                   %td
-                    - no_saggio = adoz.select {|a| a.kit_1 != 'consegnato'}.size
-                    - if no_saggio > 0
+                    - da_consegnare = adoz.select {|a| a.stato == 'da consegnare'}.size
+                    - if da_consegnare > 0
                       .pull-right
-                        %span.label= no_saggio
+                        %span.label= da_consegnare
+
                   %td
-                    - saggio = adoz.select {|a| a.kit_1 == 'consegnato'}.size
+                    - saggio = adoz.select {|a| a.stato == 'saggio'}.size
                     - if saggio > 0
                       .pull-right
-                        %span.label.label-warning=  saggio
+                        %span.label.label-warning= saggio
+                  %td
+                    - kit = adoz.select {|a| a.stato == 'kit'}.size
+                    - if kit > 0
+                      .pull-right
+                        %span.label.label-success=  kit
 
           %td
             .pull-right
