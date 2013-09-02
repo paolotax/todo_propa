@@ -167,6 +167,24 @@ class Cliente < ActiveRecord::Base
     end
   end
 
+  def adozioni_da_consegnare
+    if self.scuola_primaria?
+      adozioni_da_consegnare = self.mie_adozioni.select { |a| a.stato == 'da consegnare' }
+    end  
+  end
+  
+  def adozioni_saggi
+    if self.scuola_primaria?
+      adozioni_saggi = self.mie_adozioni.select { |a| a.stato == 'saggi' }
+    end
+  end
+  
+  def adozioni_kit
+    if self.scuola_primaria?
+      adozioni_kit = self.mie_adozioni.select { |a| a.stato == 'kit' }
+    end
+  end
+
   def saggi_da_consegnare
     if self.scuola_primaria?
       saggi_da_consegnare = self.mie_adozioni.select { |a| a.kit_1 != 'consegnato' }

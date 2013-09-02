@@ -51,12 +51,15 @@ class AdozionePdf < Prawn::Document
 
     if adozione.libro.titolo == "NEL GIARDINO 1"
       text "Il fascicolo blu NEL GIARDINO SCOPRO 1 non è al momento disponibile.", :size => 13
-      text "Sarà mia premura consegnarlo a Settembre con le agende.", :size => 13
+      text "Sarà mia premura consegnarlo appena disponibile.", :size => 13
     end
 
     if adozione.kit_1 == "consegnato"
-      text "saggio già consegnato", :size => 13
-    end  
+      text "- saggio già consegnato", :size => 13
+    end
+    if adozione.kit_2 == "consegnato"
+      text "- dotazione docente già consegnata", :size => 13
+    end    
 
   end
     

@@ -65,7 +65,7 @@ class Giro
   end  
   
   def adozioni
-    user.mie_adozioni.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", clienti.map(&:id)).order("libri.titolo")
+    user.mie_adozioni.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", clienti.map(&:id)).order("libri.materia_id, libri.titolo, classi.sezione")
   end
   
   def adozioni_per_titolo
