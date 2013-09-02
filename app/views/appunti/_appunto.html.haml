@@ -73,8 +73,8 @@
     
     .dates.content
       %small
-        %span= "##{appunto.id} - "
-        %span creato il
+        %span= link_to "##{appunto.id}", appunto
+        %span - creato il
         %span= l appunto.created_at, format: :only_date
         %span= "- modificato il"
         %span= l appunto.updated_at, format: :only_date

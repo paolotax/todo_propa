@@ -5,6 +5,7 @@
   /   = check_box_tag "cx-pagato", riga.pagato, riga.pagato
   .titolo
     = link_to riga.titolo, riga.libro
+    %small= riga.libro.cm
   .dati-riga
     .quantita
       %strong

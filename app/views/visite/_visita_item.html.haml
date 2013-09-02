@@ -8,9 +8,14 @@
         / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
         %i.icon-road
 
+  %td.in-sospeso
+    - if visita.cliente.has_sospeso?
+      %span.badge.badge-warning
+        = number_to_currency visita.cliente.properties["importo_in_sospeso"].to_f
+
   %td.vacanze
-    - if visita.cliente.vacanze_da_ritirare > 0
-      %span.label= visita.cliente.vacanze_da_ritirare
+    - if visita.cliente.vacanze_da_ritirare && visita.cliente.vacanze_da_ritirare > 0
+      %span.label.label-inverse= visita.cliente.vacanze_da_ritirare
 
 
 

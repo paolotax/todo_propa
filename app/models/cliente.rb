@@ -114,6 +114,10 @@ class Cliente < ActiveRecord::Base
     !self.appunti.empty? || !self.fatture.empty?
   end
   
+  def has_sospeso?
+    !self.appunti.select {|a| a.status == 'in_sospeso'  && !a.totale_importo.zero? }.empty?
+  end
+
   def to_s
     "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end

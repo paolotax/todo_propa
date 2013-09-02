@@ -13,6 +13,11 @@
     .titolo
       = link_to cliente.titolo, cliente
     
+    - if cliente.has_sospeso?
+      .in_sospeso
+        %span.badge.badge-warning
+          = number_to_currency cliente.properties["importo_in_sospeso"].to_f
+
     - if cliente.scuola_primaria?
       .vacanze-da-ritirare
         - if cliente.vacanze_da_ritirare > 0
