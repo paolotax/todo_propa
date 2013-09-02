@@ -1,3 +1,2 @@
-rvm use ruby-1.9.3-p392
-rvm gemset use todopropa
+rvm use ruby-1.9.3@todopropa --create
 rvm_trust_rvmrcs_flag=1
