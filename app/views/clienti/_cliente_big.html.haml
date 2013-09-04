@@ -29,6 +29,8 @@
           %span.label= cliente.adozioni_da_consegnare.size
         - unless cliente.adozioni_saggi.empty?
           %span.label.label-warning= cliente.adozioni_saggi.size
+        - unless cliente.adozioni_kit_no_saggio.empty?
+          %span.label.label-important= cliente.adozioni_kit_no_saggio.size
         - unless cliente.adozioni_kit.empty?
           %span.label.label-success= cliente.adozioni_kit.size
 

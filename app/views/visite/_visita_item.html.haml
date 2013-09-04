@@ -37,6 +37,8 @@
 
             - tutto = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'da consegnare' }
 
+            - kit_no_saggio = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit no saggio' }
+
             - if tutto.size > 0
               .tutto.pull-left
                 %span.label=tutto.size
@@ -45,10 +47,14 @@
               .saggi.pull-left
                 %span.label.label-warning=saggi.size
 
+
+            - if kit_no_saggio.size > 0
+              .kit_no_saggio.pull-left
+                %span.label.label-important=kit_no_saggio.size
+
             - if kit.size > 0
               .kit.pull-left
                 %span.label.label-success=kit.size
-
      
   
 

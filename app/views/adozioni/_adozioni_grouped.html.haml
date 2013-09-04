@@ -21,19 +21,19 @@
         - if params[:materia] 
           = params[:materia]
           .pull-right
-            %small= "#{pluralize adozioni.select {|a| a.classe.cliente.id }.uniq.size, "scuola"}"
+            %small= "#{pluralize adozioni.uniq {|a| a.classe.cliente.id }.size, "scuola"}"
             = adozioni.size
         
         - elsif params[:titolo] 
           = link_to params[:titolo], @libro
           .pull-right
-            %small= "#{pluralize adozioni.select {|a| a.classe.cliente.id }.uniq.size, "scuola"}"
+            %small= "#{pluralize adozioni.uniq {|a| a.classe.cliente.id }.size, "scuola"}"
             = adozioni.size
         
         - else
           = pluralize(adozioni.size, "Adozione")
           .pull-right
-            %small= "#{pluralize adozioni.select {|a| a.classe.cliente.id }.uniq.size, "scuola"}"
+            %small= "pino #{pluralize adozioni.uniq {|a| a.classe.cliente.idid }.size, "scuola"}"
             - if @giro
               %small= "#{@giro.adozioni.size} nel baule"
           

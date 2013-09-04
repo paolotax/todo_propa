@@ -19,16 +19,20 @@
 
             - tutto = collection.select {|a| a.libro == libro && a.stato == 'da consegnare' }
 
+            - kit_no_saggio = collection.select {|a| a.libro == libro && a.stato == 'kit no saggio' }
+
             - if kit.size > 0
               .kit.pull-right
                 %span.label.label-success=kit.size
             - if saggi.size > 0
               .saggi.pull-right
                 %span.label.label-warning=saggi.size
+            - if kit_no_saggio.size > 0
+              .kit_no_saggio.pull-right
+                %span.label=kit_no_saggio.size
             - if tutto.size > 0
               .tutto.pull-right
                 %span.label=tutto.size
-
 
 
 

@@ -10,6 +10,7 @@
         %th 
           Titolo
           %span.pull-right.label.label-success kit
+          %span.pull-right.label.label-important kit no saggio
           %span.pull-right.label.label-warning saggio
           %span.pull-right.label no
 
@@ -43,6 +44,12 @@
                     - if saggio > 0
                       .pull-right
                         %span.label.label-warning= saggio
+                  %td
+                    - kit_no_saggio = adoz.select {|a| a.stato == 'kit no saggio'}.size
+                    - if kit_no_saggio > 0
+                      .pull-right
+                        %span.label.label-important=  kit_no_saggio
+
                   %td
                     - kit = adoz.select {|a| a.stato == 'kit'}.size
                     - if kit > 0
