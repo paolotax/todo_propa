@@ -84,6 +84,7 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.0)
       compass (~> 0.12.0)
+    dalli (2.6.4)
     devise (2.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -373,6 +374,7 @@ DEPENDENCIES
   chronic
   coffee-rails (~> 3.2.2)
   compass-rails
+  dalli
   devise
   doorkeeper
   execjs

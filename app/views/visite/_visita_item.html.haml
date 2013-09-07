@@ -4,8 +4,9 @@
     %td= visita.start.try(:strftime, "%H:%M")
     %td
       = link_to visita.cliente.titolo, visita.cliente
-      = link_to cliente_path( id: visita.cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
-        %i.icon-file
+      - if visita.cliente.scuola_primaria?
+        = link_to cliente_path( id: visita.cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
+          %i.icon-file
 
     %td.visible-phone
       - unless visita.cliente.latitude.nil?

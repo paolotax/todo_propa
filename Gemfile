@@ -90,6 +90,7 @@ gem "turbolinks"
 gem 'jquery-turbolinks'
 
 gem 'cache_digests'
+gem 'dalli'
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
