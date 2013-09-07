@@ -1,6 +1,7 @@
 class Classe < ActiveRecord::Base
   
-  belongs_to :cliente
+  belongs_to :cliente, touch: true
+  
   has_many :adozioni,     :dependent => :destroy
   
   validates :sezione, :uniqueness => {:scope => [:classe, :cliente_id],

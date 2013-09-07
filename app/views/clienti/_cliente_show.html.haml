@@ -1,0 +1,147 @@
+- cache @cliente do
+  .content
+    %section.well.show-page{ class: "cliente #{dom_id(@cliente)}"}
+      %header
+      %article.row-fluid
+        .location.span4
+          - unless @cliente.latitude.nil?
+            .map-avatar
+              - @mappa = @cliente.to_gmaps4rails
+              = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+        .content-inner.span8
+          %h1= @cliente.titolo
+          %address
+            %strong
+              = "@#{@cliente.ragione_sociale || [@cliente.nome, @cliente.cognome].join(' ')}"
+            %br
+            = @cliente.indirizzo
+            %br
+            = "#{@cliente.cap} #{@cliente.frazione} #{@cliente.comune} #{@cliente.provincia}"
+          %div.pull-left
+            Partita IVA:
+            = @cliente.partita_iva
+            %br
+            Codice Fiscale:
+            = @cliente.codice_fiscale
+          %div.pull-right
+            
+            - unless @cliente.telefono.blank?
+              %a.btn{ href: "tel:#{@cliente.telefono.split.join}" }
+                %i.icon-phone
+                = @cliente.telefono
+              %br
+
+            - unless @cliente.email.blank?
+              %a.btn{ href: "mailto:#{@cliente.email}" }
+                %i.icon-envelope
+                = @cliente.email
+              %br
+            
+            - unless @cliente.latitude.nil?
+              %a.btn{ href: "http://maps.apple.com/maps?q=#{@cliente.latitude},#{@cliente.longitude}" }
+                / %a.btn{ href: "navigon://coordinate/#{@cliente.titolo.parameterize}/#{@cliente.longitude}/#{@cliente.latitude}" }
+                %i.icon-road
+                Mostra percorso
+
+      %footer.show-toolbar
+        .btn-group.pull-left
+          = previous_tag cliente_url(Cliente.previous(@cliente, 'id').first)
+          = next_tag cliente_url(Cliente.next(@cliente, 'id').first)
+        
+        %ul.inline.pull-left{ style: "margin-top: 5px;"}
+          - for v in @cliente.visite.order("start desc") do
+            - if v.giorno
+              %li{ style: "margin-right: 5px"}
+                = link_to giro_path(giorno: v.giorno) do
+                  %span.label.label-important
+                    = l v.giorno, format: :long
+        
+        .pull-right
+          = baule_tag @cliente, class_scarica: "btn btn-warning"
+          - unless @cliente.has_documenti?
+            = link_to @cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+              %i.icon-trash
+              Elimina
+          = link_to edit_cliente_url(@cliente), class: "btn btn-primary" do
+            %i.icon-pencil
+            Modifica
+              
+    .row
+      .side-bar.span3
+        - unless @righe_da_registrare.empty?
+          .module
+            .header
+              = show_hide_tag
+              %h3 Appunti da registrare
+            .more.cliente-vendite
+              
+              - for a, r in @righe_da_registrare.group_by(&:appunto) do               
+                = render "appunti/item", appunto: a
+
+              %footer.clearfix
+                .pull-left
+                  = render 'fatture/registra', c: @cliente, r: @righe_da_registrare
+                .totale-importo.pull-right
+                  %strong= number_to_currency @righe_da_registrare.sum(&:importo)
+                .totale-copie.pull-right
+                  %strong= @righe_da_registrare.sum(&:quantita)
+
+        
+        - unless @cliente.fatture.size.zero?
+          .module
+            .header
+              = show_hide_tag
+              %h3= pluralize(@cliente.fatture.size, "documento")
+            .more.riepilogo-libri  
+              %ul
+                = render partial: "fatture/fattura_item", collection: @cliente.fatture.per_numero, as: :fattura
+
+        - unless @cliente.new_record?  
+          - da_consegnare  = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
+          = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_consegnare", collection: da_consegnare} unless da_consegnare.empty?
+
+          - da_pagare = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_pagare.order("libri.titolo")
+          = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_pagare", collection: da_pagare} unless da_pagare.empty?
+          
+
+        - if @cliente.scuola_primaria?
+          = render "classi_adozioni"
+          = render "classi_inserters/form"
+        - else
+          &nbsp
+          
+      .center.span5
+        %header.content-header
+          .header-inner
+            %h2 Appunti
+          
+        - @appunti_per_anno = @cliente.appunti.recente.group_by { |t| t.created_at.year }
+        .appunti.list
+          - for anno, values in @appunti_per_anno do
+            .item
+              %h3= anno
+            - for a in values do
+              = render a, grouped: "grouped"
+            
+        .stream-loader
+        
+      .side-bar.span4
+        - if @cliente.longitude && @cliente.latitude
+          .module
+            .header
+              = show_hide_tag
+              %h3 
+                = "#{pluralize @cliente.nearbys(10).con_appunti(current_user.appunti.da_fare).size, 'cliente'}"
+                %small vicini con appunti da fare
+            .clienti.more
+              = render @cliente.nearbys(10).con_appunti(current_user.appunti.da_fare)
+          .module 
+            .header
+              = show_hide_tag
+              %h3 
+                = "#{pluralize @cliente.nearbys(10).con_appunti(current_user.appunti.in_sospeso).size, 'cliente'}"
+                %small vicini con appunti in sospeso
+              
+            .clienti.more
+              = render @cliente.nearbys(10).con_appunti(current_user.appunti.in_sospeso)
+        

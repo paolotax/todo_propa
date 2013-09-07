@@ -25,6 +25,8 @@ class ClientiController < ApplicationController
 
     @cliente = current_user.clienti.includes(:indirizzi, :appunti, :fatture, :righe, :visite).find(params[:id])
 
+    #raise @cliente.inspect
+
     respond_to do |format|
       format.html do
         session[:return_to] = request.path

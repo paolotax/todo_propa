@@ -89,6 +89,8 @@ gem "active_model_serializers"
 gem "turbolinks"
 gem 'jquery-turbolinks'
 
+gem 'cache_digests'
+
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
   gem 'quiet_assets'

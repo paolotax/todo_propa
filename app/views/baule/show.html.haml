@@ -18,7 +18,7 @@
       .header
         = show_hide_tag
         %h3 Mappa
-      = render 'baule/mappa_baule', clienti: @giro.clienti
+      / = render 'baule/mappa_baule', clienti: @giro.clienti
 
   .span5
     .module
@@ -31,14 +31,14 @@
 .row.baule-page
   .span6
     = render :partial => 'giri/list_giro'
-  .span4
-    = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
-  .span4
-    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
+/   .span4
+/     = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
+/   .span4
+/     = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
     
 
-.visite-long.baule-page
-  = render :partial => 'giri/visite_long'
+/ .visite-long.baule-page
+/   = render :partial => 'giri/visite_long'
   
   
 

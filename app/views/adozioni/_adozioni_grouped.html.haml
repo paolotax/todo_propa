@@ -33,7 +33,7 @@
         - else
           = pluralize(adozioni.size, "Adozione")
           .pull-right
-            %small= "pino #{pluralize adozioni.uniq {|a| a.classe.cliente.idid }.size, "scuola"}"
+            %small= "pino #{pluralize adozioni.uniq {|a| a.classe.cliente.id }.size, "scuola"}"
             - if @giro
               %small= "#{@giro.adozioni.size} nel baule"
           

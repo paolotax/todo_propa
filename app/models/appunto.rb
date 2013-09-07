@@ -3,7 +3,7 @@ class Appunto < ActiveRecord::Base
   acts_as_taggable
   
   belongs_to :user
-  belongs_to :cliente
+  belongs_to :cliente, touch: true
   
   STATUS       = ["da_fare", "in_sospeso", "preparato", "completato"]
   STATUS_CODES = ["", "P", "S", "X"]
