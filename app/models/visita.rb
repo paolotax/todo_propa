@@ -4,7 +4,7 @@ class Visita < ActiveRecord::Base
   WillFilter::Calendar::DAYS = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab']
   
   
-  belongs_to :cliente
+  belongs_to :cliente, touch: true
   
   has_many   :da_fare, :through => :cliente, 
                        :class_name => "Appunto", 

@@ -1,80 +1,80 @@
-/ - cache cliente do
-
-.content
+- cache [cliente, 'foglio_scuola'] do
   
-  %section.well.show-page{ class: "cliente #{dom_id(@cliente)}"}
-    %header
-    %article.row-fluid
-      .location.span4
-        - unless @cliente.latitude.nil?
-          .map-avatar
-            - @mappa = @cliente.to_gmaps4rails
-            = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-      .content-inner.span8
-        %h1= @cliente.titolo
-        %address
-          %strong
-            = "@#{@cliente.ragione_sociale || [@cliente.nome, @cliente.cognome].join(' ')}"
-          %br
-          = @cliente.indirizzo
-          %br
-          = "#{@cliente.cap} #{@cliente.frazione} #{@cliente.comune} #{@cliente.provincia}"
-        %div.pull-left
-          Partita IVA:
-          = @cliente.partita_iva
-          %br
-          Codice Fiscale:
-          = @cliente.codice_fiscale
-        %div.pull-right
-          
-          - unless @cliente.telefono.blank?
-            %a.btn{ href: "tel:#{@cliente.telefono.split.join}" }
-              %i.icon-phone
-              = @cliente.telefono
-            %br
-
-          - unless @cliente.email.blank?
-            %a.btn{ href: "mailto:#{@cliente.email}" }
-              %i.icon-envelope
-              = @cliente.email
-            %br
-          
+  .content
+    
+    %section.well.show-page{ class: "cliente #{dom_id(@cliente)}"}
+      %header
+      %article.row-fluid
+        .location.span4
           - unless @cliente.latitude.nil?
-            %a.btn{ href: "http://maps.apple.com/maps?q=#{@cliente.latitude},#{@cliente.longitude}" }
-              / %a.btn{ href: "navigon://coordinate/#{@cliente.titolo.parameterize}/#{@cliente.longitude}/#{@cliente.latitude}" }
-              %i.icon-road
-              Mostra percorso
+            .map-avatar
+              - @mappa = @cliente.to_gmaps4rails
+              = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+        .content-inner.span8
+          %h1= @cliente.titolo
+          %address
+            %strong
+              = "@#{@cliente.ragione_sociale || [@cliente.nome, @cliente.cognome].join(' ')}"
+            %br
+            = @cliente.indirizzo
+            %br
+            = "#{@cliente.cap} #{@cliente.frazione} #{@cliente.comune} #{@cliente.provincia}"
+          %div.pull-left
+            Partita IVA:
+            = @cliente.partita_iva
+            %br
+            Codice Fiscale:
+            = @cliente.codice_fiscale
+          %div.pull-right
+            
+            - unless @cliente.telefono.blank?
+              %a.btn{ href: "tel:#{@cliente.telefono.split.join}" }
+                %i.icon-phone
+                = @cliente.telefono
+              %br
 
-.foglio-scuola.module{ id: "foglio_scuola_#{cliente.id}"}
+            - unless @cliente.email.blank?
+              %a.btn{ href: "mailto:#{@cliente.email}" }
+                %i.icon-envelope
+                = @cliente.email
+              %br
+            
+            - unless @cliente.latitude.nil?
+              %a.btn{ href: "http://maps.apple.com/maps?q=#{@cliente.latitude},#{@cliente.longitude}" }
+                / %a.btn{ href: "navigon://coordinate/#{@cliente.titolo.parameterize}/#{@cliente.longitude}/#{@cliente.latitude}" }
+                %i.icon-road
+                Mostra percorso
+  
+  .foglio-scuola.module{ id: "foglio_scuola_#{cliente.id}"}
 
-  .header
-    %h2
+    .header
+      %h2
 
 
-    .pull-right
-      .btn-group
-        = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
-          - for a in cliente.mie_adozioni do
-            = hidden_field_tag "adozione_ids[]", a.id
-          = submit_tag "Stampa Adozioni",  id: "bnt-pdf", class: "btn", placeholder: "salta"
-      - if cliente.da_scorrere?
+      .pull-right
         .btn-group
-          = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger", confirm: "Sei sicuro?", remote: true
+          = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
+            - for a in cliente.mie_adozioni do
+              = hidden_field_tag "adozione_ids[]", a.id
+            = submit_tag "Stampa Adozioni",  id: "bnt-pdf", class: "btn", placeholder: "salta"
+        - if cliente.da_scorrere?
+          .btn-group
+            = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger", confirm: "Sei sicuro?", remote: true
 
-    %h3 Foglio Scuola
+      %h3 Foglio Scuola
 
-  .more
+    .more
 
-    - coef = cliente.max_classi
+      - coef = cliente.max_classi
 
-    - cliente.classi_adozioni_grouped.each do |k, classi|
+      - cliente.classi_adozioni_grouped.each do |k, classi|
 
-      .row-classi.clearfix
+        .row-classi.clearfix
 
-        .header-classi
-          .inner
-            %h1= k
+          .header-classi
+            .inner
+              %h1= k
 
-        - classi.each do |c|
+          - classi.each do |c|
 
-          = render 'classi/classe', c: c, coef: coef
+            = render 'classi/classe', c: c, coef: coef

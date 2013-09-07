@@ -1,45 +1,45 @@
-/ - cache cliente do
+- cache [cliente, 'big'] do
 
-%div{ class: "cliente big #{dom_id(cliente)} #{cliente.fatto? ? "fatto" : "" }", data: {id: "#{cliente.id}"}}
+  %div{ class: "cliente big #{dom_id(cliente)} #{cliente.fatto? ? "fatto" : "" }", data: {id: "#{cliente.id}"}}
 
-  .scorri-div  
-    - if cliente.da_scorrere?
-      .pull-right
-        = link_to "scorri", scorri_classi_cliente_url(cliente), class: "btn-small btn-danger pull-right", confirm: "Sei sicuro?", remote: true
+    .scorri-div  
+      - if cliente.da_scorrere?
+        .pull-right
+          = link_to "scorri", scorri_classi_cliente_url(cliente), class: "btn-small btn-danger pull-right", confirm: "Sei sicuro?", remote: true
 
-  .baule-div
-    = baule_tag cliente
+    .baule-div
+      = baule_tag cliente
 
 
-  .cliente-inner.clearfix
-    .titolo
-      = link_to cliente.titolo, cliente
-      = link_to cliente_path( id: cliente.slug, view: 'foglio_scuola') do
-        %i.icon-truck      
-  
-    - if cliente.has_sospeso?
-      .in_sospeso
-        %span.badge.badge-warning
-          = number_to_currency cliente.properties["importo_in_sospeso"].to_f
+    .cliente-inner.clearfix
+      .titolo
+        = link_to cliente.titolo, cliente
+        = link_to cliente_path( id: cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
+          %i.icon-truck
 
-    - if cliente.scuola_primaria?
-      .vacanze-da-ritirare
-        - if cliente.vacanze_da_ritirare > 0
-          %span.label.label-inverse= cliente.vacanze_da_ritirare
-    
-    - if cliente.has_adozioni?
-      .adozioni-da-consegnare
-        - unless cliente.adozioni_da_consegnare.empty?
-          %span.label= cliente.adozioni_da_consegnare.size
-        - unless cliente.adozioni_saggi.empty?
-          %span.label.label-warning= cliente.adozioni_saggi.size
-        - unless cliente.adozioni_kit_no_saggio.empty?
-          %span.label.label-important= cliente.adozioni_kit_no_saggio.size
-        - unless cliente.adozioni_kit.empty?
-          %span.label.label-success= cliente.adozioni_kit.size
+      - if cliente.has_sospeso?
+        .in_sospeso
+          %span.badge.badge-warning
+            = number_to_currency cliente.properties["importo_in_sospeso"].to_f
 
-    - if cliente.preparato?
-      .stato-cliente
-        = image_tag asset_path "task-preparato.png"
+      - if cliente.scuola_primaria?
+        .vacanze-da-ritirare
+          - if cliente.vacanze_da_ritirare > 0
+            %span.label.label-inverse= cliente.vacanze_da_ritirare
+      
+      - if cliente.has_adozioni?
+        .adozioni-da-consegnare
+          - unless cliente.adozioni_da_consegnare.empty?
+            %span.label= cliente.adozioni_da_consegnare.size
+          - unless cliente.adozioni_saggi.empty?
+            %span.label.label-warning= cliente.adozioni_saggi.size
+          - unless cliente.adozioni_kit_no_saggio.empty?
+            %span.label.label-important= cliente.adozioni_kit_no_saggio.size
+          - unless cliente.adozioni_kit.empty?
+            %span.label.label-success= cliente.adozioni_kit.size
 
-    
+      - if cliente.preparato?
+        .stato-cliente
+          = image_tag asset_path "task-preparato.png"
+
+      
