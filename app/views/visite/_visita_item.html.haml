@@ -1,73 +1,73 @@
-- cache visita.cliente do 
-  %tr[visita]
-    %td= visita.start.try(:strftime, "%H:%M")
-    %td
-      = link_to visita.cliente.titolo, visita.cliente
+/ - cache visita.cliente do 
+%tr[visita]
+  %td= visita.start.try(:strftime, "%H:%M")
+  %td
+    = link_to visita.cliente.titolo, visita.cliente
 
-    %td.visible-phone
-      - unless visita.cliente.latitude.nil?
-        %a.btn{ href: "http://maps.apple.com/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
-          / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
-          %i.icon-road
+  %td.visible-phone
+    - unless visita.cliente.latitude.nil?
+      %a.btn{ href: "http://maps.apple.com/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
+        / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
+        %i.icon-road
 
-    %td.in-sospeso
-      - if visita.cliente.has_sospeso?
-        %span.badge.badge-warning
-          = number_to_currency visita.cliente.properties["importo_in_sospeso"].to_f
+  %td.in-sospeso
+    - if visita.cliente.has_sospeso?
+      %span.badge.badge-warning
+        = number_to_currency visita.cliente.properties["importo_in_sospeso"].to_f
 
-    %td.vacanze
-      - if visita.cliente.vacanze_da_ritirare && visita.cliente.vacanze_da_ritirare > 0
-        %span.label.label-inverse= visita.cliente.vacanze_da_ritirare
-
-
-
-    - libri_adottati = visita.cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)
-
-    - (1..5).each do |classe|
-
-      %td.adozione-image{class: "classe_#{classe}"}
-        - libri = libri_adottati.keys.select {|l| l.classe == classe }
-        
-        - unless libri.empty?
-          - libri.each do |libro|
-            .adozione-copertina
-              
-              = image_tag libro.image_url(:small_thumb)
-
-              - saggi = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'saggio' }
-              - kit = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit' }
-
-              - tutto = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'da consegnare' }
-
-              - kit_no_saggio = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit no saggio' }
-
-              - if tutto.size > 0
-                .tutto.pull-left
-                  %span.label=tutto.size
-
-              - if saggi.size > 0
-                .saggi.pull-left
-                  %span.label.label-warning=saggi.size
+  %td.vacanze
+    - if visita.cliente.vacanze_da_ritirare && visita.cliente.vacanze_da_ritirare > 0
+      %span.label.label-inverse= visita.cliente.vacanze_da_ritirare
 
 
-              - if kit_no_saggio.size > 0
-                .kit_no_saggio.pull-left
-                  %span.label.label-important=kit_no_saggio.size
 
-              - if kit.size > 0
-                .kit.pull-left
-                  %span.label.label-success=kit.size
-       
-    
+  - libri_adottati = visita.cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)
 
-    / %td.saggio
-    /   - unless visita.cliente.saggi_da_consegnare.empty?
-    /     %span.label.label-warning= visita.cliente.saggi_da_consegnare.size
-    
-    / %td.kit
-    /   - unless visita.cliente.kit_da_consegnare.empty?
-    /     %span.label.label-success= visita.cliente.kit_da_consegnare.size
-    
-    %td
-      = link_to visita, method: :delete, remote: true, class: "close" do
-        &times;
+  - (1..5).each do |classe|
+
+    %td.adozione-image{class: "classe_#{classe}"}
+      - libri = libri_adottati.keys.select {|l| l.classe == classe }
+      
+      - unless libri.empty?
+        - libri.each do |libro|
+          .adozione-copertina
+            
+            = image_tag libro.image_url(:small_thumb)
+
+            - saggi = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'saggio' }
+            - kit = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit' }
+
+            - tutto = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'da consegnare' }
+
+            - kit_no_saggio = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit no saggio' }
+
+            - if tutto.size > 0
+              .tutto.pull-left
+                %span.label=tutto.size
+
+            - if saggi.size > 0
+              .saggi.pull-left
+                %span.label.label-warning=saggi.size
+
+
+            - if kit_no_saggio.size > 0
+              .kit_no_saggio.pull-left
+                %span.label.label-important=kit_no_saggio.size
+
+            - if kit.size > 0
+              .kit.pull-left
+                %span.label.label-success=kit.size
+     
+  
+
+  / %td.saggio
+  /   - unless visita.cliente.saggi_da_consegnare.empty?
+  /     %span.label.label-warning= visita.cliente.saggi_da_consegnare.size
+  
+  / %td.kit
+  /   - unless visita.cliente.kit_da_consegnare.empty?
+  /     %span.label.label-success= visita.cliente.kit_da_consegnare.size
+  
+  %td
+    = link_to visita, method: :delete, remote: true, class: "close" do
+      &times;
