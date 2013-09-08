@@ -1,6 +1,6 @@
 class Riga < ActiveRecord::Base
   
-  belongs_to :appunto
+  belongs_to :appunto, touch: true
   belongs_to :libro
   belongs_to :fattura
   

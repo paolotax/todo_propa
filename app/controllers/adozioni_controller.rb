@@ -20,8 +20,6 @@ class AdozioniController < ApplicationController
     
     @adozione = @classe.adozioni.build(params[:adozione])
 
-
-
     @adozione.nr_copie = @classe.nr_alunni
     respond_to do |format|
       if @adozione.save
@@ -58,7 +56,7 @@ class AdozioniController < ApplicationController
     @adozioni.reject! do |adozione|
       adozione.update_attributes(params[:adozione])
     end
-    
+
     if @adozioni.empty?
       respond_to do |format|
         format.html { redirect_to :back }

@@ -50,6 +50,10 @@ class Giro
     user.appunti.in_sospeso.where("appunti.cliente_id in (?)", clienti.map(&:id))
   end
   
+  def appunti_preparato
+    user.appunti.preparato.where("appunti.cliente_id in (?)", clienti.map(&:id))
+  end
+
   def righe_da_consegnare
     user.righe.includes(:libro).where("righe.appunto_id in (?)", appunti_da_fare.map(&:id))
   end

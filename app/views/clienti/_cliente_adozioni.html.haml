@@ -1,0 +1,59 @@
+- cache [ 'cliente_adozioni', cliente ] do
+  
+  - libri_adottati = cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)
+
+    
+  %table
+    %tr
+        
+
+      - (1..5).each do |classe|
+
+        %td.adozione-image{class: "classe_#{classe}"}
+          - libri = libri_adottati.keys.select {|l| l.classe == classe }
+
+          - unless libri.empty?
+            - libri.each do |libro|
+              .adozione-copertina
+
+                = image_tag libro.image_url(:small_thumb)
+
+                - saggi = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'saggio' }
+                - kit = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit' }
+
+                - tutto = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'da consegnare' }
+
+                - kit_no_saggio = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit no saggio' }
+
+                - if tutto.size > 0
+                  .tutto.pull-left
+                    %span.label=tutto.size
+
+                - if saggi.size > 0
+                  .saggi.pull-left
+                    %span.label.label-warning=saggi.size
+
+
+                - if kit_no_saggio.size > 0
+                  .kit_no_saggio.pull-left
+                    %span.label.label-important=kit_no_saggio.size
+
+                - if kit.size > 0
+                  .kit.pull-left
+                    %span.label.label-success=kit.size
+
+      %td.actions
+        .btn-group
+          %button.btn.btn-link.dropdown-toggle{ "data-toggle" => "dropdown" }
+            %i.icon-cog
+          %ul.dropdown-menu.pull-right
+            %li= adozioni_stato_tag "da consegnare", cliente.mie_adozioni, false
+            %li= adozioni_stato_tag "saggio", cliente.mie_adozioni, false            
+            %li= adozioni_stato_tag "kit", cliente.mie_adozioni, false            
+            %li= adozioni_stato_tag "kit no saggio", cliente.mie_adozioni, false
+            %li.divider
+            %li
+              = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
+                - for a in cliente.mie_adozioni do
+                  = hidden_field_tag "adozione_ids[]", a.id
+                = submit_tag "stampa",  id: "bnt-pdf", class: "btn btn-link"

@@ -13,13 +13,8 @@
     %h2 Nel Baule
 
 .row.baule-page
-  .span7
-    .module
-      .header
-        = show_hide_tag
-        %h3 Mappa
-      / = render 'baule/mappa_baule', clienti: @giro.clienti
-
+  .span6
+    = render :partial => 'giri/list_giro'
   .span5
     .module
       .header
@@ -27,15 +22,53 @@
         %h4 scegli il giorno
       .more.well
         = render "form"
-
-.row.baule-page
-  .span6
-    = render :partial => 'giri/list_giro'
-/   .span4
-/     = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
-/   .span4
-/     = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
+  .span4
+    = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
+  .span4
+    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
     
+  - if @giro.appunti_da_fare.size > 0
+    .span6  
+      .content
+        .content-header
+          .header-inner.header
+            = show_hide_tag
+            %h3
+              = pluralize @giro.appunti_da_fare.size, "appunti"
+              %small da fare
+          .more.appunti.list
+            - for appunto in @giro.appunti_da_fare
+              = render appunto
+  
+  - if @giro.appunti_preparato.size > 0
+    .span6 
+      .content
+        .content-header
+          .header-inner.header
+            = show_hide_tag
+            %h3
+              = pluralize @giro.appunti_preparato.size, "appunti"
+              %small pronti
+          .more.appunti.list
+            - for appunto in @giro.appunti_preparato
+              = render appunto
+
+  - if @giro.appunti_in_sospeso.size > 0
+    .span6 
+      .content
+        .content-header
+          .header-inner.header
+            = show_hide_tag
+            %h3
+              = pluralize @giro.appunti_in_sospeso.size, "appunti"
+              %small in sospeso
+          .more.appunti.list
+            - for appunto in @giro.appunti_in_sospeso
+              = render appunto
+          .footer
+
+
+      
 
 / .visite-long.baule-page
 /   = render :partial => 'giri/visite_long'

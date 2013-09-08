@@ -1,129 +1,131 @@
-- if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
-  - favorited = "favorited"
-- else
-  -favorited = ''
+- cache appunto do
 
-- grouped = grouped ||= ""
+  - if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
+    - favorited = "favorited"
+  - else
+    -favorited = ''
 
-.item[appunto]{ class: "#{appunto.status} #{grouped} #{favorited}" }
-  
-  .content
-    
-    .dogear
-    
-    %small.time
-      %time.timeago{ datetime: "#{appunto.updated_at || appunto.created_at}" }
-    
-    .actions
-      %ul.nav-appunto
-        %li.show
-          %a{ title: 'mostra dettagli', href: "#"}
-            Apri
-    
-    .chiudi{ style: "float: right;"}
-      %a{ title: 'chiudi', href: "#"}
-        Chiudi
+  - grouped = grouped ||= ""
 
-    .stato.dropdown
-      %a{ class: "dropdown-toggle #{appunto.status}", "data-toggle" => "dropdown" }
-        .icon-status{ class: "#{appunto.status}" }
-      %ul.dropdown-menu
-        %li
-          %a.change-status{ href: "#", "data-status" => "",  "data-id" => "#{appunto.id}"} da fare
-        %li
-          %a.change-status{ href: "#", "data-status" => "S",  "data-id" => "#{appunto.id}"} preparato
-        %li
-          %a.change-status{ href: "#", "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
-        %li
-          %a.change-status{ href: "#", "data-status" => "X", "data-id" => "#{appunto.id}"} completato
+  .item[appunto]{ class: "#{appunto.status} #{grouped} #{favorited}" }
     
-    
-    - if grouped == ""
-      = link_to appunto.cliente do
-        %strong.full_name= appunto.cliente.titolo       
-      %small.destinatario= "@#{appunto.destinatario}" if appunto.destinatario?
-    
-    - else
-      -  if appunto.destinatario?
-        %strong= "@#{appunto.destinatario}"
-      - else
-        %strong.full_name &nbsp 
-
-    %p
-      = appunto.note
-    
-    - unless appunto.tag_list.empty?
-      - for tag in appunto.tag_list do
-        .pull-left.tag-remove.label.label-warning{ style: "margin: 0 3px 3px 0"}
-          
-          %span.pull-left= tag
-          / = link_to tag, tag_path(tag: tag), class: "pull-left"
-          = form_for appunto, remote: true, html: {style: "display:inline; margin: 0 0 0 12px", class: "close"} do |f|
-            = hidden_field_tag "appunto[tag_list]", (appunto.tag_list - [tag]).join(', ')
-            = f.button "x"
-      .clearfix
-
-    = render "appunti/recapiti", appunto: appunto
-    
-    - if appunto.completato? && appunto.has_righe? && appunto.da_fatturare?
-      %p
-        da registrare
-
-  .more
-    
-    .dates.content
-      %small
-        %span= link_to "##{appunto.id}", appunto
-        %span - creato il
-        %span= l appunto.created_at, format: :only_date
-        %span= "- modificato il"
-        %span= l appunto.updated_at, format: :only_date
-
-        - if appunto.fattura
-          = '-'
-          = link_to appunto.fattura do
-            = "#{appunto.fattura.causale} #{appunto.fattura.numero}" 
-            = l appunto.fattura.data, format: :only_date
-        
-    
-    - if appunto.has_righe?
-      .table-righe-new
-        = render appunto.righe
-  
-  %footer
-    
-    - if appunto.has_righe?
-
-      .copie
-        %strong= appunto.totale_copie
-        copie
-      .importo-totale
-        %strong= pretty_prezzo appunto.totale_importo
-        importo
-
-
-    .footer-actions
+    .content
       
-      %ul.nav-actions
-        
-        - unless appunto.status == "completato"
-          %li.baule-div
-            = baule_tag appunto.cliente
-        
-        %li.print
-          %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
-            %i.icon-tag
-            Stampa
+      .dogear
+      
+      %small.time
+        %time.timeago{ datetime: "#{appunto.updated_at || appunto.created_at}" }
+      
+      .actions
+        %ul.nav-appunto
+          %li.show
+            %a{ title: 'mostra dettagli', href: "#"}
+              Apri
+      
+      .chiudi{ style: "float: right;"}
+        %a{ title: 'chiudi', href: "#"}
+          Chiudi
 
-        - unless appunto.fatturato?
+      .stato.dropdown
+        %a{ class: "dropdown-toggle #{appunto.status}", "data-toggle" => "dropdown" }
+          .icon-status{ class: "#{appunto.status}" }
+        %ul.dropdown-menu
+          %li
+            %a.change-status{ href: "#", "data-status" => "",  "data-id" => "#{appunto.id}"} da fare
+          %li
+            %a.change-status{ href: "#", "data-status" => "S",  "data-id" => "#{appunto.id}"} preparato
+          %li
+            %a.change-status{ href: "#", "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
+          %li
+            %a.change-status{ href: "#", "data-status" => "X", "data-id" => "#{appunto.id}"} completato
+      
+      
+      - if grouped == ""
+        = link_to appunto.cliente do
+          %strong.full_name= appunto.cliente.titolo       
+        %small.destinatario= "@#{appunto.destinatario}" if appunto.destinatario?
+      
+      - else
+        -  if appunto.destinatario?
+          %strong= "@#{appunto.destinatario}"
+        - else
+          %strong.full_name &nbsp 
+
+      %p
+        = appunto.note
+      
+      - unless appunto.tag_list.empty?
+        - for tag in appunto.tag_list do
+          .pull-left.tag-remove.label.label-warning{ style: "margin: 0 3px 3px 0"}
+            
+            %span.pull-left= tag
+            / = link_to tag, tag_path(tag: tag), class: "pull-left"
+            = form_for appunto, remote: true, html: {style: "display:inline; margin: 0 0 0 12px", class: "close"} do |f|
+              = hidden_field_tag "appunto[tag_list]", (appunto.tag_list - [tag]).join(', ')
+              = f.button "x"
+        .clearfix
+
+      = render "appunti/recapiti", appunto: appunto
+      
+      - if appunto.completato? && appunto.has_righe? && appunto.da_fatturare?
+        %p
+          da registrare
+
+    .more
+      
+      .dates.content
+        %small
+          %span= link_to "##{appunto.id}", appunto
+          %span - creato il
+          %span= l appunto.created_at, format: :only_date
+          %span= "- modificato il"
+          %span= l appunto.updated_at, format: :only_date
+
+          - if appunto.fattura
+            = '-'
+            = link_to appunto.fattura do
+              = "#{appunto.fattura.causale} #{appunto.fattura.numero}" 
+              = l appunto.fattura.data, format: :only_date
           
-          %li.edit
-            %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
-              %i.icon-pencil
-              Modifica
+      
+      - if appunto.has_righe?
+        .table-righe-new
+          = render appunto.righe
+    
+    %footer
+      
+      - if appunto.has_righe?
 
-          %li.delete
-            %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-              %i.icon-trash
-              Elimina
+        .copie
+          %strong= appunto.totale_copie
+          copie
+        .importo-totale
+          %strong= pretty_prezzo appunto.totale_importo
+          importo
+
+
+      .footer-actions
+        
+        %ul.nav-actions
+          
+          - unless appunto.status == "completato"
+            %li.baule-div
+              = baule_tag appunto.cliente
+          
+          %li.print
+            %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
+              %i.icon-tag
+              Stampa
+
+          - unless appunto.fatturato?
+            
+            %li.edit
+              %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
+                %i.icon-pencil
+                Modifica
+
+            %li.delete
+              %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+                %i.icon-trash
+                Elimina
 

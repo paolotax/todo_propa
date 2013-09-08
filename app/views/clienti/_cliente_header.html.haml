@@ -9,6 +9,11 @@
           - @mappa = cliente.to_gmaps4rails
           = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
     .content-inner.span8
+
+      - if cliente.has_adozioni?
+        .cliente-adozioni.pull-right
+          = render 'clienti/cliente_adozioni', cliente: cliente
+
       %h1
         =link_to cliente.titolo, cliente
 
@@ -17,6 +22,7 @@
             = link_to cliente_path( id: cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
               %i.icon-file
 
+
       %address
         %strong
           = "@#{cliente.ragione_sociale || [cliente.nome, cliente.cognome].join(' ')}"
@@ -24,13 +30,13 @@
         = cliente.indirizzo
         %br
         = "#{cliente.cap} #{cliente.frazione} #{cliente.comune} #{cliente.provincia}"
-      %div.pull-left
+      %div
         Partita IVA:
         = cliente.partita_iva
         %br
         Codice Fiscale:
         = cliente.codice_fiscale
-      %div.pull-right
+      %div
 
         - unless cliente.telefono.blank?
           %a.btn{ href: "tel:#{cliente.telefono.split.join}" }
