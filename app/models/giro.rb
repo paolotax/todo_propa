@@ -17,6 +17,10 @@ class Giro
   def user
     user ||= User.find(@user_id)
   end
+
+  def titoli
+    visite.map(&:titolo).uniq.join(', ')
+  end
   
   def ieri
     (@giorno - 1.day).to_date
@@ -28,7 +32,7 @@ class Giro
   
   def visite
     if baule
-      user.visite.includes(:cliente).where(baule: true)
+      user.visite.includes(:cliente).where(baule: true).order(:start)
     else  
       user.visite.includes(:cliente).where("date(start) = ?", @giorno).order(:start)
     end

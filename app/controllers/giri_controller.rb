@@ -50,13 +50,8 @@ class GiriController < ApplicationController
   
   
   def show
-
     @giro = Giro.new(user_id: current_user.id, giorno: Chronic::parse(params[:giorno])) 
-    
-    # @visite  = @giro.visite 
-    # @clienti = @giro.clienti
-    # @libri_nel_baule    = @giro.titoli_da_consegnare
-    # @adozioni_nel_baule = @giro.adozioni_per_titolo     
   end
+  
   
 end

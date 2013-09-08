@@ -20,36 +20,60 @@
     .header
       .btn-toolbar.pull-right
         .btn-group
-          = link_to "Solenne", "", class: "btn btn-danger"
-          %a{ class: "btn btn-danger dropdown-toggle", href: "#", data: {toggle: "dropdown"} }
-            %span.icon-caret-down
-          %ul.dropdown-menu
-            %li
-              %a domani
-            %li
-              %a dopo domani
-        .btn-group
           = stampami_tag
           = link_to "esandi tutto", "", class: "esandi-tutto btn"
         .btn-group  
           = previous_tag  giro_url(giorno: @giro.ieri)
           = next_tag      giro_url(giorno: @giro.domani)
-      %h2= "Giro di #{l @giro.giorno.to_date, format: :long_with_day}"
+      %h2
+        = "Giro di #{l @giro.giorno.to_date, format: :long_with_day}"
+        %small= @giro.titoli
 
-  .row    
+  .row.baule-page
+    .span6
+      = render :partial => 'giri/list_giro'
     .span4
-      = render :partial => 'list_giro'
-
+      = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
+    .span4
       = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
-      = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
+      
+    - if @giro.appunti_da_fare.size > 0
+      .span6  
+        .content
+          .content-header
+            .header-inner.header
+              = show_hide_tag
+              %h3
+                = pluralize @giro.appunti_da_fare.size, "appunti"
+                %small da fare
+            .more.appunti.list
+              - for appunto in @giro.appunti_da_fare
+                = render appunto
+    
+    - if @giro.appunti_preparato.size > 0
+      .span6 
+        .content
+          .content-header
+            .header-inner.header
+              = show_hide_tag
+              %h3
+                = pluralize @giro.appunti_preparato.size, "appunti"
+                %small pronti
+            .more.appunti.list
+              - for appunto in @giro.appunti_preparato
+                = render appunto
 
-    .span8
-      .module
-        .header
-          = show_hide_tag
-          %h3 Mappa
-        = render 'baule/mappa_baule', clienti: @giro.clienti
-
-      = render :partial => 'giri/visite_long'
-
+    - if @giro.appunti_in_sospeso.size > 0
+      .span6 
+        .content
+          .content-header
+            .header-inner.header
+              = show_hide_tag
+              %h3
+                = pluralize @giro.appunti_in_sospeso.size, "appunti"
+                %small in sospeso
+            .more.appunti.list
+              - for appunto in @giro.appunti_in_sospeso
+                = render appunto
+            .footer
 

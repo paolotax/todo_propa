@@ -153,6 +153,10 @@ class Cliente < ActiveRecord::Base
     false      
   end
 
+  def last_giro
+    visite.where("baule != true").order('start desc').first
+  end
+
   def has_adozioni?
     self.scuola_primaria? && !self.mie_adozioni.empty?
   end

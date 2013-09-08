@@ -1,12 +1,24 @@
 - cache [visita.cliente, 'adozioni'] do 
   
   %tr[visita]
-    %td= visita.start.try(:strftime, "%H:%M")
+    %td
+      = form_for visita, class: 'form-ora' do |f|
+        = f.time_select :start, { minute_step: 15 }
+        = f.submit 'modifica', class: 'btn btn-mini'
+        
     %td
       = link_to visita.cliente.titolo, visita.cliente
       - if visita.cliente.scuola_primaria?
         = link_to cliente_path( id: visita.cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
           %i.icon-file
+      - if visita.cliente.last_giro
+
+        %br
+
+          = link_to giro_url(giorno: visita.cliente.last_giro.data) do
+            %small= visita.cliente.last_giro.titolo
+            %br
+            %small= visita.cliente.last_giro.data
 
     %td.visible-phone
       - unless visita.cliente.latitude.nil?

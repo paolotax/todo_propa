@@ -30,7 +30,7 @@ class VisiteController < ApplicationController
   
   
   def create
-    @visita = Visita.new(params[:visita])
+    @visita = current_user.visite.build(params[:visita])
 
     respond_to do |format|
       if @visita.save
