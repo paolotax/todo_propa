@@ -1,71 +1,75 @@
 - title "Adozioni"
 
+- cache_key = current_user.mie_adozioni.ultima[0].updated_at.to_s
+
 .row
-  .well.span7
-    %h2 Riepilogo Adozioni
-    %br
-    %table.table.adozioni-nel-baule
-      %tr
-        %th Materia
-        %th 
-          Titolo
-          %span.pull-right.label.label-success kit
-          %span.pull-right.label.label-important kit no saggio
-          %span.pull-right.label.label-warning saggio
-          %span.pull-right.label no
-
-
-        %th Sezioni
-        %th
-          %span.label no kit
-        %th
-          %span.label.label-success kit
-
-      - for materia, adozioni in @adozioni_per_titolo.group_by { |a| a.libro.materia_id } do
+  - cache ['riepilogo_adozioni', current_user.id, cache_key] do
+    .well.span7
+      %h2 Riepilogo Adozioni
+      %br
+      %table.table.adozioni-nel-baule
         %tr
-          %td
-            = link_to materia, params.except(:titolo).merge(materia: materia)
-          %td
-            %table.table
-              - for libro, adoz in adozioni.group_by(&:libro) do
-                %tr
-                  %td= link_to libro.titolo, params.except(:materia).merge(titolo: libro.titolo)
-                  %td
-                    .pull-right
-                      %strong= adoz.size
-                  %td
-                    - da_consegnare = adoz.select {|a| a.stato == 'da consegnare'}.size
-                    - if da_consegnare > 0
-                      .pull-right
-                        %span.label= da_consegnare
+          %th Materia
+          %th 
+            Titolo
+            %span.pull-right.label.label-success kit
+            %span.pull-right.label.label-important kit no saggio
+            %span.pull-right.label.label-warning saggio
+            %span.pull-right.label no
 
-                  %td
-                    - saggio = adoz.select {|a| a.stato == 'saggio'}.size
-                    - if saggio > 0
-                      .pull-right
-                        %span.label.label-warning= saggio
-                  %td
-                    - kit_no_saggio = adoz.select {|a| a.stato == 'kit no saggio'}.size
-                    - if kit_no_saggio > 0
-                      .pull-right
-                        %span.label.label-important=  kit_no_saggio
 
-                  %td
-                    - kit = adoz.select {|a| a.stato == 'kit'}.size
-                    - if kit > 0
-                      .pull-right
-                        %span.label.label-success=  kit
+          %th Sezioni
+          %th
+            %span.label no kit
+          %th
+            %span.label.label-success kit
 
-          %td
-            .pull-right
-              %strong= adozioni.size
-          %td
-            .pull-right= adozioni.select {|a| a.kit_2 != 'consegnato'}.size
-          %td
-            .pull-right= adozioni.select {|a| a.kit_2 == 'consegnato'}.size
+        - for materia, adozioni in @adozioni_per_titolo.group_by { |a| a.libro.materia_id } do
+          %tr
+            %td
+              = link_to materia, params.except(:titolo).merge(materia: materia)
+            %td
+              %table.table
+                - for libro, adoz in adozioni.group_by(&:libro) do
+                  %tr
+                    %td= link_to libro.titolo, params.except(:materia).merge(titolo: libro.titolo)
+                    %td
+                      .pull-right
+                        %strong= adoz.size
+                    %td
+                      - da_consegnare = adoz.select {|a| a.stato == 'da consegnare'}.size
+                      - if da_consegnare > 0
+                        .pull-right
+                          %span.label= da_consegnare
+
+                    %td
+                      - saggio = adoz.select {|a| a.stato == 'saggio'}.size
+                      - if saggio > 0
+                        .pull-right
+                          %span.label.label-warning= saggio
+                    %td
+                      - kit_no_saggio = adoz.select {|a| a.stato == 'kit no saggio'}.size
+                      - if kit_no_saggio > 0
+                        .pull-right
+                          %span.label.label-important=  kit_no_saggio
+
+                    %td
+                      - kit = adoz.select {|a| a.stato == 'kit'}.size
+                      - if kit > 0
+                        .pull-right
+                          %span.label.label-success=  kit
+
+            %td
+              .pull-right
+                %strong= adozioni.size
+            %td
+              .pull-right= adozioni.select {|a| a.kit_2 != 'consegnato'}.size
+            %td
+              .pull-right= adozioni.select {|a| a.kit_2 == 'consegnato'}.size
 
   .sidebar.span4
 
-    = render 'adozioni/adozioni_grouped', adozioni: @adozioni
+    - cache ["riepilogo_adozioni", current_user.id, cache_key, params[:titolo], params[:materia], params[:provincia]] do
+      = render 'adozioni/adozioni_grouped', adozioni: @adozioni
 
                   

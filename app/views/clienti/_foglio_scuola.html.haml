@@ -1,50 +1,11 @@
+
 - cache [cliente, 'foglio_scuola'] do
   
   .content
-    
-    %section.well.show-page{ class: "cliente #{dom_id(@cliente)}"}
-      %header
-      %article.row-fluid
-        .location.span4
-          - unless @cliente.latitude.nil?
-            .map-avatar
-              - @mappa = @cliente.to_gmaps4rails
-              = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
-        .content-inner.span8
-          %h1= @cliente.titolo
-          %address
-            %strong
-              = "@#{@cliente.ragione_sociale || [@cliente.nome, @cliente.cognome].join(' ')}"
-            %br
-            = @cliente.indirizzo
-            %br
-            = "#{@cliente.cap} #{@cliente.frazione} #{@cliente.comune} #{@cliente.provincia}"
-          %div.pull-left
-            Partita IVA:
-            = @cliente.partita_iva
-            %br
-            Codice Fiscale:
-            = @cliente.codice_fiscale
-          %div.pull-right
-            
-            - unless @cliente.telefono.blank?
-              %a.btn{ href: "tel:#{@cliente.telefono.split.join}" }
-                %i.icon-phone
-                = @cliente.telefono
-              %br
+    = render partial: 'clienti/cliente_header', locals: { cliente: cliente }
 
-            - unless @cliente.email.blank?
-              %a.btn{ href: "mailto:#{@cliente.email}" }
-                %i.icon-envelope
-                = @cliente.email
-              %br
-            
-            - unless @cliente.latitude.nil?
-              %a.btn{ href: "http://maps.apple.com/maps?q=#{@cliente.latitude},#{@cliente.longitude}" }
-                / %a.btn{ href: "navigon://coordinate/#{@cliente.titolo.parameterize}/#{@cliente.longitude}/#{@cliente.latitude}" }
-                %i.icon-road
-                Mostra percorso
   
+
   .foglio-scuola.module{ id: "foglio_scuola_#{cliente.id}"}
 
     .header

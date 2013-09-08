@@ -25,6 +25,7 @@ class Adozione < ActiveRecord::Base
 
   scope :del_libro,  lambda { |l| where("adozioni.libro_id = ?", l) }
 
+  scope :ultima, order("adozioni.updated_at desc").limit(1)
   
   def importo
     libro.prezzo_copertina * nr_copie ||= 0
