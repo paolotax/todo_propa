@@ -1,11 +1,12 @@
-- cache appunto do
+- if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
+  - favorited = "favorited"
+- else
+  -favorited = ''
 
-  - if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
-    - favorited = "favorited"
-  - else
-    -favorited = ''
+- grouped = grouped ||= ""
 
-  - grouped = grouped ||= ""
+- cache [current_user.id, appunto, grouped] do
+
 
   .item[appunto]{ class: "#{appunto.status} #{grouped} #{favorited}" }
     

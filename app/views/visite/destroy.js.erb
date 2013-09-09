@@ -26,7 +26,7 @@ if ($('.list-volumi_da_consegnare').length > 0) {
 };
 
 if ($('.list-adozioni').length > 0) {
-  $('.list-adozioni').replaceWith("<%= escape_javascript( render partial: 'shared/riepilogo_libri', locals: { tipo_riepilogo: 'adozioni', collection: @giro.adozioni} ) %>");
+  $('.list-adozioni').replaceWith("<%= escape_javascript( render partial: 'shared/riepilogo_adozioni', locals: { tipo_riepilogo: 'adozioni', collection: @giro.adozioni} ) %>");
 };
 
 if ($('.riepilogo-baule').length > 0) {
