@@ -92,6 +92,8 @@ gem 'jquery-turbolinks'
 gem 'cache_digests'
 gem 'dalli'
 
+gem 'rack-mini-profiler'
+
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
   gem 'quiet_assets'

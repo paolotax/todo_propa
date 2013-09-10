@@ -18,9 +18,9 @@
     .stream-loader
       = paginate @appunti
 
-  .side-right.span3.only_desktop    
-    .module.white
-      - cache id: 'wunderground', expires_in: 1.minutes do
-        = render 'forecast'
+  / .side-right.span3.only_desktop    
+  /   .module.white
+  /     - cache id: 'wunderground', expires_in: 1.minutes do
+  /       = render 'forecast'
 
 

@@ -235,6 +235,8 @@ GEM
       rack (>= 0.4)
     rack-contrib (1.1.0)
       rack (>= 0.9.1)
+    rack-mini-profiler (0.1.31)
+      rack (>= 1.1.3)
     rack-protection (1.2.0)
       rack
     rack-ssl (1.3.2)
@@ -404,6 +406,7 @@ DEPENDENCIES
   quiet_assets
   rabl
   rack-contrib
+  rack-mini-profiler
   rails (= 3.2.2)
   redcarpet (= 1.17.2)
   roo

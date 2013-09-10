@@ -5,7 +5,8 @@ class Visita < ActiveRecord::Base
   
   
   belongs_to :cliente, touch: true
-  
+  belongs_to :user
+
   has_many   :da_fare, :through => :cliente, 
                        :class_name => "Appunto", 
                        :source => :appunti, 
@@ -30,7 +31,15 @@ class Visita < ActiveRecord::Base
   
   validate    :check_data
   before_save :save_data
+
+
+  before_create  :flush_cache
+  before_destroy :flush_cache
   
+
+  def flush_cache
+    Rails.cache.delete([ cliente.user.id, "baule_count"])
+  end
   
   def giorno
     if start

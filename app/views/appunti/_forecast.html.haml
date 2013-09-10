@@ -1,3 +1,9 @@
+/ # spostato dal controller attenzione remote: true per filter_tag se non non funziona
+- location = params[:comune] || "bologna"
+- expire_fragment "wunderground" if location != "bologna"    
+- location = location.split.join("_").downcase
+- @wunder = Wunderground.new location
+
 #forecast
   - unless @wunder.non_trovato?
     %h3

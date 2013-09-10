@@ -4,6 +4,24 @@
   .module.list-giro
     .header
       = show_hide_tag
+      
+      .pull-right
+        .btn-group
+          %button.btn.btn-link.dropdown-toggle{ "data-toggle" => "dropdown" }
+            %i.icon-cog
+          %ul.dropdown-menu.pull-right
+            %li= adozioni_stato_tag "adozioni da consegnare", @giro.adozioni, false
+            %li= adozioni_stato_tag "adozioni saggio", @giro.adozioni, false            
+            %li= adozioni_stato_tag "adozioni kit", @giro.adozioni, false            
+            %li= adozioni_stato_tag "adozioni kit no saggio", @giro.adozioni, false
+            %li.divider
+            %li
+              = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
+                - for a in @giro.adozioni do
+                  = hidden_field_tag "adozione_ids[]", a.id
+                = submit_tag "stampa adozioni",  id: "bnt-pdf", class: "btn btn-link"
+
+      
       %h3
         = "#{ pluralize @giro.visite.size, 'tappa'}"
     .more 

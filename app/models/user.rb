@@ -64,6 +64,10 @@ class User < ActiveRecord::Base
       self.properties = (properties || {}).merge(key => value)
     end
   end
+
+  def cached_baule_count
+    Rails.cache.fetch([self.id, 'baule_count']) { visite.nel_baule.size }
+  end
   
   
   

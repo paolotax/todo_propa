@@ -15,28 +15,12 @@ class AppuntiController < ApplicationController
       @search = @search.tagged_with(params[:tag])
     end
 
-
-
     @appunti = @search.page(params[:page])
     
-    @stat_appunti = current_user.appunti.filtra(params.except(:status))
-    @in_corso     = @stat_appunti.in_corso.size
-    @da_fare      = @stat_appunti.da_fare.size
-    @in_sospeso   = @stat_appunti.in_sospeso.size
-    @preparati    = @stat_appunti.preparato.size    
-    @tutti        = @stat_appunti.size
-
-    @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
-    @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
-
-
-    # attenzione remote: true per filter_tag se non non funziona
-    location = params[:comune] || "bologna"
-    expire_fragment "wunderground" if location != "bologna"
-    
-    location = location.split.join("_").downcase
-    @wunder = Wunderground.new location
-
+    respond_to do |format|
+      format.html { get_stats_appunti }
+      format.js
+    end
   end
   
   def get_note
@@ -198,4 +182,20 @@ class AppuntiController < ApplicationController
       end
     end   
   end
+
+  private
+
+    def get_stats_appunti
+      @stat_appunti = current_user.appunti.filtra(params.except(:status))
+      @in_corso     = @stat_appunti.in_corso.size
+      @da_fare      = @stat_appunti.da_fare.size
+      @in_sospeso   = @stat_appunti.in_sospeso.size
+      @preparati    = @stat_appunti.preparato.size    
+      @tutti        = @stat_appunti.size
+
+      @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
+      @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
+    end
+
+
 end

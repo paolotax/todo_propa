@@ -29,7 +29,7 @@ module ApplicationHelper
   end
   
   def filter_tag(url, title) 
-    link_to url, class: "list-link", remote: true  do
+    link_to url, class: "list-link", remote: false  do
       raw(title + content_tag( :i, "", class: "chev-right"))
     end  
   end

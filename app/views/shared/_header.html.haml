@@ -56,7 +56,7 @@
             .toolbar-buttons.pull-right
               = link_to baule_url, class: "btn btn-warning topbar-tweet-btn nav-baule", style: "font-size: 24px" do
                 %i.icon-road
-                %sup= current_user.visite.nel_baule.size
+                %sup= current_user.cached_baule_count
           
               = yield :add_button
 
