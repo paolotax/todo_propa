@@ -29,7 +29,7 @@ class BauleController < ApplicationController
   
   def update
 
-    @visite = current_user.visite.nel_baule
+    @visite = current_user.visite.nel_baule.order(:start)
     @visite.each_with_index do |a, index|
       a.update_attributes!(params[:visita].merge(step: index).reject { |k,v| v.blank? })  #  unless k == 'stato'
     end

@@ -25,6 +25,6 @@
       %h3
         = "#{ pluralize @giro.visite.size, 'tappa'}"
     .more 
-      %table.table
+      %ul.lista-visite{ "data-update-url" => "#{sort_visite_path}"}
         - for visita in @giro.visite do
           = render "visite/visita_item", visita: visita

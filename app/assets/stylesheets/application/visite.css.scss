@@ -1,4 +1,15 @@
 
+
+.lista-visite {
+  li {
+    background-color: white;
+    border-bottom: solid 1px #E8E8E8
+  }
+  li > div {
+    padding: 3px 3px
+  }
+}
+
 .edit_visita {
   select {
     width: 50px;

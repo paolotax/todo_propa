@@ -11,11 +11,10 @@
 //= require jquery-offline
 //= require jquery_ujs
 
-
-
 //= require jquery.ui.datepicker
 //= require jquery.ui.datepicker-it
 //= require jquery.ui.draggable
+//= require jquery.ui.sortable
 //= require jquery.ui.resizable
 
 //= require chosen-jquery

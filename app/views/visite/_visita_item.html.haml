@@ -1,12 +1,17 @@
 - cache [visita.cliente, 'adozioni'] do 
   
-  %tr[visita]
-    %td
-      = form_for visita, class: 'form-ora' do |f|
-        = f.time_select :start, { minute_step: 15 }
-        = f.submit 'modifica', class: 'btn btn-mini'
+  = content_tag_for :li, visita, class: 'clearfix' do
+    
+
+    %div.pull-left
+      %span.handle [drag]
+
+    / %div.ex-td.pull-left
+    /   = form_for visita, class: 'form-ora' do |f|
+    /     = f.time_select :start, { minute_step: 15 }
+    /     = f.submit 'modifica', class: 'btn btn-mini'
         
-    %td
+    %div.ex-td.pull-left
       = link_to visita.cliente.titolo, visita.cliente
       - if visita.cliente.scuola_primaria?
         = link_to cliente_path( id: visita.cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
@@ -20,29 +25,29 @@
             %br
             %small= visita.cliente.last_giro.data
 
-    %td.visible-phone
+    %div.ex-td.pull-left.visible-phone
       - unless visita.cliente.latitude.nil?
         %a.btn{ href: "http://maps.apple.com/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
           / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
           %i.icon-road
-    
-    %td.da_fare
+        
+    %div.ex-td.pull-right
+      = link_to visita, method: :delete, confirm: "Sei sicuro?", remote: true, class: "close" do
+        &times;
+
+    %div.ex-td.pull-right.cliente-adozioni
+      = render 'clienti/cliente_adozioni', cliente: visita.cliente
+
+    %div.ex-td.pull-right.vacanze
+      - if visita.cliente.vacanze_da_ritirare && visita.cliente.vacanze_da_ritirare > 0
+        %span.badge.badge-inverse= visita.cliente.vacanze_da_ritirare
+
+    %div.ex-td.pull-right.da_fare
       - if visita.cliente.appunti.da_fare.size > 0
         %span.badge.badge-important
           = visita.cliente.appunti.da_fare.size
 
-    %td.in-sospeso
+    %div.ex-td.pull-right.in-sospeso
       - if visita.cliente.has_sospeso?
         %span.label.label-warning
           = number_to_currency visita.cliente.properties["importo_in_sospeso"].to_f
-
-    %td.vacanze
-      - if visita.cliente.vacanze_da_ritirare && visita.cliente.vacanze_da_ritirare > 0
-        %span.badge.badge-inverse= visita.cliente.vacanze_da_ritirare
-
-    %td.cliente-adozioni
-      = render 'clienti/cliente_adozioni', cliente: visita.cliente
-    
-    %td
-      = link_to visita, method: :delete, remote: true, class: "close" do
-        &times;

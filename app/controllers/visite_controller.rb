@@ -87,4 +87,18 @@ class VisiteController < ApplicationController
     end
   end
 
+  def sort
+    params[:visita].each_with_index do |id, index|
+      current_user.visite.nel_baule.update_all({start: DateTime.now.beginning_of_day + (index+1).hour}, {id: id})
+    end
+    render nothing: true
+  end
+
+  private
+
+    def calculate_date(numero)
+      date = Date.new(hour: numero + 1)
+
+    end
+
 end

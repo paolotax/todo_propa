@@ -1,6 +1,12 @@
 jQuery ->
 
 
+  $('.lista-visite').sortable
+    axis: 'y'
+    handle: '.handle'
+    update: ->
+      # console.log $(this).sortable('serialize')
+      $.post($(this).data('update-url'), $(this).sortable('serialize'))
 
   $('.clienti .cliente').live 'mouseover', ->
     

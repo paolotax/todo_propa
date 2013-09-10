@@ -68,6 +68,7 @@ TodoPropa::Application.routes.draw do
   match '/search/autocomplete', format: :json
   
   resources :visite do
+    collection { post 'sort'}
     resources :visita_appunti
     collection do
       post 'destroy_all'
