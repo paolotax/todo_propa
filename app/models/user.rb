@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   end
 
   def cached_baule_count
-    Rails.cache.fetch([self.id, 'baule_count']) { visite.nel_baule.size }
+    Rails.cache.fetch([self, 'baule_count']) { visite.nel_baule.size }
   end
   
   

@@ -11,12 +11,17 @@ class AppuntiController < ApplicationController
 
     @search = current_user.appunti.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params).ordina(params)
     
+    # .includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti)
+
     if params[:tag]
       @search = @search.tagged_with(params[:tag])
     end
 
     @appunti = @search.page(params[:page])
     
+    location = params[:comune] || "bologna"
+    @location = location.split.join("_").downcase
+
     respond_to do |format|
       format.html { get_stats_appunti }
       format.js

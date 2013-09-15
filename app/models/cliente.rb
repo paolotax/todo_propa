@@ -30,8 +30,16 @@ class Cliente < ActiveRecord::Base
   
   scope :select_provincia, select("clienti.provincia").uniq
   scope :select_citta,     select("clienti.comune").uniq
+  
   scope :nel_baule,        joins(:visite).where("visite.baule = true")
-    
+  
+  scope :con_vacanze_da_ritirare, where("(properties -> 'vacanze_da_ritirare')::int >= 9") 
+  scope :con_vacanze_ritirate,    where("(properties -> 'vacanze_da_ritirare')::int < 9") 
+
+  scope :con_adozioni_da_consegnare, where("(properties -> 'adozioni_da_consegnare' <> '0') or (properties -> 'adozioni_saggi' <> '0') or (properties -> 'adozioni_kit_no_saggio' <> '0')")
+  
+  scope :con_adozioni_consegnate,    where("properties -> 'adozioni_kit' <> '0'") 
+  
   # scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")
   # scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")
   # scope :con_appunti_da_fare,    joins(:appunti).where("appunti.stato = ''")
@@ -49,6 +57,12 @@ class Cliente < ActiveRecord::Base
   scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
   
   # scope :con_adozioni, joins(:adozioni) & Adozione.scolastico  
+
+  after_commit :gino
+
+  def gino
+    puts 'gino'
+  end
 
   def localita
     if frazione.blank?
@@ -266,6 +280,26 @@ class Cliente < ActiveRecord::Base
       prop = prop.merge(importo_in_sospeso:  appunti.in_sospeso.sum(&:totale_importo) )
     end
    
+    if vacanze_da_ritirare
+      prop = prop.merge(vacanze_da_ritirare: vacanze_da_ritirare)
+    end
+
+    if adozioni_saggi && adozioni_saggi.size > 0
+      prop = prop.merge(adozioni_saggi: adozioni_saggi.size)
+    end
+
+    if adozioni_kit && adozioni_kit.size > 0
+      prop = prop.merge(adozioni_kit: adozioni_kit.size)
+    end
+
+    if adozioni_da_consegnare && adozioni_da_consegnare.size > 0
+      prop = prop.merge(adozioni_da_consegnare: adozioni_da_consegnare.size)
+    end
+
+    if adozioni_kit_no_saggio && adozioni_kit_no_saggio.size > 0
+      prop = prop.merge(adozioni_kit_no_saggio: adozioni_kit_no_saggio.size)
+    end
+
     self.properties = prop
     save   
   end
@@ -309,6 +343,15 @@ class Cliente < ActiveRecord::Base
     clienti = clienti.con_appunti(Appunto.da_fare)    if params[:status].present? && params[:status] == "da_fare"
     clienti = clienti.con_appunti(Appunto.in_sospeso) if params[:status].present? && params[:status] == "in_sospeso"
     clienti = clienti.con_appunti(Appunto.preparato)  if params[:status].present? && params[:status] == "preparati"
+    
+    clienti = clienti.nel_baule if params[:nel_baule].present? && params[:nel_baule] == "true"
+
+    clienti = clienti.con_vacanze_da_ritirare if params[:vacanze_da_ritirare].present? && params[:vacanze_da_ritirare] == "true"
+    clienti = clienti.con_vacanze_ritirate if params[:vacanze_da_ritirare].present? && params[:vacanze_da_ritirare] == "false"
+
+    clienti = clienti.con_adozioni_da_consegnare if params[:adozioni_da_consegnare].present? && params[:adozioni_da_consegnare] == "true"
+    clienti = clienti.con_adozioni_consegnate if params[:adozioni_da_consegnare].present? && params[:adozioni_da_consegnare] == "false"
+
     clienti
   end
 

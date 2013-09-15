@@ -43,6 +43,25 @@ class Appunto < ActiveRecord::Base
   
   
   before_save :leggi
+
+  after_update  :flush_cache
+  after_destroy :flush_cache
+  after_create  :flush_cache
+
+  #after_commit  :flush_cache
+
+  def flush_cache
+    Rails.cache.delete([self, 'righe'])
+    Rails.cache.delete([self, 'tag_list'])
+  end
+
+  def cached_righe
+    Rails.cache.fetch([self, "righe"]) { righe.joins(:libro).order('libri.titolo').to_a }
+  end
+  
+  def cached_tag_list
+    Rails.cache.fetch([self, "tag_list"]) { self.tag_list }
+  end
   
   def fattura
     self.fatture[0] unless self.fatture.empty?
@@ -194,8 +213,11 @@ class Appunto < ActiveRecord::Base
   
   after_save :update_righe_status
   after_save :load_into_soulmate
-  after_save :update_cliente_properties
-  after_destroy :update_cliente_properties
+
+  after_commit :update_cliente_properties
+
+  #after_save :update_cliente_properties
+  #after_destroy :update_cliente_properties
 
   def self.search_mate(term, id_user)
     matches = Soulmate::Matcher.new("#{id_user}_appunto").matches_for_term(term)

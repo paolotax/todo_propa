@@ -1,13 +1,12 @@
-- if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
-  - favorited = "favorited"
-- else
-  -favorited = ''
-
 - grouped = grouped ||= ""
 
-- cache [current_user.id, appunto, grouped] do
+- cache [current_user.id, appunto, appunto.cliente, grouped] do
 
-
+  - if !(appunto.stato == "completato") && !(appunto.nel_baule == false )
+    - favorited = "favorited"
+  - else
+    -favorited = ''
+  
   .item[appunto]{ class: "#{appunto.status} #{grouped} #{favorited}" }
     
     .content
@@ -55,14 +54,14 @@
       %p
         = appunto.note
       
-      - unless appunto.tag_list.empty?
-        - for tag in appunto.tag_list do
+      - unless appunto.cached_tag_list.empty?
+        - for tag in appunto.cached_tag_list do
           .pull-left.tag-remove.label.label-warning{ style: "margin: 0 3px 3px 0"}
             
             %span.pull-left= tag
             / = link_to tag, tag_path(tag: tag), class: "pull-left"
             = form_for appunto, remote: true, html: {style: "display:inline; margin: 0 0 0 12px", class: "close"} do |f|
-              = hidden_field_tag "appunto[tag_list]", (appunto.tag_list - [tag]).join(', ')
+              = hidden_field_tag "appunto[cached_tag_list]", (appunto.cached_tag_list - [tag]).join(', ')
               = f.button "x"
         .clearfix
 
@@ -91,7 +90,7 @@
       
       - if appunto.has_righe?
         .table-righe-new
-          = render appunto.righe
+          = render appunto.cached_righe
     
     %footer
       

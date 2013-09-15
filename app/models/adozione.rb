@@ -8,9 +8,7 @@ class Adozione < ActiveRecord::Base
   belongs_to :materia
 
   validates :classe_id, :uniqueness => {:scope => [:materia_id, :libro_id],
-                                        :message => "e' gia' stata utilizzata"}  
-                                        
-                                        
+                                        :message => "e' gia' stata utilizzata"}                                          
   scope :scolastico, joins(:libro).where("libri.settore = 'Scolastico'")
   # scope :per_scuola, lambda {|s| }
   
@@ -58,20 +56,14 @@ class Adozione < ActiveRecord::Base
     adozioni = adozioni.joins(:classe => :cliente).where("clienti.provincia = ?", params[:provincia])  if params[:provincia].present?    
     adozioni
   end
-  
-  
-  def after_save
-    self.update_counter_cache
-  end
 
-  def after_destroy
-    self.update_counter_cache
-  end
-
+  after_commit :update_cliente_properties
   
-  def update_counter_cache
-    self.classe.cliente.mie_adozioni_counter = Adozione.joins(:classe).scolastico.where("classi.cliente_id = ?", self.classe.cliente.id).count
-    self.classe.cliente.save
-  end
+  private
+
+    def update_cliente_properties
+      classe.cliente.ricalcola_properties
+    end
+
 
 end

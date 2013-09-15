@@ -5,6 +5,7 @@ class Visita < ActiveRecord::Base
   
   
   belongs_to :cliente, touch: true
+  
   belongs_to :user
 
   has_many   :da_fare, :through => :cliente, 
@@ -33,12 +34,12 @@ class Visita < ActiveRecord::Base
   before_save :save_data
 
 
-  before_create  :flush_cache
-  before_destroy :flush_cache
+  after_create  :flush_cache
+  after_destroy :flush_cache
   
 
   def flush_cache
-    Rails.cache.delete([ cliente.user.id, "baule_count"])
+    Rails.cache.delete([ cliente.user, "baule_count"])
   end
   
   def giorno
@@ -65,9 +66,9 @@ class Visita < ActiveRecord::Base
     visite
   end
 
-  def mie_adozioni_grouped_titolo
-    self.cliente.mie_adozioni.group_by(&:libro_id) || []
-  end
+  # def mie_adozioni_grouped_titolo
+  #   self.cliente.mie_adozioni.group_by(&:libro_id) || []
+  # end
 
 
   private

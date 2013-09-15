@@ -1,4 +1,4 @@
-- cache [cliente, 'big'] do
+- cache [ current_user, cliente, 'big' ] do
 
   %div{ class: "cliente big #{dom_id(cliente)} #{cliente.fatto? ? "fatto" : "" }", data: {id: "#{cliente.id}"}}
 
@@ -22,23 +22,22 @@
       - if cliente.has_sospeso?
         .in_sospeso
           %span.badge.badge-warning
+
             = number_to_currency cliente.properties["importo_in_sospeso"].to_f
 
-      - if cliente.scuola_primaria?
-        .vacanze-da-ritirare
-          - if cliente.vacanze_da_ritirare > 0
-            %span.label.label-inverse= cliente.vacanze_da_ritirare
+      .vacanze-da-ritirare
+
+        %span.label.label-inverse= cliente.properties["vacanze_da_ritirare"]
+
       
       - if cliente.has_adozioni?
         .adozioni-da-consegnare
-          - unless cliente.adozioni_da_consegnare.empty?
-            %span.label= cliente.adozioni_da_consegnare.size
-          - unless cliente.adozioni_saggi.empty?
-            %span.label.label-warning= cliente.adozioni_saggi.size
-          - unless cliente.adozioni_kit_no_saggio.empty?
-            %span.label.label-important= cliente.adozioni_kit_no_saggio.size
-          - unless cliente.adozioni_kit.empty?
-            %span.label.label-success= cliente.adozioni_kit.size
+
+
+          %span.label= cliente.properties["adozioni_da_consegnare"]
+          %span.label.label-warning= cliente.properties["adozioni_saggi"]
+          %span.label.label-important= cliente.properties["adozioni_kit_no_saggio"]
+          %span.label.label-success= cliente.properties["adozioni_kit"]
 
       - if cliente.preparato?
         .stato-cliente

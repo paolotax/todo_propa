@@ -92,6 +92,8 @@ gem 'jquery-turbolinks'
 gem 'cache_digests'
 gem 'dalli'
 
+gem 'touchpunch-rails'
+
 gem 'rack-mini-profiler'
 
 group :development do

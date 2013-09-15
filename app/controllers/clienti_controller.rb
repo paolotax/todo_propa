@@ -5,7 +5,9 @@ class ClientiController < ApplicationController
   def index
     session[:return_to] = request.path
     @search = current_user.clienti.filtra(params)
-    @clienti = @search.includes(:visite, :classi, :mie_adozioni, :appunti).page(params[:page]).ordina(params)
+    @clienti = @search.page(params[:page]).ordina(params)
+
+    # .includes(:visite, :classi, :mie_adozioni, :appunti)
     
     # stats
     @stat_clienti    = current_user.clienti.per_localita.filtra(params.except(:status))

@@ -1,4 +1,4 @@
-- cache [ 'cliente_adozioni', cliente ] do
+- cache [ current_user, cliente, 'adozioni' ] do
   
   - libri_adottati = cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)
     

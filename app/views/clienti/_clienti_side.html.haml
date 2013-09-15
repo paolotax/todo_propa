@@ -32,6 +32,25 @@
         = link_to "comune", params.merge(ordine: "comune"), remote: false, class: "btn #{params[:ordine] == 'comune'  ? 'btn-primary' : ''}"
         = link_to "nome", params.merge(ordine: "nome"), remote: false, class: "btn #{params[:ordine] == 'nome'  ? 'btn-primary' : ''}"
 
+    .more-filters-box
+      - if params[:nel_baule].present?
+        = link_to "tutti i clienti", clienti_path, class: 'btn btn-block'        
+      - else
+        = link_to "Nel Baule", params.merge(nel_baule: true), class: 'btn btn-block btn-warning'
+      
+      - if params[:vacanze_da_ritirare].present?
+        = link_to "tutti i clienti", clienti_path, class: 'btn btn-block'        
+      - else
+        .btn-group
+          = link_to "vacanze ritirate", params.merge(vacanze_da_ritirare: false), class: 'btn btn-inverse'
+          = link_to "vacanze da ritirare", params.merge(vacanze_da_ritirare: true), class: 'btn'
+
+      - if params[:adozioni_da_consegnare].present?
+        = link_to "tutti i clienti", clienti_path, class: 'btn btn-block'        
+      - else
+        .btn-group
+          = link_to "adozioni da consegnare", params.merge(adozioni_da_consegnare: true), class: 'btn btn-inverse'
+          = link_to "adozioni consegnate", params.merge(adozioni_da_consegnare: false), class: 'btn'
 
 
   = render "shared/search_tipo"

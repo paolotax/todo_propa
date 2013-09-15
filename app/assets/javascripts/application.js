@@ -44,6 +44,8 @@
 //= require gmaps
 //= require stuff
 
+//= require jquery.ui.touch-punch
+
 //= require turbolinks
 
 

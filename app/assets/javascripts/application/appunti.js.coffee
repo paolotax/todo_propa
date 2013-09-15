@@ -2,53 +2,41 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+$(document).on "click", ".appunto.item", (e) ->
+  e.stopPropagation()
+  $(@).toggleClass('opened')
+
+$(document).on "click", ".appunto.item input[type='checkbox'], .appunto.item a, .appunto-item button, .nav-actions li a, .nav-actions li button", (e) ->
+  e.stopPropagation()
+
+$(document).on "click", ".item .show a", (e) ->
+  e.stopPropagation()
+  e.preventDefault()
+  item = $(@).closest($('.item'))
+  item.addClass('opened')
+
+$(document).on "click", '.item .chiudi a', (e) ->
+  e.stopPropagation()
+  e.preventDefault()
+  item = $(@).closest($('.item'))
+  item.removeClass('opened')
+
+$(document).on "click", 'a.change-status', (e) ->
+  console.log 'change-status'
+  e.stopPropagation()
+  e.preventDefault()
+  appunto = $(@).closest($('.appunto'))
+  id = $(@).data('id')
+  stato = $(@).data('status')
+  $.ajax 
+    url: "/appunti/#{id}"  
+    data: { appunto: { stato: stato } }
+    type:  "PUT"
+    dataType: "script"
 
 jQuery ->
 
-  $(document).on "click", ".appunto.item", (e) ->
-    e.stopPropagation()
-    $(@).toggleClass('opened')
-
-  # $(document).on 'touchstart' , ".appunto.item", (e) ->
-  #   e.stopPropagation()
-  #   console.log 'touchstart'
-  #   $(@).toggleClass('opened')
-  
-  $(document).on "click", ".appunto.item input[type='checkbox'], .appunto.item a, .appunto-item button, .nav-actions li a, .nav-actions li button", (e) ->
-    e.stopPropagation()
-
-  # $(document).on "touchstart", ".appunto.item input[type='checkbox'], .appunto.item a, .appunto-item button, .nav-actions li a, .nav-actions li button", (e) ->
-  #   e.stopPropagation()
-  
-  $(document).on "click", ".item .show a", (e) ->
-    e.stopPropagation()
-    e.preventDefault()
-    item = $(@).closest($('.item'))
-    item.addClass('opened')
-  
-  $(document).on "click", '.item .chiudi a', (e) ->
-    e.stopPropagation()
-    e.preventDefault()
-    item = $(@).closest($('.item'))
-    item.removeClass('opened')
-
-  $(document).on "click", 'a.change-status', (e) ->
-    e.stopPropagation()
-    e.preventDefault()
-    appunto = $(@).closest($('.appunto'))
-    id = $(@).data('id')
-    stato = $(@).data('status')
-    $.ajax 
-      url: "/appunti/#{id}"  
-      data: { appunto: { stato: stato } }
-      type:  "PUT"
-      dataType: "script"
-
-  
   $('time.timeago').timeago();
-
-
-jQuery ->
 
   $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata"})
 
