@@ -89,6 +89,12 @@ ul.list li.item {
       float: left;
     }
 
+    .scorri-div {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+    }
+    .sum,
     .copie,
     .importo-totale {
       position: absolute;
@@ -98,6 +104,7 @@ ul.list li.item {
       font-size: 10px;
       line-height: 16px;
       text-transform: uppercase;
+      border-right: 1px solid #E8E8E8;
       border-left: 1px solid #E8E8E8;
       border-top: 1px solid #E8E8E8;
       strong {
@@ -105,6 +112,26 @@ ul.list li.item {
         color: #333;
         font-size: 14px;     
       }    
+    }
+    .sum {
+      // height: 44px
+    }
+    .appunti_da_fare {
+      right: 303px;
+      width: 41px;
+    }
+    .appunti_pronti {
+      right: 241px;
+    }
+    .importo_in_sospeso {
+      right: 157px;
+    }
+    .vacanze_da_ritirare {
+      right: 88px;
+    }
+    .adozioni_da_consegnare {
+      right: 0px;
+      width: 63px
     }
     .copie {
       right: 94px;

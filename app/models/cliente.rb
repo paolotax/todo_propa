@@ -275,6 +275,9 @@ class Cliente < ActiveRecord::Base
     if appunti.da_fare.size > 0
       prop = prop.merge(appunti_da_fare:  appunti.da_fare.size )
     end
+    if appunti.preparato.size > 0
+      prop = prop.merge(appunti_pronti:  appunti.preparato.size )
+    end
     if appunti.in_sospeso.size > 0
       prop = prop.merge(appunti_in_sospeso:  appunti.in_sospeso.size )
       prop = prop.merge(importo_in_sospeso:  appunti.in_sospeso.sum(&:totale_importo) )
