@@ -34,9 +34,10 @@ class Visita < ActiveRecord::Base
   before_save :save_data
 
 
-  after_create  :flush_cache
-  after_destroy :flush_cache
+  # after_create  :flush_cache
+  # after_destroy :flush_cache
   
+  after_commit :flush_cache
 
   def flush_cache
     Rails.cache.delete([ cliente.user, "baule_count"])

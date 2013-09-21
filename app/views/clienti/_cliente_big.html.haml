@@ -20,20 +20,20 @@
             %i.icon-file
       
       .appunti_da_fare.sum
-        - if cliente.properties["appunti_da_fare"].to_i > 0
+        - if cliente.properties["appunti_da_fare"] && cliente.properties["appunti_da_fare"].to_i > 0
           %span.label.label-important= cliente.properties["appunti_da_fare"]
           %br
         da fare
       
       .appunti_pronti.sum
-        - if cliente.properties["appunti_pronti"].to_i > 0        
+        - if cliente.properties["appunti_pronti"] && cliente.properties["appunti_pronti"].to_i > 0        
           %span.label.label-primary= cliente.properties["appunti_pronti"]
           %br
         pronti
 
 
       .importo_in_sospeso.sum
-        - if cliente.properties["appunti_in_sospeso"].to_i > 0
+        - if cliente.properties["appunti_in_sospeso"] && cliente.properties["appunti_in_sospeso"].to_i > 0
           - if cliente.properties["importo_in_sospeso"].to_f > 0.0
             %span.label.label-warning= number_to_currency cliente.properties["importo_in_sospeso"].to_f
             %br

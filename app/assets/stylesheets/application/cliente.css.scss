@@ -1,9 +1,7 @@
 @import "application/mixins";
 
-.cliente.big {
-  img {
-    margin-left: 10px;
-  }  
+.cliente.big.item {
+  min-height: 80px 
 }
 
 .cliente-vendite {

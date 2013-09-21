@@ -8,18 +8,18 @@
       %a{ href: "#info",           "data-toggle" => "tab"} Appunto
     %li
       %a{ href: "#dettaglio",      "data-toggle" => "tab"} Dettaglio righe
-    %li
-      %a{ href: "#parascolastico", "data-toggle" => "tab"} Parascolastico  
-    %li
-      %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
-    %li
-      %a{ href: "#scolastico",     "data-toggle" => "tab"} Scolastico  
-    %li
-      %a{ href: "#varia",          "data-toggle" => "tab"} Varia  
-    %li
-      %a{ href: "#adozionale",     "data-toggle" => "tab"} Adozionale  
-    %li
-      %a{ href: "#guide",          "data-toggle" => "tab"} Guide  
+    / %li
+    /   %a{ href: "#parascolastico", "data-toggle" => "tab"} Parascolastico  
+    / %li
+    /   %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
+    / %li
+    /   %a{ href: "#scolastico",     "data-toggle" => "tab"} Scolastico  
+    / %li
+    /   %a{ href: "#varia",          "data-toggle" => "tab"} Varia  
+    / %li
+    /   %a{ href: "#adozionale",     "data-toggle" => "tab"} Adozionale  
+    / %li
+    /   %a{ href: "#guide",          "data-toggle" => "tab"} Guide  
 
   .tab-content
 
@@ -47,36 +47,36 @@
             = f.simple_fields_for :righe do |riga|
               = render 'righe/form', riga: riga, remove: true
 
-    #varia.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.varia
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Varia" }
+    / #parascolastico.tab-pane.fade
+    /   .control-group
+    /     - @appunto.create_righe Libro.parascolastico
+    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Parascolastico" }
 
-    #vacanze.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.vacanze
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
+    / #varia.tab-pane.fade
+    /   .control-group
+    /     - @appunto.create_righe Libro.varia
+    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Varia" }
+
+    / #vacanze.tab-pane.fade
+    /   .control-group
+    /     - @appunto.create_righe Libro.vacanze
+    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
     
-    #parascolastico.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.parascolastico
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Parascolastico" }
+    / #scolastico.tab-pane.fade
+    /   .control-group
+    /     - @appunto.create_righe Libro.scolastico
+    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Scolastico" }
 
-    #scolastico.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.scolastico
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Scolastico" }
-
-    #adozionale.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.adozionale
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Adozionale" }
+    / #adozionale.tab-pane.fade
+    /   .control-group
+    /     - @appunto.create_righe Libro.adozionale
+    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Adozionale" }
 
         
-    #guide.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.guide
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Guide" }
+    / #guide.tab-pane.fade
+    /   .control-group
+    /     - @appunto.create_righe Libro.guide
+    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Guide" }
 
 
       
