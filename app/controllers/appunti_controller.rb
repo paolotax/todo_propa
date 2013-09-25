@@ -117,12 +117,18 @@ class AppuntiController < ApplicationController
   end
   
   def print_multiple
-    
-    @appunti = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids])
+
+    index = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids]).group_by(&:id)
+
+    @appunti = params[:appunto_ids].map { |i| index[i.to_i].first }
+
+    # piu figo ma non funzia
+    #@appunti = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids]).index_by(&:id).slice(*params[:appunto_ids]).values
     
     respond_to do |format|
       format.pdf do
-        
+        options = {}
+
         case params[:tipo_etichetta]
           when "2x4 con bordo"
             options = {
@@ -178,12 +184,17 @@ class AppuntiController < ApplicationController
               columns: 1
             }
         end  
-        
-                
-        pdf = EtichettaPdf.new(@appunti, view_context, options)
+          
+        if params[:tipo_etichetta].present?          
+          pdf = EtichettaPdf.new(@appunti, view_context, options)
+        else
+          pdf = AppuntoPdf.new(@appunti, view_context)
+        end
+
         send_data pdf.render, filename: "sovrapacchi_#{Time.now}.pdf",
                               type: "application/pdf",
                               disposition: "inline"
+
       end
     end   
   end

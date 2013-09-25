@@ -47,15 +47,30 @@ class Giro
   end
   
   def appunti_da_fare
-    user.appunti.da_fare.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti = user.appunti.da_fare.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti_da_fare = []
+    clienti.each do |cliente|
+      appunti_da_fare << appunti.select{|a| a.cliente_id == cliente.id}
+    end 
+    appunti_da_fare.flatten
   end
   
   def appunti_in_sospeso
-    user.appunti.in_sospeso.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti = user.appunti.in_sospeso.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti_in_sospeso = []
+    clienti.each do |cliente|
+      appunti_in_sospeso << appunti.select{|a| a.cliente_id == cliente.id}
+    end 
+    appunti_in_sospeso.flatten
   end
   
   def appunti_preparato
-    user.appunti.preparato.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti = user.appunti.preparato.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti_preparato = []
+    clienti.each do |cliente|
+      appunti_preparato << appunti.select{|a| a.cliente_id == cliente.id}
+    end 
+    appunti_preparato.flatten
   end
 
   def righe_da_consegnare
