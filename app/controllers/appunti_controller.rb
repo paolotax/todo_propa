@@ -118,12 +118,12 @@ class AppuntiController < ApplicationController
   
   def print_multiple
 
-    index = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids]).group_by(&:id)
+    #index = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids]).group_by(&:id)
 
-    @appunti = params[:appunto_ids].map { |i| index[i.to_i].first }
+    #@appunti = params[:appunto_ids].map { |i| index[i.to_i].first }
 
     # piu figo ma non funzia
-    #@appunti = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids]).index_by(&:id).slice(*params[:appunto_ids]).values
+    @appunti = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:appunto_ids]).index_by(&:id).slice(*params[:appunto_ids].map{|i| i.to_i}).values
     
     respond_to do |format|
       format.pdf do
