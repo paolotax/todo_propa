@@ -7,3 +7,5 @@ tmp/
 .sass-cache/
 .DS_Store
 .rvmrc
+.ruby-gemset
+.ruby-version
