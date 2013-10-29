@@ -7,10 +7,14 @@ class Api::V1::RigheController < Api::V1::BaseController
   before_filter :get_appunto, except: :index
 
   def index
-    #headers['Last-Modified'] = Time.now.httpdate
-  	# current_resource_owner = User.find(1)
-		@righe = current_resource_owner.righe.includes(:appunto, :libro)
+    
+    if params[:q]  
+      @righe = current_resource_owner.righe.where("appunti.cliente_id = ?", params[:q]).includes(:appunto, :libro)
+    else
+      @righe = current_resource_owner.righe.includes(:appunto, :libro)
+    end
     respond_with @righe
+    
   end
 
   def show
