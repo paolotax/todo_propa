@@ -12,7 +12,7 @@ class AddAnnoToClassi < ActiveRecord::Migration
   end
 
   def down
-    add_column :classi, :anno, :string
+    remove_column :classi, :anno, :string
   end
 
 end

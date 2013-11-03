@@ -50,6 +50,10 @@ class Appunto < ActiveRecord::Base
 
   #after_commit  :flush_cache
 
+  before_validation do
+    self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
+  end
+
   def flush_cache
     Rails.cache.delete([self, 'righe'])
     Rails.cache.delete([self, 'tag_list'])
@@ -180,11 +184,11 @@ class Appunto < ActiveRecord::Base
   end
 
   # before_save :ricalcola
-  # def ricalcola
-  #   logger.debug "ricalcola"
-  #   self.totale_copie   = righe.map(&:quantita).sum
-  #   self.totale_importo = righe.map(&:importo).sum
-  # end
+  def ricalcola
+    # lo uso nell API
+    self.totale_copie   = righe.map(&:quantita).sum
+    self.totale_importo = righe.map(&:importo).sum
+  end
 
   # after_save :check_importo
   # def check_importo

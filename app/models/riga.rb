@@ -36,6 +36,9 @@ class Riga < ActiveRecord::Base
   scope :di_quest_anno,         joins(:fattura).where("fatture.created_at > ?", Date.new(2013,5,1))
 
 
+  before_validation do
+    self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
+  end
 
   def cached_libro
     Libro.cached_find(libro_id)

@@ -92,6 +92,9 @@ class AppuntiController < ApplicationController
 
   def update
     @appunto = current_user.appunti.find(params[:id])
+    
+    #raise params.inspect
+
     respond_to do |format|
       if @appunto.update_attributes(params[:appunto])
         format.html   { redirect_to session[:return_to], notice: 'Appunto modificato.' }

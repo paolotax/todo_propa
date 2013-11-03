@@ -344,6 +344,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uuidtools (2.1.4)
     vegas (0.1.11)
       rack (>= 1.0.0)
     warden (1.1.1)
@@ -424,6 +425,7 @@ DEPENDENCIES
   turn
   uglifier (>= 1.0.3)
   unicorn
+  uuidtools
   whenever
   wicked
   will_filter (~> 3.1.0)

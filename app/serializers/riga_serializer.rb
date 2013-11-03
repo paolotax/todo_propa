@@ -1,6 +1,7 @@
 class RigaSerializer < ActiveModel::Serializer
   
-  attributes  :id, 
+  attributes  :id,
+          :uuid, 
   			  :appunto_id, 
   			  :libro_id, 
   			  :titolo, 
@@ -13,6 +14,6 @@ class RigaSerializer < ActiveModel::Serializer
   			  :fattura_id
 
   has_one :libro, serializer: LibroShortSerializer
-  has_one :appunto, serializer: AppuntoShortSerializer
+  #has_one :appunto, serializer: AppuntoShortSerializer
 
 end

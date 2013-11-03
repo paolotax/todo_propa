@@ -1,5 +1,5 @@
 class ClienteShortCalcSerializer < ActiveModel::Serializer
-  attributes :id, :appunti_in_sospeso, :appunti_da_fare
+  attributes :id, :uuid, :appunti_in_sospeso, :appunti_da_fare
 
   def appunti_in_sospeso
   	Cliente.find(object.id).properties[:appunti_in_sospeso]

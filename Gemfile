@@ -66,6 +66,9 @@ gem 'pg'
 gem 'pg_search'
 gem 'activerecord-postgres-hstore'
 
+#gem 'permanent_records'
+gem 'uuidtools'
+
 gem 'rack-contrib'
 gem 'soulmate', :require => 'soulmate/server'
 

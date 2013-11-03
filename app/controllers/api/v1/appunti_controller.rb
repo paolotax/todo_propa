@@ -32,10 +32,13 @@ class Api::V1::AppuntiController < Api::V1::BaseController
 
   def update
     @appunto = current_resource_owner.appunti.find(params[:id])
-    # solo nell'api
+
+    # questo non va bene per la fatturazione LA SPOSTO SULL APPUNTO?
     @appunto.righe.destroy_all
+    
     if @appunto.update_attributes(params[:appunto])
-      render json: @appunto#, each_serializer: AppuntoPostSerializer
+      @appunto.ricalcola
+      render json: @appunto, each_serializer: AppuntoPostSerializer
     else
       respond_with json: { errors: @appunto.errors.full_messages, status: :unprocessable_entity }
     end

@@ -28,6 +28,10 @@ class Cliente < ActiveRecord::Base
   validates :provincia,    :presence => true, :length => { :is => 2 }
   validates :cliente_tipo, :inclusion => {:in => TIPI_CLIENTI, :message => "non hai scelto il tipo cliente" }
   
+  before_validation do
+    self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
+  end
+
   scope :select_provincia, select("clienti.provincia").uniq
   scope :select_citta,     select("clienti.comune").uniq
   
