@@ -33,6 +33,7 @@ class Riga < ActiveRecord::Base
   scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
   
   scope :di_questa_propaganda,  joins(:appunto).where("appunti.created_at > ?", Date.new(2013,5,1))
+  
   scope :di_quest_anno,         joins(:fattura).where("fatture.created_at > ?", Date.new(2013,5,1))
 
 
@@ -46,10 +47,10 @@ class Riga < ActiveRecord::Base
 
   def anno
     if appunto
-      appunto.created_at.to_date.year
-      else
-        fattura.data.year
-      end
+    appunto.created_at.to_date.year
+    else
+      fattura.data.year
+    end
   end
   
   def riga_abbreviata

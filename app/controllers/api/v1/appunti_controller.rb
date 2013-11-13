@@ -18,10 +18,10 @@ class Api::V1::AppuntiController < Api::V1::BaseController
   def create
 
     @cliente = current_resource_owner.clienti.find(params[:appunto][:cliente_id])
-
-    @appunto =  @cliente.appunti.build(params[:appunto].except(:cliente_nome).except(:cliente_id).except(:righe))
+    @appunto =  @cliente.appunti.build(params[:appunto])
     if @appunto.save
-      respond_with @appunto#, each_serializer: AppuntoPostSerializer
+      appunto = current_resource_owner.appunti.find(@appunto.id)
+      render json: appunto
     end
   end
 
@@ -37,8 +37,8 @@ class Api::V1::AppuntiController < Api::V1::BaseController
     @appunto.righe.destroy_all
     
     if @appunto.update_attributes(params[:appunto])
-      @appunto.ricalcola
-      render json: @appunto, each_serializer: AppuntoPostSerializer
+      appunto = current_resource_owner.appunti.find(@appunto.id)
+      render json: appunto
     else
       respond_with json: { errors: @appunto.errors.full_messages, status: :unprocessable_entity }
     end

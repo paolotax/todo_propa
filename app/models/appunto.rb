@@ -1,3 +1,4 @@
+
 class Appunto < ActiveRecord::Base
   
   acts_as_taggable
@@ -188,6 +189,7 @@ class Appunto < ActiveRecord::Base
     # lo uso nell API
     self.totale_copie   = righe.map(&:quantita).sum
     self.totale_importo = righe.map(&:importo).sum
+    save
   end
 
   # after_save :check_importo
