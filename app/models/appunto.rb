@@ -23,14 +23,16 @@ class Appunto < ActiveRecord::Base
   validates :cliente_id,    :presence => true
 
 
-  scope :recente,  order("appunti.id desc")
-  scope :in_corso,   where("appunti.stato <> 'X'")
+  scope :recente,               order("appunti.id desc")
+  scope :modificato_di_recente, order("appunti.updated_at desc")
+  scope :in_corso,              where("appunti.stato <> 'X'")
   
   scope :pop,        lambda { |id| where("appunti.cliente_id = ?", id) }
   
   scope :uniq_cliente_id, select(:cliente_id).uniq
   
-  scope :recente_da_data, lambda { |data| includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?", data)  }
+  scope :recente_da_data, lambda { |data| includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?", data).recente  }
+  
   scope :un_anno, lambda {  includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?",  1.year.ago)  }
   
   scope :di_questa_propaganda,  where("appunti.created_at > ?", Date.new(2013,5,1))
