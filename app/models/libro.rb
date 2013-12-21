@@ -2,6 +2,7 @@ class Libro < ActiveRecord::Base
 
 
   SETTORI     = ["Scolastico", "Parascolastico", "Vacanze", "Varia", "Eventuale", "Guide", "Adozionale", "Concorrenza", "Scorrimento"]
+  
   SETTORI_OPT = [
                   ["Scolastico", "Scolastico"], 
                   ["Parascolastico", "Parascolastico"], 

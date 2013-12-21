@@ -7,8 +7,13 @@ class Api::V1::AppuntiController < Api::V1::BaseController
 	def index
     #headers['Last-Modified'] = Time.now.httpdate
     # current_resource_owner = User.find(1)
+
     if params[:cliente]
       @appunti = current_resource_owner.appunti.where("appunti.cliente_id = ?", params[:cliente]).includes(:cliente).recente
+    
+    elsif params[:updated_at]
+      @appunti = current_resource_owner.appunti.where("appunti.updated_at > ?", params[:updated_at]).includes(:cliente)
+      logger.debug @appunti
     else
 		  @appunti = current_resource_owner.appunti.includes(:cliente).modificato_di_recente.un_anno
     end
