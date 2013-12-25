@@ -9,9 +9,7 @@ class AppuntiController < ApplicationController
   def index
     session[:return_to] = request.path
 
-    @search = current_user.appunti.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params).ordina(params)
-    
-    # .includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti)
+    @search = current_user.appunti.not_deleted.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params).ordina(params)
 
     if params[:tag]
       @search = @search.tagged_with(params[:tag])
@@ -51,11 +49,6 @@ class AppuntiController < ApplicationController
       
       end
     end
-    
-    # respond_to do |format|
-    #   format.html # show.html.erb
-    #   format.json { render rabl: @appunto }
-    # end
   end
 
   def new
@@ -205,7 +198,7 @@ class AppuntiController < ApplicationController
   private
 
     def get_stats_appunti
-      @stat_appunti = current_user.appunti.filtra(params.except(:status))
+      @stat_appunti = current_user.appunti.not_deleted.filtra(params.except(:status))
       @in_corso     = @stat_appunti.in_corso.size
       @da_fare      = @stat_appunti.da_fare.size
       @in_sospeso   = @stat_appunti.in_sospeso.size

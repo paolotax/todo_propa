@@ -10,6 +10,10 @@ class Riga < ActiveRecord::Base
 
   delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :iva, :to => :libro
 
+  #default_scope joins(:appunto).where("appunti.deleted_at IS NULL")
+  
+  scope :not_deleted, joins(:appunto).where("appunti.deleted_at IS NULL")
+  
   scope :per_libro_id,  order("righe.libro_id")
   scope :per_titolo,    joins(:libro).order("libri.titolo asc")
   scope :per_cm,        joins(:libro).order("libri.cm asc")
@@ -18,13 +22,13 @@ class Riga < ActiveRecord::Base
   scope :scarico,       joins(:appunto)
   
   scope :da_fare,       scarico.where("appunti.stato = ''")
-  scope :preparato,       scarico.where("appunti.stato = 'S'")
+  scope :preparato,     scarico.where("appunti.stato = 'S'")
   
   scope :da_consegnare, where("righe.consegnato = false")
   scope :da_pagare,     where("righe.pagato     = false")
   
-  scope :da_fatturare,  where("righe.fattura_id is null or righe.fattura_id = 0")
-  scope :fatturata,     where("righe.fattura_id is not null or righe.fattura_id != 0")
+  scope :da_fatturare,  not_deleted.where("righe.fattura_id is null or righe.fattura_id = 0")
+  scope :fatturata,     not_deleted.where("righe.fattura_id is not null or righe.fattura_id != 0")
   
   scope :consegnata,    scarico.where("appunti.stato in ('X', 'P')")
 

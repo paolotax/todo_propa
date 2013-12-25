@@ -11,7 +11,7 @@ class ClientiController < ApplicationController
     
     # stats
     @stat_clienti    = current_user.clienti.per_localita.filtra(params.except(:status))
-    @search_appunti  = current_user.appunti.filtra(params.except(:status))
+    @search_appunti  = current_user.appunti.not_deleted.filtra(params.except(:status))
     @in_corso   = @stat_clienti.con_appunti(@search_appunti.in_corso).size
     @da_fare    = @stat_clienti.con_appunti(@search_appunti.da_fare).size
     @in_sospeso = @stat_clienti.con_appunti(@search_appunti.in_sospeso).size 
@@ -33,7 +33,7 @@ class ClientiController < ApplicationController
       format.html do
         session[:return_to] = request.path
         @adozioni_per_scuola = @cliente.adozioni.joins(:classe).scolastico.order("classi.classe, classi.sezione").group_by(&:libro)
-        @righe_da_registrare = @cliente.righe.includes(:appunto).da_fatturare.order("appunto_id desc")
+        @righe_da_registrare = @cliente.righe.da_fatturare.order("appunto_id desc")
         @classi_inserter = ClassiInserter.new
         if request.path != cliente_path(@cliente)
           redirect_to @cliente, status: :moved_permanently

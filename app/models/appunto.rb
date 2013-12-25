@@ -156,8 +156,6 @@ class Appunto < ActiveRecord::Base
   def self.filtra(params)
     appunti = scoped
     appunti = appunti.search(params[:search]) if params[:search].present?
-    # appunti = appunti.where("appunti.destinatario ilike ? or clienti.titolo ilike ?  or clienti.comune ilike ? or clienti.frazione ilike ? or appunti.note ilike ?", 
-    #            "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
     appunti = appunti.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
     appunti = appunti.where("clienti.comune = ?",    params[:comune])    if params[:comune].present?
     appunti = appunti.in_corso   if params[:status].present? && params[:status] == 'in_corso'
@@ -165,10 +163,7 @@ class Appunto < ActiveRecord::Base
     appunti = appunti.preparato  if params[:status].present? && params[:status] == "preparati"
     appunti = appunti.da_fare    if params[:status].present? && params[:status] == "da_fare"
     appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
-    
-    #appunti = appunti.pop(params[:cliente_id].to_i) if params[:cliente_id].present?
     appunti
-
   end
   
   def self.ordina(params)
@@ -298,7 +293,7 @@ class Appunto < ActiveRecord::Base
 
   
     def update_righe_status
-      
+          
       if stato == 'X'
         righe.each do |riga|
           riga.update_attributes({:pagato => true, :consegnato => true})

@@ -213,6 +213,8 @@ GEM
     pdf-reader (1.0.0)
       Ascii85 (~> 1.0.0)
       ruby-rc4
+    permanent_records (3.1.6)
+      activerecord (>= 3.0.0)
     pg (0.13.2)
     pg_search (0.4.1)
       activerecord (>= 3)
@@ -403,6 +405,7 @@ DEPENDENCIES
   mobylette
   nested_form!
   on_the_spot (~> 1.0.1)
+  permanent_records
   pg
   pg_search
   prawn

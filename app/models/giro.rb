@@ -47,7 +47,7 @@ class Giro
   end
   
   def appunti_da_fare
-    appunti = user.appunti.da_fare.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti = user.appunti.not_deleted.da_fare.where("appunti.cliente_id in (?)", clienti.map(&:id))
     appunti_da_fare = []
     clienti.each do |cliente|
       appunti_da_fare << appunti.select{|a| a.cliente_id == cliente.id}
@@ -56,7 +56,7 @@ class Giro
   end
   
   def appunti_in_sospeso
-    appunti = user.appunti.in_sospeso.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti = user.appunti.not_deleted.in_sospeso.where("appunti.cliente_id in (?)", clienti.map(&:id))
     appunti_in_sospeso = []
     clienti.each do |cliente|
       appunti_in_sospeso << appunti.select{|a| a.cliente_id == cliente.id}
@@ -65,7 +65,7 @@ class Giro
   end
   
   def appunti_preparato
-    appunti = user.appunti.preparato.where("appunti.cliente_id in (?)", clienti.map(&:id))
+    appunti = user.appunti.not_deleted.preparato.where("appunti.cliente_id in (?)", clienti.map(&:id))
     appunti_preparato = []
     clienti.each do |cliente|
       appunti_preparato << appunti.select{|a| a.cliente_id == cliente.id}
@@ -74,7 +74,7 @@ class Giro
   end
 
   def righe_da_consegnare
-    user.righe.includes(:libro).where("righe.appunto_id in (?)", appunti_da_fare.map(&:id))
+    user.righe.not_deleted.includes(:libro).where("righe.appunto_id in (?)", appunti_da_fare.map(&:id))
   end
   
   def titoli_da_consegnare
@@ -84,7 +84,7 @@ class Giro
   end
   
   def righe_in_sospeso
-    user.righe.in_sospeso.joins(:libro, :appunto => :visite).where("date(start) = ?", @giorno)
+    user.righe.not_deleted.in_sospeso.joins(:libro, :appunto => :visite).where("date(start) = ?", @giorno)
   end  
   
   def adozioni

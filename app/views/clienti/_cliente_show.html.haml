@@ -35,10 +35,10 @@
               = render partial: "fatture/fattura_item", collection: @cliente.fatture.per_numero, as: :fattura
 
       - unless @cliente.new_record?  
-        - da_consegnare  = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
+        - da_consegnare  = @cliente.righe.not_deleted.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
         = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_consegnare", collection: da_consegnare} unless da_consegnare.empty?
 
-        - da_pagare = @cliente.righe.joins(:libro).includes(:libro).di_questa_propaganda.da_pagare.order("libri.titolo")
+        - da_pagare = @cliente.righe.not_deleted.joins(:libro).includes(:libro).di_questa_propaganda.da_pagare.order("libri.titolo")
         = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_pagare", collection: da_pagare} unless da_pagare.empty?
         
 
@@ -53,7 +53,7 @@
         .header-inner
           %h2 Appunti
         
-      - @appunti_per_anno = @cliente.appunti.recente.group_by { |t| t.created_at.year }
+      - @appunti_per_anno = @cliente.appunti.not_deleted.recente.group_by { |t| t.created_at.year }
       .appunti.list
         - for anno, values in @appunti_per_anno do
           .item
