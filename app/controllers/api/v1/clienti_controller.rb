@@ -3,10 +3,11 @@ class Api::V1::ClientiController < Api::V1::BaseController
   doorkeeper_for :all	
   respond_to :json
 
-  def index
-    #headers['Last-Modified'] = Time.now.httpdate
-  	#current_resource_owner = User.find(1)
+  def index    
     @clienti = current_resource_owner.clienti.includes(:visite).order(:titolo)
+    if params[:updated_at]
+      @clienti = @clienti.where("clienti.updated_at > ?", params[:updated_at])
+    end
     respond_with @clienti
   end
 

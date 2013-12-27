@@ -7,7 +7,10 @@ class ClienteSerializer < ActiveModel::Serializer
            :appunti_in_sospeso,
            :appunti_da_fare,
            :nel_baule,
-           :fatto
+           :fatto,
+           :updated_at,
+           :created_at,
+           :deleted_at
 
   #has_many :appunti
 
