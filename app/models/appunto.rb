@@ -75,7 +75,7 @@ class Appunto < ActiveRecord::Base
   end
   
   STATUS.each_with_index do |status, index|
-    scope "#{status}", where("appunti.stato = ?", STATUS_CODES[index])
+    scope "#{status}", not_deleted.where("appunti.stato = ?", STATUS_CODES[index])
     
     define_method "#{status}?" do
       self.stato == STATUS_CODES[index]

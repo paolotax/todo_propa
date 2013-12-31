@@ -62,12 +62,6 @@ class Cliente < ActiveRecord::Base
   
   # scope :con_adozioni, joins(:adozioni) & Adozione.scolastico  
 
-  after_commit :gino
-
-  def gino
-    puts 'gino'
-  end
-
   def localita
     if frazione.blank?
       comune
