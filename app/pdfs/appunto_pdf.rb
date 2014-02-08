@@ -50,7 +50,7 @@ class AppuntoPdf < Prawn::Document
     move_down 40
     stroke_horizontal_rule
     move_down 10
-    text appunto.note, :size => 13
+    text "#{appunto.note}", :size => 13
     text "tel. #{appunto.telefono}", :size => 13 unless appunto.telefono.blank?
   end
   
