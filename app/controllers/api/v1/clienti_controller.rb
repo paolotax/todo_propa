@@ -27,10 +27,8 @@ class Api::V1::ClientiController < Api::V1::BaseController
   def update
     @cliente = current_resource_owner.clienti.find(params[:id])
     if @cliente.update_attributes(params[:cliente])
-
       cliente = current_resource_owner.clienti.find(@cliente.id)
-      #render json: cliente
-    	respond_with cliente
+      render json: cliente
   	else
     	respond_with json: { errors: @cliente.errors.full_messages, status: :unprocessable_entity }
  	  end
