@@ -69,12 +69,17 @@
               %span.label.label-important
                 = l v.giorno, format: :long
 
-    .pull-right
-      = baule_tag cliente, class_scarica: "btn btn-warning"
-      - unless cliente.has_documenti?
-        = link_to cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
-          %i.icon-trash
-          Elimina
-      = link_to edit_cliente_url(cliente), class: "btn btn-primary" do
-        %i.icon-pencil
-        Modifica
+    - unless cliente.eliminato?
+      .pull-right
+        = baule_tag cliente, class_scarica: "btn btn-warning"
+        - unless cliente.has_documenti?
+          = link_to cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+            %i.icon-trash
+            Elimina
+        = link_to edit_cliente_url(cliente), class: "btn btn-primary" do
+          %i.icon-pencil
+          Modifica
+    - else
+      .pull-right
+        %h3
+          = "Cliente ELIMINATO il #{l cliente.deleted_at, format: :long}"

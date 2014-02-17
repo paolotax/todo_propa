@@ -1,6 +1,7 @@
 - title @cliente.titolo
 
-= new_button( new_appunto_url(cliente: @cliente) )
+- unless @cliente.eliminato?
+  = new_button( new_appunto_url(cliente: @cliente) )
 
 
 - if params[:view] == 'foglio_scuola'

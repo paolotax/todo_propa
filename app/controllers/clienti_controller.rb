@@ -4,13 +4,13 @@ class ClientiController < ApplicationController
   
   def index
     session[:return_to] = request.path
-    @search = current_user.clienti.filtra(params)
+    @search = current_user.clienti.not_deleted.filtra(params)
     @clienti = @search.page(params[:page]).ordina(params)
 
     # .includes(:visite, :classi, :mie_adozioni, :appunti)
     
     # stats
-    @stat_clienti    = current_user.clienti.per_localita.filtra(params.except(:status))
+    @stat_clienti    = current_user.clienti.not_deleted.per_localita.filtra(params.except(:status))
     @search_appunti  = current_user.appunti.not_deleted.filtra(params.except(:status))
     @in_corso   = @stat_clienti.con_appunti(@search_appunti.in_corso).size
     @da_fare    = @stat_clienti.con_appunti(@search_appunti.da_fare).size
@@ -19,8 +19,8 @@ class ClientiController < ApplicationController
     @tutti      = @stat_clienti.size 
     
     #filters
-    @provincie = current_user.clienti.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
-    @citta     = current_user.clienti.select_citta.filtra(params.except(:comune)).order(:comune)
+    @provincie = current_user.clienti.not_deleted.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
+    @citta     = current_user.clienti.not_deleted.select_citta.filtra(params.except(:comune)).order(:comune)
   end
 
   def show

@@ -123,11 +123,15 @@ class Cliente < ActiveRecord::Base
   end
   
   def has_documenti?
-    !self.appunti.empty? || !self.fatture.empty?
+    !self.fatture.empty?
   end
   
   def has_sospeso?
     !self.appunti.select {|a| a.status == 'in_sospeso'  && !a.totale_importo.zero? }.empty?
+  end
+
+  def eliminato?
+    !deleted_at.nil?
   end
 
   def to_s
