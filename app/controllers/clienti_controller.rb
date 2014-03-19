@@ -48,6 +48,7 @@ class ClientiController < ApplicationController
     @cliente   = current_user.clienti.build
     @indirizzo  = @cliente.indirizzo
     # @spedizione = @cliente.indirizzo_spedizione
+    @direzioni = current_user.clienti.not_deleted.order(:titolo)
     
     respond_to do |format|
       format.html # new.html.erb
