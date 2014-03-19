@@ -99,6 +99,8 @@ gem 'touchpunch-rails'
 
 gem 'rack-mini-profiler'
 
+gem 'ancestry'
+
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
   gem 'quiet_assets'

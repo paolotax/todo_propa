@@ -23,6 +23,7 @@
               %i.icon-file
 
 
+
       %address
         %strong
           = "@#{cliente.ragione_sociale || [cliente.nome, cliente.cognome].join(' ')}"
@@ -30,12 +31,20 @@
         = cliente.indirizzo
         %br
         = "#{cliente.cap} #{cliente.frazione} #{cliente.comune} #{cliente.provincia}"
+
+      - if cliente.scuola_primaria? && !cliente.parent.nil?
+        %div
+          = "plesso de: #{cliente.parent.titolo}"
+
       %div
         Partita IVA:
         = cliente.partita_iva
         %br
         Codice Fiscale:
         = cliente.codice_fiscale
+      
+
+
       %div
 
         - unless cliente.telefono.blank?

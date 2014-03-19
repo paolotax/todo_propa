@@ -9,6 +9,14 @@
     = f.input   :cliente_tipo, collection: Cliente::TIPI_CLIENTI, label: "Tipo Cliente",  input_html: { :class => 'chzn-select', "data-placeholder" => "Seleziona tipo cliente..." }
     = f.input   :titolo, label: "Nome Cliente", hint: "Scegliere un nome univoco per indicare il cliente. Verrà aggiunto automaticamente il prefisso che ne indica il tipo"
 
+
+    - unless @direzioni.nil?
+      .control-group.form-inline
+        %label{:for => "parent_id", :class => 'string control-label'} Direzione
+        .controls
+          = f.collection_select :parent_id, @direzioni, :id, :titolo, {:include_blank => true}, { :class => 'select_direzione'}
+
+
   %fieldset
     %legend Dati anagrafici
     .control-group.form-inline
@@ -19,6 +27,10 @@
       
     = f.input   :ragione_sociale
   
+
+
+
+
   %fieldset
     = f.input   :codice_fiscale
     = f.input   :partita_iva

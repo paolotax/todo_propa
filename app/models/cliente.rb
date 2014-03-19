@@ -1,4 +1,14 @@
 class Cliente < ActiveRecord::Base
+
+
+  def self.spara
+    Cliente.direzioni.per_localita.each do |c|
+      puts c.titolo
+      c.children.each do |s|
+        puts "- #{s.titolo}"
+      end
+    end
+  end
   
   TIPI_CLIENTI = ['Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica', 'Cartolibreria', 'Persona Fisica', 'Ditta', 'Comune']
   ABBR_TIPI    = ['E', 'IC', 'D', 'C', '', '', 'Com']
@@ -6,6 +16,8 @@ class Cliente < ActiveRecord::Base
   extend FriendlyId
   friendly_id :titolo, use: [:slugged, :history]
   
+  has_ancestry
+
   belongs_to :user
 
   has_many :appunti, dependent: :destroy

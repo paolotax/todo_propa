@@ -27,6 +27,7 @@ TodoPropa::Application.routes.draw do
 
   mount WillFilter::Engine => "/will_filter"
   
+  
   resources :classi do
     member do
       get :aggiungi_sezione
@@ -35,6 +36,7 @@ TodoPropa::Application.routes.draw do
       post 'destroy_all'
     end
   end
+  
   
   resources :adozioni do
     collection do
@@ -46,14 +48,18 @@ TodoPropa::Application.routes.draw do
     end
   end
   
+  
   resources :materie
   
+  
   get 'tags/:tag', to: 'appunti#index', as: :tag
+  
   
   match '/vendite', controller: 'magazzino', action: 'vendite'
   match '/cassa',   controller: 'magazzino', action: 'cassa'
   match '/incassi', controller: 'magazzino', action: 'incassi'
     
+  
   get '/baule', to: 'baule#show', as: 'baule'
   match '/baule/rimuovi', controller: 'baule', action: 'destroy'
   match '/baule/update',  controller: 'baule', action: 'update', :via => :put
@@ -62,10 +68,13 @@ TodoPropa::Application.routes.draw do
   match '/user/profile',  controller: 'user_profile', action: 'edit'
   match '/user/update_profile',  controller: 'user_profile', action: 'update', :via => :put
   
+  
   resources :visita_appunti
 
+  
   match '/:action.appcache', :controller => 'appcache', :format => :appcache
   match '/search/autocomplete', format: :json
+  
   
   resources :visite do
     collection { post 'sort'}
@@ -78,11 +87,13 @@ TodoPropa::Application.routes.draw do
   
   match "giri"         => "giri#index", as: "giri"
   match "giri/:giorno" => "giri#show",  as: "giro"
+  match "giri/:giorno/print" => "giri#print_multiple",  as: "giro"
   
-  
+  match "propa2014"         => "clienti#propa2014", as: "propa2014"
   
   resources :comuni
 
+  
   resources :fatture do
     resources :fattura_steps
     collection do
@@ -90,8 +101,10 @@ TodoPropa::Application.routes.draw do
     end
   end
 
+  
   devise_for :users
 
+  
   resources :appunti do
     collection do
       put :update_attribute_on_the_spot
@@ -101,6 +114,7 @@ TodoPropa::Application.routes.draw do
       get :get_note
     end
   end
+  
   
   resources :clienti do
 
@@ -120,9 +134,12 @@ TodoPropa::Application.routes.draw do
     end
   end
   
+  
   resources :indirizzi
   
+  
   resources :righe
+  
   
   resources :libri do
     collection do

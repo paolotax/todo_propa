@@ -58,6 +58,11 @@ class ClientiController < ApplicationController
   def edit
     session[:return_to] = request.referer
     @cliente = current_user.clienti.find(params[:id])
+
+    # per inserimento direzione
+    if @cliente.scuola_primaria?
+      @direzioni = current_user.clienti.direzioni.where(provincia: @cliente.provincia).order(:id)
+    end
   end
 
   def create
@@ -106,6 +111,16 @@ class ClientiController < ApplicationController
 
   def export
     @clienti = current_user.clienti.per_localita
+  end
+
+  def propa2014
+    @clienti = current_user.clienti.scuole.per_localita
+
+    if params[:provincia]
+      @clienti = @clienti.where(provincia: params[:provincia])
+    end
+
+    #@clienti = current_user.clienti.where(:ancestry => Cliente.roots.pluck(:id)).per_localita
   end
   
   def registra_documento

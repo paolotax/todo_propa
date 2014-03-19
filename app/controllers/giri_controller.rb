@@ -48,10 +48,27 @@ class GiriController < ApplicationController
     logger.debug { "diff Count: #{@scuole_fatte.count}" }
   end  
   
-  
+
   def show
     @giro = Giro.new(user_id: current_user.id, giorno: Chronic::parse(params[:giorno])) 
   end
+
+
+  def print_multiple
+
+    @giro = Giro.new(user_id: current_user.id, giorno: Chronic::parse(params[:giorno]))
+    
+    respond_to do |format|
+      format.pdf do
+        pdf = GiroPdf.new(@giro.clienti, view_context)
+        send_data pdf.render, filename: "giri_#{Time.now}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+
+      end
+    end   
+  end
   
+
   
 end

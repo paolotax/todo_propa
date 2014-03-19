@@ -1,0 +1,17 @@
+- title "Propa 2014"
+
+.row
+
+  .content-main.span12
+    %header.content-header
+      .header-inner
+        %h2 Clienti
+    
+    #clienti.list
+
+      = nested_scuole @clienti.arrange(:order => "provincia asc, comune asc")
+      / - for cliente in @clienti do
+      /   = render cliente
+      /   = render partial: "cliente_big", collection: cliente.children, as: :cliente
+
+
