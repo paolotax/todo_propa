@@ -34,7 +34,14 @@
 
       - if cliente.scuola_primaria? && !cliente.parent.nil?
         %div
-          = "plesso de: #{cliente.parent.titolo}"
+          sede
+          = link_to "#{cliente.parent.titolo}", cliente.parent
+
+      - if cliente.istituto_comprensivo? || cliente.direzione_didattica?
+        %ul
+          - for c in cliente.children do
+            %li= link_to "#{c.titolo}", c
+
 
       %div
         Partita IVA:
