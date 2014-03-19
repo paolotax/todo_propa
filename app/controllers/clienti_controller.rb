@@ -61,8 +61,10 @@ class ClientiController < ApplicationController
 
     # per inserimento direzione
     if @cliente.scuola_primaria?
-      @direzioni = current_user.clienti.not_deleted.direzioni.where(provincia: @cliente.provincia).order(:id)
-    end
+      @direzioni = current_user.clienti.not_deleted.direzioni.where(provincia: @cliente.provincia).order(:comune, :id)
+    else
+      @direzioni = current_user.clienti.not_deleted.where(provincia: @cliente.provincia).order(:comune, :id)
+    end 
   end
 
   def create
