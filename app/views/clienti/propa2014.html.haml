@@ -2,11 +2,19 @@
 
 .row
 
+
   .content-main.span12
     %header.content-header
-      .header-inner
-        %h2 Clienti
     
+      .header-inner
+        - if @provincie
+          .sort-box.clearfix
+            %h2.pull-left Propaganda 2014
+            .btn-group.pull-right
+              = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
+              - for provincia in @provincie
+                = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
+
     #clienti.list
 
       = nested_scuole @clienti.arrange(:order => "provincia asc, comune asc")

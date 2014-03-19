@@ -61,7 +61,7 @@ class ClientiController < ApplicationController
 
     # per inserimento direzione
     if @cliente.scuola_primaria?
-      @direzioni = current_user.clienti.direzioni.where(provincia: @cliente.provincia).order(:id)
+      @direzioni = current_user.clienti.not_deleted.direzioni.where(provincia: @cliente.provincia).order(:id)
     end
   end
 
@@ -114,12 +114,13 @@ class ClientiController < ApplicationController
   end
 
   def propa2014
-    @clienti = current_user.clienti.scuole.per_localita
+    @clienti = current_user.clienti.not_deleted.scuole.per_localita
 
     if params[:provincia]
       @clienti = @clienti.where(provincia: params[:provincia])
     end
 
+    @provincie = current_user.clienti.not_deleted.direzioni.select_provincia.map(&:provincia)
     #@clienti = current_user.clienti.where(:ancestry => Cliente.roots.pluck(:id)).per_localita
   end
   
