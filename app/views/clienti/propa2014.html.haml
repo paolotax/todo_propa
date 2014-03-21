@@ -19,15 +19,19 @@
 
     #clienti.list
 
-      - direzioni = @clienti.arrange(:order => "provincia asc, comune asc")
+      - zone = @clienti.arrange(:order => "provincia asc, comune asc")
 
       %ul
-        - direzioni.each do |direzione|
-          %li= direzione[0].titolo
+        - zone.each do |zona|
+          %li= link_to zona[0].titolo, zona[0]
           
           %ul.nested_scuole
-            - direzione[1].each do |plesso|
-              %li= plesso[0].titolo
+            - zona[1].each do |direzione|
+              %li= link_to direzione[0].titolo, direzione[0]
+              %ul.nested_scuole          
+                - direzione[1].each do |plesso|
+                  %li= link_to plesso[0].titolo, plesso
+
 
       / = nested_scuole @clienti.arrange(:order => "provincia asc, comune asc")
 
