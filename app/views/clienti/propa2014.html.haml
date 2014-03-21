@@ -9,7 +9,9 @@
       .header-inner
         - if @provincie
           .sort-box.clearfix
-            %h2.pull-left Propaganda 2014
+            %h2.pull-left 
+              Propaganda 2014
+              %small= @count_elementari
             .btn-group.pull-right
               = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
               - for provincia in @provincie
@@ -17,9 +19,16 @@
 
     #clienti.list
 
-      = nested_scuole @clienti.arrange(:order => "provincia asc, comune asc")
-      / - for cliente in @clienti do
-      /   = render cliente
-      /   = render partial: "cliente_big", collection: cliente.children, as: :cliente
+      - direzioni = @clienti.arrange(:order => "provincia asc, comune asc")
+
+      %ul
+        - direzioni.each do |direzione|
+          %li= direzione[0].titolo
+          
+          %ul.nested_scuole
+            - direzione[1].each do |plesso|
+              %li= plesso[0].titolo
+
+      / = nested_scuole @clienti.arrange(:order => "provincia asc, comune asc")
 
 

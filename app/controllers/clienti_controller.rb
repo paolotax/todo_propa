@@ -123,6 +123,7 @@ class ClientiController < ApplicationController
       @clienti = @clienti.where(provincia: params[:provincia])
     end
 
+    @count_elementari = @clienti.select { |c| c.scuola_primaria? == true}.count
     @provincie = current_user.clienti.not_deleted.direzioni.select_provincia.map(&:provincia)
     #@clienti = current_user.clienti.where(:ancestry => Cliente.roots.pluck(:id)).per_localita
   end
