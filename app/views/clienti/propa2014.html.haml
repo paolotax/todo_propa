@@ -23,14 +23,18 @@
 
       %ul
         - zone.each do |zona|
-          %li= link_to zona[0].titolo, zona[0]
-          
+          %li
+            = link_to zona[0].titolo, zona[0]
+
+
+            %small= zona[0].descendants.select{|s| s.scuola_primaria? == true}.count
           %ul.nested_scuole
             - zona[1].each do |direzione|
-              %li= link_to direzione[0].titolo, direzione[0]
+              %li
+                = link_to direzione[0].titolo, direzione[0]
               %ul.nested_scuole          
                 - direzione[1].each do |plesso|
-                  %li= link_to plesso[0].titolo, plesso
+                  %li= link_to plesso[0].titolo, plesso[0]
 
 
       / = nested_scuole @clienti.arrange(:order => "provincia asc, comune asc")
