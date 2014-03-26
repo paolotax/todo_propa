@@ -1,0 +1,27 @@
+= simple_form_for(@propa2014) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :cliente_id
+    = f.input :data_visita
+    = f.input :data_ritiro
+    = f.input :data_interclasse
+    = f.input :data_collegio
+    = f.input :kit_123
+    = f.input :nr_123
+    = f.input :kit_45
+    = f.input :nr_45
+    = f.input :kit_123_ing
+    = f.input :nr_45_ing
+    = f.input :kit_123_rel
+    = f.input :nr_123_rel
+    = f.input :kit_45_rel
+    = f.input :nr_45_rel
+    = f.input :vac_1
+    = f.input :vac_2
+    = f.input :vac_3
+    = f.input :vac_4
+    = f.input :vac_5
+
+  .form-actions
+    = f.button :submit

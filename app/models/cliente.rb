@@ -31,6 +31,8 @@ class Cliente < ActiveRecord::Base
   
   has_many :righe, through: :appunti
 
+  has_one :propa2014
+
   accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:comune].nil? || a[:provincia].nil?}, :allow_destroy => true  
   
   validates :titolo,  :presence => true,

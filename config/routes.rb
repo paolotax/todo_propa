@@ -1,6 +1,16 @@
 TodoPropa::Application.routes.draw do
   
+  
   use_doorkeeper
+
+  
+  resources :propa2014s do
+    collection do
+      put :update_attribute_on_the_spot
+      get :get_attribute_on_the_spot
+    end
+  end
+
 
   namespace :api do
     namespace :v1  do
@@ -91,6 +101,7 @@ TodoPropa::Application.routes.draw do
   
   match "propa2014"         => "clienti#propa2014", as: "propa2014"
   
+  
   resources :comuni
 
   
@@ -134,10 +145,7 @@ TodoPropa::Application.routes.draw do
     end
   end
   
-  
-  resources :indirizzi
-  
-  
+
   resources :righe
   
   

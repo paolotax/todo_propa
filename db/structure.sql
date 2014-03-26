@@ -4,16 +4,22 @@
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
-SET standard_conforming_strings = off;
+SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET escape_string_warning = off;
 
 --
--- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: -
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
-CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 SET search_path = public, pg_catalog;
@@ -430,10 +436,10 @@ CREATE OPERATOR CLASS gin_hstore_ops
     STORAGE text ,
     OPERATOR 7 @>(hstore,hstore) ,
     OPERATOR 9 ?(hstore,text) ,
-    FUNCTION 1 bttextcmp(text,text) ,
-    FUNCTION 2 gin_extract_hstore(internal,internal) ,
-    FUNCTION 3 gin_extract_hstore_query(internal,internal,smallint,internal,internal) ,
-    FUNCTION 4 gin_consistent_hstore(internal,smallint,internal,integer,internal,internal);
+    FUNCTION 1 (hstore, hstore) bttextcmp(text,text) ,
+    FUNCTION 2 (hstore, hstore) gin_extract_hstore(internal,internal) ,
+    FUNCTION 3 (hstore, hstore) gin_extract_hstore_query(internal,internal,smallint,internal,internal) ,
+    FUNCTION 4 (hstore, hstore) gin_consistent_hstore(internal,smallint,internal,integer,internal,internal);
 
 
 --
@@ -446,13 +452,13 @@ CREATE OPERATOR CLASS gist_hstore_ops
     OPERATOR 7 @>(hstore,hstore) ,
     OPERATOR 9 ?(hstore,text) ,
     OPERATOR 13 @(hstore,hstore) ,
-    FUNCTION 1 ghstore_consistent(internal,internal,integer,oid,internal) ,
-    FUNCTION 2 ghstore_union(internal,internal) ,
-    FUNCTION 3 ghstore_compress(internal) ,
-    FUNCTION 4 ghstore_decompress(internal) ,
-    FUNCTION 5 ghstore_penalty(internal,internal,internal) ,
-    FUNCTION 6 ghstore_picksplit(internal,internal) ,
-    FUNCTION 7 ghstore_same(internal,internal,internal);
+    FUNCTION 1 (hstore, hstore) ghstore_consistent(internal,internal,integer,oid,internal) ,
+    FUNCTION 2 (hstore, hstore) ghstore_union(internal,internal) ,
+    FUNCTION 3 (hstore, hstore) ghstore_compress(internal) ,
+    FUNCTION 4 (hstore, hstore) ghstore_decompress(internal) ,
+    FUNCTION 5 (hstore, hstore) ghstore_penalty(internal,internal,internal) ,
+    FUNCTION 6 (hstore, hstore) ghstore_picksplit(internal,internal) ,
+    FUNCTION 7 (hstore, hstore) ghstore_same(internal,internal,internal);
 
 
 SET default_tablespace = '';
@@ -517,7 +523,10 @@ CREATE TABLE appunti (
     latitude double precision,
     longitude double precision,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    uuid uuid,
+    deleted_at timestamp without time zone,
+    completed_at timestamp without time zone
 );
 
 
@@ -648,7 +657,9 @@ CREATE TABLE clienti (
     updated_at timestamp without time zone NOT NULL,
     ancestry character varying(255),
     slug character varying(255),
-    properties hstore
+    properties hstore,
+    uuid uuid,
+    deleted_at timestamp without time zone
 );
 
 
@@ -1007,6 +1018,61 @@ ALTER SEQUENCE oauth_applications_id_seq OWNED BY oauth_applications.id;
 
 
 --
+-- Name: propa2014s; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE propa2014s (
+    id integer NOT NULL,
+    cliente_id integer,
+    data_visita date,
+    data_ritiro date,
+    data_interclasse date,
+    data_collegio date,
+    kit_123 character varying(255),
+    nr_123 integer,
+    kit_45 character varying(255),
+    nr_45 integer,
+    kit_123_ing character varying(255),
+    nr_45_ing integer,
+    kit_123_rel character varying(255),
+    nr_123_rel integer,
+    kit_45_rel character varying(255),
+    nr_45_rel integer,
+    vac_1 character varying(255),
+    vac_2 character varying(255),
+    vac_3 character varying(255),
+    vac_4 character varying(255),
+    vac_5 character varying(255),
+    nr_vac_1 integer,
+    nr_vac_2 integer,
+    nr_vac_3 integer,
+    nr_vac_4 integer,
+    nr_vac_5 integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: propa2014s_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE propa2014s_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: propa2014s_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE propa2014s_id_seq OWNED BY propa2014s.id;
+
+
+--
 -- Name: righe; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1024,7 +1090,8 @@ CREATE TABLE righe (
     causale_id integer,
     movimento integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    uuid uuid
 );
 
 
@@ -1318,154 +1385,161 @@ ALTER SEQUENCE will_filter_filters_id_seq OWNED BY will_filter_filters.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE adozioni ALTER COLUMN id SET DEFAULT nextval('adozioni_id_seq'::regclass);
+ALTER TABLE ONLY adozioni ALTER COLUMN id SET DEFAULT nextval('adozioni_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE appunti ALTER COLUMN id SET DEFAULT nextval('appunti_id_seq'::regclass);
+ALTER TABLE ONLY appunti ALTER COLUMN id SET DEFAULT nextval('appunti_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE appunto_events ALTER COLUMN id SET DEFAULT nextval('appunto_events_id_seq'::regclass);
+ALTER TABLE ONLY appunto_events ALTER COLUMN id SET DEFAULT nextval('appunto_events_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE classi ALTER COLUMN id SET DEFAULT nextval('classi_id_seq'::regclass);
+ALTER TABLE ONLY classi ALTER COLUMN id SET DEFAULT nextval('classi_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE clienti ALTER COLUMN id SET DEFAULT nextval('clienti_id_seq'::regclass);
+ALTER TABLE ONLY clienti ALTER COLUMN id SET DEFAULT nextval('clienti_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE comuni ALTER COLUMN id SET DEFAULT nextval('comuni_id_seq'::regclass);
+ALTER TABLE ONLY comuni ALTER COLUMN id SET DEFAULT nextval('comuni_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE fatture ALTER COLUMN id SET DEFAULT nextval('fatture_id_seq'::regclass);
+ALTER TABLE ONLY fatture ALTER COLUMN id SET DEFAULT nextval('fatture_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('friendly_id_slugs_id_seq'::regclass);
+ALTER TABLE ONLY friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('friendly_id_slugs_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE indirizzi ALTER COLUMN id SET DEFAULT nextval('indirizzi_id_seq'::regclass);
+ALTER TABLE ONLY indirizzi ALTER COLUMN id SET DEFAULT nextval('indirizzi_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE libri ALTER COLUMN id SET DEFAULT nextval('libri_id_seq'::regclass);
+ALTER TABLE ONLY libri ALTER COLUMN id SET DEFAULT nextval('libri_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE materie ALTER COLUMN id SET DEFAULT nextval('materie_id_seq'::regclass);
+ALTER TABLE ONLY materie ALTER COLUMN id SET DEFAULT nextval('materie_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE oauth_access_grants ALTER COLUMN id SET DEFAULT nextval('oauth_access_grants_id_seq'::regclass);
+ALTER TABLE ONLY oauth_access_grants ALTER COLUMN id SET DEFAULT nextval('oauth_access_grants_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE oauth_access_tokens ALTER COLUMN id SET DEFAULT nextval('oauth_access_tokens_id_seq'::regclass);
+ALTER TABLE ONLY oauth_access_tokens ALTER COLUMN id SET DEFAULT nextval('oauth_access_tokens_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE oauth_applications ALTER COLUMN id SET DEFAULT nextval('oauth_applications_id_seq'::regclass);
+ALTER TABLE ONLY oauth_applications ALTER COLUMN id SET DEFAULT nextval('oauth_applications_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE righe ALTER COLUMN id SET DEFAULT nextval('righe_id_seq'::regclass);
+ALTER TABLE ONLY propa2014s ALTER COLUMN id SET DEFAULT nextval('propa2014s_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE searches ALTER COLUMN id SET DEFAULT nextval('searches_id_seq'::regclass);
+ALTER TABLE ONLY righe ALTER COLUMN id SET DEFAULT nextval('righe_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE taggings ALTER COLUMN id SET DEFAULT nextval('taggings_id_seq'::regclass);
+ALTER TABLE ONLY searches ALTER COLUMN id SET DEFAULT nextval('searches_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
+ALTER TABLE ONLY taggings ALTER COLUMN id SET DEFAULT nextval('taggings_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+ALTER TABLE ONLY tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE visita_appunti ALTER COLUMN id SET DEFAULT nextval('visita_appunti_id_seq'::regclass);
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE visite ALTER COLUMN id SET DEFAULT nextval('visite_id_seq'::regclass);
+ALTER TABLE ONLY visita_appunti ALTER COLUMN id SET DEFAULT nextval('visita_appunti_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE will_filter_filters ALTER COLUMN id SET DEFAULT nextval('will_filter_filters_id_seq'::regclass);
+ALTER TABLE ONLY visite ALTER COLUMN id SET DEFAULT nextval('visite_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY will_filter_filters ALTER COLUMN id SET DEFAULT nextval('will_filter_filters_id_seq'::regclass);
 
 
 --
@@ -1578,6 +1652,14 @@ ALTER TABLE ONLY oauth_access_tokens
 
 ALTER TABLE ONLY oauth_applications
     ADD CONSTRAINT oauth_applications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: propa2014s_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY propa2014s
+    ADD CONSTRAINT propa2014s_pkey PRIMARY KEY (id);
 
 
 --
@@ -1834,6 +1916,13 @@ CREATE UNIQUE INDEX index_oauth_applications_on_uid ON oauth_applications USING 
 
 
 --
+-- Name: index_propa2014s_on_cliente_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_propa2014s_on_cliente_id ON propa2014s USING btree (cliente_id);
+
+
+--
 -- Name: index_righe_on_appunto_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1998,3 +2087,7 @@ INSERT INTO schema_migrations (version) VALUES ('20121209194003');
 INSERT INTO schema_migrations (version) VALUES ('20130414143827');
 
 INSERT INTO schema_migrations (version) VALUES ('20130710125622');
+
+INSERT INTO schema_migrations (version) VALUES ('20131103134609');
+
+INSERT INTO schema_migrations (version) VALUES ('20140323123526');
