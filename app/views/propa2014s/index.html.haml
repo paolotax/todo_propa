@@ -26,6 +26,7 @@
       %table
         %tr
           %th Cliente
+          %th 
           %th Data visita
           %th Data ritiro
           %th Data interclasse
@@ -59,42 +60,14 @@
             %tr
               %td= link_to direzione[0].titolo, direzione[0]
               - if direzione[0].scuola_primaria? == true
+                %td{ class: "#{dom_id(direzione[0])} cliente"}= baule_tag direzione[0]
                 %td= on_the_spot_edit direzione[0].propa2014, :data_visita, tooltip: "...", type: :select, data: [[nil, ""], ["#{Time.now.beginning_of_year.to_date}", "no"], ["#{Time.now.to_date}", "#{Time.now.to_date}"], ["#{(Time.now + 1.day).to_date}", "#{(Time.now + 1.day).to_date}"], ["#{(Time.now + 2.day).to_date}", "#{(Time.now + 2.day).to_date}"], ["#{(Time.now + 3.day).to_date}", "#{(Time.now + 3.day).to_date}"], ["#{(Time.now + 4.day).to_date}", "#{(Time.now + 4.day).to_date}"]]
             
             - direzione[1].each do |plesso|
               %tr
                 %td= link_to plesso[0].titolo, plesso[0]
                 - if plesso[0].scuola_primaria? == true
+                  %td{ class: "#{dom_id(plesso[0])} cliente"}= baule_tag plesso[0]
                   %td= on_the_spot_edit plesso[0].propa2014, :data_visita, tooltip: "...", type: :select, data: [[nil, ""], ["#{Time.now.beginning_of_year.to_date}", "no"], ["#{Time.now.to_date}", "#{Time.now.to_date}"], ["#{(Time.now + 1.day).to_date}", "#{(Time.now + 1.day).to_date}"], ["#{(Time.now + 2.day).to_date}", "#{(Time.now + 2.day).to_date}"], ["#{(Time.now + 3.day).to_date}", "#{(Time.now + 3.day).to_date}"], ["#{(Time.now + 4.day).to_date}", "#{(Time.now + 4.day).to_date}"]]
 
-/ %table
-
-
-/   - @clienti.each do |cliente|
-/     %tr
-/       %td= cliente.titolo
-/       %td= cliente.propa2014.data_visita
-/       %td= cliente.propa2014.data_ritiro
-/       %td= cliente.propa2014.data_interclasse
-/       %td= cliente.propa2014.data_collegio
-/       %td= cliente.propa2014.kit_123
-/       %td= cliente.propa2014.nr_123
-/       %td= cliente.propa2014.kit_45
-/       %td= cliente.propa2014.nr_45
-/       %td= cliente.propa2014.kit_123_ing
-/       %td= cliente.propa2014.nr_45_ing
-/       %td= cliente.propa2014.kit_123_rel
-/       %td= cliente.propa2014.nr_123_rel
-/       %td= cliente.propa2014.kit_45_rel
-/       %td= cliente.propa2014.nr_45_rel
-/       %td= cliente.propa2014.vac_1
-/       %td= cliente.propa2014.vac_2
-/       %td= cliente.propa2014.vac_3
-/       %td= cliente.propa2014.vac_4
-/       %td= cliente.propa2014.vac_5
-/       / %td= link_to 'Show', cliente.propa2014
-/       / %td= link_to 'Edit', edit_cliente.propa2014_path(cliente.propa2014)
-/       / %td= link_to 'Destroy', cliente.propa2014, :confirm => 'Are you sure?', :method => :delete
-
-/ %br
 
