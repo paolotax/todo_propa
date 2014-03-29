@@ -8,6 +8,8 @@ TodoPropa::Application.routes.draw do
     collection do
       put :update_attribute_on_the_spot
       get :get_attribute_on_the_spot
+      get :pianifica
+      get :svuota_baule
     end
   end
 
