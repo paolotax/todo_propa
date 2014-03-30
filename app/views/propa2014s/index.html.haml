@@ -17,11 +17,11 @@
             .btn-group.pull-right
               = link_to 'tutte', params.except(:provincia, :data_visita), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
               - for provincia in @provincie
-                = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
+                = link_to provincia, params.except(:data_visita).merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
             .btn-group.pull-right
               = link_to 'tutte', params.except(:status, :data_visita), class: "btn #{params[:status].present?  ? '' : 'btn-primary'}", remote: false
               - ["da fare", "da pianificare"].each do |status|
-                = link_to status, params.merge(status: status.split.join("_")), class: "btn #{params[:status] == status.split.join("_")  ? 'btn-primary' : ''}", remote: false
+                = link_to status, params.except(:data_visita).merge(status: status.split.join("_")), class: "btn #{params[:status] == status.split.join("_")  ? 'btn-primary' : ''}", remote: false
             = link_to "Svuota baule", svuota_baule_propa2014s_path, class: 'btn btn-warning baule-rimuovi pull-right'
     
 
@@ -95,39 +95,43 @@
                     %td{colspan: 6}= link_to plesso[0].titolo, plesso[0]
 
 
+
       .module.span2
-        %ul.calendar
-          
-          %li.dropdown
-            = link_to "NO", "#", class: "btn dropdown-toggle", "data-toggle" => "dropdown"
+        %ul
+
+          %li.btn-group
+            = link_to "NO", params.except(:status).merge(data_visita: Date.new(2014, 1, 1)), class: "btn"
+            %button.btn.dropdown-toggle{"data-toggle" => "dropdown"}
+              %span.caret
             %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
-              %li
-                = link_to "Filtra", params.merge(data_visita: Date.new(2014, 1, 1))
               %li
                 = link_to "Modifica selezionati", pianifica_propa2014s_url(data_visita: 'no')
-
-          %li.dropdown
-            = link_to "da fare", "#", class: "btn dropdown-toggle", "data-toggle" => "dropdown"
+          
+          %li.btn-group
+            = link_to "da pianificare", params.except(:data_visita).merge(status: "da_fare"), class: "btn"
+            %button.btn.dropdown-toggle{"data-toggle" => "dropdown"}
+              %span.caret          
             %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
-              %li
-                = link_to "Filtra", params.merge(status: "da_fare")
               %li
                 = link_to "Modifica selezionati", pianifica_propa2014s_url(data_visita: "da_fare")
 
+
+        %ul.calendar
+          
+
           - p_start = Date.new(2014, 3, 24); p_end = Date.new(2014, 4, 17)
+
           - (p_end - p_start).to_i.times do |d|
             - day = p_start + d.day
             - clienti = @tutti.select{|c| c.propa2014.data_visita == day}
             - unless day.sunday?
-
-
-              / %li= link_to "#{l day, format: :short_with_day} (#{clienti.size})", pianifica_propa2014s_url(data_visita: day), class: "btn"
               
-              %li.dropdown
-                = link_to "#{l day, format: :short_with_day} (#{clienti.size})", "#", class: "btn dropdown-toggle", "data-toggle" => "dropdown"
+              %li.btn-group
+                = link_to "#{l day, format: :short_with_day} (#{clienti.size})", params.except(:status, :provincia).merge(data_visita: day), class: "btn", style: "width: 120px;"
+                %button.btn.dropdown-toggle{"data-toggle" => "dropdown"}
+                  %span.caret
+            
                 %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
-                  %li
-                    = link_to "Filtra", params.merge(data_visita: day)
                   %li
                     = link_to "Visita", pianifica_propa2014s_url(data_visita: day)
 
@@ -137,14 +141,4 @@
                     /   - for a, righe in r.group_by(&:appunto) do
                     /     = hidden_field_tag "appunto_ids[]", a.id 
                     /   = f.submit "ultima data inserita", class: "btn btn-link"
-                  
-                  %li.divider
-                  
-                  %li
-                    / = form_for c, url: registra_documento_cliente_path(c), method: "put" do |f|
-                    /   = hidden_field_tag 'causale_id', 0
-                    /   - for a, righe in r.group_by(&:appunto) do
-                    /     = hidden_field_tag "appunto_ids[]", a.id 
-                    /   = f.submit "oggi", class: "btn btn-link"
-
 
