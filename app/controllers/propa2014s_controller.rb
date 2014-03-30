@@ -35,7 +35,13 @@ class Propa2014sController < ApplicationController
 
     @clienti.each do |c|
       if params[:data_visita].present?
-        c.propa2014.data_visita = Chronic::parse(params[:data_visita])
+        if params[:data_visita] == 'no'
+          c.propa2014.data_visita = Date.new(2014, 1, 1) 
+        elsif params[:data_visita] == "da_fare"
+          c.propa2014.data_visita = nil
+        else
+          c.propa2014.data_visita = Chronic::parse(params[:data_visita])
+        end
       end
       c.propa2014.save
     end
