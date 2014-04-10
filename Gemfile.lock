@@ -4,6 +4,12 @@ GIT
   specs:
     nested_form (0.2.0)
 
+GIT
+  remote: https://github.com/fiedl/Google-Maps-for-Rails
+  revision: c159503f5b244f0528482020f6d81215264149ad
+  specs:
+    gmaps4rails (2.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -124,8 +130,6 @@ GEM
     fssm (0.2.8.1)
     fullcalendar-rails (1.5.3.0)
     geocoder (1.1.1)
-    gmaps4rails (1.4.7)
-      json
     google-spreadsheet-ruby (0.1.8)
       nokogiri (>= 1.4.3.1)
       oauth (>= 0.3.6)
@@ -393,7 +397,7 @@ DEPENDENCIES
   friendly_id
   fullcalendar-rails
   geocoder
-  gmaps4rails
+  gmaps4rails (= 2.0.1)!
   guard-livereload
   haml (~> 3.1.7)
   haml-rails

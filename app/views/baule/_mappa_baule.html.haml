@@ -1,4 +1,4 @@
 .map-baule.more
   - mappa = clienti.to_gmaps4rails
   - unless mappa.empty?
-    = gmaps({ :markers => {:data => mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true, scroll_weel: false } }, false, false)
+    = gmaps({ :markers => {:data => mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true, scroll_weel: false } } )

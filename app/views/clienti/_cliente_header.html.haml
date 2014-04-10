@@ -7,7 +7,7 @@
       - unless cliente.latitude.nil?
         .map-avatar
           - @mappa = cliente.to_gmaps4rails
-          = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } }, false, false)
+          = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } } )
     .content-inner.span8
 
       - if cliente.has_adozioni?

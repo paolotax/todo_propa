@@ -49,7 +49,7 @@ gem 'friendly_id'
 gem 'prawn'
 
 gem 'geocoder'
-gem 'gmaps4rails'
+gem 'gmaps4rails', '2.0.1', git: 'https://github.com/fiedl/Google-Maps-for-Rails'
 
 gem 'mobylette'
 gem 'jquery_mobile_rails'
