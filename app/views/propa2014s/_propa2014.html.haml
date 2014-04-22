@@ -5,13 +5,13 @@
     %td
   - else  
     %td
-      = link_to params.except(:status, :provincia, :data_vacanze).merge(data_visita: propa2014.data_visita) do
+      = link_to params.except(:status, :provincia).merge(data: propa2014.data_visita) do
         = l propa2014.data_visita, format: :short_with_day             
 
   - if propa2014.data_vacanze.nil?
     %td
   - else  
     %td
-      = link_to params.except(:status, :provincia, :data_visita).merge(data_vacanze: propa2014.data_vacanze) do
+      = link_to params.except(:status, :provinciaa).merge(data: propa2014.data_vacanze) do
         = l propa2014.data_vacanze, format: :short_with_day 
           

@@ -28,11 +28,8 @@ class Propa2014sController < ApplicationController
       @clienti = @clienti.where(provincia: params[:provincia])
     end
 
-    if params[:data_visita].present?
-      @clienti = @clienti.where("propa2014s.data_visita = ?", Chronic::parse(params[:data_visita]))
-    elsif params[:data_vacanze].present?
-      @clienti = @clienti.where("propa2014s.data_vacanze = ?", Chronic::parse(params[:data_vacanze]))
-
+    if params[:data].present?
+      @clienti = @clienti.where("propa2014s.data_visita = ? OR propa2014s.data_vacanze = ?", Chronic::parse(params[:data]), Chronic::parse(params[:data]))
     else
       if params[:status].present?
         if params[:status] == "da_fare"
@@ -64,7 +61,7 @@ class Propa2014sController < ApplicationController
         end
       elsif params[:data_vacanze].present?
         if params[:data_vacanze] == 'no'
-          c.propa2014.data_vacanze = nil 
+          c.propa2014.data_vacanze = Date.new(2014, 1, 1)  
         elsif params[:data_vacanze] == "da_fare"
           c.propa2014.data_vacanze = nil
         else
