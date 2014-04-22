@@ -4,6 +4,23 @@ class Propa2014sController < ApplicationController
 
   def index
 
+    @vacanze_dates = [
+      Date.new(2014, 4, 23),
+      Date.new(2014, 4, 24),
+      Date.new(2014, 4, 26),
+      Date.new(2014, 4, 28),
+      Date.new(2014, 4, 29),
+      Date.new(2014, 4, 30),
+      Date.new(2014, 5, 2),
+      Date.new(2014, 5, 3),
+      Date.new(2014, 5, 5),
+      Date.new(2014, 5, 6),
+      Date.new(2014, 5, 7),
+      Date.new(2014, 5, 8),
+      Date.new(2014, 5, 9),
+      Date.new(2014, 5, 10)
+    ]  
+
     @clienti = current_user.clienti.not_deleted.joins(:propa2014).per_localita
     @tutti = @clienti.all
 
@@ -13,6 +30,9 @@ class Propa2014sController < ApplicationController
 
     if params[:data_visita].present?
       @clienti = @clienti.where("propa2014s.data_visita = ?", Chronic::parse(params[:data_visita]))
+    elsif params[:data_vacanze].present?
+      @clienti = @clienti.where("propa2014s.data_vacanze = ?", Chronic::parse(params[:data_vacanze]))
+
     else
       if params[:status].present?
         if params[:status] == "da_fare"
@@ -41,6 +61,14 @@ class Propa2014sController < ApplicationController
           c.propa2014.data_visita = nil
         else
           c.propa2014.data_visita = Chronic::parse(params[:data_visita])
+        end
+      elsif params[:data_vacanze].present?
+        if params[:data_vacanze] == 'no'
+          c.propa2014.data_vacanze = nil 
+        elsif params[:data_vacanze] == "da_fare"
+          c.propa2014.data_vacanze = nil
+        else
+          c.propa2014.data_vacanze = Chronic::parse(params[:data_vacanze])
         end
       end
       c.propa2014.save

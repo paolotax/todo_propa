@@ -1049,7 +1049,8 @@ CREATE TABLE propa2014s (
     nr_vac_4 integer,
     nr_vac_5 integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    data_vacanze date
 );
 
 
@@ -2091,3 +2092,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130710125622');
 INSERT INTO schema_migrations (version) VALUES ('20131103134609');
 
 INSERT INTO schema_migrations (version) VALUES ('20140323123526');
+
+INSERT INTO schema_migrations (version) VALUES ('20140421081711');

@@ -1,0 +1,17 @@
+%tr
+  %td{ class: "#{dom_id(propa2014.cliente)} cliente"}= baule_tag propa2014.cliente
+  %td= link_to propa2014.cliente.titolo, propa2014.cliente
+  - if propa2014.data_visita.nil?
+    %td
+  - else  
+    %td
+      = link_to params.except(:status, :provincia, :data_vacanze).merge(data_visita: propa2014.data_visita) do
+        = l propa2014.data_visita, format: :short_with_day             
+
+  - if propa2014.data_vacanze.nil?
+    %td
+  - else  
+    %td
+      = link_to params.except(:status, :provincia, :data_visita).merge(data_vacanze: propa2014.data_vacanze) do
+        = l propa2014.data_vacanze, format: :short_with_day 
+          
