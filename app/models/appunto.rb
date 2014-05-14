@@ -35,7 +35,7 @@ class Appunto < ActiveRecord::Base
   
   scope :un_anno, lambda {  includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?",  1.year.ago)  }
   
-  scope :di_questa_propaganda,  where("appunti.created_at > ?", Date.new(2013,5,1))
+  scope :di_questa_propaganda,  where("appunti.created_at > ?", Date.new(2014,5,1))
    
   
   include PgSearch
