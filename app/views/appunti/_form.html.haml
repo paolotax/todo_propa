@@ -10,8 +10,8 @@
       %a{ href: "#dettaglio",      "data-toggle" => "tab"} Dettaglio righe
     / %li
     /   %a{ href: "#parascolastico", "data-toggle" => "tab"} Parascolastico  
-    / %li
-    /   %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
+    %li
+      %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
     / %li
     /   %a{ href: "#scolastico",     "data-toggle" => "tab"} Scolastico  
     / %li
@@ -31,9 +31,8 @@
       %hr
       = f.input :stato,    collection: [["da fare", ""], ["preparato", "S"], ["in sospeso", "P"], ["completo", "X"] ], as: :radio_buttons
       = f.input :tag_list, inline_label: 'Tag (separati da virgola)'
-      
-    #dettaglio.tab-pane.fade
-      
+ 
+    #dettaglio.tab-pane.fade     
       .control-group
         = render 'righe/select_prezzo'
       
@@ -57,10 +56,10 @@
     /     - @appunto.create_righe Libro.varia
     /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Varia" }
 
-    / #vacanze.tab-pane.fade
-    /   .control-group
-    /     - @appunto.create_righe Libro.vacanze
-    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
+    #vacanze.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.vacanze
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
     
     / #scolastico.tab-pane.fade
     /   .control-group

@@ -36,9 +36,9 @@ class Riga < ActiveRecord::Base
   
   scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
   
-  scope :di_questa_propaganda,  joins(:appunto).where("appunti.created_at > ?", Date.new(2014,5,1))
+  scope :di_questa_propaganda,  joins(:appunto).where("appunti.created_at > ?", Date.new(2014,1,1))
   
-  scope :di_quest_anno,         joins(:fattura).where("fatture.created_at > ?", Date.new(2014,5,1))
+  scope :di_quest_anno,         joins(:fattura).where("fatture.created_at > ?", Date.new(2014,1,1))
 
 
   before_validation do
