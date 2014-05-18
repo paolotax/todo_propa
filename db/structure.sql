@@ -526,7 +526,9 @@ CREATE TABLE appunti (
     updated_at timestamp without time zone NOT NULL,
     uuid uuid,
     deleted_at timestamp without time zone,
-    completed_at timestamp without time zone
+    completed_at timestamp without time zone,
+    nota character varying(255),
+    score integer
 );
 
 
@@ -2094,3 +2096,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131103134609');
 INSERT INTO schema_migrations (version) VALUES ('20140323123526');
 
 INSERT INTO schema_migrations (version) VALUES ('20140421081711');
+
+INSERT INTO schema_migrations (version) VALUES ('20140518110834');

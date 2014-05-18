@@ -20,7 +20,7 @@ class MagazzinoController < ApplicationController
     
     @cassa        =  current_user.appunti.not_deleted.
                               completato.where("appunti.totale_importo > 0").
-                              where("appunti.created_at > '2013-05-01'").
+                              where("appunti.created_at >= '2014-01-01'").
                               order("Date(appunti.updated_at) desc").
                               group("Date(appunti.updated_at)").
                               sum(:totale_importo)  

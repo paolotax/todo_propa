@@ -94,9 +94,9 @@
           /   = carichi - da_consegnare - consegnati
 
   .side-bar.span4
-    - riep_bamb = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * libri.coefficente", group: "libri.settore")
-    - riep_copie = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita", group: "libri.settore")
-    - riep_fatturato = current_user.righe.joins(:libro).scarico.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
+    - riep_bamb = current_user.righe.joins(:libro).scarico.not_deleted.di_questa_propaganda.sum("righe.quantita * libri.coefficente", group: "libri.settore")
+    - riep_copie = current_user.righe.joins(:libro).scarico.not_deleted.di_questa_propaganda.sum("righe.quantita", group: "libri.settore")
+    - riep_fatturato = current_user.righe.joins(:libro).scarico.not_deleted.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
     - riep_carico = current_user.righe_fattura.joins(:libro).carico.di_quest_anno.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")
     - riep_carico_copie = current_user.righe_fattura.joins(:libro).carico.di_quest_anno.sum("righe.quantita", group: "libri.settore")
 
@@ -138,7 +138,7 @@
           %td= pretty_prezzo @cassa.values.sum
 
             
-    - ids = current_user.righe.scarico.da_consegnare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
+    - ids = current_user.righe.not_deleted.scarico.da_consegnare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
     - grouped_clienti = Cliente.order(:id).find(ids).group_by(&:provincia)
     
       
@@ -162,7 +162,7 @@
 
 
 
-    - ids = current_user.righe.scarico.da_pagare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
+    - ids = current_user.righe.scarico.not_deleted.da_pagare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
     - grouped_clienti = Cliente.order(:id).find(ids).group_by(&:provincia)
 
     - grouped_clienti.each do |provincia, clienti|

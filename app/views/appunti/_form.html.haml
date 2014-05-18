@@ -32,6 +32,19 @@
       = f.input :stato,    collection: [["da fare", ""], ["preparato", "S"], ["in sospeso", "P"], ["completo", "X"] ], as: :radio_buttons
       = f.input :tag_list, inline_label: 'Tag (separati da virgola)'
  
+      - if @appunto.nota.present?
+        .control-group
+          %label.control-label Nota
+          .controls
+            = image_tag(@appunto.nota_url)
+            elimina nota
+            = f.check_box :remove_nota 
+      - else      
+        .control-group
+          = f.label :nota
+          .controls 
+            = f.file_field :nota
+
     #dettaglio.tab-pane.fade     
       .control-group
         = render 'righe/select_prezzo'

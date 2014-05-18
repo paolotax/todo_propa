@@ -9,6 +9,9 @@ class Appunto < ActiveRecord::Base
   STATUS       = ["da_fare", "in_sospeso", "preparato", "completato"]
   STATUS_CODES = ["", "P", "S", "X"]
 
+  mount_uploader :nota, ImageUploader
+
+
   has_many :righe, :dependent => :destroy
   has_many :fatture, through: :righe, uniq: true
   
