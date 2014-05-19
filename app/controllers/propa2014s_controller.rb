@@ -29,13 +29,17 @@ class Propa2014sController < ApplicationController
     end
 
     if params[:data].present?
-      @clienti = @clienti.where("propa2014s.data_visita = ? OR propa2014s.data_vacanze = ?", Chronic::parse(params[:data]), Chronic::parse(params[:data]))
+      @clienti = @clienti.where("propa2014s.data_visita = ? OR propa2014s.data_vacanze = ? OR propa2014s.data_ritiro = ?", Chronic::parse(params[:data]), Chronic::parse(params[:data]), Chronic::parse(params[:data]))
     else
       if params[:status].present?
         if params[:status] == "da_fare"
           @clienti = @clienti.where("propa2014s.data_visita is null or propa2014s.data_visita > ?", Time.now.to_date)
         elsif params[:status] == "da_pianificare"
           @clienti = @clienti.where("propa2014s.data_visita is null")
+        elsif params[:status] == "dare_vacanze"
+          @clienti = @clienti.where("propa2014s.data_vacanze is null")
+        elsif params[:status] == "da_ritirare"
+          @clienti = @clienti.where("propa2014s.data_ritiro is null")
         end
       end
     end
@@ -66,6 +70,14 @@ class Propa2014sController < ApplicationController
           c.propa2014.data_vacanze = nil
         else
           c.propa2014.data_vacanze = Chronic::parse(params[:data_vacanze])
+        end
+      elsif params[:data_ritiro].present?
+        if params[:data_ritiro] == 'no'
+          c.propa2014.data_ritiro = Date.new(2014, 1, 1)  
+        elsif params[:data_ritiro] == "da_fare"
+          c.propa2014.data_ritiro = nil
+        else
+          c.propa2014.data_ritiro = Chronic::parse(params[:data_ritiro])
         end
       end
       c.propa2014.save

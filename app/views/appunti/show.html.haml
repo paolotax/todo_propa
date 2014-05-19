@@ -36,6 +36,10 @@
               ultima modifica: 
               = l @appunto.updated_at, format: :only_date
 
+          - if @appunto.nota_url
+            %p
+              = image_tag @appunto.nota_url
+
         %footer.show-toolbar
           .pull-right
             - unless @appunto.fatturato?

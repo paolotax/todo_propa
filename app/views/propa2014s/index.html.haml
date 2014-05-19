@@ -20,7 +20,7 @@
                 = link_to provincia, params.except(:data).merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
             .btn-group.pull-right
               = link_to 'tutte', params.except(:status, :data), class: "btn #{params[:status].present?  ? '' : 'btn-primary'}", remote: false
-              - ["da fare", "da pianificare"].each do |status|
+              - ["da fare", "da pianificare", "dare vacanze", "da ritirare"].each do |status|
                 = link_to status, params.except(:data).merge(status: status.split.join("_")), class: "btn #{params[:status] == status.split.join("_")  ? 'btn-primary' : ''}", remote: false
             = link_to "Svuota baule", svuota_baule_propa2014s_path, class: 'btn btn-warning baule-rimuovi pull-right'
     
@@ -33,7 +33,7 @@
         = render 'baule/mappa_baule', clienti: @clienti.scuola_primaria
 
     .row    
-      #clienti.list.module.span9
+      #clienti.list.module.span6
 
         - zone = @clienti.arrange(:order => "provincia asc, comune asc")
 
@@ -44,8 +44,6 @@
             %th Data visita
             %th Data vacanze
             %th Data ritiro
-            %th Data interclasse
-            %th Data collegio
 
           - zone.each do |zona|
 
@@ -87,6 +85,8 @@
                     = link_to "NO Visita", pianifica_propa2014s_url(data_visita: 'no')
                   %li
                     = link_to "NO Vacanze", pianifica_propa2014s_url(data_vacanze: 'no')
+                  %li
+                    = link_to "NO Ritiro", pianifica_propa2014s_url(data_ritiro: 'no')
             
             %li
               .btn-group
@@ -97,12 +97,13 @@
                   %li
                     = link_to "da fare", pianifica_propa2014s_url(data_visita: "da_fare")
                   %li
-                    = link_to "da fare vacanze", pianifica_propa2014s_url(data_vacanze: "da_fare")
-
+                    = link_to "dare vacanze", pianifica_propa2014s_url(data_vacanze: "da_fare")
+                  %li
+                    = link_to "da ritirare", pianifica_propa2014s_url(data_ritiro: "da_fare")
+        
         .module.well           
+          
           %ul
-            
-
             - p_start = Date.new(2014, 3, 24); p_end = Date.new(2014, 4, 17)
 
             - (p_end - p_start).to_i.times do |d|
@@ -140,5 +141,43 @@
                       %li
                         = link_to "Vacanze", pianifica_propa2014s_url(data_vacanze: day)
 
+      
+
+
+
+
+
+
+
+
+
+
+      .span3.side-bar
+        
+        .module.well           
+          %ul
+            
+
+            - p_start = Date.new(2014, 5, 12); p_end = Date.new(2014, 7, 12)
+            - (p_end - p_start).to_i.times do |d|
+              - day = p_start + d.day
+              - clienti = @tutti.select{|c| c.propa2014.data_visita == day || c.propa2014.data_vacanze == day || c.propa2014.data_ritiro == day}
+              - unless day.sunday? || day.saturday?
+                
+                %li
+                  .btn-group
+                    = link_to "#{l day, format: :short_with_day} (#{clienti.size})", params.except(:status, :provincia).merge(data: day), class: "btn", style: "width: 120px;"
+                    %button.btn.dropdown-toggle{"data-toggle" => "dropdown"}
+                      %span.caret
+                
+                    %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+                      %li
+                        = link_to "Ritiro", pianifica_propa2014s_url(data_ritiro: day)
+                      %li
+                        = link_to "Vacanze", pianifica_propa2014s_url(data_vacanze: day)
+              - else
+
+                %li
+                  Solenne
 
 
