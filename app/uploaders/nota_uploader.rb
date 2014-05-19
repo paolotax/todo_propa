@@ -23,14 +23,14 @@ class NotaUploader < CarrierWave::Uploader::Base
   end
 
 
-  process :resize_to_fit => [120, 176]
+  process :resize_to_fit => [1200, 1760]
 
   version :small_thumb do
     process :resize_to_limit => [32, 47]
   end
   
   version :thumb do
-    process :resize_to_limit => [50, 74]
+    process :resize_to_limit => [120, 176]
   end
 
   # Process files as they are uploaded:

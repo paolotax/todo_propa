@@ -37,13 +37,14 @@
           %label.control-label Nota
           .controls
             = image_tag(@appunto.nota_url)
+            %br
             elimina nota
             = f.check_box :remove_nota 
       - else      
         .control-group
           = f.label :nota
           .controls 
-            = f.file_field :nota
+            = f.file_field :nota, title: "Cerca immagine"
 
     #dettaglio.tab-pane.fade     
       .control-group

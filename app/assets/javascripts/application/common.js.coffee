@@ -12,6 +12,7 @@ document.addEventListener "page:receive", ->
 
 jQuery ->
 
+  $('input[type=file]').bootstrapFileInput()
   
   $("#loading").on "ajaxSend", () ->
     $("#loading").show()

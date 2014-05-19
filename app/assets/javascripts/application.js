@@ -48,6 +48,7 @@
 
 //= require turbolinks
 
+//= require bootstrap.file-input.js
 
 
 
