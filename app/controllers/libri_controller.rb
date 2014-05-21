@@ -31,7 +31,7 @@ class LibriController < ApplicationController
                             where("righe.libro_id = ?", @libro.id).
                             order("fatture.data desc").group_by(&:anno)
     
-    @scarichi = current_user.righe.includes(:appunto => [:cliente]).
+    @scarichi = current_user.righe.not_deleted.includes(:appunto => [:cliente]).
                             scarico.
                             where("righe.libro_id = ?", @libro.id).
                             order("appunti.created_at desc").group_by(&:anno)
