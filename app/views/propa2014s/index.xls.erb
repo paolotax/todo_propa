@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">id</Data></Cell>
+        <Cell><Data ss:Type="String">titolo</Data></Cell>
+        
+
+        <Cell><Data ss:Type="String">visita</Data></Cell>
+        <Cell><Data ss:Type="String">vacanze</Data></Cell>
+        <Cell><Data ss:Type="String">ritiro</Data></Cell>
+
+        <Cell><Data ss:Type="String">ragione_sociale</Data></Cell>
+        <Cell><Data ss:Type="String">cliente_tipo</Data></Cell>
+        
+        <Cell><Data ss:Type="String">indirizzo</Data></Cell>
+        <Cell><Data ss:Type="String">cap</Data></Cell>
+        <Cell><Data ss:Type="String">comune</Data></Cell>
+
+        <Cell><Data ss:Type="String">frazione</Data></Cell>
+        <Cell><Data ss:Type="String">provincia</Data></Cell>
+        <Cell><Data ss:Type="String">latitude</Data></Cell>
+        <Cell><Data ss:Type="String">longitude</Data></Cell>
+
+      </Row>
+
+
+      <%  zone = @clienti.arrange(:order => "provincia asc, comune asc") %>
+
+      <%  zone.each do |zona| %>
+        <%=  render partial: 'cliente_row', locals: {cliente: zona[0]} %>
+
+        <% zona[1].each do |direzione| %>
+          <%=  render partial: 'cliente_row', locals: {cliente: direzione[0]} %>
+        
+          <% direzione[1].each do |plesso| %>
+            <%=  render partial: 'cliente_row', locals: {cliente: plesso[0]} %>      
+          <% end %>
+    
+        <% end %>
+      
+      <% end %>
+    
+    
+    </Table>
+  </Worksheet>
+</Workbook>
