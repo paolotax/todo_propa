@@ -94,6 +94,12 @@
           /   = carichi - da_consegnare - consegnati
 
   .side-bar.span4
+    
+
+
+
+
+
     - riep_bamb = current_user.righe.joins(:libro).scarico.not_deleted.di_questa_propaganda.sum("righe.quantita * libri.coefficente", group: "libri.settore")
     - riep_copie = current_user.righe.joins(:libro).scarico.not_deleted.di_questa_propaganda.sum("righe.quantita", group: "libri.settore")
     - riep_fatturato = current_user.righe.joins(:libro).scarico.not_deleted.di_questa_propaganda.sum("righe.quantita * righe.prezzo_unitario * (100 - righe.sconto) / 100", group: "libri.settore")

@@ -98,8 +98,8 @@ TodoPropa::Application.routes.draw do
   
   
   match "giri"         => "giri#index", as: "giri"
-  match "giri/:giorno" => "giri#show",  as: "giro"
   match "giri/:giorno/print" => "giri#print_multiple",  as: "giro"
+  match "giri/:giorno" => "giri#show",  as: "giro"
   
   match "propa2014"         => "clienti#propa2014", as: "propa2014"
   

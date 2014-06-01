@@ -11,7 +11,7 @@
         = link_to cliente.titolo, cliente
         = link_to cliente_path( id: cliente.id, view: 'foglio_scuola'), title: "foglio scuola" do
           %i.icon-file
-      
+      = next_visita_div cliente
       .in-corso
         - if cliente.properties && cliente.properties['appunti_in_corso']
           %span.badge.badge-info
@@ -39,4 +39,6 @@
             = cliente.properties["importo_in_sospeso"].to_f.round(2)
         - else
           &nbsp
+
+
 

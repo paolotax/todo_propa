@@ -89,6 +89,12 @@ class Cliente < ActiveRecord::Base
     anno
   end 
 
+
+  def next_visita
+    visite.next
+  end
+
+  
   def crea_consegna(riga_ids = [])
 
     righe = Riga.find(riga_ids)

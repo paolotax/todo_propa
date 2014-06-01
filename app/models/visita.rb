@@ -21,10 +21,11 @@ class Visita < ActiveRecord::Base
   scope :nel_baule,     where(baule: true)
   scope :non_nel_baule, where(baule: false)
   
-  scope :settembre, where("start > ?", Date.new(Time.now.year, 4, 15))
+  scope :settembre, where("visite.start > ?", Date.new(Time.now.year, 4, 15))
   
   after_create :add_appunti
   
+  scope :next, where("visite.end > ?", Time.now).limit(1)  
   
   attr_writer :data, :step
   
