@@ -6,12 +6,52 @@
 
   .row
     .side-bar.span3
+
+      - unless @righe_da_consegnare.empty?
+        .module
+          .header
+            = show_hide_tag
+            %h3 Libri da consegnare
+          .more.box-consegna.cliente-vendite
+            
+            - for appunto, righe in @righe_da_consegnare.group_by(&:appunto) do               
+              
+              = link_to appunto do
+                = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
+
+              - for riga in righe do
+                .rig
+                  = check_box_tag "riga_ids[]", riga.id, false, {:class => 'cb-riga-item'}
+                  = riga.libro.titolo
+                  .pull-right= riga.quantita
+                  
+            %footer.clearfix
+              .pull-left
+                .dropdown
+                  = link_to "Modifica",  "#", class: "btn-small btn-warning dropdown-toggle", "data-toggle" => "dropdown" 
+
+                  %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+
+                    %li.dropdown-submenu
+                      %a{ tabindex: "-1", href: "#"}
+                        Sposta selezionati
+                      %ul.dropdown-menu
+                        %li
+                          = form_for @cliente, url: sposta_righe_cliente_path(@cliente), method: "put", html: {class: "form-inline"} do |f|
+                            / - for riga in @righe_da_consegnare do
+                            /   = hidden_field_tag "riga_ids[]", riga.id 
+                            = f.submit "sposta", class: "btn btn-link"
+
+              .totale-copie.pull-right
+                %strong= @righe_da_consegnare.sum(&:quantita)
+
+
       - unless @righe_da_registrare.empty?
         .module
           .header
             = show_hide_tag
             %h3 Appunti da registrare
-          .more.cliente-vendite
+          .more.box-registra.cliente-vendite
             
             - for a, r in @righe_da_registrare.group_by(&:appunto) do               
               = render "appunti/item", appunto: a

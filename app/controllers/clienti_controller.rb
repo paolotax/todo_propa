@@ -33,7 +33,10 @@ class ClientiController < ApplicationController
       format.html do
         session[:return_to] = request.path
         @adozioni_per_scuola = @cliente.adozioni.joins(:classe).scolastico.order("classi.classe, classi.sezione").group_by(&:libro)
+        
         @righe_da_registrare = @cliente.righe.da_fatturare.order("appunto_id desc")
+        @righe_da_consegnare = @cliente.righe.da_consegnare.da_fatturare.order("appunto_id desc")
+
         @classi_inserter = ClassiInserter.new
         if request.path != cliente_path(@cliente)
           redirect_to @cliente, status: :moved_permanently
@@ -167,6 +170,15 @@ class ClientiController < ApplicationController
     end   
     #raise @fattura.righe.inspect  
   end
+
+
+  def sposta_righe
+    
+    @cliente = current_user.clienti.find(params[:id])
+    @cliente.crea_consegna(params[:riga_ids]) 
+    redirect_to :back  
+  end
+
 
   def scorri_classi
 

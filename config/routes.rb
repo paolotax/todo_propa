@@ -134,6 +134,7 @@ TodoPropa::Application.routes.draw do
     member do
       get :scorri_classi
       put :registra_documento
+      put :sposta_righe
     end
     
     resources :indirizzi

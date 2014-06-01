@@ -89,6 +89,29 @@ class Cliente < ActiveRecord::Base
     anno
   end 
 
+  def crea_consegna(riga_ids = [])
+
+    righe = Riga.find(riga_ids)
+
+    if righe.size > 0
+
+      appunti = righe.map(&:appunto).uniq
+      # appunti = Appunto.find(appunti_ids)
+
+      appunto = self.appunti.build
+      appunto.save
+
+      righe.each do |riga|
+        riga.appunto = appunto
+        riga.save
+      end
+
+      appunto.save
+
+      appunti.each { |a| a.ricalcola}
+    end    
+  end
+
   def da_scorrere?
     anno = anno_scolastico
     if anno && anno < Time.now.year.to_s && Time.now > Date.new(Time.now.year, 6, 1)

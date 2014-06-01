@@ -19,16 +19,16 @@ class Riga < ActiveRecord::Base
   scope :per_cm,        joins(:libro).order("libri.cm asc")
   scope :per_id,        order(:id)
   
-  scope :scarico,       joins(:appunto)
+  scope :scarico,       not_deleted
   
   scope :da_fare,       scarico.where("appunti.stato = ''")
   scope :preparato,     scarico.where("appunti.stato = 'S'")
   
-  scope :da_consegnare, where("righe.consegnato = false")
-  scope :da_pagare,     where("righe.pagato     = false")
+  scope :da_consegnare, scarico.where("righe.consegnato = false")
+  scope :da_pagare,     scarico.where("righe.pagato     = false")
   
-  scope :da_fatturare,  not_deleted.where("righe.fattura_id is null or righe.fattura_id = 0")
-  scope :fatturata,     not_deleted.where("righe.fattura_id is not null or righe.fattura_id != 0")
+  scope :da_fatturare,  scarico.where("righe.fattura_id is null or righe.fattura_id = 0")
+  scope :fatturata,     scarico.where("righe.fattura_id is not null or righe.fattura_id != 0")
   
   scope :consegnata,    scarico.where("appunti.stato in ('X', 'P')")
 
@@ -105,7 +105,7 @@ class Riga < ActiveRecord::Base
     def ricalcola_after_update      
       unless appunto.nil? # non ricalcola ordine
         logger.debug "total_recalc"
-        return true unless quantita_changed? || prezzo_unitario_changed? || fattura_id_changed? || sconto_changed?
+        return true unless quantita_changed? || prezzo_unitario_changed? || fattura_id_changed? || sconto_changed? || appunto_id_changed?
         appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
         return true
       end

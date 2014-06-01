@@ -15,6 +15,14 @@
   background-color: white;
   border-bottom: 1px solid #ccc; 
 
+  > div {
+    padding: 5px 0 5px 0;
+  }
+
+  input[type="checkbox"] {
+    margin: 0;
+  }
+
   header, footer, 
   .appunto.appunto-item {
     @include clearfix();
