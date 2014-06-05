@@ -18,11 +18,11 @@ class MagazzinoController < ApplicationController
     
     @consegnati    = current_user.righe.not_deleted.scarico.consegnata.di_questa_propaganda.per_titolo.includes(:libro).group_by(&:libro)
     
-    @cassa        =  current_user.appunti.not_deleted.
+    @cassa        =  current_user.appunti.not_deleted.joins(righe: :fattura).
                               completato.where("appunti.totale_importo > 0").
                               where("appunti.created_at >= '2014-01-01'").
-                              order("Date(appunti.updated_at) desc").
-                              group("Date(appunti.updated_at)").
+                              order("Date(fatture.data) desc").
+                              group("Date(fatture.data)").
                               sum(:totale_importo)  
   end
   

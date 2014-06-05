@@ -15,6 +15,7 @@ class BauleController < ApplicationController
     #   { image: libro.image_url(:small_thumb), titolo: libro.titolo, image: libro.image, quantita: adozioni.count(&:classe) }
     # end
   end
+  
 
   def destroy
     @visite = current_user.visite.nel_baule
@@ -35,7 +36,7 @@ class BauleController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to giri_path, notice: "Il giro e' stato salvato" }
+      format.html { redirect_to :back, notice: "Il giro e' stato salvato" }
     end
   end
 

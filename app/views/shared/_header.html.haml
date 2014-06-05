@@ -56,10 +56,18 @@
                   %li
                     = link_to "Esci", destroy_user_session_path, {:method => :delete, :class => 'tab'}
             .toolbar-buttons.pull-right
+              
+              / .btn-group.pull-right            
               = link_to baule_url, class: "btn btn-warning topbar-tweet-btn nav-baule", style: "font-size: 24px" do
                 %i.icon-road
                 %sup= current_user.cached_baule_count
-          
+                / = link_to "#", class: "btn btn-warning dropdown-toggle topbar-tweet-btn pull-right", "data-toggle" => "dropdown" do
+                /   %b.caret
+                / %ul.dropdown-menu
+                /   %li
+                /     = render "baule/form"
+
+              
               = yield :add_button
 
           
