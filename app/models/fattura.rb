@@ -45,6 +45,7 @@ class Fattura < ActiveRecord::Base
       self.condizioni_pagamento == tipo
     end
   end
+
   
   def pagata?
     pagata

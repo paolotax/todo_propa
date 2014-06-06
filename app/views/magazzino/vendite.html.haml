@@ -136,12 +136,14 @@
           %th Data
           %th Incasso
         - for r in @cassa
-          %tr
-            %td= l Date.parse(r[0]), format: :long
-            %td= pretty_prezzo r[1]
+          %tr         
+            %td= l r.data, format: :long
+            %td= r.totale_importo
+            / %td= l Date.parse(r[0]), format: :long
+            / %td= pretty_prezzo r[1]
         %tr
           %td
-          %td= pretty_prezzo @cassa.values.sum
+          / %td= pretty_prezzo @cassa.values.sum
 
             
     - ids = current_user.righe.not_deleted.scarico.da_consegnare.di_questa_propaganda.pluck("appunti.cliente_id").uniq
