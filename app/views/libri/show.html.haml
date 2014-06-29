@@ -10,22 +10,38 @@
       .content-inner.span7
         %h1
           = @libro.titolo
-          %small= @libro.settore
+          - if @libro.concorrenza?
+            %small= @libro.editore
+          - else
+            %small= @libro.settore
         %dl.dl-horizontal
           %dt editore
           %dd= @libro.editore.to_s
 
           %dt id
           %dd= @libro.id
+          
           - if @libro.scolastico?
+            %dt editore
+            %dd= @libro.editore       
+          - if @libro.scolastico? || @libro.fascicoli? || @libro.concorrenza?
             %dt materia
-            %dd= @libro.materia.try(:materia)
+            %dd= @libro.materia  
+            %dt classe
+            %dd= @libro.classe 
+
+
+          / %dt materia
+          / %dd= @libro.materia.try(:materia)
+          / %dt classe
+          / %dd= @libro.classe
+
           %dt sigla
           %dd= @libro.sigla
           %dt cm      
           %dd= @libro.cm
           %dt ean
-          %dd= @libro.ean ||= "gino"
+          %dd= @libro.ean ||= ""
           %dt prezzo di copertina
           %dd= number_to_currency @libro.prezzo_copertina
           %dt prezzo consigliato

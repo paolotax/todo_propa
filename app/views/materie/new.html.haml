@@ -1,5 +1,6 @@
-%h1 New materia
+.well
+  %h1 New materia
+  %br
+  = render 'form'
 
-= render 'form'
-
-= link_to 'Back', materie_path
+  = link_to 'Indietro', materie_path, class: "btn"

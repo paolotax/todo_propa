@@ -1,23 +1,28 @@
-%h1 Listing editori
 
-%table
-  %tr
-    %th Nome
-    %th Gruppo
-    %th Codice
-    %th
-    %th
-    %th
+.well
+  
+  %h1 Editori
 
-  - @editori.each do |editore|
+  %br
+
+  %table.table
     %tr
-      %td= editore.nome
-      %td= editore.gruppo
-      %td= editore.codice
-      %td= link_to 'Show', editore
-      %td= link_to 'Edit', edit_editore_path(editore)
-      %td= link_to 'Destroy', editore, :confirm => 'Are you sure?', :method => :delete
+      %th Nome
+      %th Gruppo
+      %th Codice
+      %th
+      %th
+      %th
 
-%br
+    - @editori.each do |editore|
+      %tr
+        %td= editore.nome
+        %td= editore.gruppo
+        %td= editore.codice
+        %td= link_to 'Mostra', editore, class: "btn"
+        %td= link_to 'Modifica', edit_editore_path(editore), class: "btn"
+        %td= link_to 'Elimina', editore, :confirm => 'Sei sicuro?', :method => :delete, class: "btn"
 
-= link_to 'New Editore', new_editore_path
+  %br
+
+  = link_to 'Nuovo Editore', new_editore_path, class: "btn"

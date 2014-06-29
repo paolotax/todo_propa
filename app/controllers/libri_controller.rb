@@ -63,7 +63,7 @@ class LibriController < ApplicationController
   def create
     @libro = Libro.new(params[:libro])
     @libro.save
-    respond_with @libro
+    redirect_to @libro
   end
 
   

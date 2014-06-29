@@ -1,7 +1,8 @@
-%h1 Editing materia
+.well
+  %h1 Editing materia
+  %br
+  = render 'form'
 
-= render 'form'
-
-= link_to 'Show', @materia
-\|
-= link_to 'Back', materie_path
+  = link_to 'Mostra', @materia, class: "btn"
+  \|
+  = link_to 'Indietro', materie_path, class: "btn"

@@ -1,15 +1,17 @@
-%p#notice= notice
+.well
+  
+  %p#notice= notice
 
-%p
-  %b Nome:
-  = @editore.nome
-%p
-  %b Gruppo:
-  = @editore.gruppo
-%p
-  %b Codice:
-  = @editore.codice
+  %p
+    %b Nome:
+    = @editore.nome
+  %p
+    %b Gruppo:
+    = @editore.gruppo
+  %p
+    %b Codice:
+    = @editore.codice
 
-= link_to 'Edit', edit_editore_path(@editore)
-\|
-= link_to 'Back', editori_path
+  = link_to 'Modifica', edit_editore_path(@editore), class: "btn"
+  \
+  = link_to 'Indietro', editori_path, class: "btn"

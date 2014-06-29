@@ -1,5 +1,6 @@
-%h1 New editore
+.well
+  %h1 Nuovo editore
+  %br
+  = render 'form'
 
-= render 'form'
-
-= link_to 'Back', editori_path
+  = link_to 'Back', editori_path, class: "btn"

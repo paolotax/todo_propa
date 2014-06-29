@@ -1,7 +1,8 @@
-%h1 Editing editore
+.well
+  %h1 Modifica
+  %br
+  = render 'form'
 
-= render 'form'
-
-= link_to 'Show', @editore
-\|
-= link_to 'Back', editori_path
+  = link_to 'Mostra', @editore, class: "btn"
+  \|
+  = link_to 'Indietro', editori_path, class: "btn"

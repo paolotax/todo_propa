@@ -19,8 +19,17 @@
         %small= libro.editore
 
   %dl.dl-horizontal
+
     %dt settore
     %dd= libro.settore
+    - if libro.scolastico?
+      %dt editore
+      %dd= libro.editore       
+    - if libro.scolastico? || libro.fascicoli? || libro.concorrenza?
+      %dt materia
+      %dd= libro.materia  
+      %dt classe
+      %dd= libro.classe 
     %dt prezzo di copertina
     %dd= number_to_currency libro.prezzo_copertina
     %dt prezzo consigliato
@@ -35,10 +44,6 @@
       %dd= libro.cm
       %dt ean
       %dd= libro.ean
-      %dt materia
-      %dd= libro.materia
-      %dt classe
-      %dd= libro.classe
       %dt coefficente
       %dd= libro.coefficente
   
