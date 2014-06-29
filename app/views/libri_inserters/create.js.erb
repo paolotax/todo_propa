@@ -1,0 +1,12 @@
+
+var classe  = $("#classi_inserter_classe").val()
+var sezioni = $("#classi_inserter_sezioni").val()
+var alunni  = $("#classi_inserter_nr_alunni").val()
+
+$(".insert-classi").replaceWith("<%= escape_javascript( render 'classi_inserters/form', cliente: @cliente) %>");
+  
+$("#classi_inserter_classe").val(parseInt(classe));
+$("#classi_inserter_classe").trigger("change");
+
+$("#classi_inserter_sezioni").val(sezioni);
+$("#classi_inserter_nr_alunni").val(parseInt(nr_alunni));

@@ -76,24 +76,6 @@ class Cliente < ActiveRecord::Base
   
   # scope :con_adozioni, joins(:adozioni) & Adozione.scolastico  
 
-  def localita
-    if frazione.blank?
-      comune
-    else
-      frazione
-    end
-  end 
-
-  def anno_scolastico
-    anno = classi.pluck("classi.anno").uniq[0]
-    anno
-  end 
-
-
-  def next_visita
-    visite.next
-  end
-
   
   def crea_consegna(riga_ids = [])
 
@@ -165,21 +147,26 @@ class Cliente < ActiveRecord::Base
     end
   end
   
+  
   def has_documenti?
     !self.fatture.empty?
   end
+  
   
   def has_sospeso?
     !self.appunti.select {|a| a.status == 'in_sospeso'  && !a.totale_importo.zero? }.empty?
   end
 
+  
   def eliminato?
     !deleted_at.nil?
   end
 
+  
   def to_s
     "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end
+  
   
   def nel_baule
     nel_baule = nil
@@ -191,6 +178,7 @@ class Cliente < ActiveRecord::Base
     nel_baule
   end
 
+  
   def nel_baule=(baule)
     if baule == true
       self.visite.build(baule: 't')
@@ -200,6 +188,39 @@ class Cliente < ActiveRecord::Base
       end
     end
   end
+
+
+  def localita
+    if frazione.blank?
+      comune
+    else
+      frazione
+    end
+  end 
+
+
+  def anno_scolastico
+    anno = classi.pluck("classi.anno").uniq[0]
+    anno
+  end 
+
+
+  def next_visita
+    visite.next
+  end
+
+  
+  def visita
+    visite.order(:start).last
+  end
+
+
+  def visita=(visita)
+    if visita
+    else
+    end
+  end
+
   
   def fatto?
     unless nel_baule
@@ -501,20 +522,23 @@ class Cliente < ActiveRecord::Base
     end
   end
   
+  def load_into_soulmate
+    loader = Soulmate::Loader.new("#{user_id}_cliente")
+    loader.add({
+                  "term" => "#{titolo} #{comune} #{frazione} #{provincia} #{ragione_sociale}".squish, 
+                  "id" => id, 
+                  "data" => { 
+                    "url" => "clienti/#{slug}",
+                    "titolo" => titolo, 
+                    "citta"  => "#{comune} #{frazione} #{provincia}".squish
+                  }
+                })
+  end
+
+
   private
 
-    def load_into_soulmate
-      loader = Soulmate::Loader.new("#{user_id}_cliente")
-      loader.add({
-                    "term" => "#{titolo} #{comune} #{frazione} #{provincia} #{ragione_sociale}".squish, 
-                    "id" => id, 
-                    "data" => { 
-                      "url" => "clienti/#{slug}",
-                      "titolo" => titolo, 
-                      "citta"  => "#{comune} #{frazione} #{provincia}".squish
-                    }
-                  })
-    end
+
   
     def set_titolo
       n = self.titolo.squish.split(' ')

@@ -82,11 +82,11 @@
         = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_pagare", collection: da_pagare} unless da_pagare.empty?
         
 
-      - if @cliente.scuola_primaria?
-        = render "classi_adozioni"
-        = render "classi_inserters/form"
-      - else
-        &nbsp
+      / - if @cliente.scuola_primaria?
+      /   = render "classi_adozioni"
+      /   = render "classi_inserters/form", cliente: @cliente
+      / - else
+      /   &nbsp
         
     .center.span5
       %header.content-header

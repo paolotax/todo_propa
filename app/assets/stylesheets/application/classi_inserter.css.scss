@@ -20,19 +20,19 @@
   input[type=text] {
     width: 145px;
   }
+
+  .form-horizontal {
+    .control-label {
+      width: 70px;
+    }
+    .controls {
+      margin-left: 90px;
+    }
+  }
 }
 
 select#classi_inserter_classe {
   width: 100%;
-}
-
-.new_classi_inserter.form-horizontal {
-  .control-label {
-    width: 70px;
-  }
-  .controls {
-    margin-left: 90px;
-  }
 }
 
 .adozioni.list .item {

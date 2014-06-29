@@ -4,7 +4,7 @@ class ClassiInserter
   include ActiveModel::Conversion
   extend ActiveModel::Naming
   
-  attr_accessor :cliente_id, :classe, :sezioni, :nr_alunni, :libro_ids
+  attr_accessor :cliente_id, :classe, :sezioni, :nr_alunni, :libro_ids, :new_titolo, :new_editore
   
   validates_presence_of :cliente_id, :classe, :sezioni, :nr_alunni
   

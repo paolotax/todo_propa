@@ -31,6 +31,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'nota di accredito', 'note di accredito'
   inflect.irregular 'ordine', 'ordini'
   inflect.irregular 'documento', 'documenti'
+  inflect.irregular 'editore', 'editori'
   
   # inflect.plural /^([\w]*)a/i, '\1e'
   # inflect.singular /^([\w]*)e/i, '\1a'

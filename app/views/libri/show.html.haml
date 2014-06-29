@@ -12,6 +12,14 @@
           = @libro.titolo
           %small= @libro.settore
         %dl.dl-horizontal
+          %dt editore
+          %dd= @libro.editore.to_s
+
+          %dt id
+          %dd= @libro.id
+          - if @libro.scolastico?
+            %dt materia
+            %dd= @libro.materia.try(:materia)
           %dt sigla
           %dd= @libro.sigla
           %dt cm      

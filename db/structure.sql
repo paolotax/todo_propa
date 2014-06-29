@@ -724,6 +724,39 @@ ALTER SEQUENCE comuni_id_seq OWNED BY comuni.id;
 
 
 --
+-- Name: editori; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE editori (
+    id integer NOT NULL,
+    nome character varying(255),
+    gruppo character varying(255),
+    codice character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: editori_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE editori_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: editori_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE editori_id_seq OWNED BY editori.id;
+
+
+--
 -- Name: fatture; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -861,7 +894,8 @@ CREATE TABLE libri (
     updated_at timestamp without time zone NOT NULL,
     slug character varying(255),
     iva character varying(255),
-    classe integer
+    classe integer,
+    editore_id integer
 );
 
 
@@ -882,6 +916,16 @@ CREATE SEQUENCE libri_id_seq
 --
 
 ALTER SEQUENCE libri_id_seq OWNED BY libri.id;
+
+
+--
+-- Name: libro_connections; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE libro_connections (
+    libro_parent_id integer NOT NULL,
+    libro_child_id integer NOT NULL
+);
 
 
 --
@@ -1430,6 +1474,13 @@ ALTER TABLE ONLY comuni ALTER COLUMN id SET DEFAULT nextval('comuni_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY editori ALTER COLUMN id SET DEFAULT nextval('editori_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY fatture ALTER COLUMN id SET DEFAULT nextval('fatture_id_seq'::regclass);
 
 
@@ -1591,6 +1642,14 @@ ALTER TABLE ONLY clienti
 
 ALTER TABLE ONLY comuni
     ADD CONSTRAINT comuni_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: editori_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY editori
+    ADD CONSTRAINT editori_pkey PRIMARY KEY (id);
 
 
 --
@@ -1856,6 +1915,13 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON friendly_id_slugs USIN
 
 
 --
+-- Name: index_libri_on_editore_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_libri_on_editore_id ON libri USING btree (editore_id);
+
+
+--
 -- Name: index_libri_on_materia_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1881,6 +1947,20 @@ CREATE INDEX index_libri_on_slug ON libri USING btree (slug);
 --
 
 CREATE INDEX index_libri_on_titolo ON libri USING btree (titolo);
+
+
+--
+-- Name: index_libro_connections_on_libro_child_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_libro_connections_on_libro_child_id ON libro_connections USING btree (libro_child_id);
+
+
+--
+-- Name: index_libro_connections_on_libro_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_libro_connections_on_libro_parent_id ON libro_connections USING btree (libro_parent_id);
 
 
 --
@@ -2098,3 +2178,9 @@ INSERT INTO schema_migrations (version) VALUES ('20140323123526');
 INSERT INTO schema_migrations (version) VALUES ('20140421081711');
 
 INSERT INTO schema_migrations (version) VALUES ('20140518110834');
+
+INSERT INTO schema_migrations (version) VALUES ('20140621125949');
+
+INSERT INTO schema_migrations (version) VALUES ('20140623182242');
+
+INSERT INTO schema_migrations (version) VALUES ('20140623185944');

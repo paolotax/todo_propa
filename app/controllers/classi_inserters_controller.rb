@@ -5,6 +5,7 @@ class ClassiInsertersController < ApplicationController
   end
   
   def create
+
     @cliente = current_user.clienti.find(params[:cliente_id])
     @classi_inserter = ClassiInserter.new(params[:classi_inserter])
     if @classi_inserter.valid?

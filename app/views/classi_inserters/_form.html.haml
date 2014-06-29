@@ -1,26 +1,44 @@
 - @classi_inserter ||= ClassiInserter.new
 
-.insert-classi.clearfix
-  = simple_form_for [@cliente, @classi_inserter], class: "classi_inserter", remote: true do |f|
+.insert-classi
+  
+  = simple_form_for [cliente, @classi_inserter],  remote: true do |f|
 
     = f.error_notification
     = f.error :base, class: "error"
 
-    = f.hidden_field  :cliente_id, value: @cliente.id
-    = f.input :classe, as: :select, collection: 1..5, prompt: "inserisci classe"
-    .more.hidden
-      = f.input :sezioni, hint: "Inserisci le sezioni (a-z) senza spazi e senza ripetizioni. Le sezioni inserite verranno convertite in maiuscolo"
-      = f.input :nr_alunni, hint: "Inserisci il numero di alunni per sezione separati da spazio (es. 22 23 25) oppure il totale per classe"
-      / questo sarebbe figo ma non riesco a mettere il filtro
-      / = f.input :libro_ids, as: :check_boxes, collection: Libro.scolastico.all
-      .control-group.collection_checkbox
-        = hidden_field_tag "classi_inserter[libro_ids][]", nil
-        %label.control-label Libri adottati
+    = f.hidden_field  :cliente_id, value: cliente.id
+    
+    .row
+      .span3
+        = f.input :classe, as: :select, collection: 1..5, prompt: "inserisci classe"
+      .span4
+        = f.input :sezioni, hint: "Inserisci le sezioni (a-z) senza spazi e senza ripetizioni. Le sezioni inserite verranno convertite in maiuscolo"
+      .span4
+        = f.input :nr_alunni, hint: "Inserisci il numero di alunni per sezione separati da spazio (es. 22 23 25) oppure il totale per classe"
+        / questo sarebbe figo ma non riesco a mettere il filtro
+        / = f.input :libro_ids, as: :check_boxes, collection: Libro.scolastico.all
+
+    .row
+      .more.hidden
+      
+        .control-group.collection_checkbox
+          = hidden_field_tag "classi_inserter[libro_ids][]", nil
+          %label.control-label Libri adottati
+          .controls
+            - Libro.adottabile.group_by(&:classe).each do |classe, libri|
+
+              .row.hidden{ data: { classe: "#{classe}" } }
+                - libri.group_by(&:materia_id).each do |materia, l|
+                  .span3{ data: { materia_id: "#{materia}" } }
+                    - l.each do |libro| 
+                      %label.checkbox.hidden{ data: { classe: "#{libro.classe}" } }
+                        = check_box_tag "classi_inserter[libro_ids][]", libro.id, false, id: dom_id(libro)
+                        = link_to libro.titolo, libro
+
         .controls
-          - Libro.scolastico.each do |libro|
-            %label.checkbox.hidden{ data: { classe: "#{libro.classe}" } }
-              = check_box_tag "classi_inserter[libro_ids][]", libro.id, false, id: dom_id(libro)
-              = libro.titolo
-      .controls
-        = f.button :submit, "Salva", class: "btn-primary"
+          = f.button :submit, "Salva", class: "btn-primary"
+
+
+  = render "libri_inserters/form", cliente: cliente
 

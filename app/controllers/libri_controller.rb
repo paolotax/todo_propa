@@ -1,8 +1,11 @@
 class LibriController < ApplicationController
   
+  
   # respond_to :html, :js, :json 
   
+  
   can_edit_on_the_spot
+  
   
   def index
 
@@ -23,6 +26,7 @@ class LibriController < ApplicationController
 
   end
 
+  
   def show
     @libro = Libro.includes(righe: [ :libro, :appunto, :fattura ] ).find(params[:id])
     
@@ -50,21 +54,25 @@ class LibriController < ApplicationController
     # end
   end
 
+  
   def new
     @libro = Libro.new
   end
 
+  
   def create
     @libro = Libro.new(params[:libro])
     @libro.save
     respond_with @libro
   end
 
+  
   def edit
     session[:return_to] = request.referer
     @libro = Libro.find(params[:id])
   end
 
+  
   def update
     @libro = Libro.find(params[:id])
     respond_to do |format|
@@ -79,10 +87,14 @@ class LibriController < ApplicationController
     end
   end
 
+
   def destroy
-    @libro = Libro.find(params[:id])
+    @libro = Libro.find_by_slug(params[:id])
     @libro.destroy
-    redirect_to libri_url
+    respond_to do |format|
+      format.html { redirect_to libri_url }
+      format.js
+    end
   end
 
 end

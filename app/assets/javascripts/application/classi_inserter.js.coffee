@@ -1,11 +1,26 @@
 jQuery ->
+  
   $("#classi_inserter_classe").live 'change', (e) ->
-    $("label.checkbox input").attr('checked', false);
+    
+    $(".row[data-classe]").addClass("hidden")    
     $(".collection_checkbox label.checkbox").addClass("hidden")
+    $("label.checkbox input").attr('checked', false);
+    
     classe = $(@).val()
     if classe
       $(".insert-classi .more").removeClass("hidden")
+      $("*[data-classe='#{classe}']").removeClass("hidden")
     else
       $(".insert-classi .more").addClass("hidden")
-          
-    $("*[data-classe='#{classe}']").removeClass("hidden")
+    
+    
+  
+
+  $("input[type=checkbox").live 'change', (e) ->
+
+    clicked = $(@)
+    materiaSpan = $(@).parent().parent()
+    
+    $("input[type=checkbox", materiaSpan).each ->
+      if $(@).val() != clicked.val()
+        $(@).attr('checked', false);

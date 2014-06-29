@@ -1,0 +1,10 @@
+= simple_form_for(@editore) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :nome
+    = f.input :gruppo
+    = f.input :codice
+
+  .form-actions
+    = f.button :submit

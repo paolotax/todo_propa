@@ -5,7 +5,9 @@
     = render partial: 'clienti/cliente_header', locals: { cliente: cliente }
 
   
-
+  .module
+    = render "classi_inserters/form", cliente: cliente
+    
   .foglio-scuola.module{ id: "foglio_scuola_#{cliente.id}"}
     .header
       .pull-right

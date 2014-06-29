@@ -2,6 +2,7 @@
 
 %table
   %tr
+    %th
     %th Materia
     %th
     %th
@@ -9,6 +10,7 @@
 
   - @materie.each do |materia|
     %tr
+      %td= materia.id
       %td= materia.materia
       %td= link_to 'Show', materia
       %td= link_to 'Edit', edit_materia_path(materia)

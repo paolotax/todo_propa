@@ -1,0 +1,23 @@
+%h1 Listing editori
+
+%table
+  %tr
+    %th Nome
+    %th Gruppo
+    %th Codice
+    %th
+    %th
+    %th
+
+  - @editori.each do |editore|
+    %tr
+      %td= editore.nome
+      %td= editore.gruppo
+      %td= editore.codice
+      %td= link_to 'Show', editore
+      %td= link_to 'Edit', edit_editore_path(editore)
+      %td= link_to 'Destroy', editore, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Editore', new_editore_path

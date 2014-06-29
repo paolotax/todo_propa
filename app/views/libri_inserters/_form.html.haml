@@ -1,0 +1,21 @@
+- @libri_inserter = LibriInserter.new
+
+.insert-libri
+  
+  = simple_form_for @libri_inserter,  remote: true do |f|
+
+    = f.error_notification
+    = f.error :base, class: "error"
+
+    = hidden_field_tag  "cliente_id", cliente.id
+    
+    .row
+      .span3
+        = f.input :titolo
+      .span3
+        = f.input :corso, collection: LibriInserter::CORSI.keys
+      .span3
+        = f.input :editore, collection: Editore.concorrenza.pluck(:nome)
+
+      = f.button :submit, class: "btn pull-right"
+

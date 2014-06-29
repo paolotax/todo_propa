@@ -8,6 +8,10 @@
   
   = render 'foglio_scuola', cliente: @cliente
 
-- else
+- elsif params[:view] == 'adozioni'
   
+  = render 'cliente_adozioni', cliente: @cliente
+
+- else
+
   = render 'cliente_show'

@@ -13,7 +13,10 @@
     .stato
       = link_to image_tag(libro.image_url(:small_thumb)), libro
     
-    %strong= link_to libro.titolo, libro
+    %strong
+      = link_to libro.titolo, libro
+      - if libro.concorrenza?
+        %small= libro.editore
 
   %dl.dl-horizontal
     %dt settore
@@ -33,7 +36,7 @@
       %dt ean
       %dd= libro.ean
       %dt materia
-      %dd= libro.materia_id
+      %dd= libro.materia
       %dt classe
       %dd= libro.classe
       %dt coefficente

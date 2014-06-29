@@ -1,19 +1,8 @@
 class Libro < ActiveRecord::Base
 
 
-  SETTORI     = ["Scolastico", "Parascolastico", "Vacanze", "Varia", "Eventuale", "Guide", "Adozionale", "Concorrenza", "Scorrimento"]
+  SETTORI     = ["Scolastico", "Fascicoli", "Parascolastico", "Vacanze", "Varia", "Eventuale", "Guide", "Adozionale", "Concorrenza", "Scorrimento"]
   
-  SETTORI_OPT = [
-                  ["Scolastico", "Scolastico"], 
-                  ["Parascolastico", "Parascolastico"], 
-                  ["Vacanze", "Vacanze"], 
-                  ["Varia", "Varia"], 
-                  ["Eventuale", "Eventuale"], 
-                  ["Guide", "Guide"],
-                  ["Adozionale", "Adozionale"],
-                  ["Concorrenza", "Concorrenza"], 
-                  ["Scorrimento", "Scorrimento"]
-                ]
 
   extend FriendlyId
   friendly_id :titolo, use: [:slugged, :history]
@@ -24,10 +13,21 @@ class Libro < ActiveRecord::Base
   pg_search_scope :search, against: [:titolo, :settore, :sigla, :cm, :ean],
     using: { tsearch: { dictionary: "italian", prefix: true } }
 
-  
+
+  has_and_belongs_to_many :children, join_table: "libro_connections", class_name: "Libro", foreign_key: :libro_parent_id, association_foreign_key: :libro_child_id
+
+  has_and_belongs_to_many :parents, join_table: "libro_connections", class_name: "Libro", foreign_key: :libro_child_id, association_foreign_key: :libro_parent_id
+
+
   has_many :righe
   has_many :adozioni, dependent: :nullify
   
+  belongs_to :editore
+
+  belongs_to :materia
+
+  delegate :nome, :gruppo, to: :editore
+
   #default_scope order("libri.id")  
   scope :per_classe_e_materia, lambda {
                                   |cl,mat| joins(:adozioni => :classe).
@@ -39,14 +39,24 @@ class Libro < ActiveRecord::Base
   
   scope :per_settore, unscoped.order(:settore)
   scope :per_titolo,  unscoped.order(:titolo)
-  scope :vacanze,   where("libri.settore = 'Vacanze'").order(:titolo) 
-  scope :scolastico,   where("libri.settore = 'Scolastico'")
+
+
+  scope :adottabile, where("libri.settore in ('Concorrenza', 'Scolastico')").order("libri.classe, libri.materia_id, libri.settore DESC, libri.titolo")
+  
+
   scope :vendibili, where("libri.settore <> 'Concorrenza'").where("libri.settore <> 'Scorrimento'").where("libri.settore <> 'Adozionale'")
+
+
   
   scope :previous, lambda { |i, f| where("#{self.table_name}.#{f} < ?", i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
   scope :next,     lambda { |i, f| where("#{self.table_name}.#{f} > ?", i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
   
 
+  def to_s
+    titolo
+  end
+
+  
   def self.cached_find(id)
     Rails.cache.fetch([name, id]) { find(id) }
   end

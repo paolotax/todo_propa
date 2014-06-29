@@ -1,3 +1,6 @@
 .navbar-search.pull-right.hidden-phone
-  %form.form-search
-    %input#search-query.input-small.search-query{ type: "text", value: "", autocomplete: "off", placeholder: "vai a ..."} 
+  / %form.form-search
+  /   %input#search-query.input-small.search-query{ type: "text", value: "", autocomplete: "off", placeholder: "vai a ..."} 
+
+  = form_tag params, method:'get', id: 'search_all', class: "form-search", remote: false do
+    = text_field_tag :search, params[:search], class: "input-medium search-query", id: "search-query", placeholder: "vai a ..."

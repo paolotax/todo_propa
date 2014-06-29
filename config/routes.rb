@@ -1,6 +1,8 @@
 TodoPropa::Application.routes.draw do
   
   
+
+
   use_doorkeeper
 
   
@@ -148,6 +150,7 @@ TodoPropa::Application.routes.draw do
     end
   end
   
+  resources :libri_inserters, only: :create
 
   resources :righe
   
@@ -159,6 +162,8 @@ TodoPropa::Application.routes.draw do
     end
   end
   
+  resources :editori
+
   root :to => 'appunti#index'
 
 end

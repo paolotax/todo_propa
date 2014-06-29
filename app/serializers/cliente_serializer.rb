@@ -8,6 +8,7 @@ class ClienteSerializer < ActiveModel::Serializer
            :appunti_da_fare,
            :nel_baule,
            :fatto,
+           :visita,
            :updated_at,
            :created_at,
            :deleted_at
@@ -24,6 +25,10 @@ class ClienteSerializer < ActiveModel::Serializer
 
   def fatto
     object.fatto?
+  end
+
+  def visita
+    object.visita.try(:start) || nil
   end
 
 end
