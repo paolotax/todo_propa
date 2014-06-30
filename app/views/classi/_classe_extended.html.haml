@@ -1,0 +1,28 @@
+.classe.item[c]
+  
+  .row
+    .span2
+      .dropdown.clearfix.pull-right
+        = link_to "...",  "#", class: "btn btn-link dropdown-toggle", "data-toggle" => "dropdown" 
+
+        %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+
+          %li= link_to 'nuovo appunto', new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe}#{c.sezione} #{c.insegnanti}"), title: "nuovo appunto"
+          %li.divider
+          %li= link_to "aggiungi sezione", aggiungi_sezione_classe_path(c), remote: 'true'
+          %li= link_to "elimina", c, method: :delete, remote: true, confirm: "Sei sicuro?"
+      .sezione
+        %h1.nr_alunni.pull-left
+          = "#{c.classe} #{c.sezione}"
+          %small
+            = on_the_spot_edit c, :nr_alunni, tooltip: "#", url: '/clienti/update_attribute_on_the_spot' 
+      .clearfix
+      
+    .span9
+      %ul
+        - unless c.adozioni.order(:materia_id).empty?        
+          - for a in c.adozioni do
+            = render a
+
+
+      

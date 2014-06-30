@@ -1,0 +1,9 @@
+.adozione[adozione]
+  .row
+    .span2= adozione.libro.materia
+    .span3= adozione.libro
+    .span2= adozione.libro.editore
+    .span1
+      = adozione.nr_copie
+      = link_to adozione, method: :delete, remote: true, confirm: "Sei sicuro?", class: "close" do
+        &times
