@@ -1,5 +1,3 @@
-= render "classi_inserters/form", cliente: cliente
-    
     
 .foglio-adozioni.list{ id: "foglio_adozioni_#{cliente.id}"}
   - cliente.classi.order(:classe, :sezione).each do |c|

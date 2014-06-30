@@ -71,7 +71,7 @@ class ClassiInserter
       
       if self.libro_ids
         self.libro_ids.each do |libro|
-          nuova_classe.adozioni.create(libro_id: libro) unless libro.blank?
+          nuova_classe.adozioni.create(libro_id: libro, nr_copie: nuova_classe.nr_alunni) unless libro.blank?
         end  
       end  
     end  

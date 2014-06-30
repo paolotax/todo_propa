@@ -10,6 +10,8 @@ class Adozione < ActiveRecord::Base
   validates :classe_id, :uniqueness => {:scope => [:materia_id, :libro_id],
                                         :message => "e' gia' stata utilizzata"}                                          
   scope :scolastico, joins(:libro).where("libri.settore = 'Scolastico'")
+  scope :concorrenza, joins(:libro).where("libri.settore = 'Concorrenza'")
+  
   # scope :per_scuola, lambda {|s| }
   
   scope :per_classe_e_sezione, joins(:classe).order("classi.classe, classi.sezione, adozioni.materia_id")

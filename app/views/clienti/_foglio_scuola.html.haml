@@ -5,6 +5,10 @@
     = render partial: 'clienti/cliente_header', locals: { cliente: cliente }
 
   
+
+    
+  = render "classi_inserters/form", cliente: cliente
+
   .module
     = render 'foglio_adozioni', cliente: cliente
 

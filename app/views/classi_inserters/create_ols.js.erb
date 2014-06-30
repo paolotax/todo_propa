@@ -1,8 +1,6 @@
 <%- if @classi_inserter.errors.empty? %>
-  
-  var classe = $("#classi_inserter_classe").val();
-  
-  $(".foglio-adozioni").replaceWith("<%= escape_javascript( render 'clienti/foglio_adozioni', cliente: @cliente) %>"); 
+  console.log("<%= @classi_inserter.errors.to_json %>")
+  $(".classi-adozioni").replaceWith("<%= escape_javascript( render 'clienti/classi_adozioni') %>"); 
 
   var classe = $("#classi_inserter_classe").val();
   $("#classi_inserter_classe").val(parseInt(classe) + 1);
@@ -19,5 +17,4 @@
   $(".insert-classi").replaceWith("<%= escape_javascript( render 'classi_inserters/form') %>");
   $(".more").removeClass("hidden");
   $("#classi_inserter_classe").trigger("change");
-
 <% end %>

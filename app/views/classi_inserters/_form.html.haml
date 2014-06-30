@@ -1,6 +1,6 @@
 - @classi_inserter ||= ClassiInserter.new
 
-.insert-classi
+.insert-classi.module
   
   = simple_form_for [cliente, @classi_inserter],  remote: true do |f|
 
@@ -40,5 +40,6 @@
           = f.button :submit, "Salva", class: "btn-primary"
 
 
+  
   = render "libri_inserters/form", cliente: cliente
 
