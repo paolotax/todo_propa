@@ -29,8 +29,10 @@
             - Libro.adottabile.group_by(&:classe).each do |classe, libri|
 
               .row.hidden{ data: { classe: "#{classe}" } }
-                - libri.group_by(&:materia_id).each do |materia, l|
-                  .span3{ data: { materia_id: "#{materia}" } }
+                - libri.group_by(&:materia).each do |materia, l|
+                  .span3{ data: { materia_id: "#{materia.try(:id)}" } }
+                    %small= materia.try(:materia).try(:downcase)
+                    %br
                     - l.each do |libro| 
                       %label.checkbox.hidden{ data: { classe: "#{libro.classe}" } }
                         = check_box_tag "classi_inserter[libro_ids][]", libro.id, false, id: dom_id(libro)

@@ -1,4 +1,6 @@
     
 .foglio-adozioni.list{ id: "foglio_adozioni_#{cliente.id}"}
-  - cliente.classi.order(:classe, :sezione).each do |c|
-    = render 'classi/classe_extended', c: c
+  - cliente.classi.order(:classe, :sezione).group_by(&:classe).each do |c, sezioni|
+    .module
+      - for sezione in sezioni
+        = render 'classi/classe_extended', c: sezione
