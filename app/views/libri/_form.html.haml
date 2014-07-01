@@ -1,4 +1,4 @@
-= simple_form_for @libro, :html => { :multipart => true } do |f|
+= simple_form_for @libro, :html => { :multipart => true, class: "form-horizontal" } do |f|
   
   = f.input :titolo, :input_html => { :class => 'span4' }
   
@@ -8,7 +8,7 @@
   = f.association :materia
   = f.association :editore
 
-  = f.association :children, collection: Libro.fascicoli.order(:classe), :input_html => { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
+  = f.association :children, collection: Libro.fascicoli.order(:classe), :input_html => { :class => 'chzn-select span4', "data-placeholder" => "Seleziona i fascicoli..." }, label: "Composto da"
 
   = f.input :cm,    :input_html => { :class => 'input-small' },  label: "Codice Giunti"
   = f.input :sigla, :input_html => { :class => 'input-small' }

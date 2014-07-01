@@ -1,6 +1,6 @@
 - @libri_inserter = LibriInserter.new
 
-.insert-libri
+.insert-libri.well
   
   = simple_form_for @libri_inserter,  remote: true do |f|
 
@@ -9,13 +9,13 @@
 
     = hidden_field_tag  "cliente_id", cliente.id
     
-    .row
-      .span3
-        = f.input :titolo
-      .span3
-        = f.input :corso, collection: LibriInserter::CORSI.keys
-      .span3
-        = f.input :editore, collection: Editore.concorrenza.pluck(:nome)
 
-      = f.button :submit, "Aggiungi Titolo", class: "btn pull-right"
+    = f.input_field :titolo, class: "input-block-level"
+    = f.input_field :corso, collection: LibriInserter::CORSI.keys, class: "input-block-level"
+    = f.input_field :editore, collection: Editore.concorrenza.pluck(:nome), class: "input-block-level"
+
+    %hr
+
+    = f.button :submit, "Aggiungi Titolo", class: "btn"
+
 

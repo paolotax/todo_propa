@@ -6,11 +6,15 @@
 
   
 
-    
-  = render "classi_inserters/form", cliente: cliente
+  .row  
+    .span9
+      = render "classi_inserters/form", cliente: cliente
+    .span3
+      = render "libri_inserters/form", cliente: cliente
 
-  .module
-    = render 'foglio_adozioni', cliente: cliente
+  .row
+    .span12
+      = render 'foglio_adozioni', cliente: cliente
 
 
 

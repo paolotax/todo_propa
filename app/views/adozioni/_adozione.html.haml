@@ -1,7 +1,7 @@
 .adozione[adozione]
   .row
     .span2= adozione.try(:libro).try(:materia)
-    .span3= adozione.try(:libro)
+    .span3= link_to adozione.try(:libro), adozione.try(:libro)
     .span2= adozione.try(:libro).try(:editore)
     .span1
       = adozione.nr_copie

@@ -1,8 +1,13 @@
-= simple_form_for(@materia) do |f|
+%hr
+
+= simple_form_for(@materia, html: { class: "form-horizontal"}) do |f|
+  
   = f.error_notification
 
-  .form-inputs
-    = f.input :materia
+  = f.input :materia
 
-  .form-actions
+  .controls
     = f.button :submit
+
+%hr
+

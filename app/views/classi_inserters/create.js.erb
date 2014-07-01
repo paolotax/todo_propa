@@ -14,6 +14,11 @@
 
   $("#classi_inserter_nr_alunni").focus();
   $("#classi_inserter_nr_alunni").select();
+
+
+  $("#libri_inserter_editore").chosen()
+
+  
 <% else %>
   
   $(".insert-classi").replaceWith("<%= escape_javascript( render 'classi_inserters/form') %>");

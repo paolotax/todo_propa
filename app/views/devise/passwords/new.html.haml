@@ -1,12 +1,17 @@
-.devise-form
+.devise-form.well
   %h2 Password dimenticata?
-  = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+  %hr
+
+  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, class: "form-horizontal" }) do |f|
+    
+
     = devise_error_messages!
-    %p
-      = f.label :email
-      %br/
-      = f.text_field :email
-    %p= f.submit "Inviami le istruzioni per ripristinare la password"
+    
+    = f.input :email
+    
+    .controls
+      = f.button :submit, "Inviami le istruzioni per ripristinare la password"
+
   = render :partial => "devise/shared/links"
   
 

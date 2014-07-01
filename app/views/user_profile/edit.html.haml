@@ -1,9 +1,10 @@
 .well
+  
   %h2 Modifica profilo
   
   %hr
   
-  = simple_form_for(@user, :url => user_update_profile_path(@user), :html => { :method => :put , :multipart => true}) do |f|
+  = simple_form_for(@user, :url => user_update_profile_path(@user), :html => { :method => :put , :multipart => true, class: "form-horizontal"}) do |f|
     
     %fieldset
       = f.input :username
