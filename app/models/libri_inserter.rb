@@ -69,6 +69,18 @@ class LibriInserter
       return false unless libro.errors.empty?
     end
 
+    classi.each_with_index do |c, index|
+      if c < classi.count
+        libro = Libro.find_by_titolo("#{self.titolo} #{subtitle[index]}")
+        seguito =  Libro.find_by_titolo("#{self.titolo} #{subtitle[index + 1]}")
+
+
+        libro.next_id = seguito.id
+        libro.save
+      end    
+    end
+
+
     return true
   end  
 

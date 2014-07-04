@@ -184,6 +184,50 @@ class ClientiController < ApplicationController
 
     @cliente = current_user.clienti.find(params[:id])
 
+    
+    @cliente.classi.order("classi.classe desc, classi.sezione desc").each do |c|
+      c.classe += 1
+      c.anno = Time.now.year.to_s
+      c.save    
+    end
+    
+    @cliente.classi.order("classi.classe desc, classi.sezione desc").each do |c|
+      if c.classe == 6
+        c.classe = 1
+        c.save
+      end
+    end
+
+    @cliente.classi.order("classi.classe desc, classi.sezione desc").each do |c|
+      
+      c.adozioni.each do |old| 
+
+        seguito = old.libro.seguito
+        
+        if seguito.nil?
+          old.destroy
+        else
+          old.libro = seguito
+          old.materia_id = seguito.materia_id
+          old.save
+        end
+
+        seguito = nil
+      end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :back}
+      format.js
+    end
+       
+  end 
+
+
+  def scorri_classi_gelmini
+
+    @cliente = current_user.clienti.find(params[:id])
+
     old_adozioni = []
 
     @cliente.mie_adozioni.each do |a|

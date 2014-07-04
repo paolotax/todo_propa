@@ -10,6 +10,9 @@
 
   = f.association :children, collection: Libro.fascicoli.order(:classe), :input_html => { :class => 'chzn-select span4', "data-placeholder" => "Seleziona i fascicoli..." }, label: "Composto da"
 
+
+  = f.input :next_id, as: :select, collection: Libro.seguiti.order(:titolo), :input_html => { :class => 'chzn-select span4', "data-placeholder" => "Seleziona il seguito..." }, label: "Seguito"
+
   = f.input :cm,    :input_html => { :class => 'input-small' },  label: "Codice Giunti"
   = f.input :sigla, :input_html => { :class => 'input-small' }
   = f.input :ean

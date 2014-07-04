@@ -22,6 +22,10 @@ class Libro < ActiveRecord::Base
   has_many :righe
   has_many :adozioni, dependent: :nullify
   
+  has_one :seguito, class_name: "Libro", foreign_key: :id, primary_key: :next_id
+  
+  # belongs_to :libro_precedente, class_name: "Libro", foreign_key: :next_id
+
   belongs_to :editore
 
   belongs_to :materia
@@ -43,6 +47,7 @@ class Libro < ActiveRecord::Base
 
   scope :adottabile, where("libri.settore in ('Concorrenza', 'Scolastico')").order("libri.classe, libri.materia_id, libri.settore DESC, libri.titolo")
   
+  scope :seguiti, where("libri.settore in ('Concorrenza', 'Scolastico')").order(:titolo)
 
   scope :vendibili, where("libri.settore <> 'Concorrenza'").where("libri.settore <> 'Scorrimento'").where("libri.settore <> 'Adozionale'")
 

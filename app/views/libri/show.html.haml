@@ -16,7 +16,7 @@
             %small= @libro.settore
         %dl.dl-horizontal
           %dt editore
-          %dd= @libro.editore.to_s
+          %dd= @libro.editore
 
           %dt id
           %dd= @libro.id
@@ -28,13 +28,10 @@
             %dt materia
             %dd= @libro.materia  
             %dt classe
-            %dd= @libro.classe 
-
-
-          / %dt materia
-          / %dd= @libro.materia.try(:materia)
-          / %dt classe
-          / %dd= @libro.classe
+            %dd= @libro.classe
+            - unless @libro.seguito.nil?
+              %dt seguito
+              %dd= @libro.seguito  
 
           %dt sigla
           %dd= @libro.sigla
@@ -132,7 +129,7 @@
 
       
     .side-bar.span4      
-      - if @libro.scolastico?        
+      - if @libro.scolastico?  || @libro.concorrenza?      
         = render "adozioni/adozioni_grouped", adozioni: @adozioni
 
       

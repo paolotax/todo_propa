@@ -29,7 +29,10 @@
       %dt materia
       %dd= libro.materia  
       %dt classe
-      %dd= libro.classe 
+      %dd= libro.classe
+      - unless libro.seguito.nil?
+        %dt seguito
+        %dd= libro.seguito  
     %dt prezzo di copertina
     %dd= number_to_currency libro.prezzo_copertina
     %dt prezzo consigliato

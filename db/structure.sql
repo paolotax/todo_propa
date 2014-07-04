@@ -895,7 +895,8 @@ CREATE TABLE libri (
     slug character varying(255),
     iva character varying(255),
     classe integer,
-    editore_id integer
+    editore_id integer,
+    next_id integer
 );
 
 
@@ -2184,3 +2185,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140621125949');
 INSERT INTO schema_migrations (version) VALUES ('20140623182242');
 
 INSERT INTO schema_migrations (version) VALUES ('20140623185944');
+
+INSERT INTO schema_migrations (version) VALUES ('20140703140326');
