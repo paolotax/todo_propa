@@ -8,7 +8,8 @@
         %article.row-fluid
           .content-inner
             .pull-right
-
+              .btn-group
+                = baule_tag cliente
               - if cliente.has_adozioni?
                 .btn-group
                   %button.btn.btn-warning.dropdown-toggle{ "data-toggle" => "dropdown" }
@@ -27,12 +28,14 @@
                     = submit_tag "Stampa Adozioni",  id: "bnt-pdf", class: "btn", placeholder: "salta"
      
               .btn-group
-
-                = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger", confirm: "Sei sicuro?"
+                - cliente.da_scorrere? ? class_btn = "btn-danger" : class_btn = ""
+                = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn #{class_btn}", confirm: "Sei sicuro?"
 
             %h1
               = link_to cliente.titolo, cliente
               %small foglio adozioni 
+
+            
 
 
   .row  
