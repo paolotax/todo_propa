@@ -1,6 +1,6 @@
 - title "Adozioni"
 
-- cache_key = current_user.mie_adozioni.ultima[0].updated_at.to_s
+- cache_key = "#{current_user.mie_adozioni.ultima[0].updated_at.to_s}-#{params[:provincia]}"
 
 .row
   - cache ['riepilogo_adozioni', current_user.id, cache_key] do
@@ -23,7 +23,7 @@
           %th
             %span.label.label-success kit
 
-        - for materia, adozioni in @adozioni_per_titolo.group_by { |a| a.libro.materia_id } do
+        - for materia, adozioni in @adozioni_per_titolo.group_by { |a| a.try(:libro).try(:materia_id) } do
           %tr
             %td
               = link_to materia, params.except(:titolo).merge(materia: materia)

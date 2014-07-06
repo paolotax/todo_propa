@@ -51,6 +51,7 @@ class Adozione < ActiveRecord::Base
     end        
   end
 
+  
   def self.filtra(params)
     adozioni = scoped
     adozioni = adozioni.joins(:libro).where("libri.materia_id = ?", params[:materia])  if params[:materia].present?
@@ -58,6 +59,13 @@ class Adozione < ActiveRecord::Base
     adozioni = adozioni.joins(:classe => :cliente).where("clienti.provincia = ?", params[:provincia])  if params[:provincia].present?    
     adozioni
   end
+
+
+  def self.delete_orphaned
+
+    Adozione.where( "libro_id NOT IN (?) OR classe_id NOT IN (?) OR classe_id IS NULL or libro_id IS NULL", Libro.pluck("id"), Classe.pluck("id") ).destroy_all
+  end
+
 
   after_commit :update_cliente_properties
   

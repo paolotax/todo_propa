@@ -27,7 +27,8 @@
                     = submit_tag "Stampa Adozioni",  id: "bnt-pdf", class: "btn", placeholder: "salta"
      
               .btn-group
-                = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger", confirm: "Sei sicuro?", remote: true
+
+                = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger", confirm: "Sei sicuro?"
 
             %h1
               = link_to cliente.titolo, cliente
