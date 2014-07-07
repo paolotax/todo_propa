@@ -31,7 +31,7 @@
             %dd= @libro.classe
             - unless @libro.seguito.nil?
               %dt seguito
-              %dd= @libro.seguito  
+              %dd= link_to @libro.seguito, @libro.seguito  
 
           %dt sigla
           %dd= @libro.sigla
