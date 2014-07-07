@@ -202,7 +202,7 @@ class ClientiController < ApplicationController
       
       c.adozioni.each do |old| 
 
-        seguito = old.libro.seguito
+        seguito = old.try(:libro).try(:seguito)
         
         if seguito.nil?
           old.destroy
