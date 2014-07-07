@@ -10,9 +10,9 @@
     = hidden_field_tag  "cliente_id", cliente.id
     
 
-    = f.input_field :titolo, class: "input-block-level"
-    = f.input_field :corso, collection: LibriInserter::CORSI.keys, class: "input-block-level"
-    = f.input_field :editore, collection: Editore.concorrenza.pluck(:nome), class: "input-block-level"
+    = f.input_field :titolo, class: "input-block-level", placeholder: "Nuovo Titolo" 
+    = f.input_field :corso, collection: LibriInserter::CORSI.keys, class: "input-block-level chzn-select", "data-placeholder" =>  "Seleziona Materia..." 
+    = f.input_field :editore, collection: Editore.concorrenza.pluck(:nome), class: "input-block-level", "data-placeholder" => "Seleziona Editore..."
 
     %hr
 
