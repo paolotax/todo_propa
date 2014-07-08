@@ -17,12 +17,13 @@
       %li
         = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
           - for ado in a do
+
             = hidden_field_tag "adozione_ids[]", ado.id
           %button.btn.btn-link{ title: 'stampa adozioni' }
             stampa
 
   .pull-right
-    - if a.uniq{|a| a.libro.titolo}.size == 1
+    - if a.uniq{|a| a.try(:libro).try(:titolo)}.size == 1
       %small
         = a.first.classe.classe
         = a.map{|a| a.classe.sezione}.sort{|a, b| a <=> b}.join

@@ -32,33 +32,34 @@
 
 
                 - for libro, adoz in adozioni.group_by(&:libro) do
-                  %tr
-                    %td= link_to libro.titolo, params.except(:materia).merge(titolo: libro.titolo)
-                    %td
-                      .pull-right
-                        %strong= adoz.size
-                    %td
-                      - da_consegnare = adoz.select {|a| a.stato == 'da consegnare'}.size
-                      - if da_consegnare > 0
+                  - if libro
+                    %tr
+                      %td= link_to libro.titolo, params.except(:materia).merge(titolo: libro.titolo)
+                      %td
                         .pull-right
-                          %span.label= da_consegnare
+                          %strong= adoz.size
+                      %td
+                        - da_consegnare = adoz.select {|a| a.stato == 'da consegnare'}.size
+                        - if da_consegnare > 0
+                          .pull-right
+                            %span.label= da_consegnare
 
-                    %td
-                      - saggio = adoz.select {|a| a.stato == 'saggio'}.size
-                      - if saggio > 0
-                        .pull-right
-                          %span.label.label-warning= saggio
-                    %td
-                      - kit_no_saggio = adoz.select {|a| a.stato == 'kit no saggio'}.size
-                      - if kit_no_saggio > 0
-                        .pull-right
-                          %span.label.label-important=  kit_no_saggio
+                      %td
+                        - saggio = adoz.select {|a| a.stato == 'saggio'}.size
+                        - if saggio > 0
+                          .pull-right
+                            %span.label.label-warning= saggio
+                      %td
+                        - kit_no_saggio = adoz.select {|a| a.stato == 'kit no saggio'}.size
+                        - if kit_no_saggio > 0
+                          .pull-right
+                            %span.label.label-important=  kit_no_saggio
 
-                    %td
-                      - kit = adoz.select {|a| a.stato == 'kit'}.size
-                      - if kit > 0
-                        .pull-right
-                          %span.label.label-success=  kit
+                      %td
+                        - kit = adoz.select {|a| a.stato == 'kit'}.size
+                        - if kit > 0
+                          .pull-right
+                            %span.label.label-success=  kit
 
             %td
               .pull-right
