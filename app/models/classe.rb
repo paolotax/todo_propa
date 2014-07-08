@@ -25,7 +25,7 @@ class Classe < ActiveRecord::Base
   end
 
   def update_nr_copie
-    self.adozioni.scolastico.readonly(false).each do |a|
+    self.adozioni.readonly(false).each do |a|
       a.update_attributes(:nr_copie => self.nr_alunni)
     end
   end
