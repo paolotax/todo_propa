@@ -41,11 +41,10 @@
                 = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].include?( materia.id.to_s)
                 = materia
 
-    %hr
 
   - total_sorted = @grid.row_totals.sort.reverse
 
-  %table.table
+  %table#classifica.table.table-condensed.table-striped
     %th
     - for column in @grid.columns do
       %th= column.header
