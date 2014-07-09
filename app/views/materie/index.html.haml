@@ -7,6 +7,10 @@
     %tr
       %th
       %th Materia
+      %th Gruppo
+      %th Ordine
+      %th Copertina
+      %th Consigliato
       %th
       %th
       %th
@@ -15,6 +19,12 @@
       %tr
         %td= materia.id
         %td= materia.materia
+
+        %td= materia.gruppo
+        %td= materia.ordine
+        %td= materia.prezzo_copertina
+        %td= materia.prezzo_consigliato
+
         %td= link_to 'Mostra', materia, class: "btn"
         %td= link_to 'Modifica', edit_materia_path(materia), class: "btn"
         %td= link_to 'Elimina', materia, :confirm => 'Are you sure?', :method => :delete, class: "btn"

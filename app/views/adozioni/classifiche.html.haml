@@ -1,32 +1,45 @@
-- title "Classifica adozioni"
+- title "Classifica Adozioni"
+
 .well
-  = simple_form_for classifiche_adozioni_path, method: :put, html: { class: "form-inline"} do |f|
+  
+  %h2 Classifica Adozioni
+  %hr
+
+  = simple_form_for classifiche_adozioni_path, method: :put, html: { class: "form-horizontal" } do |f|
     
-    %fieldset
+    %fieldset.row
  
       .span3
-        .control-group
-          %label.control-label raggruppa per...
-          .controls
-            = select_tag 'row', options_for_select(["gruppo", "titolo", "editore"], @new_params["row"]), include_blank: true
+
+        %label raggruppa per...
+
+        = select_tag 'row', options_for_select(["gruppo", "titolo", "editore"], @new_params["row"]), include_blank: true
 
       .span3
-        .control-group
-          %label.control-label calcola...
-          .controls
-            = select_tag 'value_name', options_for_select(["sezioni", "copie", "valore", "provvigioni"], @new_params["value_name"]), include_blank: true
+
+
+        %label calcola...
+        = select_tag 'value_name', options_for_select(["sezioni", "copie", "valore", "provvigioni"], @new_params["value_name"]), include_blank: true
       
+      .span3
+        %label &nbsp
+        
+        = f.button :submit, "Ricalcola", class: "btn-warning"
 
-      .span4
-        .control-group.collection_checkbox
-          - Materia.all.each do |materia| 
-            %label.inline.checkbox
-              = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].include?( materia.id.to_s)
-              = materia
 
-    
-    .controls
-      = f.button :submit, "Cerca", class: "btn-primary"
+    %hr
+
+    %fieldset.row
+
+      .control-group.collection_checkbox
+          
+        - Materia.order(:ordine).all.group_by(&:gruppo).each do |gruppo, materie|
+
+          .span2
+            - for materia in materie
+              %label.checkbox
+                = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].include?( materia.id.to_s)
+                = materia
 
     %hr
 

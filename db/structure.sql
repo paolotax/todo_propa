@@ -935,7 +935,11 @@ CREATE TABLE libro_connections (
 
 CREATE TABLE materie (
     id integer NOT NULL,
-    materia character varying(255)
+    materia character varying(255),
+    gruppo character varying(255),
+    ordine integer,
+    prezzo_copertina numeric(8,2),
+    prezzo_consigliato numeric(8,2)
 );
 
 
@@ -2187,3 +2191,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140623182242');
 INSERT INTO schema_migrations (version) VALUES ('20140623185944');
 
 INSERT INTO schema_migrations (version) VALUES ('20140703140326');
+
+INSERT INTO schema_migrations (version) VALUES ('20140709212016');

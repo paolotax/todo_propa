@@ -2,7 +2,7 @@ class MaterieController < ApplicationController
   # GET /materie
   # GET /materie.json
   def index
-    @materie = Materia.all
+    @materie = Materia.order(:ordine)
 
     respond_to do |format|
       format.html # index.html.erb
