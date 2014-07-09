@@ -101,6 +101,9 @@ gem 'rack-mini-profiler'
 
 gem 'ancestry'
 
+gem 'pivot_table'
+
+
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
   gem 'quiet_assets'

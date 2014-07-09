@@ -54,8 +54,9 @@ TodoPropa::Application.routes.draw do
   
   resources :adozioni do
     collection do
-      put 'update_multiple'
+      put  'update_multiple'
       post 'destroy_all'
+      put  'classifiche'
     end
     collection do
       put 'print_multiple', format: :pdf

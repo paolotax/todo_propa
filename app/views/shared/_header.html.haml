@@ -37,7 +37,19 @@
                 %li.divider
                 %li= link_to "Propa 2014",  propa2014s_url
                 
-            %li= link_to "Adozioni", adozioni_url
+            %li.dropdown
+              %a.dropdown-toggle{ href: '#', "data-toggle" => 'dropdown'}
+                Adozioni
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to "Riepilogo", adozioni_url
+                %li.divider
+                %li
+                  = form_tag classifiche_adozioni_path, method: "put", html: { class: "form-inline" }, remote: false do
+                    = hidden_field_tag "row", "gruppo"
+                    = hidden_field_tag "value_name", "valore"
+                    = submit_tag "Classifiche", class: "btn btn-link"
+
 
         - if user_signed_in?
           .pull-right

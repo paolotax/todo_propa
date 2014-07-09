@@ -1,0 +1,50 @@
+.well
+  = simple_form_for classifiche_adozioni_path, method: :put do |f|
+    / = hidden_field_tag "materie", "50001,50002,50003"
+    
+    - Materia.all.each do |materia| 
+      %label
+        = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].include?( materia.id.to_s)
+        = materia
+
+    = select_tag 'value_name', options_for_select(["sezioni", "copie", "valore", "provvigioni"], @new_params["value_name"]), include_blank: true
+    = select_tag 'row', options_for_select(["gruppo", "titolo", "editore"], @new_params["row"]), include_blank: true
+    
+    = f.submit "cerca"
+
+.well
+
+  - total_sorted = @grid.row_totals.sort.reverse
+
+  %table.table
+    %th
+    - for column in @grid.columns do
+      %th= column.header
+      %th %
+    %th totale
+    %th %
+    %th classifica
+
+    - for row in @grid.rows do
+      %tr
+        %td= row.header
+
+        - row.data.each_with_index do |data, index|
+          
+          %td= data.value.round(1)
+          %td= (data.value / @grid.columns[index].total * 100).round(1) if data.try(:value)
+
+        %td= row.total.round(1)
+        %td= (row.total / @grid.grand_total * 100 ).round(1)
+        %td= total_sorted.index(row.total) + 1
+
+    %tr
+      %td= @grid.rows.size
+
+      - for column in @grid.columns do
+        %td= column.total.round(1)
+        %td 100%
+
+      %td= @grid.grand_total.round(1)
+      %td 100%
+      %td

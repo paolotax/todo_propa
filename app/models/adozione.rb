@@ -3,7 +3,7 @@ class Adozione < ActiveRecord::Base
   belongs_to :classe, touch: true
   belongs_to :libro
   
-  belongs_to :cliente
+  has_one :cliente, through: :classe
 
   belongs_to :materia
 
@@ -26,13 +26,19 @@ class Adozione < ActiveRecord::Base
   scope :del_libro,  lambda { |l| where("adozioni.libro_id = ?", l) }
 
   scope :ultima, order("adozioni.updated_at desc").limit(1)
-  
+
+
+
   def importo
     libro.prezzo_copertina * nr_copie ||= 0
   end
   
   def titolo
     libro.titolo
+  end
+
+  def provincia
+    classe.cliente.provincia
   end
   
   def quantita

@@ -2,11 +2,11 @@ class AdozioniController < ApplicationController
 
   def index
 
-    @adozioni_per_titolo =  current_user.adozioni.includes(:libro, :classe => :cliente).order("libri.materia_id, libri.titolo").filtra(params)
+    @adozioni_per_titolo =  current_user.adozioni.scolastico.includes(:libro, :classe => :cliente).order("libri.materia_id, libri.titolo").filtra(params)
     
-    @adozioni = current_user.adozioni.includes(:libro, :classe => :cliente).per_scuola.filtra(params)
+    @adozioni = current_user.adozioni.scolastico.includes(:libro, :classe => :cliente).per_scuola.filtra(params)
     
-    @provincie = current_user.adozioni.joins(:classe => :cliente).per_scuola.pluck("clienti.provincia").uniq
+    @provincie = current_user.adozioni.scolastico.joins(:classe => :cliente).per_scuola.pluck("clienti.provincia").uniq
     
     @giro = Giro.new(user_id: current_user.id, baule: true) 
 
@@ -72,6 +72,16 @@ class AdozioniController < ApplicationController
     end
   end
 
+
+  def classifiche
+
+    @new_params = { user_id: current_user.id, "row" => 'gruppo', "value_name" => "sezioni", "materia_ids" => []}    
+    @new_params.merge!( params.reject { |k,v| v.blank? || v.empty? })
+    #raise @new_params.inspect
+    @grid = StatAdozione.aggregate_from_params(@new_params)
+  end
+
+
   def destroy
     @adozione = current_user.adozioni.find(params[:id])
     @classe = @adozione.classe
@@ -81,6 +91,7 @@ class AdozioniController < ApplicationController
       format.js
     end    
   end
+
 
   def destroy_all
     @adozioni = Adozione.destroy(params[:adozioni][:adozione_ids])

@@ -16,7 +16,7 @@ jQuery ->
     
   
 
-  $("input[type=checkbox").live 'change', (e) ->
+  $("#new_classi_inserter input[type=checkbox").live 'change', (e) ->
 
     clicked = $(@)
     materiaSpan = $(@).parent().parent()
