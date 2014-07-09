@@ -1,18 +1,34 @@
+- title "Classifica adozioni"
 .well
-  = simple_form_for classifiche_adozioni_path, method: :put do |f|
-    / = hidden_field_tag "materie", "50001,50002,50003"
+  = simple_form_for classifiche_adozioni_path, method: :put, html: { class: "form-inline"} do |f|
     
-    - Materia.all.each do |materia| 
-      %label
-        = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].include?( materia.id.to_s)
-        = materia
+    %fieldset
+ 
+      .span3
+        .control-group
+          %label.control-label raggruppa per...
+          .controls
+            = select_tag 'row', options_for_select(["gruppo", "titolo", "editore"], @new_params["row"]), include_blank: true
 
-    = select_tag 'value_name', options_for_select(["sezioni", "copie", "valore", "provvigioni"], @new_params["value_name"]), include_blank: true
-    = select_tag 'row', options_for_select(["gruppo", "titolo", "editore"], @new_params["row"]), include_blank: true
+      .span3
+        .control-group
+          %label.control-label calcola...
+          .controls
+            = select_tag 'value_name', options_for_select(["sezioni", "copie", "valore", "provvigioni"], @new_params["value_name"]), include_blank: true
+      
+
+      .span4
+        .control-group.collection_checkbox
+          - Materia.all.each do |materia| 
+            %label.inline.checkbox
+              = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].include?( materia.id.to_s)
+              = materia
+
     
-    = f.submit "cerca"
+    .controls
+      = f.button :submit, "Cerca", class: "btn-primary"
 
-.well
+    %hr
 
   - total_sorted = @grid.row_totals.sort.reverse
 
