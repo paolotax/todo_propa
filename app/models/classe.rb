@@ -56,5 +56,6 @@ class Classe < ActiveRecord::Base
     end
   end
 
+
   
 end

@@ -62,7 +62,7 @@
 
           - row.data.each_with_index do |data, index|
             
-            %td= data.value.round(1)
+            %td= data.value.round(1) if data.try(:value)
             %td= (data.value / @grid.columns[index].total * 100).round(1) if data.try(:value)
 
           %td= row.total.round(1)

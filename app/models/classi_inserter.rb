@@ -6,7 +6,7 @@ class ClassiInserter
   
   attr_accessor :cliente_id, :classe, :sezioni, :nr_alunni, :libro_ids, :new_titolo, :new_editore
   
-  validates_presence_of :cliente_id, :classe, :sezioni, :nr_alunni
+  validates_presence_of :cliente_id, :classe, :sezioni#, :nr_alunni
   
   validates_format_of :sezioni, :with => /[a-zA-z]/, message: "cazzone carattere non valido"
   
@@ -58,6 +58,7 @@ class ClassiInserter
       # deprecated Rails4
       nuova_classe = Classe.find_or_initialize_by_cliente_id_and_classe_and_sezione( self.cliente_id, self.classe, m.keys[0].upcase)
       nuova_classe.nr_alunni =  m.values[0]
+      nuova_classe.anno      =  Time.now.year
       nuova_classe.save
 
       # nuova_classe = Classe.create(

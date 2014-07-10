@@ -1,6 +1,17 @@
 class Cliente < ActiveRecord::Base
 
 
+  def self.correggi_anno_classi
+
+    Cliente.includes(:classi).scuola_primaria.each do |cliente|
+
+      unless cliente.da_scorrere?
+        cliente.classi.update_all anno: Time.now.year
+      end
+    end
+  end
+
+
   def self.spara
     Cliente.direzioni.per_localita.each do |c|
       puts c.titolo

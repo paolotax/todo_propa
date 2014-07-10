@@ -9,6 +9,7 @@
 
           %li= link_to 'nuovo appunto', new_appunto_path(cliente: c.cliente.id, destinatario: "#{c.classe}#{c.sezione} #{c.insegnanti}"), title: "nuovo appunto"
           %li.divider
+          %li= link_to "clona", aggiungi_sezione_classe_path(c), remote: 'true'
           %li= link_to "elimina", c, method: :delete, remote: true, confirm: "Sei sicuro?"
       .sezione
         %h1.nr_alunni.pull-left
