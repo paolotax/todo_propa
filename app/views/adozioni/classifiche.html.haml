@@ -45,34 +45,39 @@
   - total_sorted = @grid.row_totals.sort.reverse
 
   %table#classifica.table.table-condensed.table-striped
-    %th
-    - for column in @grid.columns do
-      %th= column.header
-      %th %
-    %th totale
-    %th %
-    %th classifica
-
-    - for row in @grid.rows do
+    %thead
       %tr
-        %td= row.header
+        %th
+        - for column in @grid.columns do
+          %th= column.header
+          %th %
+        %th totale
+        %th %
+        %th classifica
 
-        - row.data.each_with_index do |data, index|
-          
-          %td= data.value.round(1)
-          %td= (data.value / @grid.columns[index].total * 100).round(1) if data.try(:value)
+    %tbody
+      - for row in @grid.rows do
+        %tr
+          %td= row.header
 
-        %td= row.total.round(1)
-        %td= (row.total / @grid.grand_total * 100 ).round(1)
-        %td= total_sorted.index(row.total) + 1
+          - row.data.each_with_index do |data, index|
+            
+            %td= data.value.round(1)
+            %td= (data.value / @grid.columns[index].total * 100).round(1) if data.try(:value)
 
-    %tr
-      %td= @grid.rows.size
+          %td= row.total.round(1)
+          %td= (row.total / @grid.grand_total * 100 ).round(1)
+          %td= total_sorted.index(row.total) + 1
 
-      - for column in @grid.columns do
-        %td= column.total.round(1)
+
+    %tfoot
+      %tr
+        %td= @grid.rows.size
+
+        - for column in @grid.columns do
+          %td= column.total.round(1)
+          %td 100%
+
+        %td= @grid.grand_total.round(1)
         %td 100%
-
-      %td= @grid.grand_total.round(1)
-      %td 100%
-      %td
+        %td
