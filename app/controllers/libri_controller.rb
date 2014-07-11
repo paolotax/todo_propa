@@ -12,7 +12,12 @@ class LibriController < ApplicationController
     session[:return_to] = request.path
 
     @search = Libro.filtra(params).ordina(params)
-    @libri = @search.page(params[:page])
+
+    unless params[:adottabile_per_classe].present?
+      @libri = @search.page(params[:page])
+    else
+      @libri = @search
+    end
     
     # @stat_appunti = current_user.appunti.filtra(params.except(:status))
     # @in_corso     = @stat_appunti.in_corso.size

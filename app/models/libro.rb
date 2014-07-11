@@ -44,6 +44,7 @@ class Libro < ActiveRecord::Base
   scope :per_settore, unscoped.order(:settore)
   scope :per_titolo,  unscoped.order(:titolo)
 
+  scope :adottabile_per_classe, lambda { |p| adottabile.where( classe: p) }  
 
   scope :adottabile, where("libri.settore in ('Concorrenza', 'Scolastico')").order("libri.classe, libri.materia_id, libri.settore DESC, libri.titolo")
   
@@ -111,6 +112,10 @@ class Libro < ActiveRecord::Base
   def self.filtra(params)
     libri = scoped
     libri = libri.search(params[:search]) if params[:search].present?
+
+    # per #classi_inserter_libri
+    libri = libri.adottabile_per_classe(params[:adottabile_per_classe]) if params[:adottabile_per_classe].present?
+
     if params[:settore].present?
       libri = libri.try(params[:settore].downcase)
     end

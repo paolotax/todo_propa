@@ -2,7 +2,7 @@
 
 .insert-libri.well
   
-  = simple_form_for @libri_inserter,  remote: true do |f|
+  = simple_form_for @libri_inserter,  remote: false do |f|
 
     = f.error_notification
     = f.error :base, class: "error"
