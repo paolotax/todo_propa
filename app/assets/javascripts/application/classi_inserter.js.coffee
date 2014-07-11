@@ -4,6 +4,8 @@ jQuery ->
 
   # $("#classi_inserter_classe").live 'change', (e) ->
     
+    
+    
   #   $(".row[data-classe]").addClass("hidden")    
   #   $(".collection_checkbox label.checkbox").addClass("hidden")
   #   $("label.checkbox input").attr('checked', false);
@@ -32,6 +34,7 @@ jQuery ->
 
   $(".chzn-adozioni-input").chosen()
   
+
   initialize_libri = ->
       if $('#classi_inserter_libro_ids').length
         lista_libri = new ListLibri()
@@ -47,6 +50,8 @@ class ListLibri
     @classe = $(':selected', @list_classe).text()
     @list_classe.live 'change', @change
 
+    console.log "GINO"
+
   get_libri: () =>
     $.getJSON "/libri.json", { 'adottabile_per_classe': @classe }, @render
 
@@ -61,5 +66,4 @@ class ListLibri
   change: () =>
     @classe = $(':selected', @list_classe).text()
     @get_libri()
-
 
