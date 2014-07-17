@@ -102,6 +102,10 @@ gem 'rack-mini-profiler'
 gem 'ancestry'
 
 gem 'pivot_table'
+gem 'draper'
+
+gem 'morrisjs-rails'
+gem 'raphael-rails'
 
 
 group :development do

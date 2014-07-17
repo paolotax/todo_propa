@@ -14,6 +14,9 @@
  *= require fullcalendar
  *= require bootstrap-modal
 
+ *= require morris
+ 
  *= require_tree ./application
  
+
  */

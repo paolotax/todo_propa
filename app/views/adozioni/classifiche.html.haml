@@ -41,7 +41,6 @@
                 = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].include?( materia.id.to_s)
                 = materia
 
-
   - total_sorted = @grid.row_totals.sort.reverse
 
   %table#classifica.table.table-condensed.table-striped
@@ -81,3 +80,7 @@
         %td= @grid.grand_total.round(1)
         %td 100%
         %td
+
+
+
+  = content_tag :div, "", id: "adozioni_chart", data: {adozioni: current_user.adozioni.chart_data(@new_params), labels: @new_params["value_name"]}

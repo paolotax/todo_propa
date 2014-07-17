@@ -75,10 +75,10 @@ class AdozioniController < ApplicationController
 
   def classifiche
 
-    @new_params = { user_id: current_user.id, "row" => 'gruppo', "value_name" => "sezioni", "materia_ids" => []}    
+    @new_params = {}    
     @new_params.merge!( params.reject { |k,v| v.blank? || v.empty? })
     #raise @new_params.inspect
-    @grid = StatAdozione.aggregate_from_params(@new_params)
+    @grid = StatAdozione.aggregate_from_params(current_user.adozioni, @new_params)
   end
 
 

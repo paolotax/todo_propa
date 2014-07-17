@@ -38,7 +38,7 @@ class LibriInserter
       }
   }
 
-  attr_accessor :titolo, :corso, :editore
+  attr_accessor :titolo, :corso, :editore, :libri_inseriti
   
   validates_presence_of  :titolo, :corso, :editore
    

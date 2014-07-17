@@ -5,5 +5,8 @@
     %b Materia:
     = @materia.materia
 
+  - for libro in @materia.libri.adottabile
+    = render libro
+
   = link_to 'Modifica', edit_materia_path(@materia), class: "btn"
   = link_to 'Indietro', materie_path, class: "btn"

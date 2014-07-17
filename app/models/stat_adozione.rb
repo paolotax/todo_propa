@@ -1,32 +1,32 @@
 class StatAdozione < OpenStruct
 
 
-  def self.aggregate_from_params(params)
+  def self.aggregate_from_params(adozioni, params = {})
 
-    adozioni = Adozione.joins(libro: :editore, classe: :cliente).where("clienti.user_id = ?", params[:user_id])
+    query_params = {
+      'row' => 'gruppo', 
+      'value_name' => 'copie', 
+      'materia_ids' => []
+    }.merge(params)
 
-    unless params["materia_ids"].empty?
-      adozioni = adozioni.where("libri.materia_id IN (?)", params["materia_ids"])
+    adozioni = adozioni.joins(libro: :editore, classe: :cliente)
+
+    unless query_params['materia_ids'].empty?
+      adozioni = adozioni.where("libri.materia_id IN (?)", query_params['materia_ids'])
     end
 
-    if params["row"]
-
-      if params["row"] == "gruppo"
-        select_string = "editori.gruppo as row, clienti.provincia as column"
-        group_string = "editori.gruppo, clienti.provincia"
-
-      elsif params["row"] == "titolo" 
-        select_string = "libri.titolo as row, clienti.provincia as column"
-        group_string = "libri.titolo, clienti.provincia"
-
-      elsif params["row"] == "editore" 
-        select_string = "editori.nome as row, clienti.provincia as column"
-        group_string = "editori.nome, clienti.provincia"
-
-      end
-    else
+    if query_params['row'] == "gruppo"
       select_string = "editori.gruppo as row, clienti.provincia as column"
       group_string = "editori.gruppo, clienti.provincia"
+
+    elsif query_params['row'] == "titolo" 
+      select_string = "libri.titolo as row, clienti.provincia as column"
+      group_string = "libri.titolo, clienti.provincia"
+
+    elsif query_params['row'] == "editore" 
+      select_string = "editori.nome as row, clienti.provincia as column"
+      group_string = "editori.nome, clienti.provincia"
+
     end
 
     adozioni = adozioni.where("classi.anno = '2014'")
@@ -34,10 +34,12 @@ class StatAdozione < OpenStruct
     adozioni = adozioni.select("#{select_string},  count(adozioni.id) as sezioni, sum(classi.nr_alunni) as copie, sum(libri.prezzo_copertina * classi.nr_alunni) as valore, sum(libri.prezzo_copertina * classi.nr_alunni * 0.25) as provvigioni")
     adozioni = adozioni.group("#{group_string}")
 
-    #raise adozioni.all.size.inspect
 
-    grid =  StatAdozione.grouped_grid adozioni.all, params["value_name"]
+    grid =  StatAdozione.grouped_grid adozioni.all, query_params["value_name"]
     
+    #grid.source_data.sort! {|a| a.value}.reverse
+    
+    grid
 
   end
 

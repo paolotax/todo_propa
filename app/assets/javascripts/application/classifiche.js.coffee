@@ -1,22 +1,11 @@
 jQuery ->
   
-
   rows = $('#classifica.table tbody tr').get()
-
-  console.log rows
-
   rows.sort (a, b) ->
-    console.log "sort"
-
     A = Number($("td:last", a).html())
     B = Number($("td:last", b).html())
-
-    console.log A
-    console.log B
-
     if (A < B)
       return -1
-
     if (A > B) 
       return 1
     return 
@@ -25,6 +14,15 @@ jQuery ->
     $('#classifica').children('tbody').append(row)
 
 
+  Morris.Bar
+    element: 'adozioni_chart'
+    data: $('#adozioni_chart').data('adozioni')
+    xkey: "label"
+    ykeys: ["value"]
+    labels: $('#adozioni_chart').data('labels')
+    hideHover: false
+    hoverCallback:  (index, options, content, row) ->
+      return "<div class='morris-hover-row-label'>" + row.label + "</div><div class='morris-hover-point' style='color: #0b62a4'>" + $('#adozioni_chart').data('labels') + ": " + row.value + "</div>"
 
 
 

@@ -16,6 +16,14 @@ class Classe < ActiveRecord::Base
   def to_s
     "#{self.classe} #{self.sezione}"
   end
+
+  def self.mercato
+    classi = scoped
+
+    classi = classi.select("count(classi.id) as totale_classi, sum(classi.nr_alunni) as totale_alunni, avg(classi.nr_alunni) as media_alunni").group(:classe)
+    classi
+
+  end
   
   def libri_adottabili
     libri = Libro.scolastico.where(classe: classe).order(:materia_id)

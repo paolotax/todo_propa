@@ -50,6 +50,8 @@
 
 //= require bootstrap.file-input.js
 
+//= require raphael
+//= require morris
 
 
 //pads left
