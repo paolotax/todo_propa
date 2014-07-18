@@ -27,6 +27,10 @@ class StatAdozione < OpenStruct
       select_string = "editori.nome as row, clienti.provincia as column"
       group_string = "editori.nome, clienti.provincia"
 
+    elsif query_params['row'] == "scuola" 
+      select_string = "clienti.titolo as row, clienti.provincia as column"
+      group_string = "clienti.titolo, clienti.provincia"
+      adozioni = adozioni.where("libri.settore = 'Scolastico'")
     end
 
     adozioni = adozioni.where("classi.anno = '2014'")

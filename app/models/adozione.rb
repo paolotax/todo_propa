@@ -115,6 +115,10 @@ class Adozione < ActiveRecord::Base
         select_string = "editori.nome as row"
         group_string = "editori.nome"
 
+      elsif query_params['row'] == "scuola" 
+        select_string = "clienti.titolo as row"
+        group_string = "clienti.titolo"
+        adozioni = adozioni.where("libri.settore = 'Scolastico'")
       end
     else
       select_string = "editori.gruppo as row"
