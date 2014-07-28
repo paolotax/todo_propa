@@ -1,4 +1,4 @@
-- title "Classifica Adozioni"
+- title "Adozioni per scuola"
 
 .well
   
@@ -6,35 +6,38 @@
   / = @adozioni_decorator.aggregate_by_params(@new_params)
 
 
-  %h2 Classifica Adozioni
+  %h2 Adozioni per scuola
   %hr
 
-  = simple_form_for classifiche_adozioni_path, method: :put, html: { class: "form-horizontal" } do |f|
+  = simple_form_for scuole_adozioni_path, method: :put, html: { class: "form-horizontal" } do |f|
     
     %fieldset.row
  
       .span3
 
-        %label raggruppa per...
+        %label filta province...
 
-        = select_tag 'row', options_for_select(["gruppo", "titolo", "editore", "scuola"], @new_params["row"])
+        - for province in ["RA", "RE"]
+          %label.checkbox
+            = check_box_tag "province[]", province, @new_params["province"].try(:include?, province)
+            = province
 
       .span3
 
 
-        %label calcola...
+        %label filtra direzioni...
         = select_tag 'value_name', options_for_select(["sezioni", "copie", "valore", "provvigioni"], @new_params["value_name"])
 
       .span3
 
 
-        %label colonna...
+        %label altri...
         = select_tag 'column', options_for_select(["provincia", "materia", "titolo"], @new_params[:column])
       
       .span2
         %label &nbsp
         
-        = f.button :submit, "Ricalcola", class: "btn-warning"
+        = f.button :submit, "Filtra", class: "btn-warning"
 
 
     %hr
@@ -48,7 +51,7 @@
           .span2
             - for materia in materie
               %label.checkbox
-                = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].try(:include?, materia.id.to_s)
+                = check_box_tag "materia_ids[]", materia.id, @new_params["materia_ids"].include?( materia.id.to_s)
                 = materia
 
   - total_sorted = @grid.row_totals.sort.reverse

@@ -1,5 +1,6 @@
 class AdozioniController < ApplicationController
 
+  
   def index
 
     @adozioni_per_titolo =  current_user.adozioni.scolastico.includes(:libro, :classe => :cliente).order("libri.materia_id, libri.titolo").filtra(params)
@@ -15,6 +16,7 @@ class AdozioniController < ApplicationController
     end 
   end
 
+  
   def create
     @classe = current_user.classi.find(params[:classe_id])    
     
@@ -32,7 +34,9 @@ class AdozioniController < ApplicationController
     end
   end
 
+  
   def update
+  
     @adozione = current_user.adozioni.find(params[:id])    
     @classe  = @adozione.classe
     @cliente = @classe.cliente
@@ -49,9 +53,11 @@ class AdozioniController < ApplicationController
     end
   end
 
+  
   def update_multiple
+    
     @adozioni = current_user.adozioni.find(params[:adozione_ids]) 
-    @classe = @adozioni[0].classe
+    @classe = @adozioni.first.classe
        
     @adozioni.reject! do |adozione|
       adozione.update_attributes(params[:adozione])
@@ -74,11 +80,26 @@ class AdozioniController < ApplicationController
 
 
   def classifiche
-
-    @new_params = { 'materia_ids' => []}    
+    @new_params = ActiveSupport::HashWithIndifferentAccess.new column: 'provincia'
     @new_params.merge!( params.reject { |k,v| v.blank? || v.empty? })
-    #raise @new_params.inspect
-    @grid = StatAdozione.aggregate_from_params(current_user.adozioni, @new_params)
+    
+    @adozioni_presenter = AdozioniPresenter.new current_user.adozioni.filtra(@new_params), @new_params
+    @grid =  @adozioni_presenter.grid  
+
+  end
+
+
+  def scuole
+
+    
+
+    @new_params = ActiveSupport::HashWithIndifferentAccess.new 
+
+    @new_params.merge!( params.reject { |k,v| v.blank? || v.empty? })
+    
+    @adozioni_presenter = AdozioniPresenter.new current_user.adozioni.filtra(@new_params), @new_params
+    @grid =  @adozioni_presenter.grid  
+
   end
 
 
@@ -104,6 +125,7 @@ class AdozioniController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   def print_multiple
     @adozioni = current_user.adozioni.joins(:classe).find(params[:adozione_ids], order: "classi.cliente_id, classi.classe, adozioni.libro_id, classi.sezione")    

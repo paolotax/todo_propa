@@ -31,6 +31,7 @@ class Libro < ActiveRecord::Base
   belongs_to :materia
 
   delegate :nome, :gruppo, to: :editore
+  delegate :materia, to: :materia
 
   #default_scope order("libri.id")  
   scope :per_classe_e_materia, lambda {

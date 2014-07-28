@@ -48,11 +48,17 @@
                   = form_tag classifiche_adozioni_path, method: "put", html: { class: "form-inline" }, remote: false do
                     = hidden_field_tag "materia_ids[]", 50001
                     = hidden_field_tag "materia_ids[]", 50004
-                    = hidden_field_tag "materia_ids[]", 50204
-                    
+                    = hidden_field_tag "materia_ids[]", 50204                    
                     = hidden_field_tag "row", "gruppo"
                     = hidden_field_tag "value_name", "copie"
                     = submit_tag "Classifica", class: "btn btn-link"
+                %li.divider
+                %li
+                  = form_tag scuole_adozioni_path, method: "put", html: { class: "form-inline" }, remote: false do       
+                    = hidden_field_tag "materia_ids[]", 50001             
+                    = hidden_field_tag "row", "gruppo"
+                    = hidden_field_tag "value_name", "copie"
+                    = submit_tag "Scuole", class: "btn btn-link"
 
 
         - if user_signed_in?

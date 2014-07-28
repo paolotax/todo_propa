@@ -57,6 +57,7 @@ TodoPropa::Application.routes.draw do
       put  'update_multiple'
       post 'destroy_all'
       put  'classifiche'
+      put  'scuole'
     end
     collection do
       put 'print_multiple', format: :pdf
