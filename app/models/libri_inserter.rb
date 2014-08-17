@@ -42,7 +42,6 @@ class LibriInserter
   
   validates_presence_of  :titolo, :corso, :editore
    
-  
   def initialize(attributes = {})
     attributes.each do |name, value|
       send("#{name}=", value)

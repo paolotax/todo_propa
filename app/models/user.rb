@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :appunti,  :through => :clienti
   has_many :righe,    :through => :appunti
   has_many :classi,   :through => :clienti
+  has_many :propa2014s,   :through => :clienti
   
   has_many :visite,   :through => :clienti
 

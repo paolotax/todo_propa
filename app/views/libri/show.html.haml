@@ -26,7 +26,7 @@
             %dd= @libro.editore       
           - if @libro.scolastico? || @libro.fascicoli? || @libro.concorrenza?
             %dt materia
-            %dd= @libro.materia  
+            %dd= @libro.materia_libro
             %dt classe
             %dd= @libro.classe
             - unless @libro.seguito.nil?

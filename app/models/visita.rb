@@ -14,14 +14,11 @@ class Visita < ActiveRecord::Base
                        :conditions => ['appunti.stato <> ?', 'X']
   
   has_many :visita_appunti, dependent: :destroy
+  
   has_many :appunti, :through => :visita_appunti
   
   has_many :adozioni, :through => :cliente
   
-  scope :nel_baule,     where(baule: true)
-  scope :non_nel_baule, where(baule: false)
-  
-  scope :settembre, where("visite.start > ?", Date.new(Time.now.year, 4, 15))
   
   after_create :add_appunti
   
@@ -33,6 +30,12 @@ class Visita < ActiveRecord::Base
   
   validate    :check_data
   before_save :save_data
+
+
+  scope :nel_baule,     where(baule: true)
+  scope :non_nel_baule, where(baule: false)
+  
+  scope :settembre, where("visite.start > ?", Date.new(Time.now.year, 4, 15))
 
 
   # after_create  :flush_cache
@@ -50,23 +53,28 @@ class Visita < ActiveRecord::Base
     end
   end
   
+
   def data
     @data || start.try(:strftime, "%d-%m-%Y")
   end
 
+  
   def to_s
     "#{start.strftime('%d-%m-%y')} #{titolo}"
   end
+  
   
   def nel_baule?
     self.baule == true
   end
 
+  
   def self.filtra(params)
     visite = scoped
     visite = visite.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
     visite
   end
+
 
   # def mie_adozioni_grouped_titolo
   #   self.cliente.mie_adozioni.group_by(&:libro_id) || []
@@ -75,18 +83,21 @@ class Visita < ActiveRecord::Base
 
   private
   
+ 
     def add_appunti
       self.da_fare.each do |appunto|
         self.appunti << appunto
       end
     end  
 
+ 
     def save_data
       if @data && @step
         self.start = Time.zone.parse(@data).beginning_of_day + 8.hours + 30.minutes + (30.minutes * @step.to_i)
         self.end   = self.start + 30.minutes
       end
     end
+
 
     def check_data
       if @data.present? && Date.parse(@data).nil?

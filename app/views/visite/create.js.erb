@@ -7,18 +7,22 @@ if ($('.riepilogo-baule').length > 0) {
   $('.riepilogo-baule').replaceWith("<%= escape_javascript( render 'baule/riepilogo_baule' ) %>");
 };
 
-if ($('.appunto').length > 0) {
-  <%- @visita.appunti.each do |a|  %>
-    appunto = $("#<%= dom_id(a) %>")
+
+<%- @visita.appunti.each do |a|  %>
+
+  appunto = $("#<%= dom_id(a) %>")
+  if ($('.appunto').length > 0) {  
     appunto.toggleClass('favorited');
     $('.baule_btn', appunto).replaceWith("<%= escape_javascript( baule_tag @visita.cliente ) %>");
-  <% end %>  
-};
+  }
+  
+<% end %>  
 
-if ($('.cliente').length > 0) {
-  cliente = $(".<%= dom_id(@visita.cliente) %>")
-  cliente.toggleClass('favorited');
-  $('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @visita.cliente ) %>");
-};
 
+clienti = $(".<%= dom_id(@visita.cliente) %>")
+if (clienti.length > 0) {
+  clienti.toggleClass('favorited');
+  $('.baule_btn', clienti).replaceWith("<%= escape_javascript( baule_tag @visita.cliente ) %>");
+}
+  
 $(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");

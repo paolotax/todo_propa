@@ -1,5 +1,6 @@
 jQuery ->
   isScrolledIntoView = (elem) ->
+    
     docViewTop = $(window).scrollTop()
     docViewBottom = docViewTop + $(window).height()
     elemTop = $(elem).offset().top
@@ -7,9 +8,11 @@ jQuery ->
     (elemTop >= docViewTop) && (elemTop <= docViewBottom)
   
   if $('.pagination').length
+    
     $(window).scroll ->
       url = $('.pagination .next a').attr('href')
       if url && isScrolledIntoView('.pagination')
         $('.pagination').text("Caricamento dati...")
         $.getScript(url)
+
     $(window).scroll()

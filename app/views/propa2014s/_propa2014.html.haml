@@ -21,3 +21,5 @@
     %td
       = link_to params.except(:status, :provincia).merge(data: propa2014.data_ritiro) do
         = l propa2014.data_ritiro, format: :short_with_day 
+
+  %td= render 'clienti/cliente_adozioni', cliente: propa2014.cliente
