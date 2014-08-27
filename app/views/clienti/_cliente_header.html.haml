@@ -78,12 +78,12 @@
       = next_tag cliente_url(Cliente.next(cliente, 'id').first)
 
     %ul.inline.pull-left{ style: "margin-top: 5px;"}
-      - for v in cliente.visite.order("start desc") do
-        - if v.giorno
+      - for v in cliente.visite.order("data desc") do
+        - if v.data
           %li{ style: "margin-right: 5px"}
-            = link_to giro_path(giorno: v.giorno) do
-              %span.label.label-important
-                = l v.giorno, format: :long
+            = link_to giro_path(giorno: v.data) do
+              %span.label.label-info
+                = l v.data, format: :long
 
     - unless cliente.eliminato?
       .pull-right

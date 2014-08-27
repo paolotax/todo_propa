@@ -107,6 +107,8 @@ gem 'draper'
 gem 'morrisjs-rails'
 gem 'raphael-rails'
 
+gem 'strong_parameters'
+
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'

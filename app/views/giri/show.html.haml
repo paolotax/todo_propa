@@ -26,9 +26,12 @@
           = previous_tag  giro_url(giorno: @giro.ieri)
           = next_tag      giro_url(giorno: @giro.domani)
       %h2
-        = "Giro di #{l @giro.giorno.to_date, format: :long_with_day}"
-        %small= @giro.titoli
+        = l @giro.giorno.to_date, format: :long_with_day
+        %small= @giro.scopo
+      %p
+        = @giro.localita
 
+        
   .row.baule-page
     .span6
       = render :partial => 'giri/list_giro'

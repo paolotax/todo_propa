@@ -6,7 +6,7 @@ class GiriController < ApplicationController
     
     @visite         = current_user.visite.settembre.includes(:cliente => :visite).where(baule: false).filtra(params)
     
-    @visite_grouped = @visite.order("start desc").group_by {|v| "#{v.to_s}" }
+    @visite_grouped = @visite.order("start desc").group_by(&:data)
     
     @nel_baule      = current_user.clienti.nel_baule.filtra(params.except([:controller, :action]))
     
@@ -45,18 +45,17 @@ class GiriController < ApplicationController
                                   .order("clienti.id")
 
 
-    logger.debug { "diff Count: #{@scuole_fatte.count}" }
   end  
   
 
   def show
-    @giro = Giro.new(user_id: current_user.id, giorno: Chronic::parse(params[:giorno])) 
+    @giro = Giro.new(user: current_user, giorno: Date.parse(params[:giorno])) 
   end
 
 
   def print_multiple
 
-    @giro = Giro.new(user_id: current_user.id, giorno: Chronic::parse(params[:giorno]))
+    @giro = Giro.new(user: current_user, giorno: Date.parse(params[:giorno]))
     
     respond_to do |format|
       format.pdf do

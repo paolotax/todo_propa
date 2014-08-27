@@ -154,6 +154,8 @@ TodoPropa::Application.routes.draw do
   
   resources :libri_inserters, only: :create
 
+  resources :propaganders, only: :show
+
   resources :righe
   
   

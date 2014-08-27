@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413152125) do
+ActiveRecord::Schema.define(:version => 20140709212016) do
 
   create_table "adozioni", :force => true do |t|
     t.integer  "classe_id"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.string   "anno"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+    t.string   "kit_1"
+    t.string   "kit_2"
   end
 
   add_index "adozioni", ["classe_id"], :name => "index_adozioni_on_classe_id"
@@ -31,24 +33,38 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
   create_table "appunti", :force => true do |t|
     t.string   "destinatario"
     t.text     "note"
-    t.string   "stato",          :default => "",  :null => false
+    t.string   "stato",                         :default => "",  :null => false
     t.date     "scadenza"
     t.integer  "cliente_id"
     t.integer  "user_id"
     t.integer  "position"
     t.string   "telefono"
     t.string   "email"
-    t.integer  "totale_copie",   :default => 0
-    t.float    "totale_importo", :default => 0.0
+    t.integer  "totale_copie",                  :default => 0
+    t.float    "totale_importo",                :default => 0.0
     t.float    "latitude"
     t.float    "longitude"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.string   "uuid",           :limit => nil
+    t.datetime "deleted_at"
+    t.datetime "completed_at"
+    t.string   "nota"
+    t.integer  "score"
   end
 
   add_index "appunti", ["cliente_id"], :name => "index_appunti_on_cliente_id"
   add_index "appunti", ["stato"], :name => "index_appunti_on_stato"
   add_index "appunti", ["user_id"], :name => "index_appunti_on_user_id"
+
+  create_table "appunto_events", :force => true do |t|
+    t.integer  "appunto_id"
+    t.string   "state"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "appunto_events", ["appunto_id"], :name => "index_appunto_events_on_appunto_id"
 
   create_table "classi", :force => true do |t|
     t.integer  "classe"
@@ -59,6 +75,13 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.string   "sper_id"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+    t.string   "insegnanti"
+    t.text     "note"
+    t.string   "libro_1"
+    t.string   "libro_2"
+    t.string   "libro_3"
+    t.string   "libro_4"
+    t.string   "anno"
   end
 
   add_index "classi", ["cliente_id", "classe", "sezione"], :name => "index_classi_on_scuola_id_and_classe_and_sezione", :unique => true
@@ -88,13 +111,17 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.float    "longitude"
     t.float    "latitude"
     t.integer  "user_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "ancestry"
     t.string   "slug"
+    t.hstore   "properties"
+    t.string   "uuid",            :limit => nil
+    t.datetime "deleted_at"
   end
 
   add_index "clienti", ["cliente_tipo"], :name => "index_clienti_on_cliente_tipo"
+  add_index "clienti", ["properties"], :name => "clienti_properties"
   add_index "clienti", ["user_id"], :name => "index_clienti_on_user_id"
 
   create_table "comuni", :force => true do |t|
@@ -107,6 +134,14 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.string   "codfisco"
     t.integer  "abitanti"
     t.string   "link"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "editori", :force => true do |t|
+    t.string   "nome"
+    t.string   "gruppo"
+    t.string   "codice"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -126,6 +161,7 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.datetime "created_at",                                                          :null => false
     t.datetime "updated_at",                                                          :null => false
     t.string   "slug"
+    t.string   "status"
   end
 
   add_index "fatture", ["causale_id"], :name => "index_fatture_on_causale_id"
@@ -175,22 +211,111 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
     t.string   "slug"
+    t.string   "iva"
+    t.integer  "classe"
+    t.integer  "editore_id"
+    t.integer  "next_id"
   end
 
+  add_index "libri", ["editore_id"], :name => "index_libri_on_editore_id"
   add_index "libri", ["materia_id"], :name => "index_libri_on_materia_id"
   add_index "libri", ["settore"], :name => "index_libri_on_settore"
   add_index "libri", ["slug"], :name => "index_libri_on_slug"
   add_index "libri", ["titolo"], :name => "index_libri_on_titolo"
 
-  create_table "materie", :force => true do |t|
-    t.string "materia"
+  create_table "libro_connections", :id => false, :force => true do |t|
+    t.integer "libro_parent_id", :null => false
+    t.integer "libro_child_id",  :null => false
   end
+
+  add_index "libro_connections", ["libro_child_id"], :name => "index_libro_connections_on_libro_child_id"
+  add_index "libro_connections", ["libro_parent_id"], :name => "index_libro_connections_on_libro_parent_id"
+
+  create_table "materie", :force => true do |t|
+    t.string  "materia"
+    t.string  "gruppo"
+    t.integer "ordine"
+    t.decimal "prezzo_copertina",   :precision => 8, :scale => 2
+    t.decimal "prezzo_consigliato", :precision => 8, :scale => 2
+  end
+
+  create_table "oauth_access_grants", :force => true do |t|
+    t.integer  "resource_owner_id", :null => false
+    t.integer  "application_id",    :null => false
+    t.string   "token",             :null => false
+    t.integer  "expires_in",        :null => false
+    t.string   "redirect_uri",      :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "revoked_at"
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_grants", ["token"], :name => "index_oauth_access_grants_on_token", :unique => true
+
+  create_table "oauth_access_tokens", :force => true do |t|
+    t.integer  "resource_owner_id"
+    t.integer  "application_id",    :null => false
+    t.string   "token",             :null => false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at",        :null => false
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_tokens", ["refresh_token"], :name => "index_oauth_access_tokens_on_refresh_token", :unique => true
+  add_index "oauth_access_tokens", ["resource_owner_id"], :name => "index_oauth_access_tokens_on_resource_owner_id"
+  add_index "oauth_access_tokens", ["token"], :name => "index_oauth_access_tokens_on_token", :unique => true
+
+  create_table "oauth_applications", :force => true do |t|
+    t.string   "name",         :null => false
+    t.string   "uid",          :null => false
+    t.string   "secret",       :null => false
+    t.string   "redirect_uri", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
+
+  create_table "propa2014s", :force => true do |t|
+    t.integer  "cliente_id"
+    t.date     "data_visita"
+    t.date     "data_ritiro"
+    t.date     "data_interclasse"
+    t.date     "data_collegio"
+    t.string   "kit_123"
+    t.integer  "nr_123"
+    t.string   "kit_45"
+    t.integer  "nr_45"
+    t.string   "kit_123_ing"
+    t.integer  "nr_45_ing"
+    t.string   "kit_123_rel"
+    t.integer  "nr_123_rel"
+    t.string   "kit_45_rel"
+    t.integer  "nr_45_rel"
+    t.string   "vac_1"
+    t.string   "vac_2"
+    t.string   "vac_3"
+    t.string   "vac_4"
+    t.string   "vac_5"
+    t.integer  "nr_vac_1"
+    t.integer  "nr_vac_2"
+    t.integer  "nr_vac_3"
+    t.integer  "nr_vac_4"
+    t.integer  "nr_vac_5"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.date     "data_vacanze"
+  end
+
+  add_index "propa2014s", ["cliente_id"], :name => "index_propa2014s_on_cliente_id"
 
   create_table "righe", :force => true do |t|
     t.integer  "libro_id"
     t.integer  "quantita"
-    t.decimal  "prezzo_unitario", :precision => 9, :scale => 3
-    t.decimal  "sconto",          :precision => 5, :scale => 2, :default => 0.0
+    t.decimal  "prezzo_unitario",                :precision => 9, :scale => 3
+    t.decimal  "sconto",                         :precision => 5, :scale => 2, :default => 0.0
     t.boolean  "consegnato"
     t.boolean  "pagato"
     t.integer  "appunto_id"
@@ -198,8 +323,9 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.integer  "magazzino_id"
     t.integer  "causale_id"
     t.integer  "movimento"
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
+    t.datetime "created_at",                                                                    :null => false
+    t.datetime "updated_at",                                                                    :null => false
+    t.string   "uuid",            :limit => nil
   end
 
   add_index "righe", ["appunto_id"], :name => "index_righe_on_appunto_id"
@@ -223,6 +349,23 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.datetime "updated_at"
   end
 
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", :force => true do |t|
+    t.string "name"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
@@ -243,9 +386,11 @@ ActiveRecord::Schema.define(:version => 20120413152125) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
+    t.hstore   "properties"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["properties"], :name => "users_properties"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 

@@ -4,32 +4,16 @@ class Propa2014sController < ApplicationController
 
   def index
 
-    @vacanze_dates = [
-      Date.new(2014, 4, 23),
-      Date.new(2014, 4, 24),
-      Date.new(2014, 4, 26),
-      Date.new(2014, 4, 28),
-      Date.new(2014, 4, 29),
-      Date.new(2014, 4, 30),
-      Date.new(2014, 5, 2),
-      Date.new(2014, 5, 3),
-      Date.new(2014, 5, 5),
-      Date.new(2014, 5, 6),
-      Date.new(2014, 5, 7),
-      Date.new(2014, 5, 8),
-      Date.new(2014, 5, 9),
-      Date.new(2014, 5, 10)
-    ]  
-
     @clienti = current_user.clienti.not_deleted.joins(:propa2014).per_localita
-    @tutti = @clienti.all
+    
+    #@tutti = @clienti.all
 
     if params[:provincia]
       @clienti = @clienti.where(provincia: params[:provincia])
     end
 
     if params[:data].present?
-      @clienti = @clienti.where("propa2014s.data_visita = ? OR propa2014s.data_vacanze = ? OR propa2014s.data_ritiro = ?", Chronic::parse(params[:data]), Chronic::parse(params[:data]), Chronic::parse(params[:data]))
+      @clienti = @clienti.where("propa2014s.data_visita = ? OR propa2014s.data_vacanze = ? OR propa2014s.data_ritiro = ?", Date.parse(params[:data]), Date.parse(params[:data]), Date.parse(params[:data]))
     else
       if params[:status].present?
         if params[:status] == "da_fare"
@@ -46,8 +30,15 @@ class Propa2014sController < ApplicationController
 
     @count_elementari = @clienti.select { |c| c.scuola_primaria? == true}.count
     @provincie = current_user.clienti.not_deleted.direzioni.select_provincia.map(&:provincia)
-    #@clienti = current_user.clienti.where(:ancestry => Cliente.roots.pluck(:id)).per_localita
+    
+    @visite         = current_user.visite.includes(:cliente => :visite).where(baule: false).filtra(params)
+    
+    @visite_grouped = @visite.order("data desc").group_by(&:data)
+
+
+    @date = params[:calendar] ? Date.parse(params[:calendar]) : Date.today
   
+    
   end
 
 

@@ -2,25 +2,17 @@ class VisiteController < ApplicationController
   
   
   def index
+
     @visite = current_user.visite.settembre.includes(:cliente => :visite).where(baule: false).filtra(params)
     
     @visite_grouped = @visite.order("start desc").group_by {|v| "#{v.to_s}" }
+    
     @nel_baule      = current_user.clienti.nel_baule.filtra(params.except([:controller, :action]))
     @scuole_fatte   = current_user.clienti.primarie.con_visite(Visita.settembre).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
     @scuole_da_fare = current_user.clienti.primarie.senza_visite(Visita.settembre).con_adozioni(Adozione.joins(:classe).scolastico).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
     
     @altri_clienti = current_user.clienti.con_appunti(Appunto.in_corso).senza_adozioni(Adozione.joins(:classe).scolastico).includes(:appunti, :visite).filtra(params.except([:controller, :action])).order("clienti.id")
-    
-    logger.debug { "params: #{current_user.clienti.primarie.filtra(params).order("clienti.id").to_sql}" }
-    logger.debug { "tutte Count: #{@scuole_fatte.count}" }
-    
-    # elimina le fatte 
-    # @visite.each do |v|
-    #   @scuole.delete(v.cliente)
-    # end
-    
-    logger.debug { "diff Count: #{@scuole_fatte.count}" }
-    
+        
     respond_to do |format|
       format.html
       format.json { render :rabl => @visite }
@@ -30,6 +22,7 @@ class VisiteController < ApplicationController
   
   
   def create
+    
     @visita = current_user.visite.build(params[:visita])
 
     respond_to do |format|
@@ -43,6 +36,7 @@ class VisiteController < ApplicationController
       end
     end
   end
+
   
   def update
     
@@ -58,13 +52,14 @@ class VisiteController < ApplicationController
       end
     end
   end
+
   
   def destroy
     
     @visita = current_user.visite.find(params[:id])
     @cliente = @visita.cliente
     @appunti = @cliente.appunti.in_corso
-    @giro  = Giro.new(user_id: current_user, giorno: @visita.giorno, baule: @visita.baule)
+    @giro  = Giro.new(user: current_user, giorno: @visita.data, baule: @visita.baule)
     
     @visita.destroy
     respond_to do |format|
@@ -73,12 +68,13 @@ class VisiteController < ApplicationController
     end
   end
 
+
   def update_all
   end
   
   
   def destroy_all
-    @visite = Visita.destroy(params[:visite][:visita_ids])
+    @visite = current_user.visite.destroy(params[:visite][:visita_ids])
 
     respond_to do |format|
       format.html { redirect_to :back }
@@ -87,18 +83,14 @@ class VisiteController < ApplicationController
     end
   end
 
+
   def sort
+
     params[:visita].each_with_index do |id, index|
       current_user.visite.nel_baule.update_all({start: DateTime.now.beginning_of_day + (index+1).hour}, {id: id})
     end
     render nothing: true
   end
 
-  private
-
-    def calculate_date(numero)
-      date = Date.new(hour: numero + 1)
-
-    end
 
 end

@@ -1375,7 +1375,8 @@ CREATE TABLE visite (
     scopo character varying(255),
     giro_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    data date
 );
 
 
@@ -2193,3 +2194,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140623185944');
 INSERT INTO schema_migrations (version) VALUES ('20140703140326');
 
 INSERT INTO schema_migrations (version) VALUES ('20140709212016');
+
+INSERT INTO schema_migrations (version) VALUES ('20140820072940');

@@ -9,7 +9,7 @@ class AdozioniController < ApplicationController
     
     @provincie = current_user.adozioni.scolastico.joins(:classe => :cliente).per_scuola.pluck("clienti.provincia").uniq
     
-    @giro = Giro.new(user_id: current_user.id, baule: true) 
+    @giro = Giro.new(user: current_user, baule: true) 
 
     if params[:titolo]
       @libro = Libro.find_by_titolo(params[:titolo])

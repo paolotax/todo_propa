@@ -9,7 +9,7 @@ class AppuntiController < ApplicationController
   def index
     session[:return_to] = request.path
 
-    @search = current_user.appunti.not_deleted.includes(:cliente, :user, :righe => :libro, :visite => :visita_appunti).filtra(params).ordina(params)
+    @search = current_user.appunti.not_deleted.includes(:cliente, :user, :visite, :righe => :libro).filtra(params).ordina(params)
 
     if params[:tag]
       @search = @search.tagged_with(params[:tag])

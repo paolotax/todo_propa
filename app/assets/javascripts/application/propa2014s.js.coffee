@@ -15,18 +15,19 @@ jQuery ->
       scroll = $(@).scrollTop()
       height = $('.floating-toolbar').height() + 'px'
 
-      if (scroll < $('.floating-side').offset().top - 50)
+      if (scroll < $('.floating-side').offset().top)
 
         $('.floating-toolbar').css
           'position': 'absolute',
           'top': '0',
           'width': width + 'px'
       
-      else if (scroll > length - 50)
+      else if (scroll > length)
 
         $('.floating-toolbar').css
           'position': 'absolute',
           'top': 'auto',
+          'bottom': '0',
           'width': width + 'px'
 
       else

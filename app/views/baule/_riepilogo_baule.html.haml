@@ -1,19 +1,20 @@
+- baule = Giro.new(baule: true, user: current_user)
+
 .riepilogo-baule
   %ul.stats.pull-left
     %li
-      - nel_baule = current_user.clienti.nel_baule
       = link_to "" do
-        %strong= nel_baule.size
+        %strong= baule.visite.size
         Tappe
     %li
-      - righe = current_user.righe.da_consegnare.joins(:libro, :appunto => :visite).where('visite.baule = true')
       = link_to "" do
-        %strong= righe.size
+        %strong= baule.copie_da_consegnare
         libri
     %li
-      - adozioni = current_user.mie_adozioni.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", nel_baule.map(&:id)).order("libri.titolo")
       = link_to "" do
-        %strong= adozioni.size
+        %strong= baule.adozioni.size
         adozioni
+    %li
+      = baule.localita
 
     

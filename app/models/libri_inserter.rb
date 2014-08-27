@@ -9,7 +9,7 @@ class LibriInserter
     "SUSSIDIARIO 123" => {
         classi: [1, 2, 3],
         subtitle: [1, 2, 3],
-        materie: [50001, 50202, 50203],
+        materie: [50001, 50002, 50003],
         copertina: [10.15, 14.30, 20.50]
       },
     "SUSSIDIARIO 45" => {

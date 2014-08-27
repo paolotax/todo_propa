@@ -1,3 +1,5 @@
+$(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");
+
 if ($('.map-baule').length > 0) {
   var clienti = <%= raw current_user.clienti.nel_baule.to_gmaps4rails %>
   Gmaps.map.replaceMarkers(clienti)
@@ -25,4 +27,4 @@ if (clienti.length > 0) {
   $('.baule_btn', clienti).replaceWith("<%= escape_javascript( baule_tag @visita.cliente ) %>");
 }
   
-$(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");
+

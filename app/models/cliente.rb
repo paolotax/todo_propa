@@ -177,7 +177,10 @@ class Cliente < ActiveRecord::Base
   def to_s
     "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end
-  
+
+  def nel_baule?
+    !self.visite.select{ |v| v.nel_baule? == true}.empty?
+  end 
   
   def nel_baule
     nel_baule = nil
@@ -233,10 +236,25 @@ class Cliente < ActiveRecord::Base
   end
 
   
+  def giro_fatto?
+    scuola_primaria? && !visite.select{|v| v.scopo && v.scopo.include?("serie")}.empty? && !visite.select{|v| v.scopo && v.scopo.include?("ritiro")}.empty?
+  end
+
+
+  def da_ritirare?
+    scuola_primaria? && !visite.select{|v| v.scopo && v.scopo.include?("serie")}.empty? && visite.select{|v| v.scopo && v.scopo.include?("ritiro")}.empty?
+  end
+
+
+  def visite_scopo
+    visite.all.select {|a| a.data != nil}.sort_by(&:data).map {|a| a.scopo.try(:split, ", ")}.reject {|a| a.nil?}.flatten.join(", ") 
+  end
+
+  
   def fatto?
     unless nel_baule
       self.visite.each do |v|
-        if v.start > Date.new(2013, 4, 15)
+        if v.data > Date.new(2013, 4, 15)
           return true
         end
       end

@@ -1,5 +1,5 @@
 = form_tag 'baule/update', method: :put, id: "baule_update" do
-  = text_field_tag 'visita[titolo]', nil, placeholder: "season XX episode XX"
+  = text_field_tag 'visita[scopo]', nil, placeholder: "scopo"
   = text_field_tag 'visita[data]', Time.now.strftime("%d-%m-%Y")
   = hidden_field_tag 'visita[baule]', 'f'
   %br

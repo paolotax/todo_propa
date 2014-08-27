@@ -20,6 +20,18 @@ class Materia < ActiveRecord::Base
 
   end
 
+  def self.cambia_materie_sussi
 
+    # da usare solo una volta
+
+    m_2 = Materia.create materia: "SUSSIDIARIO 2", ordine: 2, gruppo: "25"
+    Materia.where(id: m_2.id).update_all(id: 50002)
+    Libro.where(materia_id: 50202).update_all(materia_id: 50002)
+
+    m_3 = Materia.create materia: "SUSSIDIARIO 3", ordine: 3, gruppo: "3"
+    Materia.where(id: m_3.id).update_all(id: 50003)
+    Libro.where(materia_id: 50203).update_all(materia_id: 50003)
+
+  end
 
 end

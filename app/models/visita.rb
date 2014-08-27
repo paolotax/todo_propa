@@ -3,7 +3,10 @@ class Visita < ActiveRecord::Base
   WillFilter::Calendar::MONTHS = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'] 
   WillFilter::Calendar::DAYS = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab']
   
-  
+  # include ActiveModel::ForbiddenAttributesProtection
+
+
+
   belongs_to :cliente, touch: true
   
   belongs_to :user
@@ -13,35 +16,36 @@ class Visita < ActiveRecord::Base
                        :source => :appunti, 
                        :conditions => ['appunti.stato <> ?', 'X']
   
-  has_many :visita_appunti, dependent: :destroy
+  #has_many :visita_appunti, dependent: :destroy
   
   has_many :appunti, :through => :visita_appunti
   
   has_many :adozioni, :through => :cliente
   
   
-  after_create :add_appunti
+  #after_create :add_appunti
+    
+  attr_writer :step
   
-  scope :next, where("visite.end > ?", Time.now).limit(1)  
+  validates :cliente_id, :uniqueness => { :scope => :data, :message => "gia' nel giro" }
+
+  #validate    :check_data
   
-  attr_writer :data, :step
-  
-  validates :cliente_id, :uniqueness => { :scope => :start, :message => "gia' nel giro" }
-  
-  validate    :check_data
   before_save :save_data
+
+  after_commit :flush_cache
 
 
   scope :nel_baule,     where(baule: true)
   scope :non_nel_baule, where(baule: false)
   
-  scope :settembre, where("visite.start > ?", Date.new(Time.now.year, 4, 15))
 
-
-  # after_create  :flush_cache
-  # after_destroy :flush_cache
+  scope :settembre, where("visite.data > ?", Date.new(Time.now.year, 4, 15))
   
-  after_commit :flush_cache
+
+  scope :next, where("visite.end > ?", Time.now).limit(1)  
+
+  
 
   def flush_cache
     Rails.cache.delete([ cliente.user, "baule_count"])
@@ -52,12 +56,6 @@ class Visita < ActiveRecord::Base
       start.to_date
     end
   end
-  
-
-  def data
-    @data || start.try(:strftime, "%d-%m-%Y")
-  end
-
   
   def to_s
     "#{start.strftime('%d-%m-%y')} #{titolo}"
@@ -75,6 +73,10 @@ class Visita < ActiveRecord::Base
     visite
   end
 
+  
+  def add_scopo(scopo)
+    self.scopo = self.scopo.split(", ").push(scopo).uniq.sort.join(", ")
+  end
 
   # def mie_adozioni_grouped_titolo
   #   self.cliente.mie_adozioni.group_by(&:libro_id) || []
@@ -84,28 +86,28 @@ class Visita < ActiveRecord::Base
   private
   
  
-    def add_appunti
-      self.da_fare.each do |appunto|
-        self.appunti << appunto
-      end
-    end  
+    # def add_appunti
+    #   self.da_fare.each do |appunto|
+    #     self.appunti << appunto
+    #   end
+    # end  
 
  
     def save_data
-      if @data && @step
-        self.start = Time.zone.parse(@data).beginning_of_day + 8.hours + 30.minutes + (30.minutes * @step.to_i)
-        self.end   = self.start + 30.minutes
+      if @step
+        self.start = data.beginning_of_day + 8.hours + 30.minutes + (30.minutes * @step.to_i)
+        self.end   = start + 30.minutes
       end
     end
 
 
-    def check_data
-      if @data.present? && Date.parse(@data).nil?
-        errors.add :data, "cannot be parsed"
-      end
-    rescue ArgumentError
-      errors.add :data, "data non valida"
-    end
+    # def check_data
+    #   if @data.present? && Date.parse(@data).nil?
+    #     errors.add :data, "cannot be parsed"
+    #   end
+    # rescue ArgumentError
+    #   errors.add :data, "data non valida"
+    # end
 
 end
 

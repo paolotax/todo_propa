@@ -1,25 +1,27 @@
 %tr
   %td{ class: "#{dom_id(propa2014.cliente)} cliente"}= baule_tag propa2014.cliente
   %td= link_to propa2014.cliente.titolo, propa2014.cliente
-  - if propa2014.data_visita.nil?
-    %td
-  - else  
-    %td
-      = link_to params.except(:status, :provincia).merge(data: propa2014.data_visita) do
-        = l propa2014.data_visita, format: :short_with_day             
 
-  - if propa2014.data_vacanze.nil?
-    %td
-  - else  
-    %td
-      = link_to params.except(:status, :provincia).merge(data: propa2014.data_vacanze) do
-        = l propa2014.data_vacanze, format: :short_with_day 
+  %td= propa2014.cliente.visite_scopo
+  / - if propa2014.data_visita.nil?
+  /   %td
+  / - else  
+  /   %td
+  /     = link_to params.except(:status, :provincia).merge(data: propa2014.data_visita) do
+  /       = l propa2014.data_visita, format: :short_with_day             
+
+  / - if propa2014.data_vacanze.nil?
+  /   %td
+  / - else  
+  /   %td
+  /     = link_to params.except(:status, :provincia).merge(data: propa2014.data_vacanze) do
+  /       = l propa2014.data_vacanze, format: :short_with_day 
           
-  - if propa2014.data_ritiro.nil?
-    %td
-  - else  
-    %td
-      = link_to params.except(:status, :provincia).merge(data: propa2014.data_ritiro) do
-        = l propa2014.data_ritiro, format: :short_with_day 
+  / - if propa2014.data_ritiro.nil?
+  /   %td
+  / - else  
+  /   %td
+  /     = link_to params.except(:status, :provincia).merge(data: propa2014.data_ritiro) do
+  /       = l propa2014.data_ritiro, format: :short_with_day 
 
   %td= render 'clienti/cliente_adozioni', cliente: propa2014.cliente

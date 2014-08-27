@@ -15,8 +15,8 @@ class Appunto < ActiveRecord::Base
   has_many :righe, :dependent => :destroy
   has_many :fatture, through: :righe, uniq: true
   
-  has_many :visita_appunti, dependent: :destroy
-  has_many :visite, :through => :visita_appunti
+  #has_many :visita_appunti, dependent: :destroy
+  has_many :visite, :through => :cliente
   
   has_many :events, class_name: "AppuntoEvent", dependent: :destroy
 
