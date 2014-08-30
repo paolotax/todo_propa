@@ -41,6 +41,14 @@ class Riga < ActiveRecord::Base
   scope :di_quest_anno,         joins(:fattura).where("fatture.created_at > ?", Date.new(2014,1,1))
 
 
+
+  def self.carica_nel_giardino_2
+    
+    Libro.where(id: 1087).update_all(id: 214)
+    Adozione.where(libro_id: 1087).update_all(libro_id: 214)
+
+  end 
+
   before_validation do
     self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
   end

@@ -1,0 +1,430 @@
+
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 18
+    prezzo_unitario: 14.3
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 6779
+    fattura_id: 978
+    uuid: 4f25eed9-cf7f-40f4-b8ed-37228a431cfa
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 2
+    prezzo_unitario: 14.3
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 6782
+    fattura_id: 979
+    uuid: e49c7e7d-0c98-4bd8-a4a2-215fe1c5d3a4
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 13.82
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 6780
+    fattura_id: 977
+    uuid: ff280e54-0fe7-4e01-a7f8-355abaa11b2e
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 22
+    prezzo_unitario: 14.3
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 6780
+    fattura_id: 977
+    uuid: 7ff64e67-75ac-4177-b169-5ddd6bbaa731
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 25
+    prezzo_unitario: 14.3
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6397
+    fattura_id: 
+    uuid: 137ea6ef-c953-4681-9960-98cbb53d3b86
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.3
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 6781
+    fattura_id: 980
+    uuid: 72b29359-66bd-4108-a749-d68d0d647fa0
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 2
+    prezzo_unitario: 14.26
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6816
+    fattura_id: 999
+    uuid: eb32d1c7-1817-40e7-86ab-3d7513b997b4
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.0
+    sconto: 20.0
+    consegnato: true
+    pagato: true
+    appunto_id: 5182
+    fattura_id: 385
+    uuid: f4d47da8-1d8c-429f-b232-04f83e2786dd
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 26
+    prezzo_unitario: 14.3
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6630
+    fattura_id: 
+    uuid: 1788886f-6a9e-42b9-8a5d-0988281e8978
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 11.72
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6828
+    fattura_id: 
+    uuid: 343d4b3f-2d52-4681-af52-87d680e3059c
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 16
+    prezzo_unitario: 14.26
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6813
+    fattura_id: 1006
+    uuid: 8861f777-0134-4252-83b1-ff1f50f9121a
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 11.1
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 2436
+    fattura_id: 13
+    uuid: 21995434-c68d-4938-a606-92195b1d73fb
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 2
+    prezzo_unitario: 11.1
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 4084
+    fattura_id: 640
+    uuid: 6bde8a7f-4cd8-4072-b701-fd87e7b2ce96
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 11.05
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 4225
+    fattura_id: 58
+    uuid: 97ec0135-f11d-4dd5-8ed5-004b8a16e00e
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 11.05
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 4305
+    fattura_id: 431
+    uuid: 7ab857b9-f4d3-47ca-a52e-d7fc3231469f
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 26
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 4770
+    fattura_id: 733
+    uuid: 8b7ee37a-996b-4e1d-93a2-6789b68826e7
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 42
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 4884
+    fattura_id: 743
+    uuid: 27a6456c-551e-4f66-afff-387eadcb70ae
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.0
+    sconto: 20.0
+    consegnato: true
+    pagato: true
+    appunto_id: 5142
+    fattura_id: 785
+    uuid: d0f00bc6-bd68-4b89-aa72-80cd811aad6d
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 2
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5336
+    fattura_id: 393
+    uuid: b70d2fa2-3ddc-45e7-99be-8d87b518ca2f
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 34
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5337
+    fattura_id: 394
+    uuid: ea532819-6d58-4b6e-9ca2-8e48d8831360
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 3
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5341
+    fattura_id: 395
+    uuid: 85372eaf-10dc-4e3f-90dc-10ed296355cc
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 22
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5342
+    fattura_id: 396
+    uuid: 655ae9c0-ef2e-48fc-8f0b-2c08b89ea46f
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5352
+    fattura_id: 401
+    uuid: b468fad0-680e-42fb-86db-077e2976e781
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.0
+    sconto: 20.0
+    consegnato: true
+    pagato: true
+    appunto_id: 5359
+    fattura_id: 820
+    uuid: 0d7e59fd-35f6-4c34-b5b6-8a3f0ecb80c5
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.0
+    sconto: 20.0
+    consegnato: true
+    pagato: true
+    appunto_id: 5344
+    fattura_id: 420
+    uuid: 121d3bdf-38a2-45f4-b1cd-a0a3a1d550ec
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.3
+    sconto: 23.0
+    consegnato: true
+    pagato: true
+    appunto_id: 5475
+    fattura_id: 959
+    uuid: 5c614bb7-a7e4-4e1f-b784-ec950ad3becd
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 11.0
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 5470
+    fattura_id: 
+    uuid: 7778f99c-1293-4469-b971-f9d2dd341c76
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 18
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5382
+    fattura_id: 403
+    uuid: 1ace44c1-2708-438f-890e-dd9185d4929b
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 2
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5383
+    fattura_id: 405
+    uuid: be5bebc7-0dde-4c2b-8fc1-8193bee01a1a
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 20
+    prezzo_unitario: 14.3
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6631
+    fattura_id: 
+    uuid: 0305b846-bf04-441b-95c0-811c6652f63f
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 6
+    prezzo_unitario: 14.26
+    sconto: 0.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6814
+    fattura_id: 1010
+    uuid: 42e0cda0-5b8b-46f7-b530-af1947d1909d
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.3
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 6812
+    fattura_id: 1004
+    uuid: 6a28d613-aaca-48d6-b0eb-acb41fa3aa66
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.3
+    sconto: 20.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6570
+    fattura_id: 
+    uuid: 931a2d07-acca-4239-ac26-58bae40c73ae
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.3
+    sconto: 20.0
+    consegnato: true
+    pagato: true
+    appunto_id: 6788
+    fattura_id: 987
+    uuid: ca74c622-8864-477a-ae1d-31cc8a931a55
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 3
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5384
+    fattura_id: 406
+    uuid: c7c2f22a-0401-4d76-a8cd-c2a8efa885e2
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 3
+    prezzo_unitario: 14.3
+    sconto: 18.0
+    consegnato: true
+    pagato: true
+    appunto_id: 7735
+    fattura_id: 
+    uuid: ba811959-3966-4c8a-968a-2d81bf434650
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.3
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 6783
+    fattura_id: 981
+    uuid: f2510c64-fb1b-4563-a3bd-437cfc6758a3
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 1
+    prezzo_unitario: 14.3
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 6872
+    fattura_id: 1009
+    uuid: becae0e0-2cbd-4fb8-bf5e-22f165c6396f
+- !ruby/object:Riga
+  attributes:
+    libro_id: 214
+    quantita: 2
+    prezzo_unitario: 14.0
+    sconto: 0.25
+    consegnato: true
+    pagato: true
+    appunto_id: 5335
+    fattura_id: 392
+    uuid: ffd7a987-be60-4985-a8e7-361eb505183d

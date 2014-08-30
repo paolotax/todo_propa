@@ -19,7 +19,7 @@ class Libro < ActiveRecord::Base
   has_and_belongs_to_many :parents, join_table: "libro_connections", class_name: "Libro", foreign_key: :libro_child_id, association_foreign_key: :libro_parent_id
 
 
-  has_many :righe
+  has_many :righe, dependent: :nullify
   has_many :adozioni, dependent: :nullify
   
   has_one :seguito, class_name: "Libro", foreign_key: :id, primary_key: :next_id

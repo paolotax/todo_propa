@@ -18,12 +18,13 @@ class Visita < ActiveRecord::Base
   
   #has_many :visita_appunti, dependent: :destroy
   
-  has_many :appunti, :through => :visita_appunti
-  
-  has_many :adozioni, :through => :cliente
-  
+  #has_many :appunti, :through => :visita_appunti
   
   #after_create :add_appunti
+
+  has_many :adozioni, :through => :cliente
+  
+    
     
   attr_writer :step
   
@@ -51,11 +52,13 @@ class Visita < ActiveRecord::Base
     Rails.cache.delete([ cliente.user, "baule_count"])
   end
   
+
   def giorno
     if start
       start.to_date
     end
   end
+  
   
   def to_s
     "#{start.strftime('%d-%m-%y')} #{titolo}"
@@ -74,8 +77,25 @@ class Visita < ActiveRecord::Base
   end
 
   
-  def add_scopo(scopo)
-    self.scopo = self.scopo.split(", ").push(scopo).uniq.sort.join(", ")
+  def add_scopo(new_scopo)
+
+    if self.scopo.nil?
+      self.scopo = new_scopo
+    else
+      self.scopo = self.scopo.split(", ").push(new_scopo).uniq.sort.join(", ")
+    end
+  end
+
+  
+  def appunti
+    
+    if nel_baule?
+
+      cliente.appunti.in_corso
+    else
+
+      []
+    end
   end
 
   # def mie_adozioni_grouped_titolo

@@ -26,7 +26,7 @@ class BauleController < ApplicationController
       #visita.update_attributes!(params[:visita].merge(step: index).reject { |k,v| v.blank? })  #  unless k == 'stato'
 
       visita.baule = false
-      visita.titolo = params[:visita][:titolo]
+      visita.scopo = params[:visita][:scopo]
       visita.data  = params[:visita][:data]
 
       if visita.valid?
