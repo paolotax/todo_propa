@@ -42,13 +42,6 @@ class Riga < ActiveRecord::Base
 
 
 
-  def self.carica_nel_giardino_2
-    
-    Libro.where(id: 1087).update_all(id: 214)
-    Adozione.where(libro_id: 1087).update_all(libro_id: 214)
-
-  end 
-
   before_validation do
     self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
   end

@@ -13,7 +13,7 @@
             %li= adozioni_stato_tag "adozioni da consegnare", @giro.adozioni, false
             %li= adozioni_stato_tag "adozioni saggio", @giro.adozioni, false            
             %li= adozioni_stato_tag "adozioni kit", @giro.adozioni, false            
-            %li= adozioni_stato_tag "adozioni kit no saggio", @giro.adozioni, false
+            %li= adozioni_stato_tag "adozioni saggio+guida", @giro.adozioni, false
             %li.divider
             %li
               = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do

@@ -18,6 +18,10 @@ body { padding-top: 60px; }
 @import "bootstrap-responsive";
 
 
+.well {
+  background-color: white;
+}
+
 .navbar .form-search {
   margin-bottom: 0;
 }

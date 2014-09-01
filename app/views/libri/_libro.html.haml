@@ -10,6 +10,7 @@
     .chiudi{ style: "float: right;"}
       %a{ title: 'chiudi', href: "#"}
         Chiudi    
+
     .stato
       = link_to image_tag(libro.image_url(:small_thumb)), libro
     
@@ -18,38 +19,8 @@
       - if libro.concorrenza?
         %small= libro.editore
 
-  %dl.dl-horizontal
+    = render 'libri/libro_details', libro: libro
 
-    %dt settore
-    %dd= libro.settore
-    - if libro.scolastico?
-      %dt editore
-      %dd= libro.editore       
-    - if libro.scolastico? || libro.fascicoli? || libro.concorrenza?
-      %dt materia
-      %dd= libro.materia  
-      %dt classe
-      %dd= libro.classe
-      - unless libro.seguito.nil?
-        %dt seguito
-        %dd= libro.seguito  
-    %dt prezzo di copertina
-    %dd= number_to_currency libro.prezzo_copertina
-    %dt prezzo consigliato
-    %dd= number_to_currency libro.prezzo_consigliato
-
-  .more
-
-    %dl.dl-horizontal
-      %dt sigla
-      %dd= libro.sigla
-      %dt cm      
-      %dd= libro.cm
-      %dt ean
-      %dd= libro.ean
-      %dt coefficente
-      %dd= libro.coefficente
-  
   %footer
     
     .footer-actions
@@ -61,10 +32,11 @@
             %i.icon-pencil
             Modifica
 
-        %li.delete
-          = link_to libro, title: 'elimina libro', method: :delete, confirm: "Sei sicuro?", remote: true do
-            %i.icon-trash
-            Elimina
+        - if current_user.admin?
+          %li.delete
+            = link_to libro, title: 'elimina libro', method: :delete, confirm: "Sei sicuro?", remote: true do
+              %i.icon-trash
+              Elimina
 
 
 

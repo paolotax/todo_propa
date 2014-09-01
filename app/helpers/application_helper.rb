@@ -14,6 +14,14 @@ module ApplicationHelper
   end
 
 
+  def present(object, klass = nil)
+    klass ||= "#{object.class}Presenter".constantize
+    presenter = klass.new(object, self)
+    yield presenter if block_given?
+    presenter
+  end
+
+
   def vacanze_image_url(vacanza, stato)
      
     if stato.nil?
@@ -27,6 +35,7 @@ module ApplicationHelper
     end
 
   end
+  
   
   def filter_tag(url, title) 
     link_to url, class: "list-link", remote: false  do

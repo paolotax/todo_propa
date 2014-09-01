@@ -1,26 +1,10 @@
 .adozione-cliente.item{ class: "#{dom_id(cliente)} #{stato}"}
+  
   = baule_tag cliente
   = link_to cliente.titolo, cliente
+  
   - if cliente.preparato?
     = image_tag asset_path "task-preparato.png"
-
-  .btn-group.pull-right
-    %button.btn.btn-link.dropdown-toggle{ "data-toggle" => "dropdown" }
-      %i.icon-cog
-
-    %ul.dropdown-menu
-      %li= adozioni_stato_tag "da consegnare", a, remote: true
-      %li= adozioni_stato_tag "saggio", a, true            
-      %li= adozioni_stato_tag "kit", a, true            
-      %li= adozioni_stato_tag "kit no saggio", a, true           
-      %li.divider
-      %li
-        = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
-          - for ado in a do
-
-            = hidden_field_tag "adozione_ids[]", ado.id
-          %button.btn.btn-link{ title: 'stampa adozioni' }
-            stampa
 
   .pull-right
     - if a.uniq{|a| a.try(:libro).try(:titolo)}.size == 1
@@ -28,4 +12,5 @@
         = a.first.classe.classe
         = a.map{|a| a.classe.sezione}.sort{|a, b| a <=> b}.join
         = "-"
-    = adozione_stato_label stato, a.size
+    
+    = adozioni_dropdown stato, a, a.size

@@ -42,6 +42,12 @@ class User < ActiveRecord::Base
     end
   end
   
+
+  def admin?
+    id == 1
+  end
+
+
   require 'controlla_c_f'
   # require 'controlla_p_i'
   

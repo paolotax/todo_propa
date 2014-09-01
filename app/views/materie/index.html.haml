@@ -1,9 +1,9 @@
 
-.well 
+.well.span8 
   %h1 Materie
   %br
 
-  %table.table
+  %table.table.table-hover.table-striped
     %tr
       %th
       %th Materia
@@ -12,22 +12,23 @@
       %th Copertina
       %th Consigliato
       %th
-      %th
-      %th
+      - if current_user.admin?      
+        %th
 
     - @materie.each do |materia|
       %tr
         %td= materia.id
-        %td= materia.materia
+        %td= link_to materia.materia, materia
 
         %td= materia.gruppo
         %td= materia.ordine
-        %td= materia.prezzo_copertina
-        %td= materia.prezzo_consigliato
+        %td= number_to_currency materia.prezzo_copertina
+        %td= number_to_currency materia.prezzo_consigliato
 
-        %td= link_to 'Mostra', materia, class: "btn"
-        %td= link_to 'Modifica', edit_materia_path(materia), class: "btn"
-        %td= link_to 'Elimina', materia, :confirm => 'Are you sure?', :method => :delete, class: "btn"
+        %td= link_to 'Modifica', edit_materia_path(materia), class: "btn btn-primary"
+        
+        - if current_user.admin?
+          %td= link_to 'Elimina', materia, :confirm => 'Are you sure?', :method => :delete, class: "btn"
 
   %br
 

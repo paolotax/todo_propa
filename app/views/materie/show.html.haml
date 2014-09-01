@@ -1,12 +1,45 @@
-.well
-  %p#notice= notice
+= new_button( new_materia_url )
 
-  %p
-    %b Materia:
-    = @materia.materia
+- title @materia.materia
 
-  - for libro in @materia.libri.adottabile
-    = render libro
 
-  = link_to 'Modifica', edit_materia_path(@materia), class: "btn"
-  = link_to 'Indietro', materie_path, class: "btn"
+%section.well.show-page
+  %article
+    %header
+      %h2
+        = @materia.materia
+
+    %footer.show-toolbar
+      .btn-group.pull-left      
+        = link_to Materia.previous(@materia, 'ordine').first, class: "btn" do
+          %i.icon-caret-left
+        = link_to "#{pluralize(@materia.class.all.size, 'materie')}", materie_path, class: "btn"
+        
+        = link_to Materia.next(@materia, 'ordine').first, class: "btn" do
+          %i.icon-caret-right
+      
+      .btn-group.pull-right
+        = link_to 'Modifica', edit_materia_path(@materia), class: "btn btn-primary"
+
+
+.row
+  .span6
+    %header.content-header
+      .header-inner
+        %h3 
+          Scolastico
+          %small= pluralize( @materia.libri.scolastico.order(:titolo).size, 'libro')
+    .list
+      = render @materia.libri.scolastico.order(:titolo)
+
+  .span6
+    %header.content-header
+      .header-inner
+        %h3 
+          Concorrenza
+          %small= pluralize( @materia.libri.concorrenza.order(:titolo).size, 'libro')
+    .list
+      = render @materia.libri.concorrenza.order(:titolo)
+
+
+

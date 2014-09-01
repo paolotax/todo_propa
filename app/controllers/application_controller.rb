@@ -9,9 +9,17 @@ class ApplicationController < ActionController::Base
   ##### before_filter :prepare_for_mobile
   
   before_filter :authenticate_user!
+
+
+  def present(object, klass = nil)
+    klass ||= "#{object.class}Presenter".constantize
+    klass.new(object, view_context)
+  end
+  
   
   private
   
+    
     def is_mobile_request?
       return false if request.user_agent.to_s.downcase =~/ipad/
       request.user_agent.to_s.downcase =~ /#{MOBILE_USER_AGENTS}/
@@ -22,6 +30,7 @@ class ApplicationController < ActionController::Base
       request.format = :mobile if mobile_user_agent?
     end
 
+    
     def mobile_user_agent?
         request.env["HTTP_USER_AGENT"]
         request.env["HTTP_USER_AGENT"][/Mobile|webOS|Android/]

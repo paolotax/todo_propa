@@ -304,7 +304,7 @@ class Cliente < ActiveRecord::Base
 
   def adozioni_kit_no_saggio
     if self.scuola_primaria?
-      adozioni_kit_no_saggio = self.mie_adozioni.select { |a| a.stato == 'kit no saggio' }
+      adozioni_kit_no_saggio = self.mie_adozioni.select { |a| a.stato == 'saggio+guida' }
     end
   end
 

@@ -51,7 +51,7 @@ class Adozione < ActiveRecord::Base
     elsif kit_1 == "consegnato" && kit_2 != "consegnato"
       "saggio"
     elsif kit_1 != "consegnato" && kit_2 == "consegnato"
-      "kit no saggio"
+      "saggio+guida"
     else 
       "da consegnare"
     end        

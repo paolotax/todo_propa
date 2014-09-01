@@ -1,0 +1,17 @@
+.btn-group
+  %span.dropdown-toggle{ class: "label #{label_class}", "data-toggle" => "dropdown" }
+    = value
+
+  %ul.dropdown-menu
+    %li= adozioni_stato_tag "da consegnare", adozioni, true
+    %li= adozioni_stato_tag "saggio", adozioni, true            
+    %li= adozioni_stato_tag "kit", adozioni, true            
+    %li= adozioni_stato_tag "saggio+guida", adozioni, true           
+    %li.divider
+    %li
+      = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
+        - for ado in adozioni do
+
+          = hidden_field_tag "adozione_ids[]", ado.id
+        %button.btn.btn-link{ title: 'stampa adozioni' }
+          stampa

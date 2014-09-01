@@ -47,7 +47,7 @@
             = stato
             .pull-right            
               %small= "#{pluralize per_cliente.keys.size, "scuola"}" 
-              = adozione_stato_label stato, adoz.size
+              / = adozione_stato_label stato, adoz.size
         .more.hidden
           - for cliente, a in per_cliente do
             = render 'adozioni/adozione_cliente', cliente: cliente, a: a, stato: stato

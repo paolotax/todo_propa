@@ -9,10 +9,27 @@
           - @mappa = cliente.to_gmaps4rails
           = gmaps({ :markers => {:data => @mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => false } } )
     .content-inner.span8
+      .more-info.pull-right
+        
+        - if cliente.has_adozioni?
+          
+          - present cliente do |cliente_presenter|
 
-      - if cliente.has_adozioni?
-        .cliente-adozioni.pull-right
+            = cliente_presenter.adozioni_grouped
+
           = render 'clienti/cliente_adozioni', cliente: cliente
+          
+        %ul.unstyled{ style: "margin-top: 5px;"}
+    
+          - for v in cliente.visite.limit(7).order("data desc") do
+            - if v.data
+              %li{ style: "margin-right: 5px"}
+                = link_to giro_path(giorno: v.data), class: 'pull-right' do
+                  - if v.scopo
+                    %span.label.label-warning
+                      = v.scopo
+                  %span.label{ class: "#{ v.data.year == Time.now.year ? 'label-info' : ''}"}
+                    = l v.data, format: :long
 
       %h1
         =link_to cliente.titolo, cliente
@@ -76,14 +93,6 @@
     .btn-group.pull-left
       = previous_tag cliente_url(Cliente.previous(cliente, 'id').first)
       = next_tag cliente_url(Cliente.next(cliente, 'id').first)
-
-    %ul.inline.pull-left{ style: "margin-top: 5px;"}
-      - for v in cliente.visite.order("data desc") do
-        - if v.data
-          %li{ style: "margin-right: 5px"}
-            = link_to giro_path(giorno: v.data) do
-              %span.label.label-info
-                = l v.data, format: :long
 
     - unless cliente.eliminato?
       .pull-right

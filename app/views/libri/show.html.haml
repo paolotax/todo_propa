@@ -14,35 +14,10 @@
             %small= @libro.editore
           - else
             %small= @libro.settore
-        %dl.dl-horizontal
-          %dt editore
-          %dd= @libro.editore
 
-          %dt id
-          %dd= @libro.id
-          
-          - if @libro.scolastico?
-            %dt editore
-            %dd= @libro.editore       
-          - if @libro.scolastico? || @libro.fascicoli? || @libro.concorrenza?
-            %dt materia
-            %dd= @libro.materia_libro
-            %dt classe
-            %dd= @libro.classe
-            - unless @libro.seguito.nil?
-              %dt seguito
-              %dd= link_to @libro.seguito, @libro.seguito  
+        = render 'libro_details', libro: @libro
 
-          %dt sigla
-          %dd= @libro.sigla
-          %dt cm      
-          %dd= @libro.cm
-          %dt ean
-          %dd= @libro.ean ||= ""
-          %dt prezzo di copertina
-          %dd= number_to_currency @libro.prezzo_copertina
-          %dt prezzo consigliato
-          %dd= number_to_currency @libro.prezzo_consigliato
+
 
     %footer.show-toolbar
       
@@ -53,12 +28,13 @@
           %i.icon-caret-right
       
       .pull-right
-        = link_to @libro, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
-          %i.icon-trash
-          Elimina
-        / = link_to libro_url(@libro, format: :pdf), class: "btn" do
-        /   %i.icon-print
-        /   Stampa
+
+        - if current_user.admin?
+
+          = link_to @libro, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+            %i.icon-trash
+            Elimina
+
         = link_to edit_libro_url(@libro), class: "btn btn-primary" do
           %i.icon-pencil
           Modifica
