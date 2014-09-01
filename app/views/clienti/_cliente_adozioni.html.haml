@@ -1,9 +1,11 @@
+
+
 - cache [ current_user, cliente, 'adozioni' ] do
   
   - libri_adottati = cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)
     
   
-  %table.table
+  %table.table.adozioni-box
     %tr
       %td
         - if cliente.da_ritirare?
@@ -11,7 +13,6 @@
         - else
           &nbsp;
 
-      %td
       - (1..5).each do |classe|
 
         %td.adozione-image{class: "classe_#{classe}"}
@@ -39,7 +40,6 @@
 
                 - if saggi.size > 0
                   .saggi.pull-left
-
                     = adozioni_dropdown 'saggio', saggi, saggi.size
 
                 - if kit_no_saggio.size > 0
@@ -49,21 +49,3 @@
                 - if kit.size > 0
                   .kit.pull-left
                     = adozioni_dropdown 'kit', kit, kit.size
-
-      / non funzia la form con la cache
-      /
-      / %td.actions
-      /   .btn-group
-      /     %button.btn.btn-link.dropdown-toggle{ "data-toggle" => "dropdown" }
-      /       %i.icon-cog
-      /     %ul.dropdown-menu.pull-right
-      /       %li= adozioni_stato_tag "da consegnare", cliente.mie_adozioni, false
-      /       %li= adozioni_stato_tag "saggio", cliente.mie_adozioni, false            
-      /       %li= adozioni_stato_tag "kit", cliente.mie_adozioni, false            
-      /       %li= adozioni_stato_tag "saggio+guida", cliente.mie_adozioni, false
-      /       %li.divider
-      /       %li
-      /         = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
-      /           - for a in cliente.mie_adozioni do
-      /             = hidden_field_tag "adozione_ids[]", a.id
-      /           = submit_tag "stampa",  id: "bnt-pdf", class: "btn btn-link"

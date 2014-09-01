@@ -6,8 +6,6 @@ class ClientePresenter < BasePresenter
 
   def adozioni_grouped
     cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)
-
-
     h.render 'clienti/cliente_adozioni', cliente: cliente
   end
 
