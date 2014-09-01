@@ -5,7 +5,7 @@
   - libri_adottati = cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)
     
   
-  %table.table.adozioni-box
+  %table.table.adozioni-box{ class: "#{dom_id(cliente)}"}
     %tr
       %td
         - if cliente.da_ritirare?

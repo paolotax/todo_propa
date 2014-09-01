@@ -1,6 +1,6 @@
 var classe = $("#<%= dom_id(@classe) %>")
 var adozioniGroup = $(".adozioni-grouped")
-var adozioniBox = $(".<%= dom_id(@adozioni.first.classe.cliente) %> .adozioni-box");
+var adozioniBox = $(".<%= dom_id(@adozioni.first.classe.cliente) %>.adozioni-box");
 
 console.log(adozioniBox);
 
