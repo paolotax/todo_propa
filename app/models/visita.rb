@@ -5,8 +5,6 @@ class Visita < ActiveRecord::Base
   
   # include ActiveModel::ForbiddenAttributesProtection
 
-
-
   belongs_to :cliente, touch: true
   
   belongs_to :user
@@ -16,16 +14,17 @@ class Visita < ActiveRecord::Base
                        :source => :appunti, 
                        :conditions => ['appunti.stato <> ?', 'X']
   
+
   #has_many :visita_appunti, dependent: :destroy
   
   #has_many :appunti, :through => :visita_appunti
   
   #after_create :add_appunti
 
+
   has_many :adozioni, :through => :cliente
   
-    
-    
+        
   attr_writer :step
   
   validates :cliente_id, :uniqueness => { :scope => :data, :message => "gia' nel giro" }
@@ -44,7 +43,7 @@ class Visita < ActiveRecord::Base
   scope :settembre, where("visite.data > ?", Date.new(Time.now.year, 4, 15))
   
 
-  scope :next, where("visite.end > ?", Time.now).limit(1)  
+  scope :next, where("visite.data > ?", Date.today).order(:data).limit(1)  
 
   
 
@@ -97,6 +96,7 @@ class Visita < ActiveRecord::Base
       []
     end
   end
+  
 
   # def mie_adozioni_grouped_titolo
   #   self.cliente.mie_adozioni.group_by(&:libro_id) || []

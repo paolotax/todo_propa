@@ -1,25 +1,5 @@
 class Cliente < ActiveRecord::Base
 
-
-  def self.correggi_anno_classi
-
-    Cliente.includes(:classi).scuola_primaria.each do |cliente|
-
-      unless cliente.da_scorrere?
-        cliente.classi.update_all anno: Time.now.year
-      end
-    end
-  end
-
-
-  def self.spara
-    Cliente.direzioni.per_localita.each do |c|
-      puts c.titolo
-      c.children.each do |s|
-        puts "- #{s.titolo}"
-      end
-    end
-  end
   
   TIPI_CLIENTI = ['Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica', 'Cartolibreria', 'Persona Fisica', 'Ditta', 'Comune']
   ABBR_TIPI    = ['E', 'IC', 'D', 'C', '', '', 'Com']
@@ -56,6 +36,15 @@ class Cliente < ActiveRecord::Base
   before_validation do
     self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
   end
+
+
+  before_save :set_titolo
+
+  geocoded_by :full_street_address
+  
+  after_validation :geocode, 
+        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.comune_changed? || obj.cap_changed? || obj.provincia_changed?}
+
 
   scope :select_provincia, select("clienti.provincia").uniq
   scope :select_citta,     select("clienti.comune").uniq
@@ -120,11 +109,6 @@ class Cliente < ActiveRecord::Base
     end
   end    
 
-  def self.grouped_by_provincia_and_comune
-    clienti = scoped
-    clienti = clienti.group_by(&:provincia)
-    clienti
-  end
   
   class << self
     ["adozioni", "appunti", "classi", "visite"].each do |objects|
@@ -146,9 +130,8 @@ class Cliente < ActiveRecord::Base
   end
   
   
-  #after_initialize :set_indirizzi
   
-  before_save :set_titolo
+
   
   TIPI_CLIENTI.each do |tipo|
     scope "#{tipo.split.join.underscore}", where("clienti.cliente_tipo = ?", tipo)
@@ -157,7 +140,9 @@ class Cliente < ActiveRecord::Base
       self.cliente_tipo == tipo
     end
   end
-  
+
+
+
   
   def has_documenti?
     !self.fatture.empty?
@@ -213,14 +198,32 @@ class Cliente < ActiveRecord::Base
   end 
 
 
+
   def anno_scolastico
     anno = classi.pluck("classi.anno").uniq[0]
     anno
   end 
 
 
+
+
   def next_visita
-    visite.next
+    visite.next.try(:first)
+  end
+
+
+  def add_next_visita(data, scopo)
+
+    if next_visita
+      visita = next_visita
+      visita.data = data
+    else
+      visita = visite.find_or_initialize_by_data(data)
+    end
+    
+    visita.baule = false
+    visita.add_scopo(scopo) unless scopo.blank?
+    visita.save
   end
 
   
@@ -411,10 +414,6 @@ class Cliente < ActiveRecord::Base
     end
   end
   
-  def set_indirizzi
-    # self.indirizzi.build(tipo: 'Indirizzo fattura') unless self.indirizzo.present?
-    # self.indirizzi.build(tipo: 'Indirizzo spedizione') unless self.indirizzo_spedizione.present?
-  end
 
   def self.filtra(params)
         
@@ -467,10 +466,7 @@ class Cliente < ActiveRecord::Base
     clienti
   end
   
-  geocoded_by :full_street_address
-  
-  after_validation :geocode, 
-        :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.comune_changed? || obj.cap_changed? || obj.provincia_changed?}
+
   
   def full_street_address
     [self.indirizzo, self.cap, self.frazione, self.comune, self.provincia].join(', ')

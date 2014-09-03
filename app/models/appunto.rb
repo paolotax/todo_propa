@@ -1,4 +1,3 @@
-
 class Appunto < ActiveRecord::Base
   
   acts_as_taggable
@@ -22,8 +21,52 @@ class Appunto < ActiveRecord::Base
 
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => true
   
+
+  attr_writer :data_visita_text, :scopo_visita_text
+
   #  validates :user_id,  :presence => true
   validates :cliente_id,    :presence => true
+
+  validate :check_data_visita_text
+  
+  #before_save :leggi
+  before_save :save_data_visita_text
+
+  after_update  :flush_cache
+  after_destroy :flush_cache
+  after_create  :flush_cache
+  #after_commit  :flush_cache
+
+  before_validation do
+    self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
+  end
+
+
+  def data_visita_text
+    @next_visita = try(:cliente).try(:next_visita)
+    @data_visita_text ||  @next_visita.try(:data).try(:strftime, "%d-%m-%y")
+  end
+
+  def scopo_visita_text
+    @scopo_visita_text || try(:cliente).try(:next_visita).try(:scopo)
+  end
+
+  def check_data_visita_text
+    if @data_visita_text.present? && Date.parse(@data_visita_text).nil?
+      errors.add :data_visita_text, "data errata"
+    end
+  rescue ArgumentError
+    errors.add :data_visita_text, "data errata"
+  end
+
+
+  def save_data_visita_text
+
+    data_visita = Date.parse(@data_visita_text) if @data_visita_text.present?
+
+    cliente.add_next_visita(data_visita, @scopo_visita_text)
+  end
+
 
 
   scope :recente,               order("appunti.id desc")
@@ -48,19 +91,11 @@ class Appunto < ActiveRecord::Base
     using: {tsearch: {dictionary: "italian"}},
     associated_against: {cliente: [ :titolo, :comune, :frazione, :provincia ] },
     order_within_rank: "updated_at DESC"
-  
-  
-  before_save :leggi
 
-  after_update  :flush_cache
-  after_destroy :flush_cache
-  after_create  :flush_cache
 
-  #after_commit  :flush_cache
 
-  before_validation do
-    self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
-  end
+
+
 
   def flush_cache
     Rails.cache.delete([self, 'righe'])

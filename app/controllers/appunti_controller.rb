@@ -2,13 +2,11 @@ require "prawn/measurement_extensions"
 
 class AppuntiController < ApplicationController
   
-  #before_filter :authenticate_user!
 
   can_edit_on_the_spot
 
   def index
-    session[:return_to] = request.path
-
+    
     @search = current_user.appunti.not_deleted.includes(:cliente, :user, :visite, :righe => :libro).filtra(params).ordina(params)
 
     if params[:tag]
@@ -17,8 +15,7 @@ class AppuntiController < ApplicationController
 
     @appunti = @search.page(params[:page])
     
-    location = params[:comune] || "bologna"
-    @location = location.split.join("_").downcase
+    @location = (params[:comune] || "bologna").parameterize("_")
 
     respond_to do |format|
       format.html { get_stats_appunti }
@@ -31,67 +28,74 @@ class AppuntiController < ApplicationController
     render :inline => @appunto.note
   end
 
+
   def show
-    session[:return_to] = request.path    
+
     @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:id])
     
     respond_to do |format|
-      format.html  # show.html.erb
+      
+      format.html
       format.js
-      format.json  { render :rabl => @appunto }
+      #format.json  { render :rabl => @appunto }
 
       format.pdf do
         @appunti = Array(@appunto)
         pdf = AppuntoPdf.new(@appunti, view_context)
         send_data pdf.render, filename: "appunto_#{@appunto.id}.pdf",
                               type: "application/pdf",
-                              disposition: "inline"
-      
+                              disposition: "inline"      
       end
     end
   end
 
+
   def new
+
     session[:return_to] = request.referer
+
     if params[:cliente].present?
       @cliente = Cliente.find(params[:cliente])
     else
       @cliente = nil
     end 
+    
     @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).build(destinatario: params[:destinatario], telefono: params[:telefono])
     @appunto.cliente = @cliente
+    
   end
 
+
   def edit
+    
     session[:return_to] = request.referer
+    
     @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:id])
   end
 
+  
   def create
-    @appunto = current_user.appunti.build(params[:appunto])
+
+    @appunto = current_user.appunti.build(params[:appunto])    
+       
     respond_to do |format|
       if @appunto.save
-        format.html   { redirect_to session[:return_to], notice: 'Appunto creato!' }
-        format.json
+        session[:return_to] ||= appunto_url(@appunto)
+        format.html { redirect_to session.delete(:return_to), notice: 'Appunto creato.' }
       else
-        format.html do 
-          render action: "new"
-          logger.debug "giunti"
-        end
-        format.json { render rabl: @appunto.errors, status: :unprocessable_entity }
+        format.html { render action: "new" }
       end
     end
   end
 
+  
   def update
     @appunto = current_user.appunti.find(params[:id])
-    
-    #raise params.inspect
 
     respond_to do |format|
       if @appunto.update_attributes(params[:appunto])
-        format.html   { redirect_to session[:return_to], notice: 'Appunto modificato.' }
-        format.mobile { redirect_to appunti_url }
+        session[:return_to] ||= appunto_url(@appunto)
+        format.html { redirect_to session.delete(:return_to), notice: 'Appunto modificato.' }
         format.js
         format.json
       else

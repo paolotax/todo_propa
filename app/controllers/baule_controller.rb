@@ -18,8 +18,6 @@ class BauleController < ApplicationController
   
   def update
 
-    #raise params.inspect
-
     #  @visite = current_user.visite.nel_baule.order(:start)
     @visite.each_with_index do |visita, index|
       

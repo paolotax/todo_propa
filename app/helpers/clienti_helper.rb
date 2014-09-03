@@ -9,9 +9,9 @@ module ClientiHelper
 
   def next_visita_div(cliente)
     content_tag :div, :class => 'next-visita pull-right' do
-      unless cliente.next_visita.empty?
-        link_to  giro_path(giorno: cliente.next_visita[0].giorno)do
-          content_tag( :span, l(cliente.next_visita[0].start.to_date, format: :day_of_month), class: "label label-info")
+      unless cliente.next_visita.nil?
+        link_to  giro_path(giorno: cliente.next_visita.data)do
+          content_tag( :span, l(cliente.next_visita.data, format: :day_of_month), class: "label label-info")
         end
       else
         ""

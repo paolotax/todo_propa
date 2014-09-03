@@ -1,0 +1,53 @@
+
+
+- cache [ current_user, cliente, 'adozioni' ] do
+
+  - cliente_presenter ||= ClientePresenter.new(cliente, self) 
+  
+  - libri_adottati = cliente_presenter.adozioni_grouped
+    
+  
+  %table.table.adozioni-box{ class: "#{dom_id(cliente)}"}
+    %tr
+      %td
+        - if cliente.da_ritirare?
+          %span.label.label-important da ritirare
+        - else
+          &nbsp;
+
+      - (1..5).each do |classe|
+
+        %td.adozione-image{class: "classe_#{classe}"}
+          
+          - libri = libri_adottati.keys.select {|l| l.classe == classe }
+
+          - unless libri.empty?
+            
+            - libri.each do |libro|
+              .adozione-copertina
+
+                = image_tag libro.image_url(:small_thumb)
+
+                - saggi = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'saggio' }
+                
+                - kit =   libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'kit' }
+
+                - tutto = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'da consegnare' }
+
+                - kit_no_saggio = libri_adottati.values.flatten.select {|a| a.libro == libro && a.stato == 'saggio+guida' }
+
+                - if tutto.size > 0
+                  .tutto.pull-left
+                    = adozioni_dropdown( '', tutto, tutto.size )
+
+                - if saggi.size > 0
+                  .saggi.pull-left
+                    = adozioni_dropdown 'saggio', saggi, saggi.size
+
+                - if kit_no_saggio.size > 0
+                  .kit_no_saggio.pull-left
+                    = adozioni_dropdown 'saggio+guida', kit_no_saggio, kit_no_saggio.size
+
+                - if kit.size > 0
+                  .kit.pull-left
+                    = adozioni_dropdown 'kit', kit, kit.size

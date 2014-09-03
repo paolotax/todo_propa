@@ -69,6 +69,8 @@ class AdozioniController < ApplicationController
         format.js do
           @provincie = current_user.adozioni.scolastico.joins(:classe => :cliente).per_scuola.pluck("clienti.provincia").uniq
           @adozioni = current_user.adozioni.find(params[:adozione_ids]) 
+          @cliente = @adozioni.first.classe.cliente
+          @cliente_presenter = ClientePresenter.new( @cliente, view_context)
         end
      
       end 

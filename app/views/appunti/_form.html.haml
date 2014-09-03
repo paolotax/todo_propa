@@ -1,3 +1,8 @@
+- if session[:return_to]
+  .pull-right
+    = link_to "Indietro", session[:return_to], class: "btn"
+
+
 = simple_nested_form_for @appunto, html: { class: "form-horizontal"} do |f|
   
   = f.error_notification
@@ -8,12 +13,12 @@
       %a{ href: "#info",           "data-toggle" => "tab"} Appunto
     %li
       %a{ href: "#dettaglio",      "data-toggle" => "tab"} Dettaglio righe
-    / %li
-    /   %a{ href: "#parascolastico", "data-toggle" => "tab"} Parascolastico  
     %li
-      %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
+      %a{ href: "#parascolastico", "data-toggle" => "tab"} Parascolastico  
     / %li
-    /   %a{ href: "#scolastico",     "data-toggle" => "tab"} Scolastico  
+    /   %a{ href: "#vacanze",        "data-toggle" => "tab"} Vacanze  
+    %li
+      %a{ href: "#scolastico",     "data-toggle" => "tab"} Scolastico  
     / %li
     /   %a{ href: "#varia",          "data-toggle" => "tab"} Varia  
     / %li
@@ -28,6 +33,9 @@
       = f.input :note, :input_html => { rows: 5 }
       = f.input :telefono
       = f.input :email
+      = f.input :data_visita_text
+      = f.input :scopo_visita_text
+
       %hr
       = f.input :stato,    collection: [["da fare", ""], ["preparato", "S"], ["in sospeso", "P"], ["completo", "X"] ], as: :radio_buttons
       = f.input :tag_list, inline_label: 'Tag (separati da virgola)'
@@ -60,25 +68,25 @@
             = f.simple_fields_for :righe do |riga|
               = render 'righe/form', riga: riga, remove: true
 
-    / #parascolastico.tab-pane.fade
-    /   .control-group
-    /     - @appunto.create_righe Libro.parascolastico
-    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Parascolastico" }
+    #parascolastico.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.parascolastico
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Parascolastico" }
 
     / #varia.tab-pane.fade
     /   .control-group
     /     - @appunto.create_righe Libro.varia
     /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Varia" }
 
-    #vacanze.tab-pane.fade
-      .control-group
-        - @appunto.create_righe Libro.vacanze
-        = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
-    
-    / #scolastico.tab-pane.fade
+    / #vacanze.tab-pane.fade
     /   .control-group
-    /     - @appunto.create_righe Libro.scolastico
-    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Scolastico" }
+    /     - @appunto.create_righe Libro.vacanze
+    /     = render partial: 'libri_riga_form', locals: { f: f, settore: "Vacanze" }
+    
+    #scolastico.tab-pane.fade
+      .control-group
+        - @appunto.create_righe Libro.scolastico
+        = render partial: 'libri_riga_form', locals: { f: f, settore: "Scolastico" }
 
     / #adozionale.tab-pane.fade
     /   .control-group

@@ -1,6 +1,6 @@
 var classe = $("#<%= dom_id(@classe) %>")
 var adozioniGroup = $(".adozioni-grouped")
-var adozioniBox = $(".<%= dom_id(@adozioni.first.classe.cliente) %>.adozioni-box");
+var adozioniBox = $(".<%= dom_id(@cliente) %>.adozioni-box");
 
 console.log(adozioniBox);
 
@@ -11,10 +11,10 @@ if (classe != null) {
 
 
 if (adozioniGroup.length != 0) {
-  $(".adozione-cliente.<%= dom_id(@adozioni.first.classe.cliente) %>").replaceWith("<%= j render 'adozioni/adozione_cliente', cliente: @adozioni.first.classe.cliente, a: @adozioni, stato: @adozioni.first.stato %>");
+  $(".adozione-cliente.<%= dom_id(@adozioni.first.classe.cliente) %>").replaceWith("<%= j render 'adozioni/adozione_cliente', cliente: @cliente, a: @adozioni, stato: @adozioni.first.stato %>");
 };
 
 
 if (adozioniBox.length != 0) {
-  adozioniBox.replaceWith("<%= j render 'clienti/cliente_adozioni', cliente: @adozioni.first.classe.cliente %>");
+  adozioniBox.replaceWith("<%= j @cliente_presenter.adozioni_box %>");
 };
