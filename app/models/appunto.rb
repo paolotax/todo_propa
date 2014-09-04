@@ -62,9 +62,9 @@ class Appunto < ActiveRecord::Base
 
   def save_data_visita_text
 
-    data_visita = Date.parse(@data_visita_text) if @data_visita_text.present?
+    data_visita = Date.parse(@data_visita_text) unless @data_visita_text.blank?
 
-    cliente.add_next_visita(data_visita, @scopo_visita_text)
+    cliente.add_next_visita(data_visita, @scopo_visita_text) unless data_visita.nil?
   end
 
 

@@ -1,53 +1,36 @@
-- cache [visita.cliente, 'adozioni'] do 
+= content_tag_for :li, visita, class: 'clearfix' do
   
-  = content_tag_for :li, visita, class: 'clearfix' do
-    
 
-    %div.ex-td.pull-left
-      %span.handle [drag]
+  %div.ex-td.pull-left
+    %span.handle [drag]
+      
+  %div.ex-td.pull-left
 
-    / %div.ex-td.pull-left
-    /   = form_for visita, class: 'form-ora' do |f|
-    /     = f.time_select :start, { minute_step: 15 }
-    /     = f.submit 'modifica', class: 'btn btn-mini'
-        
-    %div.ex-td.pull-left
-      = link_to visita.cliente.titolo, visita.cliente
-      - if visita.cliente.scuola_primaria?
-        = link_to cliente_path( id: visita.cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
-          %i.icon-file
-      - if visita.cliente.last_giro
+    %table.table= render 'clienti/cliente_propa', cliente: visita.cliente
 
-        %br
+  %div.ex-td.pull-left.visible-phone
+    - unless visita.cliente.latitude.nil?
+      %a.btn{ href: "http://maps.apple.com/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
+        / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
+        %i.icon-road
+      
+  %div.ex-td.pull-right
+    = link_to visita, method: :delete, confirm: "Sei sicuro?", remote: true, class: "close" do
+      &times;
 
-          = link_to giro_url(giorno: visita.cliente.last_giro.data) do
-            %small= visita.cliente.last_giro.titolo
-            %br
-            %small= visita.cliente.last_giro.data
+  / %div.ex-td.pull-right.cliente-adozioni
+  /   = render 'clienti/cliente_adozioni', cliente: visita.cliente
 
-    %div.ex-td.pull-left.visible-phone
-      - unless visita.cliente.latitude.nil?
-        %a.btn{ href: "http://maps.apple.com/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
-          / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
-          %i.icon-road
-        
-    %div.ex-td.pull-right
-      = link_to visita, method: :delete, confirm: "Sei sicuro?", remote: true, class: "close" do
-        &times;
+  / %div.ex-td.pull-right.vacanze
+  /   - if visita.cliente.vacanze_da_ritirare && visita.cliente.vacanze_da_ritirare > 0
+  /     %span.badge.badge-inverse= visita.cliente.vacanze_da_ritirare
 
-    %div.ex-td.pull-right.cliente-adozioni
-      = render 'clienti/cliente_adozioni', cliente: visita.cliente
+  / %div.ex-td.pull-right.da_fare
+  /   - if visita.cliente.appunti.da_fare.size > 0
+  /     %span.badge.badge-important
+  /       = visita.cliente.appunti.da_fare.size
 
-    %div.ex-td.pull-right.vacanze
-      - if visita.cliente.vacanze_da_ritirare && visita.cliente.vacanze_da_ritirare > 0
-        %span.badge.badge-inverse= visita.cliente.vacanze_da_ritirare
-
-    %div.ex-td.pull-right.da_fare
-      - if visita.cliente.appunti.da_fare.size > 0
-        %span.badge.badge-important
-          = visita.cliente.appunti.da_fare.size
-
-    %div.ex-td.pull-right.in-sospeso
-      - if visita.cliente.has_sospeso?
-        %span.label.label-warning
-          = number_to_currency visita.cliente.properties["importo_in_sospeso"].to_f
+  / %div.ex-td.pull-right.in-sospeso
+  /   - if visita.cliente.has_sospeso?
+  /     %span.label.label-warning
+  /       = number_to_currency visita.cliente.properties["importo_in_sospeso"].to_f

@@ -40,10 +40,14 @@ class Visita < ActiveRecord::Base
   scope :non_nel_baule, where(baule: false)
   
 
-  scope :settembre, where("visite.data > ?", Date.new(Time.now.year, 4, 15))
-  
+  scope :settembre, where("visite.data > ?", Date.new(Time.now.year, 7, 31))  # fino al compleanno
+    
+  scope :filter_calendar, lambda {|d| where("data >= ? AND data <= ?", d.beginning_of_month - 7.day, d.end_of_month + 7.day)}
 
-  scope :next, where("visite.data > ?", Date.today).order(:data).limit(1)  
+  
+  scope :last, where("visite.data > ?", Date.today).order("visite.data DESC").limit(1)
+  scope :oggi, where("visite.data = ?", Date.today).order(:data).limit(1)
+  scope :next, where("visite.data > ?", Date.today).order(:data).limit(1)
 
   
 
@@ -60,7 +64,7 @@ class Visita < ActiveRecord::Base
   
   
   def to_s
-    "#{start.strftime('%d-%m-%y')} #{titolo}"
+    "#{data} #{scopo}"
   end
   
   
@@ -72,6 +76,7 @@ class Visita < ActiveRecord::Base
   def self.filtra(params)
     visite = scoped
     visite = visite.where("clienti.provincia = ?", params[:provincia]) if params[:provincia].present?
+    visite = visite.filter_calendar(params[:calendar]) if params[:calendar].present?
     visite
   end
 
@@ -96,7 +101,7 @@ class Visita < ActiveRecord::Base
       []
     end
   end
-  
+
 
   # def mie_adozioni_grouped_titolo
   #   self.cliente.mie_adozioni.group_by(&:libro_id) || []
@@ -114,6 +119,9 @@ class Visita < ActiveRecord::Base
 
  
     def save_data
+
+      data.nil? ? self.baule = true : self.baule = false
+
       if @step
         self.start = data.beginning_of_day + 8.hours + 30.minutes + (30.minutes * @step.to_i)
         self.end   = start + 30.minutes

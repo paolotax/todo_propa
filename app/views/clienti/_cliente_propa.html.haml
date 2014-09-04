@@ -1,0 +1,18 @@
+- cache [ current_user, cliente, 'propa' ] do
+  
+  - present cliente do |cliente_presenter|
+
+    %tr
+      
+      %td{ class: "#{dom_id(cliente)} cliente" }
+        = baule_tag cliente
+        = next_visita_div(cliente)
+      
+      %td
+        = link_to cliente.titolo, cliente
+        - if cliente.scuola_primaria?
+          = link_to cliente_path( id: cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
+            %i.icon-file
+
+      %td
+        = cliente_presenter.adozioni_box

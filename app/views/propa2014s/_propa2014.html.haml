@@ -1,11 +1,2 @@
-%tr
-  %td{ class: "#{dom_id(propa2014.cliente)} cliente" }= baule_tag propa2014.cliente
-  %td= link_to propa2014.cliente.titolo, propa2014.cliente
-
-  %td= propa2014.cliente.visite_scopo
-
-
-  %td
-    - present propa2014.cliente do |cliente_presenter|
-      = cliente_presenter.adozioni_box
+= render 'clienti/cliente_propa', cliente: propa2014.cliente
 

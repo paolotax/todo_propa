@@ -4,6 +4,21 @@ class ClientePresenter < BasePresenter
   #delegate :username, to: :user
 
 
+  def visite
+    @visite ||= cliente.visite.map.select { |v| !v.data.nil? }.sort_by(&:data)
+  end
+
+
+  def next_visita
+    visite.select { |v| v.data && v.data > Date.today }.first unless visite.empty?
+  end
+
+  
+  def last_visita
+    visite.select { |v| v.data && v.data < Date.today }.last unless visite.empty?
+  end
+
+
   def adozioni_grouped
     cliente.mie_adozioni.joins(:libro).order("libri.materia_id").group_by(&:libro)    
   end

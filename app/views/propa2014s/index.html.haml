@@ -2,6 +2,28 @@
 
 - title "Propa 2014"
 
+/ = render @direzioni.uniq
+
+/ = nested_scuole @clienti.arrange(:order => "provincia asc, comune asc")
+/ - zone = @clienti.arrange(:order => "provincia asc, comune asc")
+
+/ = zone.size
+
+
+/ - zone.each do |zona|
+  
+/   - if zona[0].scuola_primaria?
+/     = render zona[0]
+/   - else
+/     = link_to zona[0]
+  
+/   - zona[1].each do |direzione|
+/     - if direzione[0].scuola_primaria? == true
+/       = render direzione[0]
+/     - else
+/       = link_to direzione[0].titolo, direzione[0]
+
+
 .row
 
 
@@ -26,11 +48,6 @@
     
 
     .module
-      / .header
-      /   = show_hide_tag
-      /   %h3 Mappa
-      / .more
-      /   = render 'baule/mappa_baule', clienti: @clienti.scuola_primaria
 
     .row.floating    
       #clienti.list.module.span8
@@ -69,8 +86,10 @@
                     %td{colspan: 6}= link_to plesso[0].titolo, plesso[0]
 
 
-
+      / vecchio sistema
       / = render 'side_propaganda'
+
+      
 
       .floating-side.span4
         .floating-toolbar
@@ -98,3 +117,10 @@
                     = link_to giro_path(giorno: date) do
                       %span{ class: "badge #{date.future? ? 'badge-important' : 'badge-info'}" }
                         = @visite_grouped[date].size
+
+
+
+
+
+
+

@@ -63,10 +63,12 @@ class Cliente < ActiveRecord::Base
   # scope :con_appunti_da_fare,    joins(:appunti).where("appunti.stato = ''")
   # scope :con_appunti_in_sospeso, joins(:appunti).where("appunti.stato = 'P'")
 
-  scope :scuole,     where("clienti.cliente_tipo in ('Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica')")
+  scope :scuole,     not_deleted.where("clienti.cliente_tipo in ('Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica')")
+
   scope :primarie,   where(cliente_tipo: "Scuola Primaria")
   scope :cartolerie, where(cliente_tipo: "Cartolibreria")
   scope :direzioni,  where("clienti.cliente_tipo in ('Istituto Comprensivo', 'Direzione Didattica')")
+  
   scope :altri,      where("clienti.cliente_tipo in ('Persona Fisica', 'Ditta', 'Comune')")
 
   scope :previous, lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} < ?", i.user_id, i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
@@ -205,11 +207,24 @@ class Cliente < ActiveRecord::Base
   end 
 
 
-
-
   def next_visita
-    visite.next.try(:first)
+    visite.map.select { |v| v.data && v.data > Date.today }.first
   end
+
+  
+  def last_visita
+    visite.map.select { |v| v.data && v.data < Date.today }.last
+  end
+
+
+  # def last_visita
+  #   visite.last.try(:first)
+  # end
+
+
+  # def next_visita
+  #   visite.next.try(:first)
+  # end
 
 
   def add_next_visita(data, scopo)
@@ -220,10 +235,12 @@ class Cliente < ActiveRecord::Base
     else
       visita = visite.find_or_initialize_by_data(data)
     end
-    
+
     visita.baule = false
     visita.add_scopo(scopo) unless scopo.blank?
     visita.save
+
+
   end
 
   

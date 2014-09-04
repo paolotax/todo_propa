@@ -4,9 +4,15 @@ class Propa2014sController < ApplicationController
 
   def index
 
+    # clienti_ids = current_user.adozioni.joins(:classe).where(libro_id: 575).map{|a| a.classe.cliente_id}.sort.uniq
+    
+    # @clienti = current_user.clienti.scuole.where("id in (?)", clienti_ids).order(:provincia, :comune)
+
+    # @direzioni = @clienti.all.map(&:parent)
+
     @clienti = current_user.clienti.not_deleted.joins(:propa2014).per_localita
     
-    #@tutti = @clienti.all
+    @tutti = @clienti.all
 
     if params[:provincia]
       @clienti = @clienti.where(provincia: params[:provincia])
@@ -29,15 +35,19 @@ class Propa2014sController < ApplicationController
     end
 
     @count_elementari = @clienti.select { |c| c.scuola_primaria? == true}.count
+    
     @provincie = current_user.clienti.not_deleted.direzioni.select_provincia.map(&:provincia)
     
+    @date = params[:calendar] ? Date.parse(params[:calendar]) : Date.today
+  
+    params[:calendar] = @date
+
     @visite         = current_user.visite.includes(:cliente => :visite).where(baule: false).filtra(params)
     
     @visite_grouped = @visite.order("data desc").group_by(&:data)
 
 
-    @date = params[:calendar] ? Date.parse(params[:calendar]) : Date.today
-  
+    
     
   end
 
