@@ -58,10 +58,14 @@ class AdozioniController < ApplicationController
     
     @adozioni = current_user.adozioni.find(params[:adozione_ids]) 
     @classe = @adozioni.first.classe
-       
+    
+    #raise params.inspect
+
     @adozioni.reject! do |adozione|
       adozione.update_attributes(params[:adozione])
     end
+
+
 
     if @adozioni.empty?
       respond_to do |format|
