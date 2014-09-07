@@ -38,12 +38,12 @@ if ($('.riepilogo-baule').length > 0) {
 <% @appunti.each do |a|  %>
   var appunto = $("#<%= dom_id(a) %>");
   appunto.toggleClass('favorited');
-  $('.baule-div', appunto).html("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>");
+  $('.baule-div', appunto).html("<%= escape_javascript( baule_tag @cliente ) %>");
 <% end %>
 
 
 
 var cliente = $(".<%= dom_id(@cliente) %>");
-$('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @cliente, class_scarica: 'btn' ) %>");
+$('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @cliente ) %>");
 
 $(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");

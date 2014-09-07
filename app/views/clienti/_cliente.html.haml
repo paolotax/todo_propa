@@ -1,10 +1,9 @@
 - cache [ current_user, cliente ] do
 
-  %div{ class: "cliente #{dom_id(cliente)} #{cliente.fatto? ? "fatto" : "" }", data: {id: "#{cliente.id}"}}
-    / .counter
-    /   = "#{cliente_counter + 1}."
+  %div{ class: "cliente #{dom_id(cliente)}", data: {id: "#{cliente.id}"}}
+        
     .baule-div
-      = baule_tag cliente, class_scarica: "btn btn-warning btn-mini"
+      = baule_tag cliente
 
     .cliente-inner.clearfix
       .titolo

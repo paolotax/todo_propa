@@ -6,7 +6,8 @@
       
       %td{ class: "#{dom_id(cliente)} cliente" }
         = baule_tag cliente
-        = next_visita_div(cliente)
+        %br
+        = cliente_presenter.visite_div
       
       %td
         = link_to cliente.titolo, cliente

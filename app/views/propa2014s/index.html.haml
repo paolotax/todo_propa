@@ -32,24 +32,22 @@
     
       .header-inner
         - if @provincie
+          
           .sort-box.clearfix
+            
             %h2.pull-left 
               Propaganda 2014
               %small= @count_elementari
+            
             .btn-group.pull-right
               = link_to 'tutte', params.except(:provincia, :data), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
               - for provincia in @provincie
                 = link_to provincia, params.except(:data).merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
-            .btn-group.pull-right
-              = link_to 'tutte', params.except(:status, :data), class: "btn #{params[:status].present?  ? '' : 'btn-primary'}", remote: false
-              - ["da fare", "da pianificare", "dare vacanze", "da ritirare"].each do |status|
-                = link_to status, params.except(:data).merge(status: status.split.join("_")), class: "btn #{params[:status] == status.split.join("_")  ? 'btn-primary' : ''}", remote: false
-            = link_to "Svuota baule", svuota_baule_propa2014s_path, class: 'btn btn-warning baule-rimuovi pull-right'
-    
-
+            
     .module
 
     .row.floating    
+      
       #clienti.list.module.span8
 
         - zone = @clienti.arrange(:order => "provincia asc, comune asc")

@@ -96,7 +96,7 @@
 
       - unless cliente.eliminato?
         .pull-right
-          = baule_tag cliente, class_scarica: "btn btn-warning"
+          = baule_tag cliente
           - unless cliente.has_documenti?
             = link_to cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
               %i.icon-trash

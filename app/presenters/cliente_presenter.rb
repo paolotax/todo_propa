@@ -4,13 +4,17 @@ class ClientePresenter < BasePresenter
   #delegate :username, to: :user
 
 
+  # check visita nel baule?
   def visite
     @visite ||= cliente.visite.map.select { |v| !v.data.nil? }.sort_by(&:data)
   end
 
+  def today_visita?
+    !visite.select { |v| v.data && v.data = Date.today }.empty?
+  end
 
   def next_visita
-    visite.select { |v| v.data && v.data > Date.today }.first unless visite.empty?
+    visite.select { |v| v.data && v.data >= Date.today }.first unless visite.empty?
   end
 
   
@@ -27,6 +31,19 @@ class ClientePresenter < BasePresenter
   def adozioni_box
     h.render 'clienti/cliente_adozioni_box', cliente: cliente
   end
+
+
+  def visite_div
+    
+    next_v = h.visita_label( next_visita.try(:data) ) || ""
+    last_v = h.visita_label( last_visita.try(:data) ) || ""
+    
+    (next_v + last_v).html_safe
+    
+  end
+
+
+
 
 
   def avatar

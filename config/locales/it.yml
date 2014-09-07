@@ -73,7 +73,7 @@ it:
       only_date: "%d/%m/%Y"
       long_with_day: "%A, %d %B %Y"
       short_with_day: "%a %d %b"
-      day_of_month: "%A, %d"
+      day_of_month: "%a, %d"
       month_year: "%B %Y"
 
     day_names:
