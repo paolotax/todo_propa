@@ -22,7 +22,6 @@ class BauleController < ApplicationController
     @visite.each_with_index do |visita, index|
       
       visita.update_attributes!(params[:visita].merge(step: index).reject { |k,v| v.blank? })  #  unless k == 'stato'
-      raise v.inspect
       # visita.baule = false
       # visita.scopo = params[:visita][:scopo]
       # visita.data  = params[:visita][:data]

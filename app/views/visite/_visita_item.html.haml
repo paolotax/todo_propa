@@ -1,37 +1,21 @@
 = content_tag_for :li, visita, class: 'clearfix' do
   
 
-  %div.ex-td.pull-left
+  .pull-left
     %span.handle [drag]
-    %span= visita.start  
+ 
   
-  %div.ex-td.pull-left
+  .span5
 
-    %table.table= render 'clienti/cliente_propa', cliente: visita.cliente
+    = render 'clienti/cliente_propa', cliente: visita.cliente
 
-  %div.ex-td.pull-left.visible-phone
+  .pull-left.visible-phone
     - unless visita.cliente.latitude.nil?
       %a.btn{ href: "http://maps.apple.com/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
         / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
         %i.icon-road
       
-  %div.ex-td.pull-right
+  .pull-right
     = link_to visita, method: :delete, confirm: "Sei sicuro?", remote: true, class: "close" do
       &times;
 
-  / %div.ex-td.pull-right.cliente-adozioni
-  /   = render 'clienti/cliente_adozioni', cliente: visita.cliente
-
-  / %div.ex-td.pull-right.vacanze
-  /   - if visita.cliente.vacanze_da_ritirare && visita.cliente.vacanze_da_ritirare > 0
-  /     %span.badge.badge-inverse= visita.cliente.vacanze_da_ritirare
-
-  / %div.ex-td.pull-right.da_fare
-  /   - if visita.cliente.appunti.da_fare.size > 0
-  /     %span.badge.badge-important
-  /       = visita.cliente.appunti.da_fare.size
-
-  / %div.ex-td.pull-right.in-sospeso
-  /   - if visita.cliente.has_sospeso?
-  /     %span.label.label-warning
-  /       = number_to_currency visita.cliente.properties["importo_in_sospeso"].to_f

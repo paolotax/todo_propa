@@ -2,13 +2,7 @@
 
 - title "Propa 2014"
 
-
-
-
-
-
 .row
-
 
   .content-main.span12
     %header.content-header
@@ -22,16 +16,19 @@
               Propaganda 2014
               %small= @clienti.scuola_primaria.size
 
-            .btn-group.pull-right
-              = link_to 'tutte', params.except(:adozioni_da_consegnare, :provincia), class: "btn #{params[:adozioni_da_consegnare].present?  ? '' : 'btn-primary'}", remote: false
+            .btn-toolbar.pull-right
               
-              = link_to "kit da consegnare", params.merge(adozioni_da_consegnare: true), class: "btn #{params[:adozioni_da_consegnare] == 'true'  ? 'btn-primary' : ''}", remote: false
-              = link_to "kit consegnati", params.merge(adozioni_da_consegnare: false), class: "btn #{params[:adozioni_da_consegnare] == 'false'  ? 'btn-primary' : ''}", remote: false
-            
-            .btn-group.pull-right
-              = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
-              - for provincia in @provincie
-                = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
+              .btn-group
+                = link_to 'tutte', params.except(:adozioni_da_consegnare, :provincia), class: "btn #{params[:adozioni_da_consegnare].present?  ? '' : 'btn-primary'}", remote: false
+
+                = link_to "kit da consegnare", params.merge(adozioni_da_consegnare: true), class: "btn #{params[:adozioni_da_consegnare] == 'true'  ? 'btn-primary' : ''}", remote: false
+                = link_to "kit consegnati", params.merge(adozioni_da_consegnare: false), class: "btn #{params[:adozioni_da_consegnare] == 'false'  ? 'btn-primary' : ''}", remote: false
+              
+              .btn-group
+                = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
+                
+                - for provincia in @provincie
+                  = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
 
             
     .module
@@ -45,8 +42,9 @@
               .header-inner
                 %h3= link_to direzione.titolo, direzione
            
-            - @clienti_grouped[direzione].each do |scuola|              
-              = render "clienti/cliente_propa", cliente: scuola
+            - @clienti_grouped[direzione].each do |scuola| 
+              .cliente.item             
+                = render "clienti/cliente_propa", cliente: scuola
 
       
       .floating-side.span4
