@@ -1,35 +1,35 @@
-%table#scuola_adozioni.table
-  / %thead
-  /   %tr
-  /     %th= "materia"
-  /     %th= "classe"
-  /     %th= "sezioni"
-  /     %th= "libro"
-  /     %th= "copie"
-  /     / %th
-  /     / %th 
-  %tbody
-    - cliente.mie_adozioni_grouped.each do |k, v|
-      - ids = v.map(&:id)
-      %tr{:class => k[:settore].downcase}
-        / %td= k[:materia]
-        %td
-          .pull-right
-            = k[:classe]
-        %td
-          = v.map {|c| c.classe.sezione}.sort.join
-        %td
-          = link_to k[:titolo], libro_path(v[0][:libro_id]) 
-        %td
-          .pull-right
-            = v.sum(&:nr_copie)
-        / %td
-        /   = form_tag  edit_individual_scuola_adozioni_url(@scuola) do
-        /     - for i in ids
-        /       = hidden_field_tag 'adozione_ids[]', i
-        /     = submit_tag 'Modifica'
-        / %td
-        /   = form_tag stampe_sovrapacchi_adozioni_url, :format => 'pdf' do
-        /     - for i in ids
-        /       = hidden_field_tag 'adozione_ids[]', i
-        /     = submit_tag 'Stampa'
+/ %table#scuola_adozioni.table
+/   / %thead
+/   /   %tr
+/   /     %th= "materia"
+/   /     %th= "classe"
+/   /     %th= "sezioni"
+/   /     %th= "libro"
+/   /     %th= "copie"
+/   /     / %th
+/   /     / %th 
+/   %tbody
+/     - cliente.mie_adozioni_grouped.each do |k, v|
+/       - ids = v.map(&:id)
+/       %tr{:class => k[:settore].downcase}
+/         / %td= k[:materia]
+/         %td
+/           .pull-right
+/             = k[:classe]
+/         %td
+/           = v.map {|c| c.classe.sezione}.sort.join
+/         %td
+/           = link_to k[:titolo], libro_path(v[0][:libro_id]) 
+/         %td
+/           .pull-right
+/             = v.sum(&:nr_copie)
+/         / %td
+/         /   = form_tag  edit_individual_scuola_adozioni_url(@scuola) do
+/         /     - for i in ids
+/         /       = hidden_field_tag 'adozione_ids[]', i
+/         /     = submit_tag 'Modifica'
+/         / %td
+/         /   = form_tag stampe_sovrapacchi_adozioni_url, :format => 'pdf' do
+/         /     - for i in ids
+/         /       = hidden_field_tag 'adozione_ids[]', i
+/         /     = submit_tag 'Stampa'

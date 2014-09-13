@@ -75,7 +75,7 @@ class Adozione < ActiveRecord::Base
   end
 
   
-  after_commit :update_cliente_properties
+  after_save :update_cliente_properties
   
   
   private

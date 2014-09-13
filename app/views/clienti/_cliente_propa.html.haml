@@ -2,18 +2,22 @@
   
   - present cliente do |cliente_presenter|
 
-    %tr
+    %div.cliente.item
       
-      %td{ class: "#{dom_id(cliente)} cliente" }
+      %div.pull-left{ class: "#{dom_id(cliente)}" }
+        
         = baule_tag cliente
         %br
+        
         = cliente_presenter.visite_div
       
-      %td
+      %div.pull-left
+        
         = link_to cliente.titolo, cliente
+        
         - if cliente.scuola_primaria?
           = link_to cliente_path( id: cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
             %i.icon-file
 
-      %td
+      %div.pull-right
         = cliente_presenter.adozioni_box

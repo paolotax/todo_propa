@@ -21,17 +21,17 @@ class BauleController < ApplicationController
     #  @visite = current_user.visite.nel_baule.order(:start)
     @visite.each_with_index do |visita, index|
       
-      #visita.update_attributes!(params[:visita].merge(step: index).reject { |k,v| v.blank? })  #  unless k == 'stato'
+      visita.update_attributes!(params[:visita].merge(step: index).reject { |k,v| v.blank? })  #  unless k == 'stato'
+      raise v.inspect
+      # visita.baule = false
+      # visita.scopo = params[:visita][:scopo]
+      # visita.data  = params[:visita][:data]
 
-      visita.baule = false
-      visita.scopo = params[:visita][:scopo]
-      visita.data  = params[:visita][:data]
-
-      if visita.valid?
-        visita.save
-      else
-        visita.destroy
-      end
+      # if visita.valid?
+      #   visita.save
+      # else
+      #   visita.destroy
+      # end
     end
     
     respond_to do |format|

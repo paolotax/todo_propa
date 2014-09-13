@@ -20,7 +20,7 @@ class Giro
 
 
   def visite
-    if baule
+    if baule && baule == true
       user.visite.includes(:cliente).where(baule: true).order(:start)
     else  
       user.visite.includes(:cliente).where("data = ?", @giorno).order(:start)

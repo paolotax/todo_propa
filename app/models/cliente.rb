@@ -58,6 +58,10 @@ class Cliente < ActiveRecord::Base
   
   scope :con_adozioni_consegnate,    where("properties -> 'adozioni_kit' <> '0'") 
   
+
+
+  # scope :con_adozioni_144, select.joins(adozioni: [libro: [:materia, :editore]]).where("materie.gruppo = '144' AND editori.gruppo = 'GIUNTI'")
+
   # scope :con_appunti_in_corso,   joins(:appunti).where("appunti.stato <> 'X'")
   # scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")
   # scope :con_appunti_da_fare,    joins(:appunti).where("appunti.stato = ''")
@@ -340,12 +344,12 @@ class Cliente < ActiveRecord::Base
     end
   end
   
-  def mie_adozioni_grouped
-    adozioni = self.mie_adozioni.
-                    includes(:libro, :classe, :materia).
-                    order('classi.classe, adozioni.materia_id, classi.sezione, libri.id').
-                    group_by {|c| { :classe => c.classe.classe, :materia => c.materia.materia, :titolo => c.libro.titolo, :settore => c.libro.settore }}
-  end
+  # def mie_adozioni_grouped
+  #   adozioni = self.mie_adozioni.
+  #                   includes(:libro, :classe, :materia).
+  #                   order('classi.classe, adozioni.materia_id, classi.sezione, libri.id').
+  #                   group_by {|c| { :classe => c.classe.classe, :materia => c.materia.materia, :titolo => c.libro.titolo, :settore => c.libro.settore }}
+  # end
   
   def classi_grouped
     classi = self.classi.

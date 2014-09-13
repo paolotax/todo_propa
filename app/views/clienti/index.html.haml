@@ -13,7 +13,8 @@
     = render :partial => 'shared/filters'
 
     #clienti.list
-      = render partial: "cliente_big", collection: @clienti, as: :cliente
+
+      = render partial: "cliente_propa", collection: @clienti, as: :cliente
 
     .stream-loader
       = paginate @clienti

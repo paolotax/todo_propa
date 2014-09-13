@@ -1,40 +1,13 @@
 class Propa2014sController < ApplicationController
   
-  can_edit_on_the_spot
-
+  
   def index
 
-    # clienti_ids = current_user.adozioni.joins(:classe).where(libro_id: 575).map{|a| a.classe.cliente_id}.sort.uniq
-    
-    # @clienti = current_user.clienti.scuole.where("id in (?)", clienti_ids).order(:provincia, :comune)
+    @clienti = current_user.clienti.scuole.filtra(params).per_localita
 
-    # @direzioni = @clienti.all.map(&:parent)
+    @clienti_grouped = @clienti.scuola_primaria.all.group_by(&:parent)
 
-    @clienti = current_user.clienti.not_deleted.joins(:propa2014).per_localita
-    
-    @tutti = @clienti.all
-
-    if params[:provincia]
-      @clienti = @clienti.where(provincia: params[:provincia])
-    end
-
-    if params[:data].present?
-      @clienti = @clienti.where("propa2014s.data_visita = ? OR propa2014s.data_vacanze = ? OR propa2014s.data_ritiro = ?", Date.parse(params[:data]), Date.parse(params[:data]), Date.parse(params[:data]))
-    else
-      if params[:status].present?
-        if params[:status] == "da_fare"
-          @clienti = @clienti.where("propa2014s.data_visita is null or propa2014s.data_visita > ?", Time.now.to_date)
-        elsif params[:status] == "da_pianificare"
-          @clienti = @clienti.where("propa2014s.data_visita is null")
-        elsif params[:status] == "dare_vacanze"
-          @clienti = @clienti.where("propa2014s.data_vacanze is null")
-        elsif params[:status] == "da_ritirare"
-          @clienti = @clienti.where("propa2014s.data_ritiro is null")
-        end
-      end
-    end
-
-    @count_elementari = @clienti.select { |c| c.scuola_primaria? == true}.count
+    @direzioni = @clienti_grouped.keys.reject{ |c| c.nil? }.sort_by{|c| [c.provincia, c.comune, c.id] }
     
     @provincie = current_user.clienti.not_deleted.direzioni.select_provincia.map(&:provincia)
     
@@ -45,9 +18,6 @@ class Propa2014sController < ApplicationController
     @visite         = current_user.visite.includes(:cliente => :visite).where(baule: false).filtra(params)
     
     @visite_grouped = @visite.order("data desc").group_by(&:data)
-
-
-    
     
   end
 

@@ -2,26 +2,9 @@
 
 - title "Propa 2014"
 
-/ = render @direzioni.uniq
-
-/ = nested_scuole @clienti.arrange(:order => "provincia asc, comune asc")
-/ - zone = @clienti.arrange(:order => "provincia asc, comune asc")
-
-/ = zone.size
 
 
-/ - zone.each do |zona|
-  
-/   - if zona[0].scuola_primaria?
-/     = render zona[0]
-/   - else
-/     = link_to zona[0]
-  
-/   - zona[1].each do |direzione|
-/     - if direzione[0].scuola_primaria? == true
-/       = render direzione[0]
-/     - else
-/       = link_to direzione[0].titolo, direzione[0]
+
 
 
 .row
@@ -37,58 +20,35 @@
             
             %h2.pull-left 
               Propaganda 2014
-              %small= @count_elementari
+              %small= @clienti.scuola_primaria.size
+
+            .btn-group.pull-right
+              = link_to 'tutte', params.except(:adozioni_da_consegnare, :provincia), class: "btn #{params[:adozioni_da_consegnare].present?  ? '' : 'btn-primary'}", remote: false
+              
+              = link_to "kit da consegnare", params.merge(adozioni_da_consegnare: true), class: "btn #{params[:adozioni_da_consegnare] == 'true'  ? 'btn-primary' : ''}", remote: false
+              = link_to "kit consegnati", params.merge(adozioni_da_consegnare: false), class: "btn #{params[:adozioni_da_consegnare] == 'false'  ? 'btn-primary' : ''}", remote: false
             
             .btn-group.pull-right
-              = link_to 'tutte', params.except(:provincia, :data), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
+              = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
               - for provincia in @provincie
-                = link_to provincia, params.except(:data).merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
+                = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
+
             
     .module
 
     .row.floating    
       
-      #clienti.list.module.span8
-
-        - zone = @clienti.arrange(:order => "provincia asc, comune asc")
-
-        %table.table
-          %tr
-            %th           
-            %th Cliente
-            %th Propaganda
-            %th Adozioni
-
-          - zone.each do |zona|
-
-            - if zona[0].scuola_primaria? == true              
-              = render zona[0].propa2014
-            - else
-              %tr.warning
-                %td{colspan: 6}
-                  = link_to zona[0].titolo, zona[0]
-                  %small= zona[0].descendants.select{|s| s.scuola_primaria? == true}.count
-            
-            - zona[1].each do |direzione|
-              - if direzione[0].scuola_primaria? == true
-                = render direzione[0].propa2014
-              - else
-                %tr.warning
-                  %td{colspan: 6}= link_to direzione[0].titolo, direzione[0]
-
-              - direzione[1].each do |plesso|
-                - if plesso[0].scuola_primaria? == true
-                  = render plesso[0].propa2014
-                - else
-                  %tr.warning
-                    %td{colspan: 6}= link_to plesso[0].titolo, plesso[0]
-
-
-      / vecchio sistema
-      / = render 'side_propaganda'
+      #clienti.list.span8
+        - @direzioni.each do |direzione|
+          .module
+            .content-header
+              .header-inner
+                %h3= link_to direzione.titolo, direzione
+           
+            - @clienti_grouped[direzione].each do |scuola|              
+              = render "clienti/cliente_propa", cliente: scuola
 
       
-
       .floating-side.span4
         .floating-toolbar
           .module
