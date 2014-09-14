@@ -17,7 +17,7 @@
                 Provincie
                 %i.chev-right
         
-            - @provincie = current_user.clienti.primarie.select_provincia     
+            - @provincie = current_user.clienti.scuola_primaria.select_provincia     
             - for p in @provincie
               %li{ class: "#{ params[:provincia] == p.provincia ? 'active' : ''}" }
                 = link_to giri_path(:provincia => p.provincia), class: "list-link" do

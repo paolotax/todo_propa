@@ -45,7 +45,12 @@ class Cliente < ActiveRecord::Base
   after_validation :geocode, 
         :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.comune_changed? || obj.cap_changed? || obj.provincia_changed?}
 
+  after_save :load_into_soulmate
+  
 
+  
+  scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
+  
   scope :select_provincia, select("clienti.provincia").uniq
   scope :select_citta,     select("clienti.comune").uniq
   
@@ -55,9 +60,11 @@ class Cliente < ActiveRecord::Base
   scope :con_vacanze_ritirate,    where("(properties -> 'vacanze_da_ritirare')::int < 9") 
 
   scope :con_adozioni_da_consegnare, where("(properties -> 'adozioni_da_consegnare' <> '0') or (properties -> 'adozioni_saggi' <> '0') or (properties -> 'adozioni_kit_no_saggio' <> '0')")
-  
   scope :con_adozioni_consegnate,    where("properties -> 'adozioni_kit' <> '0'") 
+  scope :da_ritirare,  where("properties -> 'da_ritirare' = 'true'") 
   
+  scope :previous, lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} < ?", i.user_id, i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
+  scope :next,     lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} > ?", i.user_id, i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
 
 
   # scope :con_adozioni_144, select.joins(adozioni: [libro: [:materia, :editore]]).where("materie.gruppo = '144' AND editori.gruppo = 'GIUNTI'")
@@ -66,23 +73,53 @@ class Cliente < ActiveRecord::Base
   # scope :con_appunti_completo,   joins(:appunti).where("appunti.stato = 'X'")
   # scope :con_appunti_da_fare,    joins(:appunti).where("appunti.stato = ''")
   # scope :con_appunti_in_sospeso, joins(:appunti).where("appunti.stato = 'P'")
-
-  scope :scuole,     not_deleted.where("clienti.cliente_tipo in ('Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica')")
-
-  scope :primarie,   where(cliente_tipo: "Scuola Primaria")
-  scope :cartolerie, where(cliente_tipo: "Cartolibreria")
-  scope :direzioni,  where("clienti.cliente_tipo in ('Istituto Comprensivo', 'Direzione Didattica')")
-  
-  scope :altri,      where("clienti.cliente_tipo in ('Persona Fisica', 'Ditta', 'Comune')")
-
-  scope :previous, lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} < ?", i.user_id, i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
-  scope :next,     lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} > ?", i.user_id, i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
-  
-  scope :per_localita, order('clienti.provincia, clienti.comune, clienti.id')
-  
   # scope :con_adozioni, joins(:adozioni) & Adozione.scolastico  
 
+  scope :scuole,     not_deleted.where("clienti.cliente_tipo in ('Scuola Primaria', 'Istituto Comprensivo', 'Direzione Didattica')")
+  scope :direzioni,  where("clienti.cliente_tipo in ('Istituto Comprensivo', 'Direzione Didattica')")
+  scope :altri,      where("clienti.cliente_tipo in ('Persona Fisica', 'Ditta', 'Comune')")
+
   
+  TIPI_CLIENTI.each do |tipo|
+    scope "#{tipo.split.join.underscore}", where("clienti.cliente_tipo = ?", tipo)
+    
+    define_method "#{tipo.split.join.underscore}?" do
+      self.cliente_tipo == tipo
+    end
+  end  
+
+  
+  %w[sezioni_adottate copie_vendute copie_da_consegnare appunti_da_fare appunti_in_sospeso].each do |key|
+    # attr_accessible key
+    scope "has_#{key}", where("(properties -> '#{key}')::int > 0")
+
+    define_method(key) do
+      properties && properties[key]
+    end
+  end
+
+  
+  class << self
+    ["adozioni", "appunti", "classi", "visite"].each do |objects|
+      
+      define_method "con_#{objects}" do |relation|
+        ids = relation.pluck(:cliente_id)
+        clienti = scoped
+        clienti = clienti.where('clienti.id in (?)', ids)
+        clienti
+      end
+  
+      define_method "senza_#{objects}" do |relation|
+        ids = relation.pluck(:cliente_id)
+        clienti = scoped
+        clienti = clienti.where('clienti.id not in (?)', ids)
+        clienti
+      end
+  
+    end
+  end
+  
+
   def crea_consegna(riga_ids = [])
 
     righe = Riga.find(riga_ids)
@@ -106,6 +143,7 @@ class Cliente < ActiveRecord::Base
     end    
   end
 
+  
   def da_scorrere?
     anno = anno_scolastico
     if anno && anno < Time.now.year.to_s && Time.now > Date.new(Time.now.year, 6, 1)
@@ -115,41 +153,7 @@ class Cliente < ActiveRecord::Base
     end
   end    
 
-  
-  class << self
-    ["adozioni", "appunti", "classi", "visite"].each do |objects|
-      define_method "con_#{objects}" do |relation|
-        ids = relation.pluck(:cliente_id)
-        clienti = scoped
-        clienti = clienti.where('clienti.id in (?)', ids)
-        clienti
-      end
-  
-      define_method "senza_#{objects}" do |relation|
-        ids = relation.pluck(:cliente_id)
-        clienti = scoped
-        clienti = clienti.where('clienti.id not in (?)', ids)
-        clienti
-      end
-  
-    end
-  end
-  
-  
-  
 
-  
-  TIPI_CLIENTI.each do |tipo|
-    scope "#{tipo.split.join.underscore}", where("clienti.cliente_tipo = ?", tipo)
-    
-    define_method "#{tipo.split.join.underscore}?" do
-      self.cliente_tipo == tipo
-    end
-  end
-
-
-
-  
   def has_documenti?
     !self.fatture.empty?
   end
@@ -169,9 +173,11 @@ class Cliente < ActiveRecord::Base
     "##{id} - #{titolo} #{frazione} #{comune} (#{provincia})"
   end
 
+  
   def nel_baule?
     !self.visite.select{ |v| v.nel_baule? == true}.empty?
   end 
+  
   
   def nel_baule
     nel_baule = nil
@@ -381,22 +387,29 @@ class Cliente < ActiveRecord::Base
 
   # da rivedere non è certo ottimizzato
   def ricalcola_properties
+    
     prop = {}
+    
     if mie_adozioni.size > 0
       prop = prop.merge(sezioni_adottate: mie_adozioni.size )
     end
+    
     if righe.scarico.da_consegnare.sum(:quantita) > 0
       prop = prop.merge(copie_da_consegnare:  righe.scarico.da_consegnare.sum(:quantita) )
     end
+    
     if righe.sum(:quantita) > 0
       prop = prop.merge(copie_vendute:  righe.sum(:quantita) )
     end
+    
     if appunti.da_fare.size > 0
       prop = prop.merge(appunti_da_fare:  appunti.da_fare.size )
     end
+    
     if appunti.preparato.size > 0
       prop = prop.merge(appunti_pronti:  appunti.preparato.size )
     end
+    
     if appunti.in_sospeso.size > 0
       prop = prop.merge(appunti_in_sospeso:  appunti.in_sospeso.size )
       prop = prop.merge(importo_in_sospeso:  appunti.in_sospeso.sum(&:totale_importo) )
@@ -421,19 +434,15 @@ class Cliente < ActiveRecord::Base
     if adozioni_kit_no_saggio && adozioni_kit_no_saggio.size > 0
       prop = prop.merge(adozioni_kit_no_saggio: adozioni_kit_no_saggio.size)
     end
+    
+    if da_ritirare?
+      prop = prop.merge(da_ritirare: da_ritirare?)
+    end
 
     self.properties = prop
     save   
   end
   
-  %w[sezioni_adottate copie_vendute copie_da_consegnare appunti_da_fare appunti_in_sospeso].each do |key|
-    # attr_accessible key
-    scope "has_#{key}", where("(properties -> '#{key}')::int > 0")
-
-    define_method(key) do
-      properties && properties[key]
-    end
-  end
   
 
   def self.filtra(params)
@@ -449,11 +458,11 @@ class Cliente < ActiveRecord::Base
     #   clienti = clienti.tipos if params[:tipo].present? && params[:tipo] == tipos
     # end
       
-    clienti = clienti.scuole     if params[:tipo].present? && params[:tipo] == 'scuole'
-    clienti = clienti.primarie   if params[:tipo].present? && params[:tipo] == "primarie"
-    clienti = clienti.cartolerie if params[:tipo].present? && params[:tipo] == "cartolerie"
-    clienti = clienti.direzioni  if params[:tipo].present? && params[:tipo] == "direzioni"
-    clienti = clienti.altri      if params[:tipo].present? && params[:tipo] == "altri"
+    clienti = clienti.scuole        if params[:tipo].present? && params[:tipo] == 'scuole'
+    clienti = clienti.scuola_primaria   if params[:tipo].present? && params[:tipo] == "primarie"
+    clienti = clienti.cartolibreria if params[:tipo].present? && params[:tipo] == "cartolerie"
+    clienti = clienti.direzioni     if params[:tipo].present? && params[:tipo] == "direzioni"
+    clienti = clienti.altri         if params[:tipo].present? && params[:tipo] == "altri"
     
     # devo mettere l'utente
     clienti = clienti.con_appunti(Appunto.in_corso)   if params[:status].present? && params[:status] == 'in_corso'
@@ -469,6 +478,7 @@ class Cliente < ActiveRecord::Base
 
     clienti = clienti.con_adozioni_da_consegnare if params[:adozioni_da_consegnare].present? && params[:adozioni_da_consegnare] == "true"
     clienti = clienti.con_adozioni_consegnate if params[:adozioni_da_consegnare].present? && params[:adozioni_da_consegnare] == "false"
+    clienti = clienti.da_ritirare if params[:da_ritirare].present? && params[:da_ritirare] == "true"
 
     clienti
   end
@@ -525,8 +535,8 @@ class Cliente < ActiveRecord::Base
     !self.visite.nel_baule.empty?
   end
 
-  after_save :load_into_soulmate
   
+
   def self.search_mate(term, id_user)
     matches = Soulmate::Matcher.new("#{id_user}_cliente").matches_for_term(term)
   end
@@ -587,11 +597,14 @@ class Cliente < ActiveRecord::Base
 
   
     def set_titolo
-      n = self.titolo.squish.split(' ')
-      suff = Cliente::ABBR_TIPI[Cliente::TIPI_CLIENTI.index(self.cliente_tipo)]
-      
-      unless n[0] == suff
-        self.titolo = (suff + " " + self.titolo).squish
+
+      if titolo_changed?
+        n = self.titolo.squish.split(' ')
+        suff = Cliente::ABBR_TIPI[Cliente::TIPI_CLIENTI.index(self.cliente_tipo)]
+        
+        unless n[0] == suff
+          self.titolo = (suff + " " + self.titolo).squish
+        end
       end
     end
 

@@ -19,12 +19,17 @@
             .btn-toolbar.pull-right
               
               .btn-group
-                = link_to 'tutte', params.except(:adozioni_da_consegnare, :provincia), class: "btn #{params[:adozioni_da_consegnare].present?  ? '' : 'btn-primary'}", remote: false
+                
+                = link_to 'tutte', params.except(:da_ritirare, :adozioni_da_consegnare, :provincia), class: "btn #{params[:adozioni_da_consegnare].present? || params[:da_ritirare].present? ? '' : 'btn-primary'}", remote: false
 
-                = link_to "kit da consegnare", params.merge(adozioni_da_consegnare: true), class: "btn #{params[:adozioni_da_consegnare] == 'true'  ? 'btn-primary' : ''}", remote: false
-                = link_to "kit consegnati", params.merge(adozioni_da_consegnare: false), class: "btn #{params[:adozioni_da_consegnare] == 'false'  ? 'btn-primary' : ''}", remote: false
+                = link_to "kit da consegnare", params.except(:da_ritirare).merge(adozioni_da_consegnare: true), class: "btn #{params[:adozioni_da_consegnare] == 'true'  ? 'btn-primary' : ''}", remote: false
+                
+                = link_to "kit consegnati", params.except(:da_ritirare).merge(adozioni_da_consegnare: false), class: "btn #{params[:adozioni_da_consegnare] == 'false'  ? 'btn-primary' : ''}", remote: false
+                
+                = link_to "da ritirare", params.except(:adozioni_da_consegnare).merge(da_ritirare: 'true'), class: "btn #{params[:da_ritirare] == 'true'  ? 'btn-primary' : ''}", remote: false
               
               .btn-group
+                
                 = link_to 'tutte', params.except(:provincia), class: "btn #{params[:provincia].present?  ? '' : 'btn-primary'}", remote: false
                 
                 - for provincia in @provincie

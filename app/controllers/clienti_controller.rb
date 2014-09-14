@@ -25,9 +25,7 @@ class ClientiController < ApplicationController
 
   def show
 
-    @cliente = current_user.clienti.includes(:indirizzi, :appunti, :fatture, :righe, :visite).find(params[:id])
-
-    #raise @cliente.inspect
+    @cliente = current_user.clienti.includes(:appunti, :fatture, :righe, :visite).find(params[:id])
 
     respond_to do |format|
       format.html do

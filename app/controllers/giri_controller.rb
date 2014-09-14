@@ -10,13 +10,13 @@ class GiriController < ApplicationController
     
     @nel_baule      = current_user.clienti.nel_baule.filtra(params.except([:controller, :action]))
     
-    @scuole_fatte   = current_user.clienti.primarie
+    @scuole_fatte   = current_user.clienti.scuola_primaria
                                   .con_visite(current_user.visite.settembre)
                                   .includes(:appunti, :visite)
                                   .filtra(params.except([:controller, :action]))
                                   .order("clienti.id")
     
-    @scuole_da_fare = current_user.clienti.primarie
+    @scuole_da_fare = current_user.clienti.scuola_primaria
                                   .senza_visite(current_user.visite.settembre)
                                   .con_adozioni(current_user.adozioni.scolastico)
                                   .includes(:appunti, :visite)
@@ -25,7 +25,7 @@ class GiriController < ApplicationController
     
     # rimettere se solo scuole con adozioni
     #.con_adozioni(current_user.adozioni.scolastico)
-    @scuole_da_fare_senza = current_user.clienti.primarie
+    @scuole_da_fare_senza = current_user.clienti.scuola_primaria
                                   .senza_visite(current_user.visite.settembre)
                                   .senza_adozioni(current_user.adozioni.scolastico)
                                   .includes(:appunti, :visite)
