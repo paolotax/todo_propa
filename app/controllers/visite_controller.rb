@@ -86,9 +86,17 @@ class VisiteController < ApplicationController
 
   def sort
 
-    params[:visita].each_with_index do |id, index|
-      current_user.visite.nel_baule.update_all({start: DateTime.now.beginning_of_day + (index+1).hour}, {id: id})
+    # params data non serve nell update all ma il giorno è sbagliato
+    if params[:data]
+      data = DateTime.parse(params[:data])
+    else
+      data = DateTime.now.beginning_of_day
     end
+
+    params[:visita].each_with_index do |id, index|
+      current_user.visite.update_all({start: data + (index+1).hour}, {id: id})
+    end
+    
     render nothing: true
   end
 

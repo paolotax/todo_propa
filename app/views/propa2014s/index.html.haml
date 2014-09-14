@@ -5,6 +5,7 @@
 .row
 
   .content-main.span12
+    
     %header.content-header
     
       .header-inner
@@ -34,8 +35,7 @@
                 
                 - for provincia in @provincie
                   = link_to provincia, params.merge(provincia: provincia), class: "btn #{params[:provincia] == provincia  ? 'btn-primary' : ''}", remote: false
-
-            
+           
     .module
 
     .row.floating    
@@ -51,7 +51,6 @@
               .cliente.item             
                 = render "clienti/cliente_propa", cliente: scuola
 
-      
       .floating-side.span4
         .floating-toolbar
           .module

@@ -3,7 +3,7 @@
 
   .pull-left
     %span.handle [drag]
- 
+    %span.handle= "#{visita.start.try(:hour)}:#{visita.start.try(:min)}"
   
   .span5
 
