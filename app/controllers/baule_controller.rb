@@ -8,9 +8,8 @@ class BauleController < ApplicationController
   
 
   def destroy
-    # @visite = current_user.visite.nel_baule
-    @visite.destroy_all
 
+    @visite.destroy_all
     respond_to do |format|
       format.html { redirect_to :back, notice: "Baule svuotato" }
     end
@@ -18,24 +17,11 @@ class BauleController < ApplicationController
   
   def update
 
-    #  @visite = current_user.visite.nel_baule.order(:start)
-    @visite.each_with_index do |visita, index|
-      
-      visita.update_attributes!(params[:visita].merge(step: index).reject { |k,v| v.blank? })  #  unless k == 'stato'
-      # visita.baule = false
-      # visita.scopo = params[:visita][:scopo]
-      # visita.data  = params[:visita][:data]
+    @giro.salva_baule(params)
 
-      # if visita.valid?
-      #   visita.save
-      # else
-      #   visita.destroy
-      # end
-    end
-    
     respond_to do |format|
-      format.html { redirect_to :back, notice: "Il giro e' stato salvato" }
-    end
+      format.html { redirect_to giro_path( giorno: params[:visita][:data]), notice: "Il giro e' stato salvato" }
+    end  
   end
 
   private
@@ -44,5 +30,6 @@ class BauleController < ApplicationController
       @giro = Giro.new(user: current_user, baule: true) 
       @visite = @giro.visite
     end 
+
 
 end

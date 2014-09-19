@@ -27,6 +27,26 @@ class Giro
     end
   end
 
+
+  def salva_baule(params)
+
+    if @baule == true
+
+      visite.each_with_index do |visita, index|  
+        unless visita.update_attributes(params[:visita].merge(step: index).reject { |k, v| v.blank? })
+          # non modifica lo scopo se Cliente già visitato
+          old_visita = Visita.find_by_cliente_id_and_data(visita.cliente_id, Date.parse(params[:visita][:data]))
+          old_visita.add_scopo params[:visita][:scopo]
+          old_visita.step = index
+          old_visita.save 
+          visita.destroy
+        end
+      end
+
+    end
+  
+  end
+
   
   def clienti
     visite.map(&:cliente)

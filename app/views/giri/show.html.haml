@@ -10,7 +10,14 @@
         = previous_tag  giro_url(giorno: @giro.ieri)
         = next_tag      giro_url(giorno: @giro.domani)
         
-      %h2= "#{l @giro.giorno.to_date, format: :long_with_day} in cavalleria"
+      .day-calendar.pull-left
+        %time.icon{ datetime: @giro.giorno }
+          %em= I18n.t('date.day_names')[@giro.giorno.wday]
+          %strong= I18n.t('date.month_names')[@giro.giorno.month]
+          %span= @giro.giorno.day
+
+
+      %h2= " in cavalleria"
     .image
       = image_tag asset_path("cavaliere.jpg")
 
@@ -25,11 +32,20 @@
         .btn-group  
           = previous_tag  giro_url(giorno: @giro.ieri)
           = next_tag      giro_url(giorno: @giro.domani)
-      %h2
-        = l @giro.giorno.to_date, format: :long_with_day
-        %small= @giro.scopo
-      %p
-        = @giro.localita
+
+      .day-calendar.pull-left
+        %time.icon{ datetime: @giro.giorno }
+          %em= I18n.t('date.day_names')[@giro.giorno.wday]
+          %strong= I18n.t('date.month_names')[@giro.giorno.month]
+          %span= @giro.giorno.day
+
+      .pull-left
+        %h3
+          = @giro.scopo
+          %small
+            = @giro.localita
+
+      .clearfix
 
         
   .row.baule-page
@@ -37,10 +53,11 @@
     .span6
       = render :partial => 'giri/list_giro'
     
-    .span4
+
+    .span6
       = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
     
-    .span4
+    .span6
       = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
       
     - if @giro.appunti_da_fare.size > 0
