@@ -18,9 +18,13 @@
     .stream-loader
       = paginate @appunti
 
-  .side-right.span3.only_desktop    
+  .side-right.span3.only_desktop 
+
     .module.white
       - cache ['wunderground', params[:comune]], expires_in: 2.hours do
         = render 'forecast', location: @location
+
+    .module
+      = render 'visite/calendar_small'
 
 

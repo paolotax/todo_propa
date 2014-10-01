@@ -6,9 +6,6 @@
 - if @giro.visite.empty?
   .module
     .header
-      .btn-group.pull-right
-        = previous_tag  giro_url(giorno: @giro.ieri)
-        = next_tag      giro_url(giorno: @giro.domani)
         
       .day-calendar.pull-left
         %time.icon{ datetime: @giro.giorno }
@@ -18,20 +15,22 @@
 
 
       %h2= " in cavalleria"
-    .image
-      = image_tag asset_path("cavaliere.jpg")
+
+      .btn-group
+        = previous_tag  giro_url(giorno: @giro.ieri)
+        = next_tag      giro_url(giorno: @giro.domani)
+
+      .clearfix
+
+  .row
+    .span12
+      .image.cavaliere
+        = image_tag asset_path("cavaliere.jpg")
 
 - else
 
   .module
     .header
-      .btn-toolbar.pull-right
-        .btn-group
-          = stampami_tag
-          = link_to "esandi tutto", "", class: "esandi-tutto btn"
-        .btn-group  
-          = previous_tag  giro_url(giorno: @giro.ieri)
-          = next_tag      giro_url(giorno: @giro.domani)
 
       .day-calendar.pull-left
         %time.icon{ datetime: @giro.giorno }
@@ -45,6 +44,17 @@
           %small
             = @giro.localita
 
+        .btn-toolbar
+
+          .btn-group  
+            = previous_tag  giro_url(giorno: @giro.ieri)
+            = next_tag      giro_url(giorno: @giro.domani)
+
+          .btn-group
+            = link_to "esandi tutto", "", class: "esandi-tutto btn"
+            = stampami_tag
+            
+
       .clearfix
 
         
@@ -57,12 +67,11 @@
     .span6
       = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
     
-    .span6
       = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
       
-    - if @giro.appunti_da_fare.size > 0
-      .span6  
-        .content
+      - if @giro.appunti_da_fare.size > 0
+   
+        .content.module
           .content-header
             .header-inner.header
               = show_hide_tag
@@ -73,9 +82,9 @@
               - for appunto in @giro.appunti_da_fare
                 = render appunto
     
-    - if @giro.appunti_preparato.size > 0
-      .span6 
-        .content
+      - if @giro.appunti_preparato.size > 0
+
+        .content.module
           .content-header
             .header-inner.header
               = show_hide_tag
@@ -86,9 +95,9 @@
               - for appunto in @giro.appunti_preparato
                 = render appunto
 
-    - if @giro.appunti_in_sospeso.size > 0
-      .span6 
-        .content
+      - if @giro.appunti_in_sospeso.size > 0
+
+        .content.module
           .content-header
             .header-inner.header
               = show_hide_tag

@@ -46,25 +46,6 @@
   }
 }
 
-.module .header {
-  background-color: white;
-  min-height: 20px;
-  padding: 12px;
-  background-color: white;
-  border-bottom: 1px solid #E8E8E8;
-  -webkit-border-radius: 5px 5px 0 0;
-  -moz-border-radius: 5px 5px 0 0;
-  border-radius: 5px 5px 0 0;
-  color: #333;
-}
-
-.module .content {
-  background-color: white;
-}
-
-.header form {
-  margin-bottom: 0;
-}
 
 .giro {
   padding: 12px;
@@ -90,6 +71,7 @@ div.cliente {
   // }
   .cliente-inner {
     margin-left: 40px;
+    
     > div {
       float: left;
     }

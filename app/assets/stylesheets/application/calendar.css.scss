@@ -45,6 +45,8 @@
 
 .day-calendar {
 
+  line-height: 16px;
+
   time.icon {
     font-size: 1em; /* change icon size */
     display: block;
@@ -52,7 +54,7 @@
     width: 7em;
     height: 7em;
     background-color: #fff;
-    margin: 0.5em 0.5em;
+    margin: 0.5em 2.5em 0.5em 0.5em;
     border-radius: 0.6em;
     box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
     overflow: hidden;

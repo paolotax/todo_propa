@@ -53,16 +53,47 @@
   margin-right: -10px;
 }
 
+.module .header {
+  
+  background-color: white;
+  
+  line-height: 32px;
+  padding: 8px 12px;
+  
+  background-color: white;
+  border-bottom: 1px solid #E8E8E8;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  color: #333;
+
+  h3, h4 {
+    line-height: 32px;
+  }
+}
+
+.module .content {
+  background-color: white;
+}
+
+.header form {
+  margin-bottom: 0;
+}
 
 .show-hide {
+  
+  @include clearfix;
+
   float: right;
   font-size: 20px;
-  margin-left: 10px;
+
   font-weight: bold;
-  line-height: 18px;
+  // line-height: 18px;
+  
   color: black;
+  
   text-shadow: 0 1px 0 white;
-  opacity: 0.2;
+  opacity: 0.3;
   filter: alpha(opacity=20);
 }
 
@@ -73,6 +104,11 @@
   opacity: 0.4;
   filter: alpha(opacity=40);
 }
+
+.btn-group .btn.show-hide {
+  font-size: 20px;
+}
+
 
 
 /*** FILTERS ***/

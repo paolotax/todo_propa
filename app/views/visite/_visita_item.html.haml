@@ -3,8 +3,7 @@
 
   .pull-left
     %span.handle [drag]
-    %span.handle= "#{visita.start.try(:hour)}:#{visita.start.try(:min)}"
-  
+    
   .span5
 
     = render 'clienti/cliente_propa', cliente: visita.cliente
@@ -12,7 +11,6 @@
   .pull-left.visible-phone
     - unless visita.cliente.latitude.nil?
       %a.btn{ href: "http://maps.apple.com/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
-        / %a.btn{ href: "http://maps.google.it/maps?q=#{visita.cliente.latitude},#{visita.cliente.longitude}" }
         %i.icon-road
       
   .pull-right

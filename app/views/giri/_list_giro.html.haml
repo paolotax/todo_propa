@@ -2,11 +2,12 @@
   .module.list-giro.hidden
 - else    
   .module.list-giro
+    
     .header
-      = show_hide_tag
       
       .pull-right
         .btn-group
+          
           %button.btn.btn-link.dropdown-toggle{ "data-toggle" => "dropdown" }
             %i.icon-cog
           %ul.dropdown-menu.pull-right
@@ -21,9 +22,12 @@
                   = hidden_field_tag "adozione_ids[]", a.id
                 = submit_tag "stampa adozioni",  id: "bnt-pdf", class: "btn btn-link"
 
-      
+          = show_hide_tag 'up'
+
       %h3
         = "#{ pluralize @giro.visite.size, 'tappa'}"
+
+      
     .more 
       %ul.lista-visite{ "data-update-url" => "#{sort_visite_path}"}
         - for visita in @giro.visite do

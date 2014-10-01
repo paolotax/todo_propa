@@ -44,7 +44,7 @@ module ApplicationHelper
   end
   
   def show_hide_tag(up_down = 'up')
-    link_to "", class: "pull-right show-hide" do
+    link_to "", class: "btn btn-link show-hide" do
       haml_tag :i, class: "icon-caret-#{up_down}"
     end  
   end
