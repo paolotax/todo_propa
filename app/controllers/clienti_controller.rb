@@ -23,6 +23,7 @@ class ClientiController < ApplicationController
     @citta     = current_user.clienti.not_deleted.select_citta.filtra(params.except(:comune)).order(:comune)
   end
 
+
   def show
 
     @cliente = current_user.clienti.includes(:appunti, :fatture, :righe, :visite).find(params[:id])
@@ -44,6 +45,7 @@ class ClientiController < ApplicationController
     end      
   end
 
+
   def new
     session[:return_to] = request.referer
     @cliente   = current_user.clienti.build
@@ -56,6 +58,7 @@ class ClientiController < ApplicationController
       format.json { render json: @cliente }
     end
   end
+
 
   def edit
     session[:return_to] = request.referer

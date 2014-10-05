@@ -47,3 +47,8 @@ var cliente = $(".<%= dom_id(@cliente) %>");
 $('.baule_btn', cliente).replaceWith("<%= escape_javascript( baule_tag @cliente ) %>");
 
 $(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");
+
+
+
+
+$(".chzn-select").chosen()

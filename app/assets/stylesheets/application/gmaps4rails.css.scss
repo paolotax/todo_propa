@@ -19,6 +19,20 @@
   }
 }
 
+
+.map-giro {
+  
+  width: 320px;
+  height: 200px;  
+  float: right;
+  
+  .gmaps4rails_map {
+    margin: auto;
+    width: 300px;
+    height: 200px;
+  }
+}
+
 .map-baule .gmaps4rails_map {
   margin: auto;
   width: 100%;

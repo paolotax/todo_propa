@@ -2,31 +2,46 @@
 
 = new_button( new_appunto_url )
 
-.module
-  .header
-    .btn-toolbar.pull-right
-      .btn-group
-        = stampami_tag
-        = link_to "page break", "", class: "toggle-break btn"
-        = link_to "esandi tutto", "", class: "esandi-tutto btn"
-
-    %h2 Nel Baule
-
-.row.baule-page
-  .span6
-    = render :partial => 'giri/list_giro'
-  .span5
+.row
+  
+  .span3
     .module
       .header
         = show_hide_tag
-        %h4 scegli il giorno
-      .more.well
-        = render "form"
-  .span4
+        %h3 Nel Baule
+      .more
+        .riepilogo.clearfix
+          = render 'baule/riepilogo_baule'
+        .well
+          = render "baule/form"
+
+    - unless @giro.visite.empty?
+    
+      .module.map-avatar
+        - mappa = @giro.clienti.to_gmaps4rails
+        - unless mappa.empty?
+          = gmaps({ :markers => {:data => mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true, scroll_weel: false } } )
+
+    = render 'visite/calendar_small'
+  
+
+
+
+
+  .span6
+
+    = render :partial => 'giri/list_giro'
+
+  
+  
+
+
+  .span3
     = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
-  .span4
+
     = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
     
+  
   - if @giro.appunti_da_fare.size > 0
     .span6  
       .content
@@ -85,10 +100,6 @@
           .footer
 
 
-      
-
-/ .visite-long.baule-page
-/   = render :partial => 'giri/visite_long'
   
   
 

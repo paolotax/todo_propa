@@ -60,11 +60,14 @@ class Cliente < ActiveRecord::Base
   scope :con_vacanze_ritirate,    where("(properties -> 'vacanze_da_ritirare')::int < 9") 
 
   scope :con_adozioni_da_consegnare, where("(properties -> 'adozioni_da_consegnare' <> '0') or (properties -> 'adozioni_saggi' <> '0') or (properties -> 'adozioni_kit_no_saggio' <> '0')")
+  
   scope :con_adozioni_consegnate,    where("properties -> 'adozioni_kit' <> '0'") 
   scope :da_ritirare,  where("properties -> 'da_ritirare' = 'true'") 
   
   scope :previous, lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} < ?", i.user_id, i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
+  
   scope :next,     lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} > ?", i.user_id, i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
+
 
 
   # scope :con_adozioni_144, select.joins(adozioni: [libro: [:materia, :editore]]).where("materie.gruppo = '144' AND editori.gruppo = 'GIUNTI'")

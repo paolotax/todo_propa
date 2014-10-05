@@ -10,15 +10,7 @@ class Propa2014sController < ApplicationController
     @direzioni = @clienti_grouped.keys.reject{ |c| c.nil? }.sort_by{|c| [c.provincia, c.comune, c.id] }
     
     @provincie = current_user.clienti.not_deleted.direzioni.select_provincia.map(&:provincia)
-    
-    # @date = params[:calendar] ? Date.parse(params[:calendar]) : Date.today
-  
-    # params[:calendar] = @date
-
-    # @visite         = current_user.visite.includes(:cliente => :visite).where(baule: false).filtra(params)
-    
-    # @visite_grouped = @visite.order("data desc").group_by(&:data)
-    
+        
   end
 
 

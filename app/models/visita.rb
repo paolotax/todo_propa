@@ -1,25 +1,25 @@
 class Visita < ActiveRecord::Base
   
-  WillFilter::Calendar::MONTHS = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'] 
-  WillFilter::Calendar::DAYS = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab']
+  # WillFilter::Calendar::MONTHS = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'] 
+  # WillFilter::Calendar::DAYS = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab']
   
   # include ActiveModel::ForbiddenAttributesProtection
 
   belongs_to :cliente, touch: true
   
-  belongs_to :user
+  # belongs_to :user
 
-  has_many   :da_fare, :through => :cliente, 
-                       :class_name => "Appunto", 
-                       :source => :appunti, 
-                       :conditions => ['appunti.stato <> ?', 'X']
+  # has_many   :da_fare, :through => :cliente, 
+  #                      :class_name => "Appunto", 
+  #                      :source => :appunti, 
+  #                      :conditions => ['appunti.stato <> ?', 'X']
   
 
-  #has_many :visita_appunti, dependent: :destroy
+  # has_many :visita_appunti, dependent: :destroy
   
-  #has_many :appunti, :through => :visita_appunti
+  # has_many :appunti, :through => :visita_appunti
   
-  #after_create :add_appunti
+  # after_create :add_appunti
 
 
   has_many :adozioni, :through => :cliente
@@ -27,9 +27,10 @@ class Visita < ActiveRecord::Base
         
   attr_writer :step
   
+  validates :cliente_id, presence: true
   validates :cliente_id, :uniqueness => { :scope => :data, :message => "gia' nel giro" }
 
-  #validate    :check_data
+  # validate    :check_data
   
   before_save :save_data
 
@@ -45,9 +46,9 @@ class Visita < ActiveRecord::Base
   scope :filter_calendar, lambda {|d| where("data >= ? AND data <= ?", d.beginning_of_month - 7.day, d.end_of_month + 7.day)}
 
   
-  scope :last, where("visite.data > ?", Date.today).order("visite.data DESC").limit(1)
-  scope :oggi, where("visite.data = ?", Date.today).order(:data).limit(1)
-  scope :next, where("visite.data > ?", Date.today).order(:data).limit(1)
+  scope :previous, where("visite.data > ?", Date.today).order("visite.data DESC").limit(1)
+  scope :oggi,     where("visite.data = ?", Date.today).order(:data).limit(1)
+  scope :next,     where("visite.data > ?", Date.today).order(:data).limit(1)
 
   
 

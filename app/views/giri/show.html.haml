@@ -2,35 +2,11 @@
 
 = new_button( new_appunto_url )
 
-
-- if @giro.visite.empty?
-  .module
-    .header
-        
-      .day-calendar.pull-left
-        %time.icon{ datetime: @giro.giorno }
-          %em= I18n.t('date.day_names')[@giro.giorno.wday]
-          %strong= I18n.t('date.month_names')[@giro.giorno.month]
-          %span= @giro.giorno.day
-
-
-      %h2= " in cavalleria"
-
-      .btn-group
-        = previous_tag  giro_url(giorno: @giro.ieri)
-        = next_tag      giro_url(giorno: @giro.domani)
-
-      .clearfix
-
-  .row
-    .span12
-      .image.cavaliere
-        = image_tag asset_path("cavaliere.jpg")
-
-- else
-
-  .module
-    .header
+.content
+  
+  %section.well.show-page
+    
+    %article.row-fluid
 
       .day-calendar.pull-left
         %time.icon{ datetime: @giro.giorno }
@@ -39,38 +15,54 @@
           %span= @giro.giorno.day
 
       .pull-left
-        %h3
-          = @giro.scopo
-          %small
-            = @giro.localita
 
-        .btn-toolbar
-
-          .btn-group  
-            = previous_tag  giro_url(giorno: @giro.ieri)
-            = next_tag      giro_url(giorno: @giro.domani)
-
-          .btn-group
-            = link_to "esandi tutto", "", class: "esandi-tutto btn"
-            = stampami_tag
-            
-
+        - if @giro.visite.empty?
+          %h2
+            = "in cavalleria"
+        
+        - else
+          %h3
+            = @giro.scopo
+            %small
+              = @giro.localita
+        
+      .map-giro
+        - mappa = @giro.clienti.to_gmaps4rails
+        - unless mappa.empty?
+          = gmaps({ :markers => {:data => mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true, scroll_weel: false } } )
       .clearfix
 
-        
-  .row.baule-page
-    
-    .span6
-      = render :partial => 'giri/list_giro'
-    
+    %footer.show-toolbar
+      .btn-toolbar
+        .btn-group  
+          = previous_tag  giro_url(giorno: @giro.ieri)
+          = next_tag      giro_url(giorno: @giro.domani)
 
-    .span6
+        .btn-group.pull-right
+          = link_to "esandi tutto", "", class: "esandi-tutto btn"
+          / = stampami_tag
+
+
+      
+.row.baule-page
+  
+  .span6
+    = render :partial => 'giri/list_giro'
+  
+
+  .span6
+
+    - if @giro.visite.empty?
+
+      
+    - else
+
       = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
     
       = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
       
       - if @giro.appunti_da_fare.size > 0
-   
+
         .content.module
           .content-header
             .header-inner.header

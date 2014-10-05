@@ -31,7 +31,7 @@ class VisiteController < ApplicationController
         format.js
         format.json { render :json => @visita, :status => :created, :location => @visita }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to :back, :notice => "#{@visita.errors.full_messages.join(" ")}" }
         format.json { render :json => @visita.errors, :status => :unprocessable_entity }
       end
     end

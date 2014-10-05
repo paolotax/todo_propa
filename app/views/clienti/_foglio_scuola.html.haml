@@ -58,47 +58,4 @@
 
 
 
-  / .foglio-scuola.module{ id: "foglio_scuola_#{cliente.id}"}
-  /   .header
-  /     .pull-right
-
-  /       - if cliente.has_adozioni?
-  /         .btn-group
-  /           %button.btn.btn-warning.dropdown-toggle{ "data-toggle" => "dropdown" }
-  /             trasforma adozioni
-  /             %span.caret
-  /           %ul.dropdown-menu
-  /             %li= adozioni_stato_tag "da consegnare", cliente.mie_adozioni, remote: false
-  /             %li= adozioni_stato_tag "saggio", cliente.mie_adozioni, false            
-  /             %li= adozioni_stato_tag "kit", cliente.mie_adozioni, false            
-  /             %li= adozioni_stato_tag "saggio+guida", cliente.mie_adozioni, false           
-
-  /         .btn-group
-  /           = form_tag print_multiple_adozioni_path, :method => :put, target: "_blank", :id => "form_print_adozioni" do
-  /             - for a in cliente.mie_adozioni do
-  /               = hidden_field_tag "adozione_ids[]", a.id
-  /             = submit_tag "Stampa Adozioni",  id: "bnt-pdf", class: "btn", placeholder: "salta"
-  /       - if cliente.da_scorrere?
-  /         .btn-group
-  /           = link_to "Scorri classi", scorri_classi_cliente_url(cliente), class: "btn btn-danger", confirm: "Sei sicuro?", remote: true
-
-  /     %h1 Foglio Scuola
-
-  /   .more
-
-  /     - coef = cliente.max_classi
-
-  /     - cliente.classi_adozioni_grouped.each do |k, classi|
-
-  /       .row-classi.clearfix
-
-  /         .header-classi
-  /           .inner
-  /             %h1= k
-
-  /         - classi.each do |c|
-
-  /           = render 'classi/classe', c: c, coef: coef
-
-
 

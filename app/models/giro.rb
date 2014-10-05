@@ -28,6 +28,10 @@ class Giro
   end
 
 
+  def baule?
+    @baule == true
+  end
+
   def salva_baule(params)
 
     if @baule == true
@@ -50,6 +54,18 @@ class Giro
   
   def clienti
     visite.map(&:cliente)
+  end
+
+
+  def clienti_vicini
+
+    vicini = []
+
+    clienti.each do |cliente|
+      vicini << cliente.nearbys(10, units: :km).all
+    end
+    clienti_vicini = (vicini.flatten - clienti) & user.clienti.has_appunti_da_fare.all
+  
   end
 
   
