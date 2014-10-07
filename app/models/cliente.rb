@@ -102,14 +102,15 @@ class Cliente < ActiveRecord::Base
     or ((properties -> 'copie_da_consegnare')::int > 0)
     or ((properties -> 'appunti_da_fare')::int > 0)
     or ((properties -> 'appunti_in_sospeso')::int > 0)
+    or ((properties -> 'appunti_pronti')::int > 0)
     or ((properties -> 'da_ritirare' = 'true'))
 
 
   ")  
   
-  %w[sezioni_adottate copie_vendute copie_da_consegnare appunti_da_fare appunti_in_sospeso].each do |key|
+  %w[sezioni_adottate copie_vendute copie_da_consegnare appunti_da_fare appunti_in_sospeso appunti_pronti].each do |key|
     # attr_accessible key
-    scope "has_#{key}", where("(properties -> '#{key}')::int > 0")
+    scope "con_#{key}", where("(properties -> '#{key}')::int > 0")
 
     define_method(key) do
       properties && properties[key]
@@ -412,52 +413,57 @@ class Cliente < ActiveRecord::Base
       prop = prop.merge(sezioni_adottate: mie_adozioni.size )
     end
     
-    if righe.scarico.da_consegnare.sum(:quantita) > 0
-      prop = prop.merge(copie_da_consegnare:  righe.scarico.da_consegnare.sum(:quantita) )
+    if righe.not_deleted.scarico.da_consegnare.sum(:quantita) > 0
+      prop = prop.merge(copie_da_consegnare:  righe.not_deleted.scarico.da_consegnare.sum(:quantita) )
     end
     
-    if righe.sum(:quantita) > 0
-      prop = prop.merge(copie_vendute:  righe.sum(:quantita) )
+    if righe.not_deleted.sum(:quantita) > 0
+      prop = prop.merge(copie_vendute:  righe.not_deleted.sum(:quantita) )
     end
     
-    if appunti.da_fare.size > 0
-      prop = prop.merge(appunti_da_fare:  appunti.da_fare.size )
+    if appunti.not_deleted.da_fare.size > 0
+      prop = prop.merge(appunti_da_fare:  appunti.not_deleted.da_fare.size )
     end
     
-    if appunti.preparato.size > 0
-      prop = prop.merge(appunti_pronti:  appunti.preparato.size )
+    if appunti.not_deleted.preparato.size > 0
+      prop = prop.merge(appunti_pronti:  appunti.not_deleted.preparato.size )
     end
     
-    if appunti.in_sospeso.size > 0
-      prop = prop.merge(appunti_in_sospeso:  appunti.in_sospeso.size )
-      prop = prop.merge(importo_in_sospeso:  appunti.in_sospeso.sum(&:totale_importo) )
+    if appunti.not_deleted.in_sospeso.size > 0
+      prop = prop.merge(appunti_in_sospeso:  appunti.not_deleted.in_sospeso.size )
+      prop = prop.merge(importo_in_sospeso:  appunti.not_deleted.in_sospeso.sum(&:totale_importo) )
     end
    
-    if vacanze_da_ritirare
-      prop = prop.merge(vacanze_da_ritirare: vacanze_da_ritirare)
-    end
+    # if vacanze_da_ritirare
+    #   prop = prop.merge(vacanze_da_ritirare: vacanze_da_ritirare)
+    # end
 
-    if adozioni_saggi && adozioni_saggi.size > 0
-      prop = prop.merge(adozioni_saggi: adozioni_saggi.size)
-    end
+    if scuola_primaria?
+      
+      if adozioni_saggi && adozioni_saggi.size > 0
+        prop = prop.merge(adozioni_saggi: adozioni_saggi.size)
+      end
 
-    if adozioni_kit && adozioni_kit.size > 0
-      prop = prop.merge(adozioni_kit: adozioni_kit.size)
-    end
+      if adozioni_kit && adozioni_kit.size > 0
+        prop = prop.merge(adozioni_kit: adozioni_kit.size)
+      end
 
-    if adozioni_da_consegnare && adozioni_da_consegnare.size > 0
-      prop = prop.merge(adozioni_da_consegnare: adozioni_da_consegnare.size)
-    end
+      if adozioni_da_consegnare && adozioni_da_consegnare.size > 0
+        prop = prop.merge(adozioni_da_consegnare: adozioni_da_consegnare.size)
+      end
 
-    if adozioni_kit_no_saggio && adozioni_kit_no_saggio.size > 0
-      prop = prop.merge(adozioni_kit_no_saggio: adozioni_kit_no_saggio.size)
-    end
-    
-    if da_ritirare?
-      prop = prop.merge(da_ritirare: da_ritirare?)
+      if adozioni_kit_no_saggio && adozioni_kit_no_saggio.size > 0
+        prop = prop.merge(adozioni_kit_no_saggio: adozioni_kit_no_saggio.size)
+      end
+      
+      if da_ritirare?
+        prop = prop.merge(da_ritirare: da_ritirare?)
+      end
+
     end
 
     self.properties = prop
+    
     save   
   end
   
