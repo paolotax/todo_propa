@@ -64,8 +64,7 @@ class Giro
     clienti.each do |cliente|
       vicini << cliente.nearbys(10, units: :km).all
     end
-    clienti_vicini = (vicini.flatten - clienti) & user.clienti.has_appunti_da_fare.all
-  
+    clienti_vicini = (vicini.flatten - clienti) & user.clienti.con_qualcosa_da_fare
   end
 
   

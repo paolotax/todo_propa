@@ -16,7 +16,7 @@
           = render "baule/form"
 
     - unless @giro.visite.empty?
-    
+
       .module.map-avatar
         - mappa = @giro.clienti.to_gmaps4rails
         - unless mappa.empty?
@@ -99,8 +99,17 @@
               = render appunto
           .footer
 
-
+  - if @giro.clienti_vicini.size > 0
   
-  
-
-
+    .span6 
+      .content
+        .content-header
+          .header-inner.header
+            = show_hide_tag
+            %h3
+              = pluralize @giro.clienti_vicini.size, "clienti"
+              %small dimenticati
+          .more.appunti.list
+            - for cliente in @giro.clienti_vicini
+              = render cliente
+          .footer

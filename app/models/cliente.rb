@@ -54,15 +54,6 @@ class Cliente < ActiveRecord::Base
   scope :select_provincia, select("clienti.provincia").uniq
   scope :select_citta,     select("clienti.comune").uniq
   
-  scope :nel_baule,        joins(:visite).where("visite.baule = true")
-  
-  scope :con_vacanze_da_ritirare, where("(properties -> 'vacanze_da_ritirare')::int >= 9") 
-  scope :con_vacanze_ritirate,    where("(properties -> 'vacanze_da_ritirare')::int < 9") 
-
-  scope :con_adozioni_da_consegnare, where("(properties -> 'adozioni_da_consegnare' <> '0') or (properties -> 'adozioni_saggi' <> '0') or (properties -> 'adozioni_kit_no_saggio' <> '0')")
-  
-  scope :con_adozioni_consegnate,    where("properties -> 'adozioni_kit' <> '0'") 
-  scope :da_ritirare,  where("properties -> 'da_ritirare' = 'true'") 
   
   scope :previous, lambda { |i, f| where("#{self.table_name}.user_id = ? AND #{self.table_name}.#{f} < ?", i.user_id, i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
   
@@ -91,6 +82,30 @@ class Cliente < ActiveRecord::Base
     end
   end  
 
+
+  scope :nel_baule,        joins(:visite).where("visite.baule = true")
+  
+  scope :con_vacanze_da_ritirare, where("(properties -> 'vacanze_da_ritirare')::int >= 9") 
+  scope :con_vacanze_ritirate,    where("(properties -> 'vacanze_da_ritirare')::int < 9") 
+
+  scope :con_adozioni_da_consegnare, where("(properties -> 'adozioni_da_consegnare' <> '0') or (properties -> 'adozioni_saggi' <> '0') or (properties -> 'adozioni_kit_no_saggio' <> '0')")
+  
+  scope :con_adozioni_consegnate,    where("properties -> 'adozioni_kit' <> '0'") 
+  scope :da_ritirare,  where("properties -> 'da_ritirare' = 'true'") 
+
+
+  scope :con_qualcosa_da_fare, where("  
+
+    ((properties -> 'adozioni_da_consegnare')::int > 0) 
+    or ((properties -> 'adozioni_saggi')::int > 0) 
+    or ((properties -> 'adozioni_kit_no_saggio')::int > 0)
+    or ((properties -> 'copie_da_consegnare')::int > 0)
+    or ((properties -> 'appunti_da_fare')::int > 0)
+    or ((properties -> 'appunti_in_sospeso')::int > 0)
+    or ((properties -> 'da_ritirare' = 'true'))
+
+
+  ")  
   
   %w[sezioni_adottate copie_vendute copie_da_consegnare appunti_da_fare appunti_in_sospeso].each do |key|
     # attr_accessible key
