@@ -2,12 +2,13 @@
 
 = new_button( new_appunto_url )
 
-.content
+.row
   
-  %section.well.show-page
+  .span4
     
-    %article.row-fluid
 
+    .module.well
+      
       .day-calendar.pull-left
         %time.icon{ datetime: @giro.giorno }
           %em= I18n.t('date.day_names')[@giro.giorno.wday]
@@ -25,79 +26,81 @@
             = @giro.scopo
             %small
               = @giro.localita
-        
-      .map-giro
+      .clearfix
+
+      %footer.show-toolbar
+        .btn-toolbar
+          .btn-group  
+            = previous_tag  giro_url(giorno: @giro.ieri)
+            = next_tag      giro_url(giorno: @giro.domani)
+
+          .btn-group.pull-right
+            = link_to "esandi tutto", "", class: "esandi-tutto btn"
+            / = stampami_tag
+
+    - unless @giro.visite.empty?
+
+      .module.map-avatar
         - mappa = @giro.clienti.to_gmaps4rails
         - unless mappa.empty?
           = gmaps({ :markers => {:data => mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true, scroll_weel: false } } )
-      .clearfix
 
-    %footer.show-toolbar
-      .btn-toolbar
-        .btn-group  
-          = previous_tag  giro_url(giorno: @giro.ieri)
-          = next_tag      giro_url(giorno: @giro.domani)
+    = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
 
-        .btn-group.pull-right
-          = link_to "esandi tutto", "", class: "esandi-tutto btn"
-          / = stampami_tag
+    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
+
+
+    = render 'visite/calendar_small'
 
 
       
-.row.baule-page
   
-  .span6
+  .span8
     = render :partial => 'giri/list_giro'
   
 
-  .span6
 
-    - if @giro.visite.empty?
+
+
 
       
-    - else
+    - if @giro.appunti_da_fare.size > 0
 
-      = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
-    
-      = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
-      
-      - if @giro.appunti_da_fare.size > 0
+      .content.module
+        .content-header
+          .header-inner.header
+            = show_hide_tag
+            %h3
+              = pluralize @giro.appunti_da_fare.size, "appunti"
+              %small da fare
+          .more.appunti.list
+            - for appunto in @giro.appunti_da_fare
+              = render appunto
+  
+    - if @giro.appunti_preparato.size > 0
 
-        .content.module
-          .content-header
-            .header-inner.header
-              = show_hide_tag
-              %h3
-                = pluralize @giro.appunti_da_fare.size, "appunti"
-                %small da fare
-            .more.appunti.list
-              - for appunto in @giro.appunti_da_fare
-                = render appunto
-    
-      - if @giro.appunti_preparato.size > 0
+      .content.module
+        .content-header
+          .header-inner.header
+            = show_hide_tag
+            %h3
+              = pluralize @giro.appunti_preparato.size, "appunti"
+              %small pronti
+          .more.appunti.list
+            - for appunto in @giro.appunti_preparato
+              = render appunto
 
-        .content.module
-          .content-header
-            .header-inner.header
-              = show_hide_tag
-              %h3
-                = pluralize @giro.appunti_preparato.size, "appunti"
-                %small pronti
-            .more.appunti.list
-              - for appunto in @giro.appunti_preparato
-                = render appunto
+    - if @giro.appunti_in_sospeso.size > 0
 
-      - if @giro.appunti_in_sospeso.size > 0
-
-        .content.module
-          .content-header
-            .header-inner.header
-              = show_hide_tag
-              %h3
-                = pluralize @giro.appunti_in_sospeso.size, "appunti"
-                %small in sospeso
-            .more.appunti.list
-              - for appunto in @giro.appunti_in_sospeso
-                = render appunto
-            .footer
+      .content.module
+        .content-header
+          .header-inner.header
+            = show_hide_tag
+            %h3
+              = pluralize @giro.appunti_in_sospeso.size, "appunti"
+              %small in sospeso
+          .more.appunti.list
+            - for appunto in @giro.appunti_in_sospeso
+              = render appunto
+          .footer
 

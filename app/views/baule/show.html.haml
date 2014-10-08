@@ -4,7 +4,7 @@
 
 .row
   
-  .span3
+  .span4
     .module
       .header
         = show_hide_tag
@@ -22,94 +22,75 @@
         - unless mappa.empty?
           = gmaps({ :markers => {:data => mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true, scroll_weel: false } } )
 
+    = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
+
+    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
+
+
     = render 'visite/calendar_small'
   
 
 
 
 
-  .span6
+  .span8
 
     = render :partial => 'giri/list_giro'
-
   
-  
+    - if @giro.appunti_da_fare.size > 0 
+      .module
+        .header
+          = show_hide_tag
+          .pull-right
+            .btn-group                  
+              %button.btn.btn-link.dropdown-toggle{ "data-toggle" => "dropdown" }
+                %i.icon-cog
+              %ul.dropdown-menu.pull-right
+                %li
+                  = form_tag print_multiple_appunti_path, :method => :put, target: "_blank", :id => "form_print_sovrapacchi" do
+                    - for a in @giro.appunti_da_fare do
+                      = hidden_field_tag "appunto_ids[]", a.id
+                    = submit_tag "stampa sovrapacchi",  id: "bnt-pdf", class: "btn btn-link"
 
 
-  .span3
-    = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
-
-    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
+          %h3
+            = pluralize @giro.appunti_da_fare.size, "appunti"
+            %small da fare
+        .more.appunti.list
+          - for appunto in @giro.appunti_da_fare
+            = render appunto
     
-  
-  - if @giro.appunti_da_fare.size > 0
-    .span6  
-      .content
-        .content-header
-          .header-inner.header
-            = show_hide_tag
-            .pull-right
-              .btn-group
-                %button.btn.btn-link.dropdown-toggle{ "data-toggle" => "dropdown" }
-                  %i.icon-cog
-                %ul.dropdown-menu.pull-right
-                  / %li= adozioni_stato_tag "adozioni da consegnare", @giro.adozioni, false
-                  / %li= adozioni_stato_tag "adozioni saggio", @giro.adozioni, false            
-                  / %li= adozioni_stato_tag "adozioni kit", @giro.adozioni, false            
-                  / %li= adozioni_stato_tag "adozioni saggio+guida", @giro.adozioni, false
-                  / %li.divider
-                  %li
-                    = form_tag print_multiple_appunti_path, :method => :put, target: "_blank", :id => "form_print_sovrapacchi" do
-                      - for a in @giro.appunti_da_fare do
-                        = hidden_field_tag "appunto_ids[]", a.id
-                      = submit_tag "stampa sovrapacchi",  id: "bnt-pdf", class: "btn btn-link"
+    - if @giro.appunti_preparato.size > 0
+      .module
+        .header
+          = show_hide_tag
+          %h3
+            = pluralize @giro.appunti_preparato.size, "appunti"
+            %small pronti
+        .more.appunti.list
+          - for appunto in @giro.appunti_preparato
+            = render appunto
 
+    - if @giro.appunti_in_sospeso.size > 0
+      .module
+        .header
+          = show_hide_tag
+          %h3
+            = pluralize @giro.appunti_in_sospeso.size, "appunti"
+            %small in sospeso
+        .more.appunti.list
+          - for appunto in @giro.appunti_in_sospeso
+            = render appunto
+        .footer
 
-            %h3
-              = pluralize @giro.appunti_da_fare.size, "appunti"
-              %small da fare
-          .more.appunti.list
-            - for appunto in @giro.appunti_da_fare
-              = render appunto
-  
-  - if @giro.appunti_preparato.size > 0
-    .span6 
-      .content
-        .content-header
-          .header-inner.header
-            = show_hide_tag
-            %h3
-              = pluralize @giro.appunti_preparato.size, "appunti"
-              %small pronti
-          .more.appunti.list
-            - for appunto in @giro.appunti_preparato
-              = render appunto
-
-  - if @giro.appunti_in_sospeso.size > 0
-    .span6 
-      .content
-        .content-header
-          .header-inner.header
-            = show_hide_tag
-            %h3
-              = pluralize @giro.appunti_in_sospeso.size, "appunti"
-              %small in sospeso
-          .more.appunti.list
-            - for appunto in @giro.appunti_in_sospeso
-              = render appunto
-          .footer
-
-  - if @giro.clienti_vicini.size > 0
-  
-    .span6 
-      .content
-        .content-header
-          .header-inner.header
-            = show_hide_tag
-            %h3
-              = pluralize @giro.clienti_vicini.size, "clienti"
-              %small dimenticati
-          .more.appunti.list
-            - for cliente in @giro.clienti_vicini
-              = render cliente
-          .footer
+    - if @giro.clienti_vicini.size > 0
+      .module
+        .header
+          = show_hide_tag
+          %h3
+            = pluralize @giro.clienti_vicini.size, "clienti"
+            %small dimenticati
+        .more.appunti.list
+          - for cliente in @giro.clienti_vicini
+            = render cliente
+        .footer
