@@ -25,14 +25,18 @@
         
   .more
     = week_calendar @date do |date|
-      %span.data
+      %td.data
         = (l date, format: :day).downcase
       
       - if visite[date]
         
-        %span{ class: "badge #{date.future? ? 'badge-important' : 'badge-info'}" }
-          = visite[date].size
+        %td
+          %span{ class: "badge #{date.future? ? 'badge-important' : 'badge-info'}" }
+            = visite[date].size
 
-        %span.localita
+        %td.localita
           - visite[date].map{|v| v.cliente.localita }.uniq.each do |localita|
             = localita
+      - else
+        %td
+        %td

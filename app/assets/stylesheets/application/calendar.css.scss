@@ -1,6 +1,14 @@
 #calendar_week {
   
+  tr:first-child {
+    border-width: 0px;
+  }
 
+  td.data {
+    min-width: 50px;
+    padding: 12px;
+    text-aligment: center;
+  }
 }
 
 #calendar_small .calendar {
