@@ -24,7 +24,7 @@
       - cache ['wunderground', params[:comune]], expires_in: 2.hours do
         = render 'forecast', location: @location
 
-    .module
-      = render 'visite/calendar_small'
+
+    = render_calendar
 
 

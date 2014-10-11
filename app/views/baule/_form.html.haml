@@ -1,7 +1,15 @@
-= form_tag 'baule/update', method: :put, id: "baule_update" do
-  = text_field_tag 'visita[scopo]', nil, placeholder: "scopo"
-  = text_field_tag 'visita[data]', Time.now.strftime("%d-%m-%Y")
-  = hidden_field_tag 'visita[baule]', 'f'
-  %br
-  = submit_tag "Salva baule", class: "btn btn-primary"
-  = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'
+.module
+  .header
+    = show_hide_tag
+    %h3 Nel Baule
+  .clearfix
+    = render 'baule/riepilogo_baule'      
+  .more
+    .inner
+      = form_tag 'baule/update', method: :put, id: "baule_update" do
+        = text_field_tag 'visita[scopo]', nil, placeholder: "scopo"
+        = text_field_tag 'visita[data]', Time.now.strftime("%d-%m-%Y")
+        = hidden_field_tag 'visita[baule]', 'f'
+        %br
+        = submit_tag "Salva baule", class: "btn btn-primary"
+        = link_to "Svuota baule", baule_rimuovi_path, class: 'btn btn-warning baule-rimuovi'

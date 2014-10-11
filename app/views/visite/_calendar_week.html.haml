@@ -1,0 +1,38 @@
+- @date = params[:calendar] ? Date.parse(params[:calendar]) : Date.today
+
+- visite = current_user.visite.includes(:cliente).filter_calendar(@date).non_nel_baule.order("data desc").all.group_by{ |v| v.data}
+
+
+#calendar_week.module
+  
+  .header
+    
+    = show_hide_tag
+    %h3
+      .btn-group
+        = link_to params.merge(calendar: @date.prev_week), class: "btn btn-mini" do
+          %i.icon-caret-left
+        
+        = link_to params.merge(calendar: @date.next_week), class: "btn btn-mini" do
+          %i.icon-caret-right
+      = (l @date, format: :month_year).downcase
+      
+      .btn-group
+        = link_to params.merge(calendar_view: 'month'), class: "btn btn-mini" do
+          %i.icon-calendar
+
+
+        
+  .more
+    = week_calendar @date do |date|
+      %span.data
+        = (l date, format: :day).downcase
+      
+      - if visite[date]
+        
+        %span{ class: "badge #{date.future? ? 'badge-important' : 'badge-info'}" }
+          = visite[date].size
+
+        %span.localita
+          - visite[date].map{|v| v.cliente.localita }.uniq.each do |localita|
+            = localita

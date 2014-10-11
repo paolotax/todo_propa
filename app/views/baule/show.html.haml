@@ -5,33 +5,28 @@
 .row
   
   .span4
-    .module
-      .header
-        = show_hide_tag
-        %h3 Nel Baule
-      .more
-        .riepilogo.clearfix
-          = render 'baule/riepilogo_baule'
-        .well
-          = render "baule/form"
+
+    = render "baule/form"
+
+    = render_calendar
+        
+    = render "shared/riepilogo_adozioni", tipo_riepilogo: "adozioni", collection: @giro.adozioni
+    
+    = render "shared/riepilogo_libri", tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare
 
     - unless @giro.visite.empty?
 
-      .module.map-avatar
-        - mappa = @giro.clienti.to_gmaps4rails
-        - unless mappa.empty?
-          = gmaps({ :markers => {:data => mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true, scroll_weel: false } } )
+      .module
+        .header
+          = show_hide_tag
+          %h3 Mappa
+        .more
+          .map-avatar
+            - mappa = @giro.clienti.to_gmaps4rails
+            - unless mappa.empty?
+              = gmaps({ :markers => {:data => mappa }, :map_options => { :type => "ROADMAP", :zoom => 15, :auto_zoom => true, scroll_weel: false } } )
 
-    = render partial: "shared/riepilogo_adozioni", locals: { tipo_riepilogo: "adozioni", collection: @giro.adozioni}
-
-    = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "volumi_da_consegnare", collection: @giro.righe_da_consegnare} 
-
-
-    = render 'visite/calendar_small'
   
-
-
-
 
   .span8
 

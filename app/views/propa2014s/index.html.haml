@@ -52,18 +52,12 @@
                 = render "clienti/cliente_propa", cliente: scuola
 
       .floating-side.span4
+        
         .floating-toolbar
-          .module
-            .header
-              = show_hide_tag
-              %h3 Nel Baule
-            .more
-              .riepilogo.clearfix
-                = render 'baule/riepilogo_baule'
-              .well
-                = render "baule/form"
 
-          = render 'visite/calendar_small'
+          = render "baule/form"
+
+          = render_calendar
 
 
 

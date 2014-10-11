@@ -1,7 +1,7 @@
 - baule = Giro.new(baule: true, user: current_user)
 
 .riepilogo-baule
-  %ul.stats.pull-left
+  %ul.stats
     %li
       = link_to "" do
         %strong= baule.visite.size
@@ -15,6 +15,7 @@
         %strong= baule.adozioni.size
         adozioni
     %li
-      = baule.localita
+      %span
+        = baule.localita
 
     

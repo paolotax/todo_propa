@@ -103,21 +103,15 @@
                             &times;
         
       .side-bar.span4
+        
+        = render "baule/form"
+
         .module
           .header
             = show_hide_tag
-            %h3 Nel Baule
+            %h3 Mappa
           .more
-            .riepilogo.clearfix
-              = render 'baule/riepilogo_baule'
-            .well
-              = render "baule/form"
-
-            .header
-              = show_hide_tag
-              %h3 Mappa
-            .more
-              = render 'baule/mappa_baule', clienti: @nel_baule
+            = render 'baule/mappa_baule', clienti: @nel_baule
 
         
             

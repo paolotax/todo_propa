@@ -86,7 +86,7 @@ jQuery ->
   
   $(".show-hide").on "click", (e) ->
     e.preventDefault();
-    $(@).closest('.header').next(".more").toggleClass("hidden")
+    $(".more", $(@).closest('.header').closest(".module")).toggleClass("hidden")
     if $("i", $( @)).hasClass('icon-caret-down')
       $("i", $(@)).removeClass('icon-caret-down');
       $("i", $(@)).addClass('icon-caret-up');

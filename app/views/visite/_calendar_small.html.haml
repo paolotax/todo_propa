@@ -4,16 +4,28 @@
 
 
 #calendar_small.module
-  %h2#month
-    = link_to "<", {calendar: @date.prev_month}, class: "btn"
-    = l @date, format: :month_year
-    = link_to ">", {calendar: @date.next_month}, class: "btn"
+  .header
+    = show_hide_tag
+    %h3
+      .btn-group
+        = link_to params.merge(calendar: @date.prev_month), class: "btn btn-mini" do
+          %i.icon-caret-left
+        
+        = link_to params.merge(calendar: @date.next_month), class: "btn btn-mini" do
+          %i.icon-caret-right
+      
+      = (l @date, format: :month_year).downcase
+      
+      .btn-group
+        = link_to params.merge(calendar_view: 'week'), class: "btn btn-mini" do
+          %i.icon-calendar
 
-  = calendar @date do |date|
-    = date.day
-    - if visite[date]
-      %ul.unstyled
-        %li
-          = link_to giro_path(giorno: date) do
-            %span{ class: "badge #{date.future? ? 'badge-important' : 'badge-info'}" }
-              = visite[date].first.tappe
+  .more
+    = calendar @date do |date|
+      = date.day
+      - if visite[date]
+        %ul.unstyled
+          %li
+            = link_to giro_path(giorno: date) do
+              %span{ class: "badge #{date.future? ? 'badge-important' : 'badge-info'}" }
+                = visite[date].first.tappe

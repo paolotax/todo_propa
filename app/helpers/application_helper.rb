@@ -102,6 +102,16 @@ module ApplicationHelper
       render partial: 'shared/add_button', locals: { path: path }
     end
   end
+
+
+  def render_calendar
+    if params[:calendar_view] == 'week'
+      render 'visite/calendar_week'
+    else
+      render 'visite/calendar_small'
+    end
+  end
+
   
   def markdown(text)
     options = [:hard_wrap, :filter_html, :autolink, :no_intraemphasis, :fenced_code, :gh_blockcode]
