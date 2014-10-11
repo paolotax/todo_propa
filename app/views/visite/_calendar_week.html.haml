@@ -26,7 +26,8 @@
   .more
     = week_calendar @date do |date|
       %td.data
-        = (l date, format: :day).downcase
+        = link_to giro_path(giorno: date) do
+          = (l date, format: :day).downcase
       
       - if visite[date]
         
