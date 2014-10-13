@@ -14,35 +14,24 @@
           = link_to cliente_path( id: cliente.slug, view: 'foglio_scuola'), title: "foglio scuola" do
             %i.icon-file
       
-      = next_visita_div cliente
+      / = next_visita_div cliente
       
-      .in-corso
-        - if cliente.properties && cliente.properties['appunti_in_corso']
-          %span.badge.badge-info
-            = cliente.properties["appunti_in_corso"]
-        - else
-          &nbsp
-
-      .da-consegnare
-        - if cliente.properties && cliente.properties["copie_da_consegnare"]
-          %span.badge
-            = cliente.properties["copie_da_consegnare"]
-        - else
-          &nbsp
-
-      .mie-adozioni
-        - unless cliente.mie_adozioni.empty?
-          %span.adozioni.badge.badge-important 
-            = cliente.mie_adozioni.size
-        - else
-          &nbsp
-        
       .importo-in-sospeso
+        
         - if cliente.properties && cliente.properties['importo_in_sospeso'] && cliente.properties['importo_in_sospeso'] != '0.0'
-          %span.badge.badge-warning
-            = cliente.properties["importo_in_sospeso"].to_f.round(2)
+
+          = cliente.properties["importo_in_sospeso"].to_f.round(2)
         - else
           &nbsp
+
+      .todo-icons
+        - ["da_fare", "pronti", "in_sospeso"].each do |status|
+          
+          - if cliente.properties && cliente.properties["appunti_#{status}"]
+
+            = image_tag "task-#{status}.png"
+
+        
 
 
 

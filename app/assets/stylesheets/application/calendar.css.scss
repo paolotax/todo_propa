@@ -1,5 +1,9 @@
 #calendar_week {
   
+  td {
+    vertical-align: center;
+  }
+
   tr:first-child {
     border-width: 0px;
   }
@@ -16,6 +20,10 @@
     a:hover {
       text-decoration: none;
     }
+  }
+
+  td .badge {
+    margin-top: 6px;
   }
 }
 

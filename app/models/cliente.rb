@@ -45,6 +45,7 @@ class Cliente < ActiveRecord::Base
   after_validation :geocode, 
         :if => lambda{ |obj| obj.indirizzo_changed? || obj.cap_changed? || obj.comune_changed? || obj.cap_changed? || obj.provincia_changed?}
 
+  
   after_save :load_into_soulmate
   
 
@@ -381,10 +382,12 @@ class Cliente < ActiveRecord::Base
                     order('classi.classe, classi.sezione').
                     group_by(&:classe)
   end
+
   
   def classi_adozioni_grouped
     classi = self.classi.includes(:adozioni).order("classi.classe, classi.sezione").all.group_by(&:classe)
   end
+  
   
   def max_classi
     max_classi = 0
@@ -396,6 +399,7 @@ class Cliente < ActiveRecord::Base
     end
     max_classi
   end
+  
   
   def self.ricalcola_properties
     Cliente.all.each do |c|
@@ -430,8 +434,7 @@ class Cliente < ActiveRecord::Base
     end
     
     if appunti.not_deleted.in_sospeso.size > 0
-      prop = prop.merge(appunti_in_sospeso:  appunti.not_deleted.in_sospeso.size )
-      prop = prop.merge(importo_in_sospeso:  appunti.not_deleted.in_sospeso.sum(&:totale_importo) )
+      prop = prop.merge(appunti_in_sospeso:  appunti.not_deleted.in_sospeso.size, importo_in_sospeso:  appunti.not_deleted.in_sospeso.sum(&:totale_importo) )
     end
    
     # if vacanze_da_ritirare
@@ -533,9 +536,11 @@ class Cliente < ActiveRecord::Base
     "#{self.indirizzo}, #{self.frazione}, #{self.comune}, #{self.provincia}"
   end
   
+  
   def gmaps4rails_infowindow
     "#{self.titolo} </br> #{self.frazione} #{self.comune}"
   end
+  
   
   def calculate_tipo_from_titolo
     if ( self.titolo =~ /^E\s.+/)
@@ -560,10 +565,10 @@ class Cliente < ActiveRecord::Base
   end
 
   
-
   def self.search_mate(term, id_user)
     matches = Soulmate::Matcher.new("#{id_user}_cliente").matches_for_term(term)
   end
+
 
   def self.import(file, user_id)
     current_user = User.find(user_id)
@@ -584,6 +589,7 @@ class Cliente < ActiveRecord::Base
     end
   end
 
+  
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
     when ".csv" then Csv.new(file.path, nil, :ignore)
@@ -593,6 +599,7 @@ class Cliente < ActiveRecord::Base
     end
   end
 
+  
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
@@ -602,7 +609,9 @@ class Cliente < ActiveRecord::Base
     end
   end
   
+  
   def load_into_soulmate
+    
     loader = Soulmate::Loader.new("#{user_id}_cliente")
     loader.add({
                   "term" => "#{titolo} #{comune} #{frazione} #{provincia} #{ragione_sociale}".squish, 
@@ -617,7 +626,6 @@ class Cliente < ActiveRecord::Base
 
 
   private
-
 
   
     def set_titolo
