@@ -21,6 +21,13 @@ class ClientiController < ApplicationController
     #filters
     @provincie = current_user.clienti.not_deleted.select_provincia.filtra(params.except(:provincia).except(:comune)).order(:provincia)
     @citta     = current_user.clienti.not_deleted.select_citta.filtra(params.except(:comune)).order(:comune)
+
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @search.ordina(params).all}
+    end
+
   end
 
 

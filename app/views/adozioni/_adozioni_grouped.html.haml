@@ -33,7 +33,7 @@
         - else
           = pluralize(adozioni.size, "Adozione")
           .pull-right
-            %small= "pino #{pluralize adozioni.uniq {|a| a.classe.cliente.id }.size, "scuola"}"
+            %small= "#{pluralize adozioni.select{|a| a.classe.cliente.id }.uniq.size, "scuola"}"
             - if @giro
               %small= "#{@giro.adozioni.size} nel baule"
           
@@ -41,16 +41,18 @@
 
       - for stato, adoz in adozioni.group_by {|a| a.stato } do
         - per_cliente = adoz.group_by { |a| a.classe.cliente }
-        .header
-          = show_hide_tag 'down'
-          %h3
-            = stato
-            .pull-right            
-              %small= "#{pluralize per_cliente.keys.size, "scuola"}" 
-              / = adozione_stato_label stato, adoz.size
-        .more.hidden
-          - for cliente, a in per_cliente do
-            = render 'adozioni/adozione_cliente', cliente: cliente, a: a, stato: stato
+        .module
+          .header
+            = show_hide_tag "down"
+            %h3
+              = stato
+              %small= "#{pluralize per_cliente.keys.size, "scuola"}"
+              .pull-right            
+                = adozioni_dropdown stato, adoz, "#{adoz.size}/#{adoz.sum{|a| a.classe.nr_alunni}}"
+                
+          .more.hidden
+            - for cliente, a in per_cliente do
+              = render 'adozioni/adozione_cliente', cliente: cliente, a: a, stato: stato
 
 
             

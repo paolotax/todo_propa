@@ -15,7 +15,7 @@ class VisiteController < ApplicationController
         
     respond_to do |format|
       format.html
-      format.json { render :rabl => @visite }
+      format.json { render :json => @visite }
     end
     
   end

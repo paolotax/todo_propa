@@ -1,10 +1,7 @@
-.adozione-cliente.item{ class: "#{dom_id(cliente)} #{stato}"}
+.cliente{ class: "#{dom_id(cliente)} #{stato}"}
   
   = baule_tag cliente
   = link_to cliente.titolo, cliente
-  
-  - if cliente.preparato?
-    = image_tag asset_path "task-preparato.png"
 
   .pull-right
     - if a.uniq{|a| a.try(:libro).try(:titolo)}.size == 1
@@ -13,4 +10,4 @@
         = a.map{|a| a.classe.sezione}.sort{|a, b| a <=> b}.join
         = "-"
     
-    = adozioni_dropdown stato, a, a.size
+    = adozioni_dropdown stato, a, "#{a.size}/#{a.sum{|a| a.classe.nr_alunni}}"
