@@ -108,7 +108,7 @@ class FattureController < ApplicationController
 
   def create_multiple
 
-    righe = current_user.righe.joins(appunto: :cliente).da_fatturare
+    righe = current_user.righe.joins(appunto: :cliente).da_fatturare.dell_anno(params[:anno])
 
     if params[:pagamento] == 'In sospeso'
       righe = righe.where("appunti.stato = 'P'")
@@ -126,7 +126,7 @@ class FattureController < ApplicationController
       righe = righe.where("clienti.cliente_tipo != 'Scuola Primaria'")
     end
     
-    if params[:data] == 'data pagamento'
+    if params[:data] == 'data ultima modifica'
       righe = righe.order("appunti.updated_at desc, appunti.id desc")
     else
       righe = righe.order("appunti.id desc")
@@ -174,7 +174,7 @@ class FattureController < ApplicationController
 
         if data == 'oggi'
           data_documento = Time.now
-        elsif data == 'data pagamento'
+        elsif data == 'data ultima modifica'
           data_documento = righe.first.appunto.updated_at
         elsif data == 'data creazione'
           data_documento = righe.first.appunto.created_at
