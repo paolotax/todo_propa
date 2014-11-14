@@ -3,17 +3,27 @@ class FattureController < ApplicationController
   def index
     
     @tot_fatture = current_user.fatture.filtra(params)
+    
     @fatture = @tot_fatture.includes(:cliente, :righe => [:libro]).per_numero.page(params[:page])
+    
     @fatture_per_anno = @fatture.group_by { |t| t.data.beginning_of_year }
     
+    
     @righe_da_fatturare = current_user.righe.joins(appunto: :cliente).includes(:libro, appunto: [:cliente]).pagata.da_fatturare.order("clienti.id, appunto_id desc")    
+    
     @righe_da_pagare    = current_user.righe.joins(appunto: :cliente).includes(:libro, :appunto, appunto: [:cliente]).da_pagare.da_fatturare.order("clienti.id, appunto_id desc")
+
+
+    if params[:anno]
+      @righe_da_fatturare = @righe_da_fatturare.dell_anno(params[:anno].to_i)
+      @righe_da_pagare    = @righe_da_pagare.dell_anno(params[:anno].to_i)
+    end
 
     respond_to do |format|
       format.html # show.html.erb
       format.js
       format.xls do
-        @fatture = current_user.fatture.order("fatture.causale_id, fatture.data, fatture.numero")
+        @fatture = @tot_fatture.order("fatture.causale_id, fatture.data, fatture.numero")
       end
     end
   end

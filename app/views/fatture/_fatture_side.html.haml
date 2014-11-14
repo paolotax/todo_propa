@@ -58,7 +58,7 @@
           Anni 
           %i.chev-right
 
-      - for c in ["2013", "2012", "2011", "2010"]
+      - for c in ["2014", "2013", "2012", "2011", "2010"]
         %li{ class: "#{ params[:anno] == c ? 'active' : ''}"}
           = link_to fatture_url(params.merge(:anno => c)), class: "list-link", remote: false  do
             = c

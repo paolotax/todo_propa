@@ -40,7 +40,7 @@ class Riga < ActiveRecord::Base
   
   scope :di_quest_anno,         joins(:fattura).where("fatture.created_at > ?", Date.new(2014,1,1))
 
-
+  scope :dell_anno, lambda { |a| joins(appunto: [:cliente]).where("extract(year from appunti.created_at) = ?", a)}
 
   before_validation do
     self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?

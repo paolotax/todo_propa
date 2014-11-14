@@ -26,11 +26,11 @@
 
       .module
         .header
-          = show_hide_tag
+          = show_hide_tag "down"
           %h3
             = number_to_currency righe.sum(&:importo)
             %small= label
-        .more
+        .more.hidden
                         
           - unless righe.empty?
             
