@@ -101,3 +101,29 @@
           .controls
             = submit_tag "Genera", class: "btn btn-primary", confirm: "Sei sicuro"
 
+
+    .well
+
+      = form_tag :modifica_numero_fatture, method: :put, class: 'form-horizontal', id: "form-modifica-numero" do
+
+        %h3 Modifica Numero
+
+        %hr
+
+        .control-group
+          %label.control-label{ for: 'inputAnno' } Anno
+          .controls
+            = select_tag "anno", options_for_select(["2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-medium", id: 'inputAnno'
+        
+        .control-group
+          %label.control-label{ for: 'inputCausale' } Tipo documento
+          .controls
+            = select_tag "causale", options_for_select(["Buono di consegna"]), class: "input", id: 'inputCausale'
+        
+        %hr
+
+        .contol-group
+        
+          .controls
+            = submit_tag "Modifica", class: "btn btn-primary", confirm: "Sei sicuro"
+

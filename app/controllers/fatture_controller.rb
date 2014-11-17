@@ -142,11 +142,19 @@ class FattureController < ApplicationController
 
     crea_documenti righe, params[:causale_id], params[:data]
 
-    redirect_to fatture_url
+    redirect_to fatture_url, notice: "#{ActionController::Base.helpers.pluralize(righe.keys.size, "documento")} generati!"
 
   end
 
-  def modifica_nr_bolle
+  def modifica_numero
+
+    @fatture = current_user.fatture.filtra(params).per_numero_asc
+
+    @fatture.each_with_index do |f, i|
+      f.update_column(:numero, i + 1)
+    end
+
+    redirect_to fatture_url, notice: "#{ActionController::Base.helpers.pluralize(@fatture.size, "documento")} rinumerati!"
 
   end
 

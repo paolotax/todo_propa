@@ -115,6 +115,7 @@ TodoPropa::Application.routes.draw do
     resources :fattura_steps
     collection do
       put 'create_multiple'
+      put 'modifica_numero'
     end
   end
 

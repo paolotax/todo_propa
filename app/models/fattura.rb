@@ -20,8 +20,14 @@ class Fattura < ActiveRecord::Base
   validates :cliente_id, :data, :numero, :presence => true, :if => :active?
   
   scope :per_numero, order('fatture.data desc, fatture.numero desc')
-  
+  scope :per_numero_asc, order('fatture.data, fatture.numero') 
+
+  scope :dell_anno, lambda { |a| where("extract(year from fatture.data) = ?", a)}
+
+
   before_save :ricalcola
+  
+
   # before_create :init
 
   # include PgSearch
@@ -30,6 +36,7 @@ class Fattura < ActiveRecord::Base
   #   associated_against: {cliente: [ :titolo, :comune, :frazione, :provincia ] },
   #   order_within_rank: "data DESC, numero DESC"
   
+
   TIPO_FATTURA.each do |tipo|
     scope "#{tipo.downcase.split.join('_')}", where("causale_id = ?", TIPO_FATTURA.index(tipo))
     
@@ -51,27 +58,31 @@ class Fattura < ActiveRecord::Base
     pagata
   end
   
+  
   def coerente?
     true
     unless appunti.empty?
       appunti.each do |a|
         return false if a.stato == 'X' && pagata != true
         return false if a.stato == "P" && pagata != false
+        return false if a.stato.blank? && pagata != false
       end
     else
       true
     end
   end
 
+
   def anno
     data.year
   end
+
   
   def self.filtra(params)
     fatture = scoped
     fatture = fatture.search(params[:search]) if params[:search].present?
     fatture = fatture.where("fatture.causale_id = ?", TIPO_FATTURA.index(params[:causale])) if params[:causale].present?
-    fatture = fatture.where("extract(year  from data) = ? ", params[:anno] ) if params[:anno].present?
+    fatture = fatture.where("extract(year from data) = ? ", params[:anno] ) if params[:anno].present?
     fatture = fatture.where("condizioni_pagamento = ?", params[:pagamento]) if params[:pagamento].present?
     fatture = fatture.where("pagata = ?", params[:pagata]) if params[:pagata].present?
     
