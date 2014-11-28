@@ -1,6 +1,6 @@
 class Fattura < ActiveRecord::Base
 
-  TIPO_FATTURA   = [ "Fattura", "Buono di consegna", "Nota di accredito", "Ordine" ]
+  TIPO_FATTURA   = [ "Fattura", "Buono di consegna", "Nota di accredito", "Ordine"]
   TIPO_PAGAMENTO = ["Contanti", "Assegno", "Bonifico Bancario", "Bollettino Postale"]
   
   extend FriendlyId
@@ -17,9 +17,48 @@ class Fattura < ActiveRecord::Base
   
   delegate :titolo, to: :cliente
   
-  validates :cliente_id, :data, :numero, :presence => true, :if => :active?
+  validates :cliente_id, :causale, :data_text, :numero, :presence => true, :if => :active?
+
+  attr_writer :data_text
+
+  validate :check_data_text
+
+  before_save :save_data_text
+
   
-  scope :per_numero, order('fatture.data desc, fatture.numero desc')
+  def active?
+    # serve per wicked gem
+    # status == 'active'
+    true
+  end
+
+
+  def data_text
+    @data_text ||  Date.today.try(:strftime, "%d-%m-%y")
+  end
+
+
+  def check_data_text
+    if @data_text.present? && Date.parse(@data_text).nil?
+      errors.add :data_text, "data errata"
+    end
+  rescue ArgumentError
+    errors.add :data_text, "data errata"
+  end
+
+
+  def save_data_text
+    self.data = Date.parse(@data_text) unless @data_text.blank?
+  end
+
+
+  def should_generate_new_friendly_id?
+    slug.blank? || data_changed?
+  end
+
+
+
+  scope :per_numero,     order('fatture.data desc, fatture.numero desc')
   scope :per_numero_asc, order('fatture.data, fatture.numero') 
 
   scope :dell_anno, lambda { |a| where("extract(year from fatture.data) = ?", a)}
@@ -27,6 +66,24 @@ class Fattura < ActiveRecord::Base
 
   before_save :ricalcola
   
+
+
+  def leggi
+  end
+
+
+  def leggi=(leggi)
+    new_righe = leggi.lines.to_a
+    for r in leggi.lines do
+      riga = r.squish.split
+      if /\d{5}[A-Z]/.match riga.first
+        libro = Libro.find_or_create_by_cm( cm: riga.first, titolo: riga[1..-2].join(" "), prezzo_consigliato: 0, prezzo_copertina: 0 )
+        new_riga = self.righe.build( libro: libro, quantita:  riga.last, prezzo_unitario: libro.prezzo_copertina )
+        new_righe.delete(r)
+      end
+    end
+  end
+
 
   # before_create :init
 
@@ -102,6 +159,7 @@ class Fattura < ActiveRecord::Base
   end
 
   
+  
   def righe_per_titolo
     self.righe.joins(:libro).order("libri.titolo")
   end
@@ -110,6 +168,10 @@ class Fattura < ActiveRecord::Base
     self.importo_fattura - self.totale_iva
   end
   
+  
+
+
+
   def causale
     unless causale_id.nil?
       TIPO_FATTURA[self.causale_id]
@@ -121,10 +183,7 @@ class Fattura < ActiveRecord::Base
   end
   
   
-  def active?
-    # che cazzo è questo qui
-    status == 'active'
-  end
+
   
   # def add_righe_from_cliente(cliente)
   #   self.totale_copie = self.totale_copie || 0
@@ -145,6 +204,7 @@ class Fattura < ActiveRecord::Base
   #     self.righe << riga
   #   end
   # end
+
 
   def doc_id
     if data == nil
@@ -175,6 +235,7 @@ class Fattura < ActiveRecord::Base
     end
   end
     
+
   def get_new_id(user)
     last_id = Fattura.where("user_id = ? and data > ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
     if last_id.empty?
@@ -183,6 +244,17 @@ class Fattura < ActiveRecord::Base
       return last_id[0][:numero] + 1    
     end
   end
+
+
+  def self.last_numeri(user, anno)
+
+    numeri = Fattura.where("user_id = ? and extract(year from data) = ?", user.id, anno).select("causale_id, max(numero) as numero").group("causale_id")
+
+
+
+  
+  end
+
 
   def last_numero(user, data)
     if causale
@@ -194,6 +266,7 @@ class Fattura < ActiveRecord::Base
       end
     end    
   end
+
 
   def last_data(user, data)
     if causale
@@ -207,11 +280,13 @@ class Fattura < ActiveRecord::Base
 
   end
   
+
   private
     
-    def init
-      self.data ||= self.data = Time.now
-    end
+    # def init
+    #   self.data ||= self.data = Time.now
+    # end
+
 end
 
 # == Schema Information

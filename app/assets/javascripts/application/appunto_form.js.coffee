@@ -2,9 +2,13 @@ $(document).on 'page:change', ->
   $.datepicker.initialized = false
 
 jQuery ->  
-  console.log "ready" 
+
   $('#appunto_data_visita_text').datepicker
     dateFormat: 'dd-mm-yy'
+
+  $('#fattura_data_text').datepicker
+    dateFormat: 'dd-mm-yy'
+
 
 window.validateAppunto = () ->
   $.validity.start();

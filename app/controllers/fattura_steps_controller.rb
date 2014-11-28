@@ -4,7 +4,7 @@ class FatturaStepsController < ApplicationController
   
   include Wicked::Wizard
   
-  steps :intestazione, :scegli_appunti, :vacanze, :finale 
+  steps :intestazione, :scegli_appunti, :vacanze, :leggi, :finale 
   
   after_filter :generate_appunto, :only => [:update]
   
@@ -13,6 +13,7 @@ class FatturaStepsController < ApplicationController
     @fattura = current_user.fatture.find(params[:fattura_id])
 
     case step
+    
     when :intestazione
       if @fattura.numero.nil?
         @fattura.numero = @fattura.get_new_id(current_user)
@@ -20,6 +21,7 @@ class FatturaStepsController < ApplicationController
       end
     
     when :scegli_appunti
+      
       unless @fattura.ordine?
         @righe = @fattura.cliente.righe.da_fatturare 
         if @righe.empty?
@@ -27,6 +29,7 @@ class FatturaStepsController < ApplicationController
         end
       else
         skip_step
+        jump_to(:leggi)
       end
     
     when :vacanze

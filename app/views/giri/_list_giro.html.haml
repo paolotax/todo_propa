@@ -32,7 +32,7 @@
 
   .module.white
 
-    = simple_form_for current_user.visite.build do |f|
+    = simple_form_for current_user.visite.build, html: {class: "form-horizontal"} do |f|
       
       - if @giro.baule?
         = f.hidden_field  :baule, value: 't'
@@ -47,3 +47,4 @@
       
       = f.submit "Aggiungi", class: "btn-small btn-success pull-right"
 
+      .clearfix

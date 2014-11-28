@@ -142,7 +142,7 @@ class FattureController < ApplicationController
 
     crea_documenti righe, params[:causale_id], params[:data]
 
-    redirect_to fatture_url, notice: "#{ActionController::Base.helpers.pluralize(righe.keys.size, "documento")} generati!"
+    redirect_to fatture_url(anno: params[:anno], causale: params[:causale]), notice: "#{ActionController::Base.helpers.pluralize(righe.keys.size, "documento")} generati!"
 
   end
 
@@ -154,7 +154,7 @@ class FattureController < ApplicationController
       f.update_column(:numero, i + 1)
     end
 
-    redirect_to fatture_url, notice: "#{ActionController::Base.helpers.pluralize(@fatture.size, "documento")} rinumerati!"
+    redirect_to fatture_url(anno: params[:anno], causale: params[:causale]), notice: "#{ActionController::Base.helpers.pluralize(@fatture.size, "documento")} rinumerati!"
 
   end
 
