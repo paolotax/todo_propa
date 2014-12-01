@@ -4,7 +4,7 @@ class FatturaStepsController < ApplicationController
   
   include Wicked::Wizard
   
-  steps :intestazione, :scegli_appunti, :vacanze, :leggi, :finale 
+  steps :scegli_appunti, :vacanze, :leggi, :finale, :intestazione 
   
   after_filter :generate_appunto, :only => [:update]
   

@@ -4,7 +4,7 @@ class Fattura < ActiveRecord::Base
   TIPO_PAGAMENTO = ["Contanti", "Assegno", "Bonifico Bancario", "Bollettino Postale"]
   
   extend FriendlyId
-  friendly_id :doc_id, use: [:slugged, :history]
+  friendly_id :doc_slug, use: [:slugged, :history]
   
   
   belongs_to :cliente
@@ -17,13 +17,13 @@ class Fattura < ActiveRecord::Base
   
   delegate :titolo, to: :cliente
   
-  validates :cliente_id, :causale, :data_text, :numero, :presence => true, :if => :active?
+  validates :cliente_id, :causale, :data, :numero, :presence => true, :if => :active?
 
-  attr_writer :data_text
+  # attr_writer :data_text
 
-  validate :check_data_text
+  # validate :check_data_text
 
-  before_save :save_data_text
+  # before_save :save_data_text
 
   
   def active?
@@ -33,29 +33,32 @@ class Fattura < ActiveRecord::Base
   end
 
 
-  def data_text
-    @data_text ||  Date.today.try(:strftime, "%d-%m-%y")
-  end
-
-
-  def check_data_text
-    if @data_text.present? && Date.parse(@data_text).nil?
-      errors.add :data_text, "data errata"
+  def doc_slug
+    if data == nil
+      self.id
+    else  
+      "#{causale}-#{data.year}-#{numero}"
     end
-  rescue ArgumentError
-    errors.add :data_text, "data errata"
-  end
+  end 
 
 
-  def save_data_text
-    self.data = Date.parse(@data_text) unless @data_text.blank?
-  end
+  # def data_text
+  #   @data_text ||  Date.today.try(:strftime, "%d-%m-%y")
+  # end
 
 
-  def should_generate_new_friendly_id?
-    slug.blank? || data_changed?
-  end
+  # def check_data_text
+  #   if @data_text.present? && Date.parse(@data_text).nil?
+  #     errors.add :data_text, "data errata"
+  #   end
+  # rescue ArgumentError
+  #   errors.add :data_text, "data errata"
+  # end
 
+
+  # def save_data_text
+  #   self.data = Date.parse(@data_text) unless @data_text.blank?
+  # end
 
 
   scope :per_numero,     order('fatture.data desc, fatture.numero desc')
@@ -179,7 +182,7 @@ class Fattura < ActiveRecord::Base
   end
   
   def causale=(text)
-    self.causale_id = TIPO_FATTURA.index(text)
+    self.causale_id = TIPO_FATTURA.index(text.split(',')[0])
   end
   
   
@@ -206,13 +209,7 @@ class Fattura < ActiveRecord::Base
   # end
 
 
-  def doc_id
-    if data == nil
-      self.id
-    else  
-      "#{causale}-#{data.year}-#{numero}"
-    end
-  end 
+
   
 
   # ricalcola i totali e cambia stato degli appunti
@@ -246,13 +243,18 @@ class Fattura < ActiveRecord::Base
   end
 
 
-  def self.last_numeri(user, anno)
+  def self.next_numeri(user, anno)
 
     numeri = Fattura.where("user_id = ? and extract(year from data) = ?", user.id, anno).select("causale_id, max(numero) as numero").group("causale_id")
 
 
+    TIPO_FATTURA.map do |c|
+      [
+        c,
+        "#{c},#{(numeri.select{|a| a.causale_id == TIPO_FATTURA.index(c)}.first.try(:numero) || 0) + 1}"
+      ]
+    end
 
-  
   end
 
 

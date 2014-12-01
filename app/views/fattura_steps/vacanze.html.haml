@@ -1,7 +1,6 @@
 = render layout: 'form' do |f|
-  
-  .control-group
-    = render 'righe/select_prezzo'
+
+  = render 'righe/select_prezzo'
 
   .control-group
     #righe
@@ -15,9 +14,9 @@
           - else
             .hidden
 
+  %hr
   .control-group
     .controls
-      = link_to "Passaggio precedente", previous_wizard_path, class: "btn"
-      %button{:class => "btn btn-primary", :type => "submit"} Salva e continua
+      %button{:class => "btn btn-primary pull-right", :type => "submit"} Salva e continua
 
-      = link_to "Salta questo passaggio", next_wizard_path, class: "btn"
+      

@@ -12,12 +12,8 @@
       = f.simple_fields_for :righe do |riga|
         = render 'righe/form', riga: riga, remove: 'fattura'
           
-  %fieldset
-    %legend
-      
-    .control-group
-      .controls
-        = link_to "Inserisci Vacanze", wizard_path(:vacanze), class: "btn"
-        = link_to "Scegli appunti", wizard_path(:scegli_appunti), class: "btn"
-        %button{:class => "btn btn-primary", :type => "submit"} Salva e chiudi
+  %hr      
+  .control-group
+    .controls
+      %button{:class => "btn btn-primary pull-right", :type => "submit"} Salva e continua
   

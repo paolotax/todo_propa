@@ -1,9 +1,13 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-
 jQuery ->
   
+  $("#fattura_causale").on 'change', (e) ->
+    values = $(@).val().split(',')
+    if values.length == 2
+      $("#fattura_numero").val values[1]
+      
+
+
+
   $(".remove-fattura").live 'click', (e) ->
     e.preventDefault()
     riga = $(@).closest(".riga")
