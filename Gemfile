@@ -49,18 +49,18 @@ gem 'friendly_id'
 gem 'prawn'
 
 gem 'geocoder'
-gem 'gmaps4rails', '2.0.1', git: 'https://github.com/fiedl/Google-Maps-for-Rails'
+gem 'gmaps4rails', "=1.5.6" #'2.0.1', git: 'https://github.com/fiedl/Google-Maps-for-Rails'
 
 gem 'mobylette'
 gem 'jquery_mobile_rails'
 
-gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
+gem 'nested_form' #, :git => 'git://github.com/ryanb/nested_form.git'
 gem 'simple_form'
 
 gem 'will_filter', "~> 3.1.0" 
 
 gem 'kaminari'
-gem 'wicked'
+gem 'wicked', "= 1.1.0"
 
 gem 'pg'
 gem 'pg_search'

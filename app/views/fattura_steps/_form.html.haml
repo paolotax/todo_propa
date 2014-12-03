@@ -1,9 +1,4 @@
-
-
-
 .row
-
-
   .span7.well
 
     %h2
@@ -13,16 +8,15 @@
 
     %ul.nav.nav-tabs
       - if !@fattura.ordine? && !@fattura.cliente.righe.da_fatturare.empty?
-        %li{class: "active"}
+        %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
           = link_to "Scegli Appunti", wizard_path(:scegli_appunti)      
-      %li  
+      %li{class: "#{step == :vacanze ? 'active' : ''}"}  
         = link_to "Vacanze", wizard_path(:vacanze)
-      - if @fattura.ordine?
-        %li   
-          = link_to "Importa email", wizard_path(:leggi)
-      %li   
+      %li{class: "#{step == :leggi ? 'active' : ''}"}   
+        = link_to "Importa email", wizard_path(:leggi)
+      %li{class: "#{step == :finale ? 'active' : ''}"}   
         = link_to "Righe", wizard_path(:finale)
-      %li  
+      %li{class: "#{step == :intestazione ? 'active' : ''}"}  
         = link_to "Intestazione", wizard_path(:intestazione)
     
 

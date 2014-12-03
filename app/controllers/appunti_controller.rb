@@ -107,8 +107,10 @@ class AppuntiController < ApplicationController
   end
 
   def destroy
+    
     @appunto = current_user.appunti.find(params[:id])
     @appunto.destroy
+    
     respond_to do |format|
       format.html { redirect_to appunti_url }
       format.json { head :ok }

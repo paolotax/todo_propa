@@ -1,3 +1,5 @@
+= new_button( new_fattura_url )
+
 - title @fattura.slug.capitalize
 
 .content
@@ -16,11 +18,20 @@
             %br
             = "#{@fattura.cliente.cap} #{@fattura.cliente.frazione} #{@fattura.cliente.comune} #{@fattura.cliente.provincia}"
 
-        = link_to fattura_url(@fattura, format: :pdf), class: "btn pull-right", title: "stampa #{@fattura.causale}", target: "_blank" do
-          %i.icon-tag
-          Stampa
-        .clearfix
+        %footer.show-toolbar
+          .pull-right
 
+            = link_to @fattura, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+              %i.icon-trash
+              Elimina
+            = link_to fattura_url(@fattura, format: :pdf), class: "btn" do
+              %i.icon-print
+              Stampa
+
+            = link_to fattura_fattura_step_url(@fattura, :finale), class: "btn btn-primary" do
+              %i.icon-pencil
+              Modifica
+        
 
       - unless @fattura.appunti.empty?
         %article.table-righe-new.well

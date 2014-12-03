@@ -12,12 +12,6 @@ class FatturaStepsController < ApplicationController
 
     case step
     
-    when :intestazione
-      if @fattura.numero.nil?
-        @fattura.numero = @fattura.get_new_id(current_user)
-        @fattura.data   = Time.now
-      end
-    
     when :scegli_appunti
       
       unless @fattura.ordine?
@@ -75,20 +69,25 @@ class FatturaStepsController < ApplicationController
             @fattura.pagata = false
           end
         end
-         
+        jump_to(:finale)
       end
 
+    when :leggi, :vacanze 
+      jump_to(:finale)
     end
     
-    render_wizard @fattura
+    
+    render_wizard(@fattura, notice: 'Documento modificato!') 
   end
 
   private
 
-    def redirect_to_finish_wizard
-      redirect_to fatture_url, notice: "Fattura inserita"
+    
+    def finish_wizard_path
+      fattura_path(@fattura)
     end
 
+    
     def generate_appunto
       unless @fattura.ordine?
         case step

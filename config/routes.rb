@@ -1,10 +1,6 @@
 TodoPropa::Application.routes.draw do
   
-  
-
-
   use_doorkeeper
-
   
   resources :propa2014s do
     collection do
@@ -19,7 +15,6 @@ TodoPropa::Application.routes.draw do
   namespace :api do
     namespace :v1  do
       
-      #resources :tokens,  :only => [:create, :destroy]
       resources :appunti, :except => [:new, :edit] do
         resources :righe,    :except => :index
 
@@ -28,7 +23,7 @@ TodoPropa::Application.routes.draw do
         end
       end
       
-      resources :clienti, :only => [:index, :show, :create, :update]
+      resources :clienti,  :only => [:index, :show, :create, :update]
       resources :libri
       resources :righe,    :only => :index
       resources :classi,   :only => [:index, :update]
@@ -40,7 +35,6 @@ TodoPropa::Application.routes.draw do
   resources :appunto_events
 
   mount WillFilter::Engine => "/will_filter"
-  
   
   resources :classi do
     member do
