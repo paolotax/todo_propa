@@ -1,8 +1,8 @@
 = render layout: 'form' do |f|
   
-  - unless @fattura.ordine?
-    .control-group
-      = render 'righe/select_prezzo'
+
+  .control-group
+    = render 'righe/select_prezzo'
   
   .control-group
     = render 'righe/form_create', model: 'fattura'

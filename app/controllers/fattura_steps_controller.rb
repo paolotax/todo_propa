@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class FatturaStepsController < ApplicationController
   
   include Wicked::Wizard
@@ -63,11 +61,23 @@ class FatturaStepsController < ApplicationController
     @fattura.attributes = params[:fattura]
     
     case step
+    
     when :scegli_appunti
+      
       if params[:appunti_ids].present?
-        @righe = @fattura.cliente.righe.da_fatturare.where("righe.appunto_id in (?)", params[:appunti_ids])
-        @fattura.righe << @righe
-      end   
+        appunti = current_user.appunti.includes(:righe).find(params[:appunti_ids])
+      
+        appunti.each do |a|
+          @fattura.righe << a.righe
+          if a.stato == 'X'
+            @fattura.pagata = true
+          else
+            @fattura.pagata = false
+          end
+        end
+         
+      end
+
     end
     
     render_wizard @fattura
