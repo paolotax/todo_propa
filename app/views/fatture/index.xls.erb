@@ -21,7 +21,7 @@
       </Row>
     <% @fatture.each do |fattura| %>
       <Row>
-        <Cell><Data ss:Type="String"><%= fattura.causale %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= fattura.documento_causale %></Data></Cell>
         <Cell><Data ss:Type="Number"><%= fattura.numero %></Data></Cell>
         <Cell><Data ss:Type="String"><%= l fattura.data, format: :long_with_day %></Data></Cell>
         <Cell><Data ss:Type="String"><%= fattura.data.year %></Data></Cell>

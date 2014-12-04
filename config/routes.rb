@@ -1,5 +1,7 @@
 TodoPropa::Application.routes.draw do
   
+  resources :causali
+
   use_doorkeeper
   
   resources :propa2014s do

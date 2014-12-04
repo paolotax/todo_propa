@@ -1,6 +1,6 @@
 jQuery ->
   
-  $("#fattura_causale").on 'change', (e) ->
+  $("#fattura_causale_id").on 'change', (e) ->
     values = $(@).val().split(',')
     if values.length == 2
       $("#fattura_numero").val values[1]

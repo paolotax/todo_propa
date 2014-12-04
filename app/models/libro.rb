@@ -3,12 +3,14 @@ class Libro < ActiveRecord::Base
 
   SETTORI     = ["Scolastico", "Fascicoli", "Parascolastico", "Vacanze", "Varia", "Eventuale", "Guide", "Adozionale", "Concorrenza", "Scorrimento"]
   
-
+  
   extend FriendlyId
   friendly_id :titolo, use: [:slugged, :history]
 
+  
   mount_uploader :image, ImageUploader
 
+  
   include PgSearch
   pg_search_scope :search, against: [:titolo, :settore, :sigla, :cm, :ean],
     using: { tsearch: { dictionary: "italian", prefix: true } }
@@ -17,31 +19,28 @@ class Libro < ActiveRecord::Base
   has_and_belongs_to_many :children, join_table: "libro_connections", class_name: "Libro", foreign_key: :libro_parent_id, association_foreign_key: :libro_child_id
 
   has_and_belongs_to_many :parents, join_table: "libro_connections", class_name: "Libro", foreign_key: :libro_child_id, association_foreign_key: :libro_parent_id
-
-
-  has_many :righe, dependent: :nullify
-  has_many :adozioni, dependent: :nullify
   
   has_one :seguito, class_name: "Libro", foreign_key: :id, primary_key: :next_id
+
   
-  # belongs_to :libro_precedente, class_name: "Libro", foreign_key: :next_id
+  has_many :righe,    dependent: :nullify
+  has_many :adozioni, dependent: :nullify
 
+  
   belongs_to :editore
-
   belongs_to :materia
 
+  
   delegate :nome, :gruppo, to: :editore
   delegate :materia_libro, to: :materia
 
-  #default_scope order("libri.id")  
+  
   scope :per_classe_e_materia, lambda {
                                   |cl,mat| joins(:adozioni => :classe).
                                            select('distinct libri.*').
                                            where('classi.classe = ?', cl).
                                            where('adozioni.materia_id = ?', mat) }
-  
-
-  
+    
   scope :per_settore, unscoped.order(:settore)
   scope :per_titolo,  unscoped.order(:titolo)
 
@@ -53,10 +52,10 @@ class Libro < ActiveRecord::Base
 
   scope :vendibili, where("libri.settore <> 'Concorrenza'").where("libri.settore <> 'Scorrimento'").where("libri.settore <> 'Adozionale'")
 
-
-  
   scope :previous, lambda { |i, f| where("#{self.table_name}.#{f} < ?", i[f]).order("#{self.table_name}.#{f} DESC").limit(1) }
   scope :next,     lambda { |i, f| where("#{self.table_name}.#{f} > ?", i[f]).order("#{self.table_name}.#{f} ASC").limit(1) }
+  
+  scope :anagrafica_da_completare, where("libri.settore is null")
   
 
   def to_s
@@ -67,6 +66,7 @@ class Libro < ActiveRecord::Base
   def self.cached_find(id)
     Rails.cache.fetch([name, id]) { find(id) }
   end
+
 
   def flush_cache
     Rails.cache.delete([self.class.name, id])
@@ -81,21 +81,31 @@ class Libro < ActiveRecord::Base
     end
   end
   
+
+  def anagrafica_da_completare?
+    self.settore == nil
+  end
+  
+
   #fratelli usato per option group
   def bros
     Libro.unscoped.where("settore = ?", self.settore).order(:titolo)
   end
   
+
   def carica_image_da_giunti
     self.remote_image_url = "http://catalogo.giunti.it/librig/#{self.cm}.jpg"
   end
   
+
   after_save :load_into_soulmate
   
+
   def self.search_mate(term)
     matches = Soulmate::Matcher.new("libro").matches_for_term(term)
   end
   
+
   def load_into_soulmate
     loader = Soulmate::Loader.new("libro")
     loader.add({
@@ -108,7 +118,9 @@ class Libro < ActiveRecord::Base
                     "tags"   => "#{settore} #{sigla}"
                   }
                 })
+
   end
+
 
   def self.filtra(params)
     libri = scoped
@@ -123,6 +135,7 @@ class Libro < ActiveRecord::Base
     libri
   end
   
+
   def self.ordina(params)
     libri = scoped
     unless params[:ordine].present?

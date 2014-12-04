@@ -84,7 +84,7 @@
           - if appunto.fattura
             = '-'
             = link_to appunto.fattura do
-              = "#{appunto.fattura.causale} #{appunto.fattura.numero}" 
+              = "#{appunto.fattura.documento_causale} #{appunto.fattura.numero}" 
               = l appunto.fattura.data, format: :only_date
           
       

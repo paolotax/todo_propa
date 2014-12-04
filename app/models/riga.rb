@@ -52,10 +52,14 @@ class Riga < ActiveRecord::Base
 
   def anno
     if appunto
-    appunto.created_at.to_date.year
+      appunto.created_at.to_date.year
     else
       fattura.data.year
     end
+  end
+
+  def da_registrare?
+    self.fattura_id.nil?
   end
   
   def riga_abbreviata

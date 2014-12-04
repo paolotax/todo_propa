@@ -58,7 +58,7 @@
           - unless @appunto.da_fatturare?
             .riferimento-fattura{ style: "margin-top: 10px;"}
               = link_to @appunto.fattura do
-                = "registrato con #{@appunto.fattura.causale.downcase} nr. #{@appunto.fattura.numero} del #{l @appunto.fattura.data, format: :only_date}"
+                = "registrato con #{@appunto.fattura.documento_causale.downcase} nr. #{@appunto.fattura.numero} del #{l @appunto.fattura.data, format: :only_date}"
           
           .table-righe-new
             = render @appunto.righe

@@ -1,30 +1,38 @@
 .row
-  .span7.well
+  .span8
+    .well.clearfix
+      %h2
+        = link_to @fattura.titolo, @fattura.cliente
+        %small= "#{@fattura.documento_causale} #{@fattura.numero} del #{l @fattura.data, format: :only_date}"
+      %br
 
-    %h2
-      = link_to @fattura.titolo, @fattura.cliente
-      %small= "#{@fattura.causale} #{@fattura.numero} del #{l @fattura.data, format: :only_date}"
-    %br
+      %ul.nav.nav-tabs
+        - if !@fattura.ordine? && !@fattura.cliente.righe.da_fatturare.empty?
+          %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
+            = link_to "Scegli Appunti", wizard_path(:scegli_appunti)      
+        %li{class: "#{step == :vacanze ? 'active' : ''}"}  
+          = link_to "Vacanze", wizard_path(:vacanze)
+        %li{class: "#{step == :leggi ? 'active' : ''}"}   
+          = link_to "Importa email", wizard_path(:leggi)
+        %li{class: "#{step == :dettaglio ? 'active' : ''}"}   
+          = link_to "Dettaglio righe", wizard_path(:dettaglio)
+        %li{class: "#{step == :intestazione ? 'active' : ''}"}  
+          = link_to "Intestazione", wizard_path(:intestazione)
+      
+      %br
 
-    %ul.nav.nav-tabs
-      - if !@fattura.ordine? && !@fattura.cliente.righe.da_fatturare.empty?
-        %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
-          = link_to "Scegli Appunti", wizard_path(:scegli_appunti)      
-      %li{class: "#{step == :vacanze ? 'active' : ''}"}  
-        = link_to "Vacanze", wizard_path(:vacanze)
-      %li{class: "#{step == :leggi ? 'active' : ''}"}   
-        = link_to "Importa email", wizard_path(:leggi)
-      %li{class: "#{step == :finale ? 'active' : ''}"}   
-        = link_to "Righe", wizard_path(:finale)
-      %li{class: "#{step == :intestazione ? 'active' : ''}"}  
-        = link_to "Intestazione", wizard_path(:intestazione)
-    
-
-    = simple_nested_form_for @fattura, url: wizard_path do |f|
-      = f.error_notification      
-      = yield f
+      = simple_nested_form_for @fattura, url: wizard_path do |f|
+        = f.error_notification      
+        = yield f
 
   
   .span4
+    .well
+      - libri = @fattura.righe.map(&:libro).select{|l| l.anagrafica_da_completare? == true}.uniq
+
+      - for libro in libri do
+        = render libro
+
+
     .well
       = link_to 'Documenti', fatture_path

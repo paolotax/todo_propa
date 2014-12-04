@@ -1,0 +1,10 @@
+= simple_form_for(@causale) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :causale
+    = f.input :magazzino
+    = f.input :movimento
+
+  .form-actions
+    = f.button :submit

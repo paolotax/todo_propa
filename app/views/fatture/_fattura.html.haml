@@ -10,7 +10,7 @@
       Chiudi
   .causale
     %h4
-      = "#{fattura.causale} #{fattura.numero}"
+      = "#{fattura.documento_causale} #{fattura.numero}"
       %small= "del #{l(fattura.data, format: :short).downcase}" 
   .clearfix    
   .cliente-titolo
@@ -44,11 +44,11 @@
         %li.baule-div
           = paga_tag fattura     
         %li.print
-          %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.causale}", target: "_blank" }
+          %a{ href: "/fatture/#{fattura.slug}.pdf", title: "stampa #{fattura.documento_causale}", target: "_blank" }
             %i.icon-tag
             Stampa
         %li.edit
-          %a{ href: "/fatture/#{fattura.slug}/fattura_steps/intestazione", title: 'modifica appunto'}
+          %a{ href: "/fatture/#{fattura.slug}/fattura_steps/dettaglio", title: 'modifica appunto'}
             %i.icon-pencil
             Modifica
         %li.delete

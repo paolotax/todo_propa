@@ -1,7 +1,7 @@
 %li{ class: "#{ fattura.pagata? ? '' : 'da_pagare'}", data: { id: "#{fattura.id}"} }
   %span.titolo
     = link_to fattura_url fattura do
-      #{fattura.causale}
+      #{fattura.documento_causale}
       %br 
       #{fattura.numero} del #{l(fattura.data).downcase}
   %span.quantita

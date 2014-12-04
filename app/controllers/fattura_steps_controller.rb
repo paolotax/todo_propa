@@ -2,7 +2,7 @@ class FatturaStepsController < ApplicationController
   
   include Wicked::Wizard
   
-  steps :scegli_appunti, :vacanze, :leggi, :finale, :intestazione 
+  steps :scegli_appunti, :vacanze, :leggi, :dettaglio, :intestazione 
   
   after_filter :generate_appunto, :only => [:update]
   
@@ -62,18 +62,18 @@ class FatturaStepsController < ApplicationController
         appunti = current_user.appunti.includes(:righe).find(params[:appunti_ids])
       
         appunti.each do |a|
-          @fattura.righe << a.righe
+          @fattura.righe << a.righe.select{|r| r.da_registrare? == true}
           if a.stato == 'X'
             @fattura.pagata = true
           else
             @fattura.pagata = false
           end
         end
-        jump_to(:finale)
+        jump_to(:dettaglio)
       end
 
     when :leggi, :vacanze 
-      jump_to(:finale)
+      jump_to(:dettaglio)
     end
     
     
@@ -91,7 +91,7 @@ class FatturaStepsController < ApplicationController
     def generate_appunto
       unless @fattura.ordine?
         case step
-        when :vacanze, :finale
+        when :vacanze, :dettaglio
           @righe_nuove = @fattura.righe.where("appunto_id is null")
           unless @righe_nuove.empty?
             @new_appunto = @fattura.cliente.appunti.build

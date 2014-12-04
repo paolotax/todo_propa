@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Causale:
+  = @causale.causale
+%p
+  %b Magazzino:
+  = @causale.magazzino
+%p
+  %b Movimento:
+  = @causale.movimento
+
+= link_to 'Edit', edit_causale_path(@causale)
+\|
+= link_to 'Back', causali_path

@@ -22,17 +22,18 @@
           = button_tag class: "btn", name: nil do
             %i.icon-search
 
-  .module
-    %ul
-      %li{ class: "#{ params[:causale].present? ? '': 'active' }" }
-        = link_to params.except(:causale), class: "list-link", remote: false  do
-          Tutti 
-          %i.chev-right
-      - for c in Fattura::TIPO_FATTURA
-        %li{ class: "#{ params[:causale] == c ? 'active' : ''}"}
-          = link_to fatture_url(params.merge(:causale => c)), class: "list-link", remote: false  do
-            = c.pluralize
+  - ["scarico", "carico"].each do |tipo_causale|
+    .module
+      %ul
+        %li{ class: "#{ params[:tipo_causale] == tipo_causale ? 'active': '' }" }
+          = link_to params.except(:causale).merge(tipo_causale: tipo_causale), class: "list-link", remote: false  do
+            = tipo_causale.pluralize.capitalize 
             %i.chev-right
+        - for c in Causale.send(tipo_causale).map(&:causale)
+          %li{ class: "#{ params[:causale] == c ? 'active' : ''}"}
+            = link_to fatture_url(params.except(:tipo_causale).merge(:causale => c)), class: "list-link", remote: false  do
+              = c.pluralize
+              %i.chev-right
 
   .module
     %ul

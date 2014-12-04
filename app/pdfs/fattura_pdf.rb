@@ -92,7 +92,7 @@ class FatturaPdf < Prawn::Document
     
     bounding_box [bounds.left, bounds.top - 55.mm], :width => 44.mm, :height => 8.mm do
       stroke_bounds
-      text "#{@fattura.causale}", :align => :center, :valign => :center
+      text "#{@fattura.documento_causale}", :align => :center, :valign => :center
     end
 
 

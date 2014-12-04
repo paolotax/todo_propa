@@ -1,0 +1,23 @@
+%h1 Listing causali
+
+%table
+  %tr
+    %th Causale
+    %th Magazzino
+    %th Movimento
+    %th
+    %th
+    %th
+
+  - @causali.each do |causale|
+    %tr
+      %td= causale.causale
+      %td= causale.magazzino
+      %td= causale.movimento
+      %td= link_to 'Show', causale
+      %td= link_to 'Edit', edit_causale_path(causale)
+      %td= link_to 'Destroy', causale, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Causale', new_causale_path

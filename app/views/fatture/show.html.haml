@@ -8,7 +8,7 @@
       %header.well
 
         %div{ style: "margin-left: 80px"}  
-          %h2= "#{@fattura.causale} Nr. #{@fattura.numero} del #{l @fattura.data}"
+          %h2= "#{@fattura.documento_causale} Nr. #{@fattura.numero} del #{l @fattura.data}"
           %address
             %strong
               = link_to @fattura.cliente do
@@ -24,11 +24,11 @@
             = link_to @fattura, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
               %i.icon-trash
               Elimina
-            = link_to fattura_url(@fattura, format: :pdf), class: "btn" do
+            = link_to fattura_url(@fattura, format: :pdf), class: "btn", target: "_blank" do
               %i.icon-print
               Stampa
 
-            = link_to fattura_fattura_step_url(@fattura, :finale), class: "btn btn-primary" do
+            = link_to fattura_fattura_step_url(@fattura, :dettaglio), class: "btn btn-primary" do
               %i.icon-pencil
               Modifica
         

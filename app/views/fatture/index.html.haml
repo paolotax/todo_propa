@@ -66,27 +66,27 @@
         .control-group
           %label.control-label{ for: 'inputAnno' } Anno
           .controls
-            = select_tag "anno", options_for_select(["2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-medium", id: 'inputAnno'
+            = select_tag "anno", options_for_select(["2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-block-level", id: 'inputAnno'
         
         .control-group
           %label.control-label{ for: 'inputCausale' } Tipo documento
           .controls
-            = select_tag "causale_id", options_for_select([["Buoni di consegna", 1], ["Fatture", 0]]), class: "input", id: 'inputCausale'
+            = select_tag "causale_id", options_for_select([["Buoni di consegna", 1], ["Fatture", 0]]), class: "input-block-level", id: 'inputCausale'
 
         .control-group
           %label.control-label{ for: 'inputClienti' } Clienti
           .controls
-            = select_tag "tipo_cliente", options_for_select(["Scuole", "Altri", "Tutti"]), class: "input-medium", id: 'inputClienti'
+            = select_tag "tipo_cliente", options_for_select(["Scuole", "Altri", "Tutti"]), class: "input-block-level", id: 'inputClienti'
 
         .control-group
           %label.control-label{ for: 'inputPagamento' } Pagamento
           .controls
-            = select_tag "pagamento", options_for_select(['Pagati', 'In sospeso', 'Tutti']), class: "input-medium", id: 'inputPagamento'
+            = select_tag "pagamento", options_for_select(['Pagati', 'In sospeso', 'Tutti']), class: "input-block-level", id: 'inputPagamento'
 
         .control-group
           %label.control-label{ for: 'inputData' } Data documenti
           .controls
-            = select_tag "data", options_for_select(['data creazione', 'data ultima modifica', 'ultima data', 'oggi']), class: "input-medium", id: 'inputData'
+            = select_tag "data", options_for_select(['data creazione', 'data ultima modifica', 'ultima data', 'oggi']), class: "input-block-level", id: 'inputData'
 
         .contol-group
           .controls
@@ -113,12 +113,12 @@
         .control-group
           %label.control-label{ for: 'inputAnno' } Anno
           .controls
-            = select_tag "anno", options_for_select(["2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-medium", id: 'inputAnno'
+            = select_tag "anno", options_for_select(["2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-block-level", id: 'inputAnno'
         
         .control-group
           %label.control-label{ for: 'inputCausale' } Tipo documento
           .controls
-            = select_tag "causale", options_for_select(["Buono di consegna", "Ordine"]), class: "input", id: 'inputCausale'
+            = select_tag "causale", options_for_select(["Buono di consegna", "Ordine"]), class: "input-block-level", id: 'inputCausale'
         
         %hr
 

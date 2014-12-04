@@ -1,12 +1,12 @@
 class Fattura < ActiveRecord::Base
 
-  TIPO_FATTURA   = [ "Fattura", "Buono di consegna", "Nota di accredito", "Ordine"]
+  #TIPO_FATTURA   = [ "Fattura", "Buono di consegna", "Nota di accredito", "Ordine"]
   TIPO_PAGAMENTO = ["Contanti", "Assegno", "Bonifico Bancario", "Bollettino Postale"]
   
   extend FriendlyId
   friendly_id :doc_slug, use: [:slugged, :history]
   
-  
+  belongs_to :causale
   belongs_to :cliente
   belongs_to :user
   
@@ -15,8 +15,10 @@ class Fattura < ActiveRecord::Base
   
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => false
   
-  delegate :titolo, to: :cliente
-  
+  delegate :titolo,  to: :cliente
+  delegate :causale, to: :causale, prefix: :documento
+
+
   validates :cliente_id, :causale, :data, :numero, :presence => true, :if => :active?
 
   # attr_writer :data_text
@@ -37,7 +39,7 @@ class Fattura < ActiveRecord::Base
     if data == nil
       self.id
     else  
-      "#{causale}-#{data.year}-#{numero}"
+      "#{documento_causale}-#{data.year}-#{numero}"
     end
   end 
 
@@ -97,11 +99,11 @@ class Fattura < ActiveRecord::Base
   #   order_within_rank: "data DESC, numero DESC"
   
 
-  TIPO_FATTURA.each do |tipo|
-    scope "#{tipo.downcase.split.join('_')}", where("causale_id = ?", TIPO_FATTURA.index(tipo))
+  Causale.all.each do |causale|
+    scope "#{causale.causale.downcase.split.join('_')}", where("causale_id = ?", causale.id)
     
-    define_method "#{tipo.downcase.split.join('_')}?" do
-      self.causale_id == TIPO_FATTURA.index(tipo)
+    define_method "#{causale.causale.downcase.split.join('_')}?" do
+      self.causale_id == causale.id
     end
   end
   
@@ -141,13 +143,14 @@ class Fattura < ActiveRecord::Base
   def self.filtra(params)
     fatture = scoped
     fatture = fatture.search(params[:search]) if params[:search].present?
-    fatture = fatture.where("fatture.causale_id = ?", TIPO_FATTURA.index(params[:causale])) if params[:causale].present?
+    fatture = fatture.joins(:causale).where("causali.causale = ?", params[:causale]) if params[:causale].present?
+    fatture = fatture.joins(:causale).where("causali.tipo = ?", params[:tipo_causale]) if params[:tipo_causale].present?
+
     fatture = fatture.where("extract(year from data) = ? ", params[:anno] ) if params[:anno].present?
     fatture = fatture.where("condizioni_pagamento = ?", params[:pagamento]) if params[:pagamento].present?
     fatture = fatture.where("pagata = ?", params[:pagata]) if params[:pagata].present?
     
     fatture
-    # raise fatture.inspect  if params[:search].present?
   end
 
 
@@ -162,31 +165,15 @@ class Fattura < ActiveRecord::Base
   end
 
   
-  
   def righe_per_titolo
     self.righe.joins(:libro).order("libri.titolo")
   end
   
+
   def imponibile
     self.importo_fattura - self.totale_iva
   end
   
-  
-
-
-
-  def causale
-    unless causale_id.nil?
-      TIPO_FATTURA[self.causale_id]
-    end
-  end
-  
-  def causale=(text)
-    self.causale_id = TIPO_FATTURA.index(text.split(',')[0])
-  end
-  
-  
-
   
   # def add_righe_from_cliente(cliente)
   #   self.totale_copie = self.totale_copie || 0
@@ -208,9 +195,6 @@ class Fattura < ActiveRecord::Base
   #   end
   # end
 
-
-
-  
 
   # ricalcola i totali e cambia stato degli appunti
   def ricalcola
@@ -248,10 +232,10 @@ class Fattura < ActiveRecord::Base
     numeri = Fattura.where("user_id = ? and extract(year from data) = ?", user.id, anno).select("causale_id, max(numero) as numero").group("causale_id")
 
 
-    TIPO_FATTURA.map do |c|
+    Causale.all.map do |c|
       [
-        c,
-        "#{c},#{(numeri.select{|a| a.causale_id == TIPO_FATTURA.index(c)}.first.try(:numero) || 0) + 1}"
+        c.causale,
+        "#{c.id},#{(numeri.select{|a| a.causale_id == c.id}.first.try(:numero) || 0) + 1}"
       ]
     end
 

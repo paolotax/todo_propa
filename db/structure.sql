@@ -584,6 +584,40 @@ ALTER SEQUENCE appunto_events_id_seq OWNED BY appunto_events.id;
 
 
 --
+-- Name: causali; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE causali (
+    id integer NOT NULL,
+    causale character varying(255),
+    magazzino character varying(255),
+    movimento character varying(255),
+    tipo character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: causali_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE causali_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: causali_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE causali_id_seq OWNED BY causali.id;
+
+
+--
 -- Name: classi; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1459,6 +1493,13 @@ ALTER TABLE ONLY appunto_events ALTER COLUMN id SET DEFAULT nextval('appunto_eve
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY causali ALTER COLUMN id SET DEFAULT nextval('causali_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY classi ALTER COLUMN id SET DEFAULT nextval('classi_id_seq'::regclass);
 
 
@@ -1624,6 +1665,14 @@ ALTER TABLE ONLY appunti
 
 ALTER TABLE ONLY appunto_events
     ADD CONSTRAINT appunto_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: causali_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY causali
+    ADD CONSTRAINT causali_pkey PRIMARY KEY (id);
 
 
 --
@@ -2196,3 +2245,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140703140326');
 INSERT INTO schema_migrations (version) VALUES ('20140709212016');
 
 INSERT INTO schema_migrations (version) VALUES ('20140820072940');
+
+INSERT INTO schema_migrations (version) VALUES ('20141204091446');
