@@ -89,9 +89,9 @@ class FatturaStepsController < ApplicationController
 
     
     def generate_appunto
-      unless @fattura.ordine?
+      unless @fattura.causale.carico?
         case step
-        when :vacanze, :dettaglio
+        when :dettaglio
           @righe_nuove = @fattura.righe.where("appunto_id is null")
           unless @righe_nuove.empty?
             @new_appunto = @fattura.cliente.appunti.build

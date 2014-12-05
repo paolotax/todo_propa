@@ -5,5 +5,9 @@ class Causale < ActiveRecord::Base
 
   scope :carico,  where("causali.tipo = 'carico'")
   scope :scarico, where("causali.tipo = 'scarico'")
+
+  def carico?
+    tipo == "carico"
+  end
   
 end
