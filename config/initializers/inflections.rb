@@ -27,7 +27,10 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'copia', 'copie'
   inflect.irregular 'comune', 'comuni'
   inflect.irregular 'magazzino', 'magazzini'
-  
+
+  inflect.irregular 'carico', 'carichi'
+  inflect.irregular 'scarichi', 'scarichi'
+
   inflect.irregular 'buono di consegna', 'buoni di consegna'
   inflect.irregular 'nota di accredito', 'note di accredito'
   
@@ -35,8 +38,6 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'resa a fornitore', 'rese a fornitore'
   inflect.irregular 'fattura acquisti', 'fatture acquisti'
   
-  inflect.irregular 'carico', 'carichi'
-  inflect.irregular 'scarichi', 'scarichi'
   
 
   inflect.irregular 'ordine', 'ordini'

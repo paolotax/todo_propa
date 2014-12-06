@@ -1,6 +1,10 @@
 = render layout: 'form' do |f|
   
-  = nested_righe_per_appunto(@righe)
+
+  - if @fattura.causale.carico?
+    = nested_righe_documenti_per_fattura(@righe)
+  - else
+    = nested_righe_per_appunto(@righe)
 
   %hr
   .control-group

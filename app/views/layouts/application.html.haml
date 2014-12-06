@@ -1,6 +1,5 @@
 !!!
 %html
-  / %html{ :manifest => "production.appcache" }
   %head
     %title= yield :title || "Untitled"
     
@@ -30,6 +29,7 @@
       .container.page
         - flash.each do |name, msg|
           = content_tag(:div, raw(msg), id: "flash_#{name}", class: "alert alert-#{name}")
+        
         = yield :head
 
         = yield

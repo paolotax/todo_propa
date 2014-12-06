@@ -20,7 +20,8 @@ class Cliente < ActiveRecord::Base
   has_many :adozioni,     :through => :classi, :include => :libro
   has_many :mie_adozioni, :through => :classi, :source => :adozioni, :include => :libro, :conditions => "libri.settore = 'Scolastico'"
   
-  has_many :righe, through: :appunti
+  has_many :righe,           through: :appunti
+  has_many :righe_documenti, through: :fatture, source: :righe
 
   has_one :propa2014
 

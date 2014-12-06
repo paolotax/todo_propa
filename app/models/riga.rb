@@ -20,6 +20,9 @@ class Riga < ActiveRecord::Base
   scope :per_id,        order(:id)
   
   scope :scarico,       not_deleted
+
+  scope :carico,        joins(fattura: :causale).where("causali.tipo = 'carico'")
+  scope :completare_carico, carico.where("causali.causale != 'Fattura acquisto'")
   
   scope :da_fare,       scarico.where("appunti.stato = ''")
   scope :preparato,     scarico.where("appunti.stato = 'S'")
@@ -34,11 +37,10 @@ class Riga < ActiveRecord::Base
 
   scope :pagata,        where("righe.pagato = true")
   
-  scope :carico,        joins(:fattura).where("fatture.causale_id = ?", 3)
   
   scope :di_questa_propaganda,  joins(:appunto).where("appunti.created_at > ?", Date.new(2014,1,1))
   
-  scope :di_quest_anno,         joins(:fattura).where("fatture.created_at > ?", Date.new(2014,1,1))
+  scope :di_quest_anno,         joins(:fattura).where("extract(year from fatture.data) = ?", 2014)
 
   scope :dell_anno, lambda { |a| joins(appunto: [:cliente]).where("extract(year from appunti.created_at) = ?", a)}
 

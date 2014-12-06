@@ -6,6 +6,7 @@ class FatturaStepsController < ApplicationController
   
   after_filter :generate_appunto, :only => [:update]
   
+
   def show
     
     @fattura = current_user.fatture.find(params[:fattura_id])
@@ -14,15 +15,13 @@ class FatturaStepsController < ApplicationController
     
     when :scegli_appunti
       
-      unless @fattura.ordine?
+      unless @fattura.causale.carico?
         @righe = @fattura.cliente.righe.da_fatturare 
-        if @righe.empty?
-          skip_step
-        end
       else
-        skip_step
-        jump_to(:leggi)
+        @righe = @fattura.cliente.righe_documenti.completare_carico.di_quest_anno
       end
+      skip_step if @righe.empty?
+
     
     when :vacanze
       
@@ -60,7 +59,6 @@ class FatturaStepsController < ApplicationController
       
       if params[:appunti_ids].present?
         appunti = current_user.appunti.includes(:righe).find(params[:appunti_ids])
-      
         appunti.each do |a|
           @fattura.righe << a.righe.select{|r| r.da_registrare? == true}
           if a.stato == 'X'
@@ -71,6 +69,17 @@ class FatturaStepsController < ApplicationController
         end
         jump_to(:dettaglio)
       end
+
+      if params[:fatture_ids].present?
+        fatture = current_user.fatture.includes(:righe).find(params[:fatture_ids])        
+        fatture.each do |a|
+          @fattura.righe << a.righe
+        end
+        jump_to(:dettaglio)
+      end     
+
+
+
 
     when :leggi, :vacanze 
       jump_to(:dettaglio)
@@ -84,6 +93,7 @@ class FatturaStepsController < ApplicationController
 
     
     def finish_wizard_path
+      flash.keep
       fattura_path(@fattura)
     end
 
