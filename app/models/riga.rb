@@ -22,7 +22,7 @@ class Riga < ActiveRecord::Base
   scope :scarico,       not_deleted
 
   scope :carico,        joins(fattura: :causale).where("causali.tipo = 'carico'")
-  scope :completare_carico, carico.where("causali.causale != 'Fattura acquisto'")
+  scope :completare_carico, carico.where("causali.causale != 'Fattura Acquisti'")
   
   scope :da_fare,       scarico.where("appunti.stato = ''")
   scope :preparato,     scarico.where("appunti.stato = 'S'")
