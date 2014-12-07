@@ -5,7 +5,7 @@
 .row
   = render 'fatture_side'
 
-  .content-main.span5
+  .content-main.span6
     %header.content-header
       .header-inner
         %h2 Documenti
@@ -18,11 +18,11 @@
     .stream-loader
       = paginate @fatture
 
-  .side-bar.span4
+  .side-bar.span3
     
     - [@righe_da_fatturare, @righe_da_pagare ].each_with_index do |righe, index|
 
-      - index == 0 ? label = "pagati da registrare" : label = "da incassare e registrare" 
+      - index == 0 ? label = "pagati" : label = "da incassare" 
 
       .module
         .header
@@ -55,7 +55,7 @@
             %span.list-link 
               %small= "non ci sono appunti #{label}"
 
-    .well
+    .well.well-small
 
       = form_tag :create_multiple_fatture, method: :put, class: 'form-horizontal', id: "form-genera-documenti" do
 
@@ -102,7 +102,7 @@
             = submit_tag "Genera", class: "btn btn-primary", confirm: "Sei sicuro"
 
 
-    .well
+    .well.well-small
 
       = form_tag :modifica_numero_fatture, method: :put, class: 'form-horizontal', id: "form-modifica-numero" do
 

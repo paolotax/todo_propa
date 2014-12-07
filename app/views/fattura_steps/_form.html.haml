@@ -10,6 +10,11 @@
         - if !@fattura.ordine? && !@fattura.cliente.righe.da_fatturare.empty?
           %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
             = link_to "Scegli Appunti", wizard_path(:scegli_appunti)      
+ 
+        - if @fattura.causale.carico? && !@fattura.cliente.righe_documenti..empty?
+          %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
+            = link_to "Scegli Documenti", wizard_path(:scegli_appunti)      
+
         %li{class: "#{step == :vacanze ? 'active' : ''}"}  
           = link_to "Vacanze", wizard_path(:vacanze)
         %li{class: "#{step == :leggi ? 'active' : ''}"}   

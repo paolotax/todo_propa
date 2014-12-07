@@ -28,7 +28,7 @@ class FatturaStepsController < ApplicationController
       @libri = Libro.vacanze.per_titolo
       @libri.all.each do |l|
         
-        if @fattura.ordine?
+        if @fattura.causale.carico?
           prezzo = l.prezzo_copertina
           sconto = 43
         else          

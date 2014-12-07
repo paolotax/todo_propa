@@ -1,15 +1,13 @@
-.modifica-sconto.well
+.modifica-sconto.well.well-small.form-inline.pull-right.clearfix
 
-  
-  %label.pull-left Imposta prezzo o sconto:
+  %label.radio.inline
+    = radio_button_tag 'prezzo', 'consigliato', true
+    prezzo consigliato
+  %label.radio.inline
+    = radio_button_tag 'prezzo', 'con_sconto', false
+    sconto
+    = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 23, 25, 30, 35, 43, 100], 20), class: 'input-mini'
+  %label.radio.inline
+    %button#modifica-prezzo.btn.btn-mini Modifica tutti
 
-  .pull-right
-    %label.radio.inline
-      = radio_button_tag 'prezzo', 'consigliato', true
-      prezzo consigliato
-    %label.radio.inline
-      = radio_button_tag 'prezzo', 'con_sconto', false
-      sconto
-      = select_tag 'prezzo', options_for_select([0, 10, 15, 18, 20, 23, 25, 30, 35, 43, 100], 20), class: 'input-mini'
-    %label.radio.inline
-      %button#modifica-prezzo.btn.btn-mini Modifica tutti
+.clearfix
