@@ -12,6 +12,16 @@ document.addEventListener "page:receive", ->
 
 jQuery ->
 
+
+  $('form').on 'focus', 'input[type=number]', (e) ->
+    $(@).on 'mousewheel.disableScroll', (e) ->
+      e.preventDefault()
+  
+  $('form').on 'blur', 'input[type=number]', (e) ->
+    $(@).off 'mousewheel.disableScroll'
+
+
+
   $('input[type=file]').bootstrapFileInput()
   
   $("#loading").on "ajaxSend", () ->

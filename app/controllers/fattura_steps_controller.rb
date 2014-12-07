@@ -22,10 +22,12 @@ class FatturaStepsController < ApplicationController
       end
       skip_step if @righe.empty?
 
-    
     when :vacanze
       
-      @libri = Libro.vacanze.per_titolo
+      settore = params[:settore] || "Vacanze"
+      @libri = Libro.send(settore.downcase.underscore).per_titolo
+      
+
       @libri.all.each do |l|
         
         if @fattura.causale.carico?
@@ -47,6 +49,7 @@ class FatturaStepsController < ApplicationController
 
     render_wizard
   end
+
 
   def update
     
@@ -78,16 +81,15 @@ class FatturaStepsController < ApplicationController
         jump_to(:dettaglio)
       end     
 
-
-
-
     when :leggi, :vacanze 
       jump_to(:dettaglio)
     end
-    
-    
+        
     render_wizard(@fattura, notice: 'Documento modificato!') 
   end
+
+
+
 
   private
 

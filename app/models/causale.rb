@@ -9,5 +9,9 @@ class Causale < ActiveRecord::Base
   def carico?
     tipo == "carico"
   end
+
+  def scarico?
+    tipo == "scarico"
+  end
   
 end

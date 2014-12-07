@@ -6,6 +6,15 @@
 @import "compass/utilities/text/ellipsis";
 @import "mixins";
 
+
+#righe .riga .titolo a {
+  color: inherit;
+    &:hover {
+    color: inherit;
+  }
+}
+
+
 .table-righe-new {
   .rif-appunto {
     padding: 5px 12px;
