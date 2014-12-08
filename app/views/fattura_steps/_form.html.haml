@@ -2,8 +2,9 @@
   .span8
     .well.clearfix
       %h2
-        = link_to @fattura.titolo, @fattura.cliente
-        %small= "#{@fattura.documento_causale} #{@fattura.numero} del #{l @fattura.data, format: :only_date}"
+        = "#{@fattura.documento_causale} #{@fattura.numero} del #{l @fattura.data, format: :only_date}"
+        %small= link_to @fattura.titolo, @fattura.cliente
+        
       %br
 
       %ul.nav.nav-tabs

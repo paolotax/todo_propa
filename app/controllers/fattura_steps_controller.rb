@@ -32,18 +32,18 @@ class FatturaStepsController < ApplicationController
         
         if @fattura.causale.carico?
           prezzo = l.prezzo_copertina
-          sconto = 43
+          @sconto = 43
         else          
           if !(["Cartolibreria", "Ditta"].include?  @fattura.cliente.cliente_tipo)
             prezzo = l.prezzo_consigliato
-            sconto = 0.0
+            @sconto = 0.0
           else
             prezzo = l.prezzo_copertina
-            sconto = 20
+            @sconto = 20
           end
         end
 
-        @fattura.righe.build(libro: l, prezzo_unitario: prezzo, sconto: sconto)
+        @fattura.righe.build(libro: l, prezzo_unitario: prezzo, sconto: @sconto)
       end    
     end
 
