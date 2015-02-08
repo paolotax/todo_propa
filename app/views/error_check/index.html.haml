@@ -1,0 +1,30 @@
+
+
+.row
+  .content-main.span6
+    %header.content-header
+      .header-inner
+        %h2 Appunti errati    
+    #appunti.list
+      = render @appunti_errore_importo
+  
+  .content-main.span6
+    %header.content-header
+      .header-inner
+        %h2= "#{@fatture_errore_importo.size} Fatture errate"
+    #fatture.list
+      - for fattura in @fatture_errore_importo do
+        
+        %div.clearfix
+          .errore
+            = "id: #{fattura.id}    diff importo: #{fattura.differenza_importo} copie: #{fattura.differenza_copie}"
+          
+          = render fattura
+
+  .content-main.span6
+    %header.content-header
+      .header-inner
+        %h2= "#{@appunti_fattura_id_errata.size} Appunti con Fatture errate"
+        = @appunti_fattura_id_errata.map(&:id)
+    #fatture.list
+      = render @appunti_fattura_id_errata

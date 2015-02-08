@@ -5,9 +5,6 @@ jQuery ->
     if values.length == 2
       $("#fattura_numero").val values[1]
       
-
-
-
   $(".remove-fattura").live 'click', (e) ->
     e.preventDefault()
     riga = $(@).closest(".riga")

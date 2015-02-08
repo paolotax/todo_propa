@@ -1,3 +1,12 @@
+Destinatario = Struct.new(:destinatario, :telefono, :email, :tipo) do
+  def dest
+    "#{destinatario} #{telefono} #{email}"
+  end
+end
+
+
+
+
 class Cliente < ActiveRecord::Base
 
   
@@ -22,6 +31,9 @@ class Cliente < ActiveRecord::Base
   
   has_many :righe,           through: :appunti
   has_many :righe_documenti, through: :fatture, source: :righe
+
+  has_many :documenti, dependent: :destroy
+  has_many :righe_documento, through: :documenti, source: :righe
 
   has_one :propa2014
 
@@ -139,7 +151,19 @@ class Cliente < ActiveRecord::Base
   
     end
   end
+
+
+  def destinatari
+    destinatari = appunti.map{ |a| [a.destinatario, a.telefono, a.email]}.uniq.map{|a| Destinatario.new(a[0], a[1], a[2], 'insegnanti')}
+
+    destinatari << classi.order("classi.classe, classi.sezione").map { |c| Destinatario.new("Classe #{c.classe} #{c.sezione}", nil, nil, "classi")}
+
+    destinatari.flatten
+  end
   
+  def destinatari_con_recapiti
+    destinatari.select {|a| a.telefono.blank? == false || a.email.blank? == false}
+  end
 
   def crea_consegna(riga_ids = [])
 
@@ -676,5 +700,8 @@ end
 #  updated_at      :datetime        not null
 #  ancestry        :string(255)
 #  slug            :string(255)
+#  properties      :hstore
+#  uuid            :string
+#  deleted_at      :datetime
 #
 

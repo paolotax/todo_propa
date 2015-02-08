@@ -92,6 +92,8 @@ class AppuntiController < ApplicationController
   def update
     @appunto = current_user.appunti.find(params[:id])
 
+    #raise params[:appunto].inspect
+
     respond_to do |format|
       if @appunto.update_attributes(params[:appunto])
         session[:return_to] ||= appunto_url(@appunto)

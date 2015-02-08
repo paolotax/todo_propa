@@ -1,0 +1,10 @@
+= render layout: 'form' do |f|
+  
+  .control-group
+    = f.input :leggi, as: :text, label: "incolla i titoli e le quantità dalla mail Consegne", input_html: { class: "input-block-level" }
+          
+  %hr    
+  .control-group
+    .controls
+      %button{:class => "btn btn-primary pull-right", :type => "submit"} Salva e continua
+  

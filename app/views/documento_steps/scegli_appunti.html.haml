@@ -1,0 +1,15 @@
+= render layout: 'form' do |f|
+  
+
+  %div
+    = check_box_tag "select_all", nil, false, class: 'cb-toggle'
+    - if @documento.causale.carico?
+      = nested_righe_documenti_per_documento(@righe)
+    - else
+      = nested_righe_per_appunto(@righe)
+
+  %hr
+  .control-group
+    .controls
+      %button{:class => "btn btn-primary pull-right", :type => "submit"} Salva e continua
+      

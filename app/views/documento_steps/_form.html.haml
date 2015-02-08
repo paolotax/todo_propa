@@ -1,0 +1,51 @@
+.row
+  .span8
+    .well.clearfix
+      %h2
+        = "#{@documento.documento_causale} #{@documento.numero} del #{l @documento.data, format: :only_date}"
+        %small= link_to @documento.titolo, @documento.cliente
+        
+      %br
+
+      %ul.nav.nav-tabs
+        - if @documento.documento_scarico? && !@documento.cliente.righe.scarico.non_documentato.empty?
+          %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
+            = link_to "Scegli appunti", wizard_path(:scegli_appunti)      
+ 
+        - if @documento.documento_carico? && !@documento.cliente.righe_documento.carico.open_fattura.empty?
+          %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
+            = link_to "Scegli documenti", wizard_path(:scegli_appunti)      
+
+        %li{class: "dropdown #{step == :vacanze ? 'active' : ''}"}
+          %a.dropdown-toggle{ href: '#', "data-toggle" => 'dropdown'}
+            Libri per settore
+            %b.caret
+          %ul.dropdown-menu
+            -Libro::SETTORI.each do |settore|
+              %li= link_to settore, wizard_path(:vacanze, settore: settore)
+             
+        %li{class: "#{step == :leggi ? 'active' : ''}"}   
+          = link_to "Importa", wizard_path(:leggi)
+        %li{class: "#{step == :dettaglio ? 'active' : ''}"}   
+          = link_to "Dettaglio righe", wizard_path(:dettaglio)
+        %li{class: "#{step == :intestazione ? 'active' : ''}"}  
+          = link_to "Modifica intestazione", wizard_path(:intestazione)
+      
+      %br
+
+      = simple_nested_form_for @documento, url: wizard_path do |f|
+        = f.error_notification      
+        = yield f
+
+  
+  .span4
+    
+    - libri = @documento.righe.map(&:libro).select{|l| l.anagrafica_da_completare? == true}.uniq
+    - unless libri.empty?
+      .well
+      - for libro in libri do
+        = render libro
+
+    - if @documento.documento_causale
+      .well
+        = link_to "#{@documento.documento_causale.pluralize} #{@documento.data.year}", documenti_path(causale: @documento.documento_causale, anno: @documento.data.year)

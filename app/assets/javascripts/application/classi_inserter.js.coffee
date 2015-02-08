@@ -36,10 +36,10 @@ jQuery ->
   
 
   initialize_libri = ->
-      if $('#classi_inserter_libro_ids').length
-        lista_libri = new ListLibri()
+    if $('#classi_inserter_libro_ids').length
+      lista_libri = new ListLibri()
         
-    initialize_libri()
+  initialize_libri()
 
 class ListLibri
   

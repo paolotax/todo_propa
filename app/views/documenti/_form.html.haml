@@ -1,0 +1,21 @@
+- anno = params[:anno].try(:to_i) || Date.today.year
+
+
+= simple_nested_form_for @documento, html: { class: "form-horizontal"} do |f|
+  
+  = f.error_notification
+
+  = f.hidden_field :user_id, value: current_user.id
+  
+  = f.input :cliente_id, collection: current_user.clienti.order(:titolo), label_method: :titolo, value_method: :id, input_html: { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
+  
+  = f.input :causale_id, collection: Documento.next_numeri(current_user, anno), prompt: "Seleziona causale", label: "Causale"
+
+  = f.input :numero
+  = f.input :data, input_html: { class: "input-small"}
+
+  %hr
+
+  .control-group
+    .controls
+      %button{:class => "btn btn-primary", :type => "submit"} Continua

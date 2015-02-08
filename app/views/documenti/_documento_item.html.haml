@@ -1,0 +1,10 @@
+%li{ class: "#{ documento.pagata? ? '' : 'da_pagare'}", data: { id: "#{documento.id}"} }
+  %span.titolo
+    = link_to documento_url documento do
+      #{documento.documento_causale}
+      %br 
+      #{documento.numero} del #{l(documento.data).downcase}
+  %span.quantita
+    = documento.totale_copie
+  %span.importo
+    = number_to_currency documento.totale_importo

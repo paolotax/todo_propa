@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">causale</Data></Cell>
+        <Cell><Data ss:Type="String">numero</Data></Cell>
+        <Cell><Data ss:Type="String">data</Data></Cell>
+        <Cell><Data ss:Type="String">anno</Data></Cell>
+        <Cell><Data ss:Type="String">cliente</Data></Cell>
+        <Cell><Data ss:Type="String">pagata</Data></Cell>
+        
+        <Cell><Data ss:Type="String">totale copie</Data></Cell>
+        <Cell><Data ss:Type="String">importo_fattura</Data></Cell>
+        <Cell><Data ss:Type="String">totale_iva</Data></Cell>
+
+      </Row>
+    <% @fatture.each do |fattura| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= fattura.documento_causale %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= fattura.numero %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= l fattura.data, format: :long_with_day %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= fattura.data.year %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= fattura.cliente.ragione_sociale %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= fattura.pagata %></Data></Cell>
+        
+        <Cell><Data ss:Type="Number"><%= fattura.totale_copie %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= fattura.importo_fattura %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= fattura.totale_iva %></Data></Cell>
+
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

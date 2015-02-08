@@ -107,7 +107,7 @@ gem 'morrisjs-rails'
 gem 'raphael-rails'
 
 gem 'strong_parameters'
-
+gem 'state_machine'
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'

@@ -10,11 +10,11 @@
       %ul.nav.nav-tabs
         - if @fattura.documento_scarico? && !@fattura.cliente.righe.da_fatturare.empty?
           %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
-            = link_to "Scegli Appunti", wizard_path(:scegli_appunti)      
+            = link_to "Scegli appunti", wizard_path(:scegli_appunti)      
  
         - if @fattura.documento_carico? && !@fattura.cliente.righe_documenti.completare_carico.di_quest_anno.empty?
           %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
-            = link_to "Scegli Documenti", wizard_path(:scegli_appunti)      
+            = link_to "Scegli documenti", wizard_path(:scegli_appunti)      
 
         %li{class: "dropdown #{step == :vacanze ? 'active' : ''}"}
           %a.dropdown-toggle{ href: '#', "data-toggle" => 'dropdown'}
@@ -24,15 +24,12 @@
             -Libro::SETTORI.each do |settore|
               %li= link_to settore, wizard_path(:vacanze, settore: settore)
              
-
-        
-
         %li{class: "#{step == :leggi ? 'active' : ''}"}   
           = link_to "Importa", wizard_path(:leggi)
         %li{class: "#{step == :dettaglio ? 'active' : ''}"}   
           = link_to "Dettaglio righe", wizard_path(:dettaglio)
         %li{class: "#{step == :intestazione ? 'active' : ''}"}  
-          = link_to "Intestazione", wizard_path(:intestazione)
+          = link_to "Modifica intestazione", wizard_path(:intestazione)
       
       %br
 
@@ -42,12 +39,13 @@
 
   
   .span4
-    .well
-      - libri = @fattura.righe.map(&:libro).select{|l| l.anagrafica_da_completare? == true}.uniq
-
+    
+    - libri = @fattura.righe.map(&:libro).select{|l| l.anagrafica_da_completare? == true}.uniq
+    - unless libri.empty?
+      .well
       - for libro in libri do
         = render libro
 
-
-    .well
-      = link_to 'Documenti', fatture_path
+    - if @fattura.documento_causale
+      .well
+        = link_to "#{@fattura.documento_causale.pluralize} #{@fattura.data.year}", fatture_path(causale: @fattura.documento_causale, anno: @fattura.data.year)

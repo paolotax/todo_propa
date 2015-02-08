@@ -1,0 +1,77 @@
+.documenti-side.span3
+  
+  .module
+    %ul.stats
+      %li
+        = link_to "", remote: false do
+          %strong= @tot_documenti.size
+          DOC
+      %li
+        = link_to "", remote: false do
+          %strong= @tot_documenti.sum(&:totale_copie)
+          copie
+      %li
+        = link_to "", remote: false do
+          %strong= number_to_currency @tot_documenti.sum(&:totale_importo)
+          importo
+      
+    .search-box
+      = form_tag params, method:'get', id: 'documenti_search', class: "form-search", remote: false do
+        .input-append
+          = text_field_tag :search, params[:search], class: "input-medium search-query", placeholder: "cerca documenti"
+          = button_tag class: "btn", name: nil do
+            %i.icon-search
+
+  - ["scarico", "carico"].each do |tipo_causale|
+    .module
+      %ul
+        %li{ class: "#{ params[:tipo_causale] == tipo_causale ? 'active': '' }" }
+          = link_to params.except(:causale).merge(tipo_causale: tipo_causale), class: "list-link", remote: false  do
+            = tipo_causale.pluralize.capitalize 
+            %i.chev-right
+        - for c in Causale.send(tipo_causale).map(&:causale)
+          %li{ class: "#{ params[:causale] == c ? 'active' : ''}"}
+            = link_to params.except(:tipo_causale).merge(:causale => c), class: "list-link", remote: false  do
+              = c.pluralize
+              %i.chev-right
+
+  .module
+    %ul
+      %li{ class: "#{ params[:pagata].present? ? '': 'active' }" }
+        = link_to params.except(:pagata), class: "list-link", remote: false  do
+          Tutti 
+          %i.chev-right
+
+      %li{ class: "#{ params[:pagata] == 'false' ? 'active' : ''}"}
+        = link_to params.merge(:pagata => false), class: "list-link", remote: false  do
+          non pagato
+          %i.chev-right
+
+      %li{ class: "#{ params[:pagata] == 'true' ? 'active' : ''}"}
+        = link_to params.merge(:pagata => true), class: "list-link", remote: false  do
+          pagato
+          %i.chev-right
+
+  .module
+    %ul
+      %li{ class: "#{ params[:anno].present? ? '': 'active' }" }
+        = link_to params.except(:anno), class: "list-link", remote: false  do
+          Anni 
+          %i.chev-right
+
+      - for c in ["2015", "2014", "2013", "2012", "2011", "2010"]
+        %li{ class: "#{ params[:anno] == c ? 'active' : ''}"}
+          = link_to params.merge(:anno => c), class: "list-link", remote: false  do
+            = c
+            %i.chev-right
+  .module
+    %ul
+      %li{ class: "#{ params[:pagamento].present? ? '': 'active' }" }
+        = link_to params.except(:pagamento), class: "list-link", remote: false  do
+          Pagamenti 
+          %i.chev-right
+      - for c in Documento::TIPO_PAGAMENTO
+        %li{ class: "#{ params[:pagamento] == c ? 'active' : ''}"}
+          = link_to params.merge(:pagamento => c), class: "list-link", remote: false  do
+            = c
+            %i.chev-right

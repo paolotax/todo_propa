@@ -15,15 +15,20 @@ end
 #  stato          :string(255)     default(""), not null
 #  scadenza       :date
 #  cliente_id     :integer
+#  user_id        :integer
 #  position       :integer
 #  telefono       :string(255)
 #  email          :string(255)
-#  user_id        :integer
 #  totale_copie   :integer         default(0)
 #  totale_importo :float           default(0.0)
 #  latitude       :float
 #  longitude      :float
-#  created_at     :datetime
-#  updated_at     :datetime
+#  created_at     :datetime        not null
+#  updated_at     :datetime        not null
+#  uuid           :string
+#  deleted_at     :datetime
+#  completed_at   :datetime
+#  nota           :string(255)
+#  score          :integer
 #
 

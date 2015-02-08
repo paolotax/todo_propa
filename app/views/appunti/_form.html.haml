@@ -29,7 +29,14 @@
   .tab-content
 
     #info.tab-pane.fade.active.in
-      = f.input :destinatario
+      
+
+      - if @appunto.cliente
+        = f.input :destinatario, collection: @appunto.cliente.destinatari, label_method: :dest, value_method: :destinatario, input_html: { class: 'chzn-select', "data-placeholder" => "Seleziona il destinatario..." }
+      - else
+        = f.input :destinatario
+      
+
       = f.input :note, :input_html => { rows: 5 }
       = f.input :telefono
       = f.input :email

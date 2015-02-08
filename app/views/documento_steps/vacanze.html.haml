@@ -1,0 +1,22 @@
+= render layout: 'form' do |f|
+
+  = render 'righe/select_prezzo'
+
+  .control-group
+    #righe
+      - if f.object.righe.empty?
+        .empty
+          Nessuna riga in questo documento...
+      - else
+        = f.simple_fields_for :righe do |riga|          
+          - if riga.object.new_record?
+            = render 'righe/form', riga: riga, remove: false
+          - else
+            .hidden
+
+  %hr
+  .control-group
+    .controls
+      %button{:class => "btn btn-primary pull-right", :type => "submit"} Salva e continua
+
+      

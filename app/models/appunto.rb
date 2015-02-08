@@ -128,7 +128,11 @@ class Appunto < ActiveRecord::Base
   
   def status=(stato)
     self.stato = STATUS_CODES[STATUS.index(stato)]
-  end  
+  end 
+
+  def deleted?
+    !deleted_at.nil?
+  end 
   
   def da_consegnare?
     self.stato.blank?
@@ -239,6 +243,33 @@ class Appunto < ActiveRecord::Base
   #   end
   # end
 
+
+
+  def calc_importo
+    righe.map(&:importo).sum
+  end
+
+
+  def calc_copie
+    righe.map(&:quantita).sum
+  end
+
+
+  def differenza_importo
+    (calc_importo - totale_importo).to_s
+  end
+
+  
+  def importo_errato?
+    !(calc_importo - totale_importo).between?(-0.01, 0.01)
+  end
+
+
+  def copie_errate?
+    calc_copie != totale_copie
+  end
+
+
   def self.check_status_fattura
     errors = []
     Appunto.all.each do |a|
@@ -284,37 +315,6 @@ class Appunto < ActiveRecord::Base
     end
   end
 
-  #  TDOO
-  #  State Machine
-  # 
-
-  # STATES = %w[incompleto pronto consegnato spedito registrato pagato chiuso cancellato]
-  # delegate :incompleto?, :pronto?, :consegnato?, :spedito?, 
-  #          :registrato?, :pagato?, :chiuso?, :cancellato?, to: :current_state
-
-  # class << self
-  #   STATES.each do |state|
-  #     define_method "#{state}" do
-  #       joins(:events).merge AppuntoEvent.with_last_state(state)
-  #     end
-  #   end
-  # end           
-
-  # def current_state
-  #   (events.last.try(:state) || STATES.first).inquiry
-  # end
-
-  # def prepara(valid_payment = true)
-  #   if incompleto?
-  #     events.create! state: "pronto" if valid_payment
-  #   end
-  # end
-  
-  # def consegna(valid_payment = true)
-  #   if incompleto? || pronto?
-  #     events.create! state: "consegnato" if valid_payment
-  #   end
-  # end
 
   private
 
@@ -377,5 +377,10 @@ end
 #  longitude      :float
 #  created_at     :datetime        not null
 #  updated_at     :datetime        not null
+#  uuid           :string
+#  deleted_at     :datetime
+#  completed_at   :datetime
+#  nota           :string(255)
+#  score          :integer
 #
 

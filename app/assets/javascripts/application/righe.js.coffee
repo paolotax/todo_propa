@@ -76,8 +76,10 @@ jQuery ->
 
     if $(@).hasClass('appunto')
       tipo = 'appunto'
-    else
+    else if $(@).hasClass('fattura')
       tipo = 'fattura'
+    else
+      tipo = 'documento'
 
     if validateRiga()
       riga =

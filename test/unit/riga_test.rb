@@ -21,7 +21,10 @@ end
 #  magazzino_id    :integer
 #  causale_id      :integer
 #  movimento       :integer
-#  created_at      :datetime
-#  updated_at      :datetime
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#  uuid            :string
+#  state           :string(255)
+#  position        :integer
 #
 

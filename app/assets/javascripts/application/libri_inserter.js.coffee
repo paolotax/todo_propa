@@ -1,7 +1,8 @@
 jQuery ->
   
-  select = $("#libri_inserter_editore")
-
+  select = $("#libri_inserter_editore") 
+  if select.length == 0
+    select = $("#appunto_destinatario")
 
   if select.length > 0
   
@@ -20,6 +21,8 @@ jQuery ->
 
         select.prepend(option);
     
-        select.find(option).prop('selected', true);
+        select.find(option).prop('selected', true)
 
-        select.trigger("liszt:updated");
+        select.trigger("liszt:updated")
+        $(".active-result.result-selected").addClass("highlighted").focus()
+

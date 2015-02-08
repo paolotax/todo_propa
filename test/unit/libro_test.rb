@@ -24,5 +24,10 @@ end
 #  image              :string(255)
 #  created_at         :datetime        not null
 #  updated_at         :datetime        not null
+#  slug               :string(255)
+#  iva                :string(255)
+#  classe             :integer
+#  editore_id         :integer
+#  next_id            :integer
 #
 

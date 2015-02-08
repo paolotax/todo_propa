@@ -1,12 +1,15 @@
 %div.clearfix[riga]
-  / .consegnata
-  /   = check_box_tag "cx-consegnato", riga.consegnato, riga.consegnato
-  / .pagata
-  /   = check_box_tag "cx-pagato", riga.pagato, riga.pagato
+  .cb
+    = check_box_tag("riga_ids[]", riga.id, false)
+
   .titolo
     = link_to riga.cached_libro.titolo, riga.cached_libro
-    %small= riga.cached_libro.cm
-  .dati-riga
+    - if Rails.env.production?
+      %small= riga.cached_libro.cm
+    - else
+      %small= riga.state
+
+  .dati-riga      
     .quantita
       %strong
         = riga.quantita

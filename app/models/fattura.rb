@@ -1,6 +1,5 @@
 class Fattura < ActiveRecord::Base
 
-  #TIPO_FATTURA   = [ "Fattura", "Buono di consegna", "Nota di accredito", "Ordine"]
   TIPO_PAGAMENTO = ["Contanti", "Assegno", "Bonifico Bancario", "Bollettino Postale"]
   
   extend FriendlyId
@@ -14,12 +13,45 @@ class Fattura < ActiveRecord::Base
   has_many :appunti, :through => :righe, uniq: true, order: "appunti.id"
   
   accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => false
+
+
+  validates :cliente_id, :causale_id, :data, :numero, :presence => true, :if => :active?
+
   
   delegate :titolo,  to: :cliente
   delegate :causale, :carico?, :scarico?, to: :causale, prefix: :documento
 
 
-  validates :cliente_id, :causale, :data, :numero, :presence => true, :if => :active?
+  def differenza_copie
+    (calc_copie - totale_copie).to_s
+  end
+
+
+  def calc_importo
+    righe.map(&:importo).sum
+  end
+
+
+  def calc_copie
+    righe.map(&:quantita).sum
+  end
+
+
+  def differenza_importo
+    (calc_importo - importo_fattura).to_s
+  end
+
+  
+  def importo_errato?
+    !(calc_importo - importo_fattura).between?(-0.01, 0.01)
+  end
+
+
+  def copie_errate?
+    calc_copie != totale_copie
+  end
+
+
 
   # attr_writer :data_text
 
@@ -36,9 +68,7 @@ class Fattura < ActiveRecord::Base
 
 
   def doc_slug
-    if data == nil
-      self.id
-    else  
+    unless causale.nil?
       "#{documento_causale}-#{data.year}-#{numero}"
     end
   end 
@@ -294,5 +324,6 @@ end
 #  created_at           :datetime        not null
 #  updated_at           :datetime        not null
 #  slug                 :string(255)
+#  status               :string(255)
 #
 

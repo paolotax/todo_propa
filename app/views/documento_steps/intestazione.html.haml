@@ -1,0 +1,18 @@
+= render layout: 'form' do |f|
+ 
+  .form-horizontal   
+    
+    %fieldset
+      %legend Modifica numero o data
+      = f.input :numero
+      = f.input :data, input_html: {class: "input-small"}
+    
+    %fieldset
+      %legend Modalita' pagamento
+      = f.input :condizioni_pagamento, collection: Fattura::TIPO_PAGAMENTO
+      = f.input :pagata
+    
+    %hr
+    .control-group
+      .controls
+        %button{:class => "btn btn-primary pull-right", :type => "submit"} Salva e chiudi     

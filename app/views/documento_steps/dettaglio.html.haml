@@ -1,0 +1,19 @@
+= render layout: 'form' do |f|
+  
+
+  .control-group
+    = render 'righe/select_prezzo'
+  
+  .control-group
+    = render 'righe/form_create', model: 'documento'
+  
+  .control-group
+    #righe
+      = f.simple_fields_for :righe do |riga|
+        = render 'righe/form', riga: riga, remove: 'documento'
+          
+  %hr      
+  .control-group
+    .controls
+      %button{:class => "btn btn-primary pull-right", :type => "submit"} Salva e continua
+  

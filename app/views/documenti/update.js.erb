@@ -1,0 +1,9 @@
+var documento
+
+documento = $("#<%= dom_id(@documento) %>");
+
+opened = documento.hasClass("opened");
+
+documento.replaceWith("<%= j render @documento %>");
+
+if (opened) $("#<%= dom_id(@documento) %>").addClass("opened");

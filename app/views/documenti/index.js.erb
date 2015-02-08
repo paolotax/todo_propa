@@ -1,0 +1,22 @@
+<% if params[:page] && params[:page].to_i > 1 %>
+  $("#documenti").append("<%= j render 'grouped_documenti' %>")
+  <% if (@documenti.current_page < @documenti.num_pages) %>
+    $('.pagination').replaceWith('<%= j paginate(@documenti) %>');
+  <% else %>
+    $('.pagination').remove();
+  <% end %>
+<% else %>  
+  $("#documenti").html("<%= j render 'grouped_documenti' %>")
+  $(".documenti-side").replaceWith('<%= j render "documenti_side" %>');
+  if ($(".pagination").length > 0) {
+    $('.pagination').replaceWith('<%= j paginate(@documenti) %>');
+  } else {
+    $("#documenti").after("<div class='pagination'>" + '<%= j paginate(@documenti) %>' + "</div>");
+  }
+<% end %>
+
+if ($(".filters").length > 0) {
+  $('.filters').replaceWith('<%= j render "shared/filters" %>');
+} else {
+  $("#documenti").before('<%= j render "shared/filters" %>');
+}

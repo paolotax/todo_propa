@@ -1,0 +1,6 @@
+= form_for documento, method: :put, remote: true, html: { style: "display:inline;" }, class: "baule_btn" do |f|
+  = f.hidden_field :pagata, value: 't'
+  = f.hidden_field :id, value: documento.id
+  %button.btn{ title: 'Pagato!' }
+    %i.icon-money
+    

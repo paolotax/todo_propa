@@ -23,7 +23,8 @@ class Api::V1::AppuntiController < Api::V1::BaseController
     @cliente = current_resource_owner.clienti.find(params[:appunto][:cliente_id])
     @appunto =  @cliente.appunti.build(params[:appunto])
     if @appunto.save
-      appunto = current_resource_owner.appunti.find(@appunto.id)
+      appunto = current_resource_owner.appunti.includes(:cliente, :righe => :libro).find(@appunto.id)
+      #respond_with appunto
       render json: appunto
     end
   end
@@ -36,11 +37,12 @@ class Api::V1::AppuntiController < Api::V1::BaseController
   def update
     @appunto = current_resource_owner.appunti.find(params[:id])
 
-    # questo non va bene per la fatturazione LA SPOSTO SULL APPUNTO?
-    @appunto.righe.destroy_all
+    # raise params[:appunto].inspect
+    # @appunto.righe.destroy_all
     
     if @appunto.update_attributes(params[:appunto])
-      appunto = current_resource_owner.appunti.find(@appunto.id)
+      appunto = current_resource_owner.appunti.includes(:cliente, :righe => :libro).find(@appunto.id)
+      #respond_with appunto
       render json: appunto
     else
       respond_with json: { errors: @appunto.errors.full_messages, status: :unprocessable_entity }

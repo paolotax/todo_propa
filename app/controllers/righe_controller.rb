@@ -1,6 +1,9 @@
+
 class RigheController < ApplicationController
   
   def index
+
+    
   end
   
   def create
@@ -39,4 +42,7 @@ class RigheController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+
+
 end

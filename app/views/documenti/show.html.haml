@@ -1,0 +1,61 @@
+= new_button( new_documento_url )
+
+- title @documento.slug.capitalize
+
+.content
+  .row
+    %section.offset2.span8.documento
+      %header.well
+
+        %div{ style: "margin-left: 80px"}  
+          %h2= "#{@documento.documento_causale} Nr. #{@documento.numero} del #{l @documento.data}"
+          %address
+            %strong
+              = link_to @documento.cliente do
+                = "@#{@documento.cliente.ragione_sociale || [@documento.cliente.nome, @documento.cliente.cognome].join(' ')}"
+            %br
+            = @documento.cliente.indirizzo
+            %br
+            = "#{@documento.cliente.cap} #{@documento.cliente.frazione} #{@documento.cliente.comune} #{@documento.cliente.provincia}"
+
+          - for documento in @documento.next_documenti
+            = link_to(" -> #{documento.documento_causale} nr #{documento.numero} del #{l documento.data, format: :only_date}", documento)
+        
+        %footer.show-toolbar
+          .pull-right
+
+            = link_to @documento, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
+              %i.icon-trash
+              Elimina
+            = link_to documento_url(@documento, format: :pdf), class: "btn", target: "_blank" do
+              %i.icon-print
+              Stampa
+
+            = link_to documento_documento_step_url(@documento, :dettaglio), class: "btn btn-primary" do
+              %i.icon-pencil
+              Modifica
+        
+
+      - unless @documento.appunti.empty?
+        %article.table-righe-new.well
+          - for appunto, righe in @documento.righe.group_by(&:appunto)
+            .rif-appunto
+              = link_to appunto do
+                = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
+            = render righe
+
+      - else
+        
+        %article.table-righe-new.well
+          = nested_righe_del_documento(@documento)
+          
+      %footer.well
+        .copie
+          %strong= @documento.totale_copie
+          copie
+        .importo-totale
+          %strong= pretty_prezzo @documento.totale_importo
+          importo
+
+  
+          

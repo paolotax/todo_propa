@@ -12,6 +12,8 @@ document.addEventListener "page:receive", ->
 
 jQuery ->
 
+  $( '.cb-toggle' ).on 'click', () ->
+    $( 'input[type="checkbox"]', $(@).parent().parent()).prop('checked', this.checked)
 
   $('form').on 'focus', 'input[type=number]', (e) ->
     $(@).on 'mousewheel.disableScroll', (e) ->
@@ -21,9 +23,9 @@ jQuery ->
     $(@).off 'mousewheel.disableScroll'
 
 
-
   $('input[type=file]').bootstrapFileInput()
   
+
   $("#loading").on "ajaxSend", () ->
     $("#loading").show()
   

@@ -758,6 +758,80 @@ ALTER SEQUENCE comuni_id_seq OWNED BY comuni.id;
 
 
 --
+-- Name: documenti; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE documenti (
+    id integer NOT NULL,
+    numero integer,
+    data date,
+    note text,
+    cliente_id integer,
+    causale_id integer,
+    user_id integer,
+    condizioni_pagamento character varying(255),
+    totale_copie integer DEFAULT 0,
+    totale_importo numeric(9,2) DEFAULT 0.0,
+    totale_iva numeric(9,2) DEFAULT 0.0,
+    spese numeric(9,2) DEFAULT 0.0,
+    state character varying(255),
+    slug character varying(255),
+    payed_at date,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: documenti_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE documenti_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: documenti_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE documenti_id_seq OWNED BY documenti.id;
+
+
+--
+-- Name: documenti_righe; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE documenti_righe (
+    id integer NOT NULL,
+    documento_id integer,
+    riga_id integer
+);
+
+
+--
+-- Name: documenti_righe_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE documenti_righe_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: documenti_righe_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE documenti_righe_id_seq OWNED BY documenti_righe.id;
+
+
+--
 -- Name: editori; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1177,7 +1251,9 @@ CREATE TABLE righe (
     movimento integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    uuid uuid
+    uuid uuid,
+    state character varying(255),
+    "position" integer
 );
 
 
@@ -1521,6 +1597,20 @@ ALTER TABLE ONLY comuni ALTER COLUMN id SET DEFAULT nextval('comuni_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY documenti ALTER COLUMN id SET DEFAULT nextval('documenti_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY documenti_righe ALTER COLUMN id SET DEFAULT nextval('documenti_righe_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY editori ALTER COLUMN id SET DEFAULT nextval('editori_id_seq'::regclass);
 
 
@@ -1697,6 +1787,22 @@ ALTER TABLE ONLY clienti
 
 ALTER TABLE ONLY comuni
     ADD CONSTRAINT comuni_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: documenti_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY documenti
+    ADD CONSTRAINT documenti_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: documenti_righe_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY documenti_righe
+    ADD CONSTRAINT documenti_righe_pkey PRIMARY KEY (id);
 
 
 --
@@ -1928,6 +2034,27 @@ CREATE INDEX index_clienti_on_user_id ON clienti USING btree (user_id);
 
 
 --
+-- Name: index_documenti_on_causale_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_documenti_on_causale_id ON documenti USING btree (causale_id);
+
+
+--
+-- Name: index_documenti_on_cliente_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_documenti_on_cliente_id ON documenti USING btree (cliente_id);
+
+
+--
+-- Name: index_documenti_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_documenti_on_user_id ON documenti USING btree (user_id);
+
+
+--
 -- Name: index_fatture_on_causale_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -2079,6 +2206,13 @@ CREATE INDEX index_righe_on_causale_id ON righe USING btree (causale_id);
 --
 
 CREATE INDEX index_righe_on_fattura_id ON righe USING btree (fattura_id);
+
+
+--
+-- Name: index_righe_on_id_and_position; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_righe_on_id_and_position ON righe USING btree (id, "position");
 
 
 --
@@ -2247,3 +2381,7 @@ INSERT INTO schema_migrations (version) VALUES ('20140709212016');
 INSERT INTO schema_migrations (version) VALUES ('20140820072940');
 
 INSERT INTO schema_migrations (version) VALUES ('20141204091446');
+
+INSERT INTO schema_migrations (version) VALUES ('20141210173644');
+
+INSERT INTO schema_migrations (version) VALUES ('20141217173856');

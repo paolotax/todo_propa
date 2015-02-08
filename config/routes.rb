@@ -1,8 +1,11 @@
 TodoPropa::Application.routes.draw do
   
-  resources :causali
 
   use_doorkeeper
+
+
+  resources :causali
+
   
   resources :propa2014s do
     collection do
@@ -36,7 +39,9 @@ TodoPropa::Application.routes.draw do
 
   resources :appunto_events
 
+
   mount WillFilter::Engine => "/will_filter"
+  
   
   resources :classi do
     member do
@@ -66,6 +71,7 @@ TodoPropa::Application.routes.draw do
   
   get 'tags/:tag', to: 'appunti#index', as: :tag
   
+  get 'error_check', to: 'error_check#index'
   
   match '/vendite', controller: 'magazzino', action: 'vendite'
   match '/cassa',   controller: 'magazzino', action: 'cassa'
@@ -115,6 +121,20 @@ TodoPropa::Application.routes.draw do
     end
   end
 
+
+  resources :documenti do
+    resources :documento_steps
+    
+    member do
+      put :remove_riga
+    end
+
+    collection do
+      put 'create_multiple'
+      put 'modifica_numero'
+    end
+  end
+
   
   devise_for :users
 
@@ -151,9 +171,16 @@ TodoPropa::Application.routes.draw do
   
   resources :libri_inserters, only: :create
 
+  
   resources :propaganders, only: :show
 
-  resources :righe
+  
+  resources :righe do
+    collection do
+      put :update_multiple
+    end   
+
+  end
   
   
   resources :libri do

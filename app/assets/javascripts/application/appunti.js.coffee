@@ -38,7 +38,9 @@ jQuery ->
 
   $('time.timeago').timeago();
 
-  $('.chzn-select').chosen({no_results_text: "Nessuna corrispondenza trovata", allow_single_deselect: true})
+  $('.chzn-select').chosen
+    no_results_text: "Nessuna corrispondenza trovata", 
+    allow_single_deselect: true
 
   @selected_appunti = []
   

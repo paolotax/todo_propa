@@ -1,0 +1,59 @@
+.item[documento]{ class: "#{ documento.coerente? ? '' : 'non_coerente'} #{ documento.pagata? ? '' : 'da_pagare'}", data: { id: "#{documento.id}"} }
+  
+  .actions
+    %ul.nav-documento
+      %li.show
+        %a.apri{ title: 'mostra dettagli', href: "#"}
+          Apri  
+  .chiudi{ style: "float: right;"}
+    %a{href: "#"}
+      Chiudi
+  .causale
+    %h4
+      = "#{documento.documento_causale} #{documento.numero}"
+      %small= "del #{l(documento.data, format: :short).downcase}" 
+  .clearfix    
+  .cliente-titolo
+    %strong= link_to documento.titolo, documento.cliente
+  .copie
+    %strong= documento.totale_copie
+    copie
+  .importo-totale
+    %strong= pretty_prezzo documento.totale_importo
+    importo
+  .clearfix
+
+  .more
+    - unless documento.appunti.empty?
+      .table-righe-new
+        - for appunto, righe in documento.righe.group_by(&:appunto)
+          .rif-appunto
+            = link_to appunto do
+              = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
+          - for riga in righe
+            = render riga
+    - else      
+      = nested_righe_del_documento documento
+
+  
+  %footer
+
+    .footer-actions
+      
+      %ul.nav-actions
+        %li.baule-div
+          = paga_tag documento     
+        %li.print
+          %a{ href: "/documenti/#{documento.slug}.pdf", title: "stampa #{documento.documento_causale}", target: "_blank" }
+            %i.icon-tag
+            Stampa
+        %li.edit
+          %a{ href: "/documenti/#{documento.slug}/documento_steps/dettaglio", title: 'modifica appunto'}
+            %i.icon-pencil
+            Modifica
+        %li.delete
+          %a{ href: "/documenti/#{documento.slug}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+            %i.icon-trash
+            Elimina
+    
+  
