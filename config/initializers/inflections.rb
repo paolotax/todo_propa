@@ -28,6 +28,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'comune', 'comuni'
   inflect.irregular 'magazzino', 'magazzini'
 
+
   inflect.irregular 'carico', 'carichi'
   inflect.irregular 'scarichi', 'scarichi'
 
@@ -45,6 +46,8 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'causale', 'causali'
   inflect.irregular 'documento', 'documenti'
   inflect.irregular 'editore', 'editori'
+
+  # inflect.irregular 'documento_riga', 'documenti_righe'
   
   # inflect.plural /^([\w]*)a/i, '\1e'
   # inflect.singular /^([\w]*)e/i, '\1a'

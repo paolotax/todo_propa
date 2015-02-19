@@ -96,15 +96,15 @@ jQuery ->
       $(@).text("mostra")
 
   
-  $(".show-hide").on "click", (e) ->
-    e.preventDefault();
-    $(".more:first", $(@).closest('.header').closest(".module")).toggleClass("hidden")
-    if $("i", $( @)).hasClass('icon-caret-down')
-      $("i", $(@)).removeClass('icon-caret-down');
-      $("i", $(@)).addClass('icon-caret-up');
-    else
-      $("i", @).removeClass('icon-caret-up')
-      $("i", @).addClass('icon-caret-down')      
+  # $(".show-hide").on "click", (e) ->
+  #   e.preventDefault();
+  #   $(".more:first", $(@).closest('.header').closest(".module")).toggleClass("hidden")
+  #   if $("i", $( @)).hasClass('icon-caret-down')
+  #     $("i", $(@)).removeClass('icon-caret-down');
+  #     $("i", $(@)).addClass('icon-caret-up');
+  #   else
+  #     $("i", @).removeClass('icon-caret-up')
+  #     $("i", @).addClass('icon-caret-down')      
     
   $(".esandi-tutto").on "click", (e) ->
     e.preventDefault();

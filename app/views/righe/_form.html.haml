@@ -7,12 +7,4 @@
     = riga.number_field :prezzo,   class: 'input-mini riga_prezzo',  value: number_with_precision(riga.object.prezzo, precision: 2), data: {copertina: number_with_precision(riga.object.libro.prezzo_copertina, precision: 2), consigliato: number_with_precision(riga.object.libro.prezzo_consigliato, precision: 2) }
     = riga.number_field :sconto, value: number_with_precision(riga.object.sconto, precision: 2), class: 'input-mini riga_sconto'
     
-    - if remove == true
-      = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"
-    - elsif remove == 'fattura'
-      = link_to "#", class: "btn btn-danger btn-mini remove-fattura" do
-        %i.icon-minus
-    - elsif remove == 'documento'
-      = link_to "#", class: "btn btn-danger btn-mini remove-documento" do
-        %i.icon-minus
-
+    = riga.link_to_remove raw("<i class='icon-minus'></i>"), class: "btn btn-danger btn-mini"

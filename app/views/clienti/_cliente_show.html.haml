@@ -2,7 +2,7 @@
 - cache [@cliente, 'cliente_show'] do         
   
   .content
-    = render partial: 'clienti/cliente_header', locals: { cliente: @cliente }
+    = render 'clienti/cliente_header',  cliente: @cliente
 
   .row
     .side-bar.span3

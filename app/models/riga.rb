@@ -7,12 +7,18 @@ class Riga < ActiveRecord::Base
   
   after_initialize :init
   
-  after_save    :ricalcola_after_update
-  after_destroy :ricalcola_after_destroy
+  
+  before_save :set_importo
+
+  after_save     :ricalcola_after_commit
+  before_destroy :ricalcola_before_destroy
 
   delegate :titolo, :prezzo_copertina, :prezzo_consigliato, :iva, :to => :libro
 
-  has_and_belongs_to_many :documenti
+
+  has_many :documenti_righe
+  has_many :documenti, through: :documenti_righe
+
 
   before_validation do
     self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
@@ -21,10 +27,10 @@ class Riga < ActiveRecord::Base
   scope :scarico,       joins(:appunto).where("appunti.deleted_at IS NULL")
   scope :carico,        where("righe.appunto_id is NULL")
 
-  scope :documentato,     includes(:documenti).where("documenti.id IS NOT NULL")
-  scope :non_documentato, includes(:documenti).where("documenti.id IS NULL")
+  # scope :documentato,     includes(:documenti).where("documenti.id IS NOT NULL")  
+  # scope :non_documentato, includes(:documenti).where("documenti.id IS NULL")
 
-  scope :nulle,           carico.non_documentato
+  # scope :nulle,           carico.non_documentato
 
   scope :not_deleted,   joins(:appunto).where("appunti.deleted_at IS NULL")
   scope :deleted,       joins(:appunto).where("appunti.deleted_at IS NOT NULL")
@@ -53,9 +59,16 @@ class Riga < ActiveRecord::Base
   scope :dell_anno, lambda { |a| joins(appunto: [:cliente]).where("extract(year from appunti.created_at) = ?", a)}
   
   scope :open_vendita, -> { scarico.with_state(:open, :ordinata)}
+  
   scope :open_carico,  -> { carico.with_state(:open, :ordinata) }
   scope :open_fattura, -> { carico.with_state(:open, :ordinata, :caricata) }
   
+  
+
+  def self.non_documentato
+    scoped.all.select{ |r| r.documenti.empty?}
+  end
+
 
   state_machine :initial => :open do
 
@@ -156,9 +169,6 @@ class Riga < ActiveRecord::Base
   end
 
 
-
-
-
   def cached_libro
     Libro.cached_find(libro_id)
   end
@@ -201,24 +211,24 @@ class Riga < ActiveRecord::Base
   end
   
   
-  def remove_fattura=(value)
-    if value == "true"
-      self.fattura_id = nil
-      self.save
-    end
-  end
+  # def remove_fattura=(value)
+  #   if value == "true"
+  #     self.fattura_id = nil
+  #     self.save
+  #   end
+  # end
  
 
-  def remove_documento=(value)
+  # def remove_documento=(value)
     
-    if value == "true"
-      documento = self.documenti.last
-      if documento
-        documento.righe = documento.righe - [self]
-        self.elimina_documento
-      end     
-    end
-  end
+  #   if value == "true"
+  #     documento = self.documenti.last
+  #     if documento
+  #       documento.righe = documento.righe - [self]
+  #       self.elimina_documento
+  #     end     
+  #   end
+  # end
 
   
   def prezzo=(text)
@@ -226,41 +236,46 @@ class Riga < ActiveRecord::Base
   end
   
   
-  def importo
-    sconto.nil? ? sc = 0.0 : sc = sconto
-    prezzo_unitario * quantita * (100.0 - sc) / 100
-  end
+
 
   
   private
   
+    
     def init
       self.consegnato ||= false
       self.pagato     ||= false
-      self.sconto     ||= 0.0           #will set the default value only if it's nil
+      self.sconto     ||= 0.0
+      self.importo    ||= 0.0           #will set the default value only if it's nil
     end  
-  
-    def ricalcola_after_update      
-      
-      unless appunto.nil? # non ricalcola ordine
-        logger.debug "total_recalc"
-        return true unless quantita_changed? || prezzo_unitario_changed? || fattura_id_changed? || sconto_changed? || appunto_id_changed?
-        appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
-        return true
-      else
-        return true unless quantita_changed? || prezzo_unitario_changed? || sconto_changed? || documenti.empty?  
-        documenti.each do |documento|
-          documento.update_attributes(:totale_copie => documento.righe.sum(&:quantita), :totale_importo => documento.righe.sum(&:importo))
-        end 
-        return true        
-      end
+
+
+    def set_importo
+      self.importo = (prezzo_unitario * quantita * (100.0 - sconto) / 100.0)
     end
 
-    def ricalcola_after_destroy
+
+    def ricalcola_after_commit           
+      return true  unless quantita_changed? || importo_changed?
+      if appunto
+        Appunto.update_counters appunto.id,
+          totale_copie: quantita - (quantita_was || 0.0),
+          totale_importo: importo - importo_was      
+      end
+      documenti.each do |documento|
+        Documento.update_counters documento.id,
+          totale_copie:   quantita - (quantita_was || 0.0),
+          totale_importo: importo  - importo_was     
+      end
+      return true        
+    end
+
+    
+    def ricalcola_before_destroy
       unless appunto.nil?
-        logger.debug "riga destroy"
-        appunto.update_attributes(:totale_copie => appunto.righe.sum(&:quantita), :totale_importo => appunto.righe.sum(&:importo))
-        return true
+        Appunto.update_counters appunto.id,
+          totale_copie: - quantita_was,
+          totale_importo: - importo_was
       end
     end
 

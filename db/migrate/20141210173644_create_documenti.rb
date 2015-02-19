@@ -1,11 +1,5 @@
 class CreateDocumenti < ActiveRecord::Migration
   
-  # class Riga < ActiveRecord::Base
-  #   has_and_belongs_to_many :documenti
-  # end 
-  class Documento < ActiveRecord::Base
-    has_and_belongs_to_many :righe
-  end
 
   def up
     create_table :documenti do |t|
@@ -41,30 +35,7 @@ class CreateDocumenti < ActiveRecord::Migration
       t.integer :riga_id
     end
 
-    Documento.reset_column_information
-
-    Fattura.all.each do |f|
-
-      doc = Documento.new
-      doc.numero = f.numero
-      doc.data   = f.data
-      doc.cliente_id = f.cliente_id
-      doc.causale_id = f.causale_id
-      doc.user_id = f.user_id
-      doc.condizioni_pagamento = f.condizioni_pagamento
-      if f.pagata == true
-        doc.payed_at = f.data
-      end
-      doc.totale_copie = f.totale_copie
-      doc.totale_importo = f.importo_fattura
-      doc.totale_iva = f.totale_iva
-      doc.spese = f.spese
-      doc.slug = f.slug
-      doc.righe << f.righe
-      
-      doc.save
-
-    end
+    say "eseguire rake youpropa:crea_documenti"
 
   end
 

@@ -11,28 +11,92 @@ class Documento < ActiveRecord::Base
   belongs_to :causale
   belongs_to :cliente
 
-  has_and_belongs_to_many :righe
-  has_many :documenti, :through => :righe, uniq: true
+  has_many :documenti_righe
+  has_many :righe, through: :documenti_righe
   
-  has_many :appunti, :through => :righe, uniq: true, order: "appunti.id"
-  
-  accepts_nested_attributes_for :righe, :reject_if => lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, :allow_destroy => false
+  has_many :documenti, through: :righe, uniq: true    
+  has_many :appunti, through: :righe, uniq: true, order: "appunti.id"
+    
+  accepts_nested_attributes_for :righe, reject_if: lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, allow_destroy: true
 
 
-  validates :cliente_id, :causale_id, :data, :numero, :presence => true, :if => :active?
-
+  validates :cliente_id, :causale_id, :data, :numero, presence: true, if: :active?
   
   delegate :titolo,  to: :cliente
   delegate :causale, :carico?, :scarico?, to: :causale, prefix: :documento
 
+  scope :scarico, joins(:causale).where("causali.tipo = 'scarico'")
+  scope :carico,  joins(:causale).where("causali.tipo = 'carico'")
 
   scope :per_numero,     order('documenti.data desc, documenti.numero desc')
   scope :per_numero_asc, order('documenti.data, documenti.numero') 
-  scope :dell_anno,      lambda { |a| where("extract(year from documenti.data) = ?", a)}
+  scope :dell_anno,      lambda { |a| where("extract(year from documenti.data) = ?", a) }
 
   scope :previous, lambda { |d| order("documenti.id desc").where("documenti.id < ?", d).limit(1) }
 
+
+  Causale.all.each do |causale|
+    scope "#{causale.causale.downcase.split.join('_')}", where("causale_id = ?", causale.id)
+  end
   
+  
+  TIPO_PAGAMENTO.each do |tipo|
+    scope "#{tipo.downcase.split.join('_')}", where("condizioni_pagamento = ?", tipo)
+    
+    define_method "#{tipo.downcase.split.join('_')}?" do
+      self.condizioni_pagamento == tipo
+    end
+  end
+
+
+  def active?
+    # serve per wicked gem
+    # status == 'active'
+    true
+  end
+
+
+
+  def calc_importo
+    righe.map(&:importo).sum
+  end
+
+  def calc_copie
+    righe.map(&:quantita).sum
+  end
+
+  def calc_importo_appunti
+    appunti.map(&:totale_importo).sum
+  end
+
+  def differenza_importo
+    (calc_importo - totale_importo).to_s
+  end
+
+  def differenza_copie
+    (calc_copie - totale_copie).to_s
+  end
+
+  def differenza_importo_appunti
+    (calc_importo_appunti - totale_importo).to_s
+  end
+
+  def importo_errato?
+    !(calc_importo - totale_importo).between?(-0.01, 0.01)
+  end
+
+  def copie_errate?
+    calc_copie != totale_copie
+  end
+
+  def importo_appunti_errato?
+    !(calc_importo_appunti - totale_importo).between?(-0.01, 0.01)
+  end
+
+
+
+
+
   def imponibile
     self.totale_importo - self.totale_iva
   end
@@ -84,41 +148,33 @@ class Documento < ActiveRecord::Base
   end
   
 
-  before_save :ricalcola
-  # ricalcola i totali e cambia stato degli appunti
-  def ricalcola
+  # before_save :ricalcola
+  # # ricalcola i totali e cambia stato degli appunti
+  # def ricalcola
     
-    self.totale_copie    = righe.map(&:quantita).sum
-    self.totale_importo  = righe.map(&:importo).sum
-    self.totale_iva = 0 
-    righe.each do |r|
-      unless r.libro.iva == "VA"
-        self.totale_iva += r.importo / 100 * r.libro.iva.to_f
-      end
-    end 
-    # appunti.each do |a|
-    #   if self.pagata == true
-    #     a.stato = "X"
-    #   else
-    #     a.stato = "P"
-    #   end 
-    #   a.save 
-    # end
-  end
+  #   self.totale_copie    = righe.map(&:quantita).sum
+  #   self.totale_importo  = righe.map(&:importo).sum
+  #   self.totale_iva = 0 
+  #   righe.each do |r|
+  #     unless r.libro.iva == "VA"
+  #       self.totale_iva += r.importo / 100 * r.libro.iva.to_f
+  #     end
+  #   end 
+  #   # appunti.each do |a|
+  #   #   if self.pagata == true
+  #   #     a.stato = "X"
+  #   #   else
+  #   #     a.stato = "P"
+  #   #   end 
+  #   #   a.save 
+  #   # end
+  # end
     
-
-  def get_new_id(user)
-    last_id = Fattura.where("user_id = ? and data > ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
-    if last_id.empty?
-      return 1
-    else
-      return last_id[0][:numero] + 1    
-    end
-  end
 
 
   after_save :registra
   def registra
+    logger.debug "REGISTRAAAAAA"
 
     righe.each do |r|
       if documento_scarico?
@@ -135,28 +191,17 @@ class Documento < ActiveRecord::Base
   end
 
   
-  Causale.all.each do |causale|
-    scope "#{causale.causale.downcase.split.join('_')}", where("causale_id = ?", causale.id)
-  end
+
+
   
-  
-  TIPO_PAGAMENTO.each do |tipo|
-    scope "#{tipo.downcase.split.join('_')}", where("condizioni_pagamento = ?", tipo)
-    
-    define_method "#{tipo.downcase.split.join('_')}?" do
-      self.condizioni_pagamento == tipo
+  def get_new_id(user)
+    last_id = Fattura.where("user_id = ? and data > ? and causale_id = ?", user.id, Time.now.beginning_of_year, self.causale_id).order('numero desc').limit(1)
+    if last_id.empty?
+      return 1
+    else
+      return last_id[0][:numero] + 1    
     end
   end
-
-
-  def active?
-    # serve per wicked gem
-    # status == 'active'
-    true
-  end
-
-  
-
   
   
 
@@ -168,9 +213,11 @@ class Documento < ActiveRecord::Base
 
 
   def doc_slug
+    
     unless causale.nil?
       "#{documento_causale}-#{anno}-#{numero}"
     end
+  
   end 
 
 

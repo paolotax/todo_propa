@@ -61,6 +61,8 @@ class DocumentiController < ApplicationController
 
   def update
     @documento = current_user.documenti.find(params[:id])
+
+    raise params.inspect
     
     respond_to do |format|
       if @documento.update_attributes(documento_params)

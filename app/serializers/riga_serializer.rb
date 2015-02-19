@@ -11,7 +11,8 @@ class RigaSerializer < ActiveModel::Serializer
       			 :prezzo_consigliato,  
       			 :sconto, 
              :importo,
-      			 :fattura_id
+      			 :fattura_id,
+             :state
 
   has_one :libro, serializer: LibroShortSerializer
 

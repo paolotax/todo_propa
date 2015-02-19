@@ -22,6 +22,7 @@ class Fattura < ActiveRecord::Base
   delegate :causale, :carico?, :scarico?, to: :causale, prefix: :documento
 
 
+  
   def differenza_copie
     (calc_copie - totale_copie).to_s
   end

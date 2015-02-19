@@ -1,8 +1,9 @@
 jQuery ->
   
   select = $("#libri_inserter_editore") 
+  
   if select.length == 0
-    select = $("#appunto_destinatario")
+    select = $("#appunto_destinatario.chzn-select")
 
   if select.length > 0
   

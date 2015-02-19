@@ -519,7 +519,7 @@ CREATE TABLE appunti (
     telefono character varying(255),
     email character varying(255),
     totale_copie integer DEFAULT 0,
-    totale_importo double precision DEFAULT 0.0,
+    totale_importo numeric(9,2) DEFAULT 0.0,
     latitude double precision,
     longitude double precision,
     created_at timestamp without time zone NOT NULL,
@@ -1252,6 +1252,7 @@ CREATE TABLE righe (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     uuid uuid,
+    importo numeric(9,2) DEFAULT 0.0,
     state character varying(255),
     "position" integer
 );

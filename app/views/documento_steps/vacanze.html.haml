@@ -4,15 +4,15 @@
 
   .control-group
     #righe
-      - if f.object.righe.empty?
-        .empty
-          Nessuna riga in questo documento...
-      - else
-        = f.simple_fields_for :righe do |riga|          
-          - if riga.object.new_record?
-            = render 'righe/form', riga: riga, remove: false
-          - else
-            .hidden
+      / - if f.object.righe.empty?
+      /   .empty
+      /     Nessuna riga in questo documento...
+      / - else
+      = f.simple_fields_for :righe do |riga|          
+        - if riga.object.new_record?
+          = render 'righe/form', riga: riga, remove: false
+        - else
+          .hidden
 
   %hr
   .control-group

@@ -49,7 +49,8 @@ class DocumentoStepsController < ApplicationController
         end
 
         @documento.righe.build(libro: l, prezzo_unitario: prezzo, sconto: @sconto)
-      end    
+      end   
+      
     end
 
     render_wizard
@@ -61,8 +62,10 @@ class DocumentoStepsController < ApplicationController
     @documento = current_user.documenti.find(params[:documento_id])
     @documento.attributes = params[:documento]
     
+    #raise params[:documento].inspect
+
+
     case step
-    
     when :scegli_appunti
       
       if params[:riga_ids].present?
@@ -97,6 +100,7 @@ class DocumentoStepsController < ApplicationController
     def generate_appunto
       unless @documento.documento_carico?
         case step
+        
         when :dettaglio
           @righe_nuove = @documento.righe.where("appunto_id is null")
           unless @righe_nuove.empty?
@@ -111,6 +115,8 @@ class DocumentoStepsController < ApplicationController
             end
             @new_appunto.save
           end
+          
+
         end
       end
     end

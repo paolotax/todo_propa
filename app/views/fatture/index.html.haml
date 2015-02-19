@@ -1,6 +1,6 @@
 = new_button( new_fattura_url )
 
-- title "Documenti"
+- title "Fatture"
 
 .row
   = render 'fatture_side'
@@ -8,7 +8,7 @@
   .content-main.span6
     %header.content-header
       .header-inner
-        %h2 Documenti
+        %h2 Fatture
     
     = render :partial => 'shared/filters'
 
@@ -71,7 +71,7 @@
         .control-group
           %label.control-label{ for: 'inputCausale' } Tipo documento
           .controls
-            = select_tag "causale_id", options_for_select([["Buoni di consegna", 1], ["Fatture", 0]]), class: "input-block-level", id: 'inputCausale'
+            = select_tag "causale_id", options_for_select([["Buoni di consegna", 2], ["Fatture", 1]]), class: "input-block-level", id: 'inputCausale'
 
         .control-group
           %label.control-label{ for: 'inputClienti' } Clienti
@@ -113,12 +113,13 @@
         .control-group
           %label.control-label{ for: 'inputAnno' } Anno
           .controls
-            = select_tag "anno", options_for_select(["2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-block-level", id: 'inputAnno'
+            = select_tag "anno", options_for_select(["2015", "2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-block-level", id: 'inputAnno'
         
         .control-group
           %label.control-label{ for: 'inputCausale' } Tipo documento
           .controls
-            = select_tag "causale", options_for_select(["Buono di consegna", "Ordine"]), class: "input-block-level", id: 'inputCausale'
+            = select_tag "causale", options_for_select(["Buono di consegna", "Fattura", "Ordine"]), class: "input-block-level", id: 'inputCausale'
+
         
         %hr
 

@@ -10,7 +10,7 @@
     %fieldset
       %legend Modalita' pagamento
       = f.input :condizioni_pagamento, collection: Fattura::TIPO_PAGAMENTO
-      = f.input :pagata
+      = f.input :payed_at, input_html: {class: "input-small"}, label: "Pagato il"
     
     %hr
     .control-group

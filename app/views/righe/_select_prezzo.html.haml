@@ -1,6 +1,6 @@
 .modifica-sconto.well.well-small.form-inline.pull-right.clearfix
   
-  - checked_sconto = @sconto == 0.0 ? false : true 
+  - checked_sconto = (@sconto == 0.0 || @sconto.nil?) ? false : true 
   %label.radio.inline
     = radio_button_tag 'prezzo', 'consigliato', !checked_sconto
     prezzo consigliato

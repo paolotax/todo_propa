@@ -71,6 +71,7 @@ class AppuntiController < ApplicationController
     session[:return_to] = request.referer
     
     @appunto = current_user.appunti.includes(:cliente, :user, :righe => [:libro]).find(params[:id])
+    get_default_sconto
   end
 
   
@@ -205,6 +206,24 @@ class AppuntiController < ApplicationController
 
   private
 
+    
+    def get_default_sconto
+      if @appunto.cliente 
+        cliente_tipo = @appunto.cliente.cliente_tipo
+      else
+        cliente_tipo = "Cartolibreria"
+      end
+
+      if ["Cartolibreria", "Ditta"].include?  cliente_tipo
+        @sconto = 20
+      elsif ["Comune"].include?  cliente_tipo
+        @sconto = 0.25
+      else
+        @sconto = 0
+      end
+    end
+
+    
     def get_stats_appunti
       @stat_appunti = current_user.appunti.not_deleted.filtra(params.except(:status))
       @in_corso     = @stat_appunti.in_corso.size
