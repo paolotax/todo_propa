@@ -6,8 +6,7 @@ class Riga < ActiveRecord::Base
   belongs_to :fattura
   
   after_initialize :init
-  
-  
+    
   before_save :set_importo
 
   after_save     :ricalcola_after_commit
@@ -45,8 +44,11 @@ class Riga < ActiveRecord::Base
   scope :preparato,     scarico.where("appunti.stato = 'S'")
   
   
-  scope :da_consegnare, scarico.where("righe.consegnato = false")
+  scope :da_consegnare, -> { scarico.with_state(:open, :pronta) } # scarico.where("righe.consegnato = false")
+  
+
   scope :da_pagare,     scarico.where("righe.pagato     = false")
+
   
   scope :da_fatturare,  scarico.where("righe.fattura_id is null or righe.fattura_id = 0")
   scope :fatturata,     scarico.where("righe.fattura_id is not null or righe.fattura_id != 0")
@@ -55,7 +57,9 @@ class Riga < ActiveRecord::Base
   scope :pagata,        where("righe.pagato = true")
   
   scope :di_questa_propaganda,  joins(:appunto).where("appunti.created_at > ?", Date.new(2014,1,1))  
+  
   scope :di_quest_anno,         joins(:fattura).where("extract(year from fatture.data) = ?", 2014)
+  
   scope :dell_anno, lambda { |a| joins(appunto: [:cliente]).where("extract(year from appunti.created_at) = ?", a)}
   
   scope :open_vendita, -> { scarico.with_state(:open, :ordinata)}
@@ -80,13 +84,14 @@ class Riga < ActiveRecord::Base
       transition [:open, :pronta] => :consegnata
     end
 
+    # event :annulla_consegna do
+    #   transition :consegnata => :open
+    # end
+
     event :registra do
-      transition [:open, :consegnata] => :registrata
+      transition [:open, :pronta, :consegnata] => :registrata
     end
-
-    event :annulla_registra do
-
-    end
+    
 
     event :ordina do
       transition :open => :ordinata
@@ -105,6 +110,7 @@ class Riga < ActiveRecord::Base
       transition :caricata => :ordinata,  :if => :last_ordine?
       transition :fatturata => :caricata, :if => :last_carico?
       transition :fatturata => :ordinata, :if => :last_ordine?
+      transition :consegnata => :open,    :if => :last_consegna?
     end
   end
 
@@ -116,6 +122,11 @@ class Riga < ActiveRecord::Base
   
   def last_carico?
     true if documenti.last.try(:documento_causale) == "Bolla di carico"
+  end
+
+  
+  def last_consegna?
+    true if documenti.empty?
   end
 
   
@@ -193,10 +204,6 @@ class Riga < ActiveRecord::Base
   end
 
 
-  def documento
-    self.appunto || self.fattura
-  end
-
   def cliente
    self.appunto.cliente || self.fattura.cliente
   end
@@ -210,35 +217,13 @@ class Riga < ActiveRecord::Base
     end
   end
   
-  
-  # def remove_fattura=(value)
-  #   if value == "true"
-  #     self.fattura_id = nil
-  #     self.save
-  #   end
-  # end
- 
-
-  # def remove_documento=(value)
     
-  #   if value == "true"
-  #     documento = self.documenti.last
-  #     if documento
-  #       documento.righe = documento.righe - [self]
-  #       self.elimina_documento
-  #     end     
-  #   end
-  # end
-
-  
   def prezzo=(text)
     self.prezzo_unitario = text
   end
   
   
-
-
-  
+    
   private
   
     
@@ -276,6 +261,11 @@ class Riga < ActiveRecord::Base
         Appunto.update_counters appunto.id,
           totale_copie: - quantita_was,
           totale_importo: - importo_was
+      end
+      documenti.each do |documento|
+        Documento.update_counters documento.id,
+          totale_copie:   - quantita_was,
+          totale_importo: - importo_was     
       end
     end
 

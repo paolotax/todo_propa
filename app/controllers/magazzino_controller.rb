@@ -1,5 +1,18 @@
 class MagazzinoController < ApplicationController
   
+  def vendite_nuove
+
+    @vendite = current_user.righe.scarico.includes(:libro).group_by(&:libro).map do |l, righe|
+      { 
+        libro: l, 
+        copie: righe.sum(&:quantita),
+        importo: righe.sum(&:importo)
+      }
+    end
+
+  end
+
+
   def vendite
     
     #@libri_vacanze = (Libro.vacanze.order(:titolo) + Libro.parascolastico.order(:titolo)).flatten
@@ -31,7 +44,8 @@ class MagazzinoController < ApplicationController
   def cassa
     @incassi = current_user.fatture.where(causale_id: 2).order(:data).select("data, sum(importo_fattura) as incasso").group(:data)
   end  
-  
+
+
   def incassi
     @completati = current_user.appunti.not_deleted.di_questa_propaganda.completato.order("appunti.updated_at desc")
   end

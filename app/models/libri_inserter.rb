@@ -36,6 +36,7 @@ class LibriInserter
         materie: [50401, 50402, 50403, 50404, 50405],
         copertina: [3.05, 5.00, 6.10, 6.10, 7.60]
       }
+  
   }
 
   attr_accessor :titolo, :corso, :editore, :libri_inseriti
@@ -69,12 +70,8 @@ class LibriInserter
     end
 
     classi.each_with_index do |c, index|
-      
-      # dd = classi.index(c)
-      
+            
       if index  < classi.count
-
-        
 
         libro = Libro.find_by_titolo("#{self.titolo} #{subtitle[index]}")
         seguito =  Libro.find_by_titolo("#{self.titolo} #{subtitle[index + 1]}")
@@ -86,7 +83,6 @@ class LibriInserter
         libro.save
       end    
     end
-
 
     return true
   end  

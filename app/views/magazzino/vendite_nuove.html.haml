@@ -1,0 +1,18 @@
+.row
+  .content-main.span8
+    .content-header
+      .header-inner
+        %h2 Vendite Nuove
+
+    .situazione-vacanze.list
+      - @vendite.each do |l|
+        - libro = l[:libro]
+        .item[libro]
+          .titolo
+            = link_to image_tag(libro.image_url(:small_thumb)), libro
+            %strong= libro.titolo
+            %br
+            = libro.cm
+          .quantita
+            = l[:copie]
+            = l[:importo]

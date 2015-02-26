@@ -40,19 +40,38 @@ namespace :youpropa do
 
     Riga.includes(documenti: :causale).find_each do |riga|
 
-      last_documento = riga.documenti.last
+      last_documento = riga.documenti.order(:causale_id).last
+      
+      
       if last_documento
-        if last_documento.causale.causale == "Ordine"
+
+        riga.pagata_il = last_documento.payed_at
+
+        if last_documento.ordine?
           riga.state = "ordinata"
-        elsif last_documento.causale.causale == "Bolla di carico"
+        elsif last_documento.bolla_di_carico?
           riga.state = "caricata"
-        elsif last_documento.causale.causale == "Fattura acquisti"
+          riga.consegnata_il = last_documento.data
+        elsif last_documento.fattura_acquisti?
           riga.state = "fatturata"
+          riga.consegnata_il = last_documento.data
         else
           riga.state = "registrata"
+          riga.consegnata_il = last_documento.data
         end
+        
       else
+
         riga.state = "open"
+        if riga.appunto
+          if riga.appunto.stato == 'P'
+            riga.consegnata_il = riga.appunto.created_at.to_date
+          elsif riga.appunto.stato = 'X'
+            riga.consegnata_il = riga.appunto.created_at.to_date
+            riga.pagata_il = riga.appunto.created_at.to_date
+          end
+        end
+
       end
       riga.save
     end

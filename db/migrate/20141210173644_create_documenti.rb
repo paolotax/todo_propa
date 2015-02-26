@@ -35,7 +35,6 @@ class CreateDocumenti < ActiveRecord::Migration
       t.integer :riga_id
     end
 
-    say "eseguire rake youpropa:crea_documenti"
 
   end
 

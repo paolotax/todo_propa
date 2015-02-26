@@ -1,2 +1,0 @@
-class VisitaAppuntiController < ApplicationController
-end

@@ -1254,7 +1254,9 @@ CREATE TABLE righe (
     uuid uuid,
     importo numeric(9,2) DEFAULT 0.0,
     state character varying(255),
-    "position" integer
+    "position" integer,
+    pagata_il date,
+    consegnata_il date
 );
 
 

@@ -37,6 +37,10 @@ class Documento < ActiveRecord::Base
 
   Causale.all.each do |causale|
     scope "#{causale.causale.downcase.split.join('_')}", where("causale_id = ?", causale.id)
+    
+    define_method "#{causale.causale.downcase.split.join('_')}?" do
+      self.causale == causale
+    end
   end
   
   
@@ -234,6 +238,43 @@ class Documento < ActiveRecord::Base
         new_riga = self.righe.build( libro: libro, quantita:  riga.last, prezzo_unitario: libro.prezzo_copertina )
         new_righe.delete(r)
       end
+    end
+  end
+
+
+  def importa_file=(file)
+    
+    return if file.nil?
+    spreadsheet = open_spreadsheet(file)
+
+    if spreadsheet.is_a? Array
+      # uso smarter_csv
+      spreadsheet.each do |row|
+        libro = Libro.find_or_create_by_cm( cm: row[:codice], titolo: row[:descrizione], prezzo_consigliato: 0, prezzo_copertina: row[:prezzo], ean: row[:ean] )
+        
+        self.righe.build( libro: libro, quantita:  row[:qta], prezzo_unitario: libro.prezzo_copertina )
+      end  
+
+    else
+      # uso roo per altri tipi di file
+      header = spreadsheet.row(1)
+      (2..spreadsheet.last_row).each do |i|
+        row = Hash[[header, spreadsheet.row(i)].transpose]        
+        libro = Libro.find_or_create_by_cm( cm: row["CODICE"], titolo: row["DESCRIZIONE"], prezzo_consigliato: 0, prezzo_copertina: row["PREZZO"], ean: row["EAN"] )
+        
+        self.righe.build( libro: libro, quantita:  row["QTA"], prezzo_unitario: libro.prezzo_copertina )
+      end
+    end
+  end
+
+  
+  def open_spreadsheet(file)
+    case File.extname(file.original_filename)
+    when ".csv" then SmarterCSV.process(file.path, col_sep: ";")
+      #Csv.new(file.path, csv_options: {encoding: Encoding::UTF_8})
+    when ".xls" then Excel.new(file.path, nil, :ignore)
+    when ".xlsx" then Excelx.new(file.path, nil, :ignore)
+    else raise "Unknown file type: #{file.original_filename}"
     end
   end
 

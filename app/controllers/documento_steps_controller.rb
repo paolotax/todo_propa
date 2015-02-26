@@ -49,8 +49,7 @@ class DocumentoStepsController < ApplicationController
         end
 
         @documento.righe.build(libro: l, prezzo_unitario: prezzo, sconto: @sconto)
-      end   
-      
+      end      
     end
 
     render_wizard
@@ -62,9 +61,6 @@ class DocumentoStepsController < ApplicationController
     @documento = current_user.documenti.find(params[:documento_id])
     @documento.attributes = params[:documento]
     
-    #raise params[:documento].inspect
-
-
     case step
     when :scegli_appunti
       
@@ -98,26 +94,23 @@ class DocumentoStepsController < ApplicationController
 
     
     def generate_appunto
+      
       unless @documento.documento_carico?
-        case step
-        
-        when :dettaglio
-          @righe_nuove = @documento.righe.where("appunto_id is null")
-          unless @righe_nuove.empty?
-            @new_appunto = @documento.cliente.appunti.build
-            @new_appunto.righe << @righe_nuove
-            @new_appunto.totale_copie   = @righe_nuove.map(&:quantita).sum
-            @new_appunto.totale_importo = @righe_nuove.map(&:importo).sum
-            if @documento.pagata?
-              @new_appunto.status = "completato"
-            else
-              @new_appunto.status = "in_sospeso"
-            end
-            @new_appunto.save
-          end
-          
 
+        @righe_nuove = @documento.righe.where("appunto_id is null")
+        unless @righe_nuove.empty?
+          @new_appunto = @documento.cliente.appunti.build
+          @new_appunto.righe << @righe_nuove
+          @new_appunto.totale_copie   = @righe_nuove.map(&:quantita).sum
+          @new_appunto.totale_importo = @righe_nuove.map(&:importo).sum
+          if @documento.pagata?
+            @new_appunto.status = "completato"
+          else
+            @new_appunto.status = "in_sospeso"
+          end
+          @new_appunto.save
         end
+      
       end
     end
 

@@ -85,7 +85,10 @@ gem 'unicorn'
 gem "acts-as-taggable-on"
 
 gem 'chosen-rails'
+
 gem 'roo'
+gem 'smarter_csv'
+
 gem "active_model_serializers"
 
 # gem "underscore-rails"

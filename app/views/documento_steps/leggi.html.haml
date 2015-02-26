@@ -1,7 +1,14 @@
 = render layout: 'form' do |f|
   
   .control-group
+
+    = f.file_field :importa_file, title: "Importa File CSV o XLS"
+    
+    %hr
+    
     = f.input :leggi, as: :text, label: "incolla i titoli e le quantità dalla mail Consegne", input_html: { class: "input-block-level" }
+
+ 
           
   %hr    
   .control-group
