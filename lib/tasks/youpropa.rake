@@ -55,9 +55,13 @@ namespace :youpropa do
         elsif last_documento.fattura_acquisti?
           riga.state = "fatturata"
           riga.consegnata_il = last_documento.data
-        else
-          riga.state = "registrata"
+        elsif last_documento.buono_di_consegna?
+          riga.state = "corrispettivi"
           riga.consegnata_il = last_documento.data
+        elsif last_documento.fattura?
+          riga.state = "fattura"
+          riga.consegnata_il = last_documento.data
+        
         end
         
       else
@@ -66,7 +70,9 @@ namespace :youpropa do
         if riga.appunto
           if riga.appunto.stato == 'P'
             riga.consegnata_il = riga.appunto.created_at.to_date
+            riga.state = 'consegnata'
           elsif riga.appunto.stato = 'X'
+            riga.state = 'consegnata'
             riga.consegnata_il = riga.appunto.created_at.to_date
             riga.pagata_il = riga.appunto.created_at.to_date
           end

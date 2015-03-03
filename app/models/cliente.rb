@@ -108,19 +108,22 @@ class Cliente < ActiveRecord::Base
   scope :da_ritirare,  where("properties -> 'da_ritirare' = 'true'") 
 
 
-  scope :con_qualcosa_da_fare, where("  
+  scope :con_qualcosa_da_fare, lambda { |user| 
+    
+    where("  
 
-    ((properties -> 'adozioni_da_consegnare')::int > 0) 
-    or ((properties -> 'adozioni_saggi')::int > 0) 
-    or ((properties -> 'adozioni_kit_no_saggio')::int > 0)
-    or ((properties -> 'copie_da_consegnare')::int > 0)
-    or ((properties -> 'appunti_da_fare')::int > 0)
-    or ((properties -> 'appunti_in_sospeso')::int > 0)
-    or ((properties -> 'appunti_pronti')::int > 0)
-    or ((properties -> 'da_ritirare' = 'true'))
+      ((properties -> 'adozioni_da_consegnare')::int > 0) 
+      or ((properties -> 'adozioni_saggi')::int > 0) 
+      or ((properties -> 'adozioni_kit_no_saggio')::int > 0)
+      or ((properties -> 'copie_da_consegnare')::int > 0)
+      or ((properties -> 'appunti_da_fare')::int > 0)
+      or ((properties -> 'appunti_in_sospeso')::int > 0)
+      or ((properties -> 'appunti_pronti')::int > 0)
+      or ((properties -> 'da_ritirare' = 'true'))
 
+    ").where(user_id: user.id) 
 
-  ")  
+  } 
   
   %w[sezioni_adottate copie_vendute copie_da_consegnare appunti_da_fare appunti_in_sospeso appunti_pronti].each do |key|
     # attr_accessible key
@@ -648,7 +651,6 @@ class Cliente < ActiveRecord::Base
                   }
                 })
   end
-
 
   private
 

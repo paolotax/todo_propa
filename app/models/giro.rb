@@ -66,7 +66,7 @@ class Giro
         vicini << cliente.nearbys(10, units: :km).all
       end
     end
-    clienti_vicini = (vicini.flatten - clienti) & user.clienti.con_qualcosa_da_fare
+    clienti_vicini = (vicini.flatten - clienti) & user.clienti.con_qualcosa_da_fare(current_user)
   end
 
   

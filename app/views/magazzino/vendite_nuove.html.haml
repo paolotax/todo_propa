@@ -1,18 +1,71 @@
 .row
-  .content-main.span8
+  .content-main.span10
+    
     .content-header
       .header-inner
+        .pull-right
+          %ul.nav.nav-pills
+            %li
+              = link_to "2015", params.merge(anno: 2015)
+            %li
+              = link_to "2014", params.merge(anno: 2014)
+            %li
+              = link_to "2013", params.merge(anno: 2013)
+            %li
+              = link_to "2012", params.merge(anno: 2012)
+            %li
+              = link_to "2011", params.merge(anno: 2011)
+              
         %h2 Vendite Nuove
+    
+    .list
+      - @giacenza.each do |settore, libri|
+        .item
+          .span5
+            = settore
+          .span1 Carichi
+          .span1 Scarichi
+          .span1 Giacenza
 
-    .situazione-vacanze.list
-      - @vendite.each do |l|
-        - libro = l[:libro]
-        .item[libro]
-          .titolo
-            = link_to image_tag(libro.image_url(:small_thumb)), libro
-            %strong= libro.titolo
-            %br
-            = libro.cm
-          .quantita
-            = l[:copie]
-            = l[:importo]
+        - libri.each do |l|
+          .item
+            .span5
+              = link_to image_tag(l.libro.image_url(:small_thumb)), l.libro
+              %strong= l.libro.titolo
+              %br
+              = l.libro.cm
+            .span1
+              = l.copie_caricate
+            .span2
+              = l.copie_registrate
+              %br
+              = l.copie_corrispettivi
+              %br
+              = l.copie_consegnate
+            .span1
+              = l.giacenza
+              %br
+              &nbsp
+              %br
+              = l.giacenza_contabile
+              
+        .item.totale-generale
+          .span5
+            %strong parziale
+          .span2
+            = libri.map(&:copie_caricate).sum
+          .span1
+            = libri.map(&:copie_vendute).sum
+            
+          .span1
+            = libri.map(&:giacenza).sum
+
+      .item.totale-generale
+        .span5
+          %strong Totale
+        .span1
+          = @giacenza.values.flatten.sum(&:copie_caricate)
+        .span1
+          = @giacenza.values.flatten.sum(&:copie_vendute)
+        .span1
+          = @giacenza.values.flatten.sum(&:giacenza)

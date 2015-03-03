@@ -1,9 +1,9 @@
-%li[riga]
+.item-small[riga]
   %span
     = link_to riga.documento do
-      = l riga.documento.created_at, format: :only_date
+      = l riga.data, format: :short
   |
   %span.cliente
-    = link_to riga.documento.cliente do
-      = riga.documento.cliente.titolo
+    = link_to riga.cliente do
+      = riga.cliente.titolo
   %span.pull-right= riga.quantita

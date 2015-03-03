@@ -40,71 +40,10 @@
         = link_to edit_libro_url(@libro), class: "btn btn-primary" do
           %i.icon-pencil
           Modifica
-      
+
   
-  .row-fluid
-    .span4.carichi
-      - @carichi.each do |anno, carichi|
-        .well
-          %h2 
-            = anno
-          %h2 
-            Carichi
-            .pull-right
-              = carichi.sum(&:quantita)
-          %h3 
-            copie acquistate
-            .pull-right
-              = carichi.select {|r| r.fattura.condizioni_pagamento != "Contanti" }.sum(&:quantita)
-          %ul.unstyled
-            - for riga in carichi.select {|r| r.fattura.condizioni_pagamento != "Contanti" } do
-              = render "riga", riga: riga
-
-          %h3 
-            copie in deposito
-            .pull-right
-              = carichi.select {|r| r.fattura.condizioni_pagamento == "Contanti" }.sum(&:quantita)
-          %ul.unstyled
-            - for riga in carichi.select {|r| r.fattura.condizioni_pagamento == "Contanti" } do
-              = render "riga", riga: riga
-
-
-
-    .span4.scarichi
-      - @scarichi.each do |anno, scarichi|
-
-        .module
-          .header
-            - if anno == Time.now.year
-              = show_hide_tag
-            - else
-              = show_hide_tag "down"
-            %h2 
-              = anno
-          
-          .more
-            .header
-              = show_hide_tag
-              %h3 
-                Scarichi
-                .pull-right
-                  = scarichi.sum(&:quantita)
-            .more{ class: "#{anno == Time.now.year ? '' : 'hidden'}" }
-              
-              - ["completato", "in_sospeso", "preparato", "da_fare"].each do |stato|
-                - righe = scarichi.select {|r| r.appunto.try("#{stato}?") }
-                - if righe.sum(&:quantita) > 0
-                  .header
-                    = show_hide_tag
-                    %h4 
-                      = stato
-                      .pull-right
-                        %small
-                          = righe.sum(&:quantita)
-                  %ul.unstyled.more
-                    - for riga in righe do
-                      = render "riga", riga: riga  
-
+  .row   
+    = render 'carico_scarico'
       
     .side-bar.span4      
       - if @libro.scolastico?  || @libro.concorrenza?      

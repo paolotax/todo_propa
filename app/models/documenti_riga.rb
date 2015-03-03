@@ -26,8 +26,17 @@ class DocumentiRiga < ActiveRecord::Base
       Documento.update_counters documento.id,  
         totale_importo: - riga.importo,
         totale_copie: - riga.quantita
+      riga.annulla_registra
     end
     return true
   end 
 
-end
+end# == Schema Information
+#
+# Table name: documenti_righe
+#
+#  id           :integer         not null, primary key
+#  documento_id :integer
+#  riga_id      :integer
+#
+

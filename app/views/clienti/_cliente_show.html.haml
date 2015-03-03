@@ -1,144 +1,78 @@
 
-- cache [@cliente, 'cliente_show'] do         
+/ - cache [@cliente, 'cliente_show'] do         
   
-  .content
-    = render 'clienti/cliente_header',  cliente: @cliente
+.content
+  = render 'clienti/cliente_header',  cliente: @cliente
 
-  .row
-    .side-bar.span4
+.row
+  
+  .span8
 
+    - unless @righe_da_consegnare.empty?
       .module
         .header
           = show_hide_tag
-          %h3 Destinatari
+          %h3 vendite da consegnare
+        .more       
+          = nested_righe_per_appunto( @righe_da_consegnare.to_a )
+
+    - unless @righe_da_registrare.empty?
+    
+      .module
+        .header
+          = show_hide_tag
+          %h3 vendite da registrare
+        .more       
+          = nested_righe_per_appunto( @righe_da_registrare.to_a )
+
+
+    
+    - unless @cliente.documenti.size.zero?
+      .module.transparent
+        .header
+          = show_hide_tag
+          %h3= pluralize(@cliente.documenti.size, "documento")
         .more
           .list
-            - @cliente.destinatari.each do |d|
+            = render partial: "documenti/documento", collection: @cliente.documenti.per_numero, as: :documento
+
+      
+  / .center.span4
+  /   %header.content-header
+  /     .header-inner
+  /       %h2 Appunti
+      
+  /   - @appunti_per_anno = @cliente.appunti.not_deleted.recente.group_by { |t| t.created_at.year }
+  /   .appunti.list
+  /     - for anno, values in @appunti_per_anno do
+  /       .item
+  /         %h3= anno
+  /       - for a in values do
+  /         = render a, grouped: "grouped"
+        
+  /   .stream-loader
+    
+  .side-bar.span4
+
+    .module
+      .header
+        = show_hide_tag "down"
+        %h3 destinatari
+      .more.hidden
+        .list
+          - @cliente.destinatari.each do |d|
+            - unless d.destinatario.blank? && d.telefono.blank? && d.email.blank?
               .item
                 = d.destinatario
                 = d.telefono
                 = d.email
 
-      - unless @righe_da_consegnare.empty?
-        .module
-          .header
-            = show_hide_tag
-            %h3 Libri da consegnare
-          .more       
-            = nested_righe_per_appunto( @righe_da_consegnare.to_a )
-
-        / .module
-        /   .header
-        /     = show_hide_tag
-        /     %h3 Libri da consegnare
-        /   .more.box-consegna.cliente-vendite
-            
-        /     - for appunto, righe in @righe_da_consegnare.group_by(&:appunto) do               
-              
-        /       = link_to appunto do
-        /         = "##{appunto.id} del #{l appunto.created_at, format: :only_date} - #{appunto.status}"
-
-        /       - for riga in righe do
-        /         .rig
-        /           = check_box_tag "riga_ids[]", riga.id, false, {:class => 'cb-riga-item'}
-        /           = riga.libro.titolo
-        /           .pull-right= riga.quantita
-                  
-        /     %footer.clearfix
-        /       .pull-left
-        /         .dropdown
-        /           = link_to "Modifica",  "#", class: "btn-small btn-warning dropdown-toggle", "data-toggle" => "dropdown" 
-
-        /           %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
-
-        /             %li.dropdown-submenu
-        /               %a{ tabindex: "-1", href: "#"}
-        /                 Sposta selezionati
-        /               %ul.dropdown-menu
-        /                 %li
-        /                   = form_for @cliente, url: sposta_righe_cliente_path(@cliente), method: "put", html: {class: "form-inline"} do |f|
-        /                     / - for riga in @righe_da_consegnare do
-        /                     /   = hidden_field_tag "riga_ids[]", riga.id 
-        /                     = f.submit "sposta", class: "btn btn-link"
-
-        /       .totale-copie.pull-right
-        /         %strong= @righe_da_consegnare.sum(&:quantita)
 
 
-      - unless @righe_da_registrare.empty?
-        .module
-          .header
-            = show_hide_tag
-            %h3 Appunti da registrare
-          .more.box-registra.cliente-vendite
-            
-            - for a, r in @righe_da_registrare.group_by(&:appunto) do               
-              = render "appunti/item", appunto: a
-
-            %footer.clearfix
-              .pull-left
-                = render 'documenti/registra', c: @cliente, r: @righe_da_registrare
-              .totale-importo.pull-right
-                %strong= number_to_currency @righe_da_registrare.sum(&:importo)
-              .totale-copie.pull-right
-                %strong= @righe_da_registrare.sum(&:quantita)
-
-      
-      - unless @cliente.documenti.size.zero?
-        .module
-          .header
-            = show_hide_tag
-            %h3= pluralize(@cliente.documenti.size, "documento")
-          .more
-            #documenti.list
-              = render partial: "documenti/documento", collection: @cliente.documenti.per_numero, as: :documento
-
-      - unless @cliente.new_record?  
-        - da_consegnare  = @cliente.righe.not_deleted.joins(:libro).includes(:libro).di_questa_propaganda.da_consegnare.order("libri.titolo")
-        = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_consegnare", collection: da_consegnare} unless da_consegnare.empty?
-
-        - da_pagare = @cliente.righe.not_deleted.joins(:libro).includes(:libro).di_questa_propaganda.da_pagare.order("libri.titolo")
-        = render partial: "shared/riepilogo_libri", locals: { tipo_riepilogo: "da_pagare", collection: da_pagare} unless da_pagare.empty?
-        
-
-      / - if @cliente.scuola_primaria?
-      /   = render "classi_adozioni"
-      /   = render "classi_inserters/form", cliente: @cliente
-      / - else
-      /   &nbsp
-        
-    .center.span4
-      %header.content-header
-        .header-inner
-          %h2 Appunti
-        
-      - @appunti_per_anno = @cliente.appunti.not_deleted.recente.group_by { |t| t.created_at.year }
-      .appunti.list
-        - for anno, values in @appunti_per_anno do
-          .item
-            %h3= anno
-          - for a in values do
-            = render a, grouped: "grouped"
-          
-      .stream-loader
-      
-    .side-bar.span4
-      - if @cliente.longitude && @cliente.latitude
-        .module
-          .header
-            = show_hide_tag
-            %h3 
-              = "#{pluralize @cliente.nearbys(10).con_appunti(current_user.appunti.da_fare).size, 'cliente'}"
-              %small vicini con appunti da fare
-          .clienti.more
-            = render @cliente.nearbys(10).con_appunti(current_user.appunti.da_fare)
-        .module 
-          .header
-            = show_hide_tag
-            %h3 
-              = "#{pluralize @cliente.nearbys(10).con_appunti(current_user.appunti.in_sospeso).size, 'cliente'}"
-              %small vicini con appunti in sospeso
-            
-          .clienti.more
-            = render @cliente.nearbys(10).con_appunti(current_user.appunti.in_sospeso)
-      
+    - if @cliente.longitude && @cliente.latitude
+      .module
+        .header
+          = show_hide_tag
+          %h3 nelle vicinanze...
+        .clienti.more
+          = render @cliente.nearbys(10).con_qualcosa_da_fare(current_user)

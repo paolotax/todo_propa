@@ -20,7 +20,7 @@ end
 #  telefono       :string(255)
 #  email          :string(255)
 #  totale_copie   :integer         default(0)
-#  totale_importo :float           default(0.0)
+#  totale_importo :decimal(9, 2)   default(0.0)
 #  latitude       :float
 #  longitude      :float
 #  created_at     :datetime        not null

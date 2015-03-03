@@ -55,6 +55,7 @@
                 Modifica
 
         - if @appunto.has_righe?
+          
           - unless @appunto.da_fatturare?
             .riferimento-fattura{ style: "margin-top: 10px;"}
               = link_to @appunto.fattura do

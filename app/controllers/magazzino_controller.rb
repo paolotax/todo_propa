@@ -2,13 +2,10 @@ class MagazzinoController < ApplicationController
   
   def vendite_nuove
 
-    @vendite = current_user.righe.scarico.includes(:libro).group_by(&:libro).map do |l, righe|
-      { 
-        libro: l, 
-        copie: righe.sum(&:quantita),
-        importo: righe.sum(&:importo)
-      }
-    end
+    anno = params[:anno] || Time.now.year
+
+    @giacenza = GiacenzaCounter.new(user: current_user, anno: anno, params: nil).per_settore
+
 
   end
 

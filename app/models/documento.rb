@@ -250,7 +250,7 @@ class Documento < ActiveRecord::Base
     if spreadsheet.is_a? Array
       # uso smarter_csv
       spreadsheet.each do |row|
-        libro = Libro.find_or_create_by_cm( cm: row[:codice], titolo: row[:descrizione], prezzo_consigliato: 0, prezzo_copertina: row[:prezzo], ean: row[:ean] )
+        libro = Libro.find_or_create_by_cm( cm: row[:codice], titolo: row[:descrizione], prezzo_consigliato: 0, prezzo_copertina: row[:prezzo], ean: row[:ean], editore_id: 29 )
         
         self.righe.build( libro: libro, quantita:  row[:qta], prezzo_unitario: libro.prezzo_copertina )
       end  
@@ -260,7 +260,7 @@ class Documento < ActiveRecord::Base
       header = spreadsheet.row(1)
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]        
-        libro = Libro.find_or_create_by_cm( cm: row["CODICE"], titolo: row["DESCRIZIONE"], prezzo_consigliato: 0, prezzo_copertina: row["PREZZO"], ean: row["EAN"] )
+        libro = Libro.find_or_create_by_cm( cm: row["CODICE"], titolo: row["DESCRIZIONE"], prezzo_consigliato: 0, prezzo_copertina: row["PREZZO"], ean: row["EAN"], editore_id: 29 )
         
         self.righe.build( libro: libro, quantita:  row["QTA"], prezzo_unitario: libro.prezzo_copertina )
       end
@@ -324,18 +324,18 @@ end
 #  id                   :integer         not null, primary key
 #  numero               :integer
 #  data                 :date
-#  note                 :string(255)
+#  note                 :text
 #  cliente_id           :integer
 #  causale_id           :integer
 #  user_id              :integer
 #  condizioni_pagamento :string(255)
-#  pagata               :boolean         default(FALSE)
 #  totale_copie         :integer         default(0)
 #  totale_importo       :decimal(9, 2)   default(0.0)
 #  totale_iva           :decimal(9, 2)   default(0.0)
 #  spese                :decimal(9, 2)   default(0.0)
 #  state                :string(255)
 #  slug                 :string(255)
+#  payed_at             :date
 #  created_at           :datetime        not null
 #  updated_at           :datetime        not null
 #

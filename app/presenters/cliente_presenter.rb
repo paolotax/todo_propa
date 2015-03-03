@@ -4,9 +4,6 @@ class ClientePresenter < BasePresenter
   #delegate :username, to: :user
 
 
-  
-
-
   # check visita nel baule?
   def visite
     @visite ||= cliente.visite.map.select { |v| !v.data.nil? }.sort_by(&:data)

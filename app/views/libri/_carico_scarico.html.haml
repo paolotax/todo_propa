@@ -1,0 +1,52 @@
+.span8
+  - @giacenza.carico_scarico.each do |a|
+    .module
+      .header
+        - if a[:anno] == Time.now.year
+          = show_hide_tag
+        - else
+          = show_hide_tag "down"
+        %h2 
+          = a[:anno]
+          .pull-right
+            %small= "giacenza: #{a[:giacenza]}"      
+      
+      .more.row{ class: "#{a[:anno] == Time.now.year ? '' : 'hidden'}" }
+        
+        .span4
+          .header
+            %h3
+              Carichi
+              .pull-right
+                %small= a[:carichi].map(&:quantita).sum
+
+          - a[:carichi].group_by(&:state).each do |causale, rig|          
+            .header
+              %h4 
+                = causale
+                .pull-right
+                  %small= rig.map(&:quantita).sum
+            .list
+              - for riga in rig do
+                = render "riga", riga: riga
+
+
+        .span4
+          .header
+            %h3
+              Scarichi
+              .pull-right
+
+                %small= a[:scarichi].values.flatten.map(&:quantita).sum
+
+          - a[:scarichi].each do |causale, rig|          
+            .header
+              %h4 
+                = causale
+                .pull-right
+                  %small= rig.map(&:quantita).sum
+            .list
+              - for riga in rig do
+                = render "riga", riga: riga
+
+    

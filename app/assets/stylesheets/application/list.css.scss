@@ -1,16 +1,36 @@
 @import "compass/utilities/lists/inline-list";
 
+
+.module.transparent {
+  background-color: transparent !important;
+
+
+}
+
 ul.list li.item {
   padding-bottom: 9px;
 }
 
 .list {
 
+  .item-small {
+    
+    background-color: white;
+    padding: 4px 12px;
+
+    border-bottom: 1px solid #E8E8E8;
+
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+  
+  }
+
   .item {
 
-    min-height: 70px;
+    background-color: white;
     padding: 9px 12px 0;
-    background: white;
+
     border-bottom: 1px solid #E8E8E8;
 
     border-left: 1px solid #E8E8E8;
@@ -18,7 +38,10 @@ ul.list li.item {
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
     background-clip: padding-box;
-    
+
+
+    min-height: 70px;
+     
     footer {
       min-height: 37px;
       line-height: 37px;

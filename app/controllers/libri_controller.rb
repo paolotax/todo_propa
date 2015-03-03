@@ -35,17 +35,11 @@ class LibriController < ApplicationController
   def show
     @libro = Libro.includes(righe: [ :libro, :appunto, :fattura ] ).find(params[:id])
     
-    @carichi = current_user.righe_fattura.includes(:fattura => [:cliente]).
-                            carico.
-                            where("righe.libro_id = ?", @libro.id).
-                            order("fatture.data desc").group_by(&:anno)
-    
-    @scarichi = current_user.righe.not_deleted.includes(:appunto => [:cliente]).
-                            scarico.
-                            where("righe.libro_id = ?", @libro.id).
-                            order("appunti.created_at desc").group_by(&:anno)
     
     @adozioni = current_user.adozioni.includes(:classe => :cliente).del_libro(@libro.id).per_scuola
+
+
+    @giacenza = GiacenzaLibro.new(libro: @libro, user: current_user)
 
     respond_to do |format|
       format.html

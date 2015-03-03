@@ -33,7 +33,7 @@ class ClientiController < ApplicationController
 
   def show
 
-    @cliente = current_user.clienti.includes(:appunti, :fatture, :righe, :visite).find(params[:id])
+    @cliente = current_user.clienti.includes(:appunti, :righe, :visite).find(params[:id])
 
     respond_to do |format|
       format.html do
@@ -41,9 +41,8 @@ class ClientiController < ApplicationController
 
         @adozioni_per_scuola = @cliente.adozioni.joins(:classe).scolastico.order("classi.classe, classi.sezione").group_by(&:libro)
 
-        @righe_da_consegnare = @cliente.righe.da_consegnare.da_fatturare.order("appunto_id desc")
-
-        @righe_da_registrare = @cliente.righe.da_fatturare.order("appunto_id desc")
+        @righe_da_consegnare = @cliente.righe.scarico.with_state(:pronta)
+        @righe_da_registrare = @cliente.righe.scarico.with_state(:consegnata)
 
         @classi_inserter = ClassiInserter.new
 
