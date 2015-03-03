@@ -58,10 +58,9 @@ namespace :youpropa do
         elsif last_documento.buono_di_consegna?
           riga.state = "corrispettivi"
           riga.consegnata_il = last_documento.data
-        elsif last_documento.fattura?
-          riga.state = "fattura"
-          riga.consegnata_il = last_documento.data
-        
+        else
+          riga.state = "registrata"
+          riga.consegnata_il = last_documento.data       
         end
         
       else

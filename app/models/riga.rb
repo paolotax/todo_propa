@@ -297,7 +297,6 @@ class Riga < ActiveRecord::Base
       
     else
 
-      self.state = "open"
       if self.appunto
         if self.appunto.stato == 'P'
           self.consegnata_il = self.appunto.created_at.to_date
