@@ -6,7 +6,7 @@
 
 .row
   
-  .span8
+  .span4
 
     - unless @righe_da_consegnare.empty?
       .module
@@ -37,20 +37,20 @@
             = render partial: "documenti/documento", collection: @cliente.documenti.per_numero, as: :documento
 
       
-  / .center.span4
-  /   %header.content-header
-  /     .header-inner
-  /       %h2 Appunti
+  .center.span4
+    %header.content-header
+      .header-inner
+        %h2 Appunti
       
-  /   - @appunti_per_anno = @cliente.appunti.not_deleted.recente.group_by { |t| t.created_at.year }
-  /   .appunti.list
-  /     - for anno, values in @appunti_per_anno do
-  /       .item
-  /         %h3= anno
-  /       - for a in values do
-  /         = render a, grouped: "grouped"
+    - @appunti_per_anno = @cliente.appunti.not_deleted.recente.group_by { |t| t.created_at.year }
+    .appunti.list
+      - for anno, values in @appunti_per_anno do
+        .item
+          %h3= anno
+        - for a in values do
+          = render a, grouped: "grouped"
         
-  /   .stream-loader
+    .stream-loader
     
   .side-bar.span4
 
