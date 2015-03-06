@@ -17,7 +17,7 @@ class Documento < ActiveRecord::Base
   has_many :documenti, through: :righe, uniq: true    
   has_many :appunti, through: :righe, uniq: true, order: "appunti.id"
     
-  accepts_nested_attributes_for :righe, reject_if: lambda { |a| (a[:quantita].blank? || a[:libro_id].blank?)}, allow_destroy: true
+  accepts_nested_attributes_for :righe, reject_if: lambda { |a| (a[:quantita].blank? || a[:quantita].to_i.zero? || a[:libro_id].blank?)}, allow_destroy: true
 
 
   validates :cliente_id, :causale_id, :data, :numero, presence: true, if: :active?

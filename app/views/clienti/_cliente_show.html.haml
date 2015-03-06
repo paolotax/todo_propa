@@ -9,21 +9,34 @@
   .span4
 
     - unless @righe_da_consegnare.empty?
-      .module
-        .header
-          = show_hide_tag
-          %h3 vendite da consegnare
-        .more       
-          = nested_righe_per_appunto( @righe_da_consegnare.to_a )
+      - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'consegna')
+      = simple_form_for @consegna do |f|
+        .module
+          .header
+            = show_hide_tag
+            %h3 vendite da consegnare
+          .more       
+            = nested_righe_per_appunto( @righe_da_consegnare.to_a )
+
+          = f.input :data
+          = f.hidden_field :azione
+          = f.submit "Consegna", class: "btn"
+
 
     - unless @righe_da_registrare.empty?
-    
-      .module
-        .header
-          = show_hide_tag
-          %h3 vendite da registrare
-        .more       
-          = nested_righe_per_appunto( @righe_da_registrare.to_a )
+      - @consegna = Consegna.new(user: current_user, azione: 'annulla_consegna')
+      
+      = simple_form_for @consegna do |f|
+        .module
+          .header
+            = show_hide_tag
+            %h3 vendite da registrare
+          .more       
+            = nested_righe_per_appunto( @righe_da_registrare.to_a )
+          
+          = f.hidden_field :azione
+          = f.submit "Annulla consegna", class: "btn"
+
 
 
     

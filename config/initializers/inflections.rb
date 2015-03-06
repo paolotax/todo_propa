@@ -47,6 +47,9 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'documento', 'documenti'
   inflect.irregular 'editore', 'editori'
 
+  inflect.irregular 'consegna', 'consegne'
+
+
   # inflect.irregular 'documento_riga', 'documenti_righe'
   
   # inflect.plural /^([\w]*)a/i, '\1e'

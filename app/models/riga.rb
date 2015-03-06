@@ -78,11 +78,6 @@ class Riga < ActiveRecord::Base
   end
 
 
-  
-
-
-
-
   state_machine :initial => :open do
 
     event :prepara do
@@ -93,9 +88,9 @@ class Riga < ActiveRecord::Base
       transition [:open, :pronta] => :consegnata
     end
 
-    # event :annulla_consegna do
-    #   transition :consegnata => :open
-    # end
+    event :annulla_consegna do
+      transition :consegnata => :open
+    end
 
     event :registra do
       transition [:open, :pronta, :consegnata] => :registrata,    :if => :last_fattura?
@@ -103,7 +98,7 @@ class Riga < ActiveRecord::Base
     end
     
     event :annulla_registra do
-      transition [:registrata, :corrispettivi]=> :consegnata
+      transition [:registrata, :corrispettivi] => :consegnata
     end
     
     event :ordina do

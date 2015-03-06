@@ -4,6 +4,12 @@ TodoPropa::Application.routes.draw do
   use_doorkeeper
 
 
+  resources :consegne, only: [:create] do
+    member do
+      put :annulla
+    end
+  end
+
   resources :causali
 
   

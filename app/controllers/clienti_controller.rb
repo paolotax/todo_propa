@@ -41,7 +41,7 @@ class ClientiController < ApplicationController
 
         @adozioni_per_scuola = @cliente.adozioni.joins(:classe).scolastico.order("classi.classe, classi.sezione").group_by(&:libro)
 
-        @righe_da_consegnare = @cliente.righe.scarico.with_state(:pronta)
+        @righe_da_consegnare = @cliente.righe.scarico.with_state(:pronta, :open)
         @righe_da_registrare = @cliente.righe.scarico.with_state(:consegnata)
 
         @classi_inserter = ClassiInserter.new
