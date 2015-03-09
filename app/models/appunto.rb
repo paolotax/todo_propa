@@ -12,9 +12,10 @@ class Appunto < ActiveRecord::Base
 
 
   has_many :righe, :dependent => :destroy
-  has_many :fatture, through: :righe, uniq: true
   
-  #has_many :visita_appunti, dependent: :destroy
+  # questo lo tolgo con lo state dell'appunto 
+  has_many :documenti, through: :righe, uniq: true
+  
   has_many :visite, :through => :cliente
   
   has_many :events, class_name: "AppuntoEvent", dependent: :destroy
@@ -77,6 +78,10 @@ class Appunto < ActiveRecord::Base
   scope :modificato_di_recente, order("appunti.updated_at desc")
   scope :in_corso,              where("appunti.stato <> 'X'")
   
+
+  scope :senza_righe,           where(righe_count: 0)
+
+
   scope :pop,        lambda { |id| where("appunti.cliente_id = ?", id) }
   
   scope :uniq_cliente_id, select(:cliente_id).uniq
@@ -115,7 +120,7 @@ class Appunto < ActiveRecord::Base
   end
   
   def fattura
-    self.fatture[0] unless self.fatture.empty?
+    self.documenti[0] unless self.documenti.empty?
   end
   
   STATUS.each_with_index do |status, index|
@@ -161,16 +166,20 @@ class Appunto < ActiveRecord::Base
     end
   end
   
+
+  # da rivedere !!!!!!
+
+
   def da_fatturare?
-    self.has_righe? && self.fatture.empty? 
+    has_righe? && self.documenti.empty? 
   end
 
   def fatturato?
-    self.has_righe? && !self.fatture.empty? 
+    has_righe? && !self.documenti.empty? 
   end
   
   def has_righe?
-    !self.righe.empty?
+    righe_count > 0
   end
   
   def has_recapiti?
@@ -187,6 +196,10 @@ class Appunto < ActiveRecord::Base
     nel_baule
   end
   
+  
+
+
+
   def to_s
     "##{id} - #{destinatario} (#{cliente_nome})"
   end

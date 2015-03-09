@@ -4,10 +4,16 @@
 
   .titolo
     = link_to riga.cached_libro.titolo, riga.cached_libro
-    - if Rails.env.production?
-      %small= riga.cached_libro.cm
-    - else
+    - if riga.can_registra?
       %small= riga.state
+      - unless riga.consegnata_il.nil?
+        %small.badge.badge-info= formatta_data riga.consegnata_il
+      - unless riga.pagata_il.nil?  
+        %small.badge.badge-success= formatta_data riga.pagata_il
+    / - if Rails.env.production?
+    /   %small= riga.cached_libro.cm
+    / - else
+    /   %small= riga.state
 
   .dati-riga      
     .quantita

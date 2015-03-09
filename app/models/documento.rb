@@ -30,6 +30,8 @@ class Documento < ActiveRecord::Base
 
   scope :per_numero,     order('documenti.data desc, documenti.numero desc')
   scope :per_numero_asc, order('documenti.data, documenti.numero') 
+
+
   scope :dell_anno,      lambda { |a| where("extract(year from documenti.data) = ?", a) }
 
   scope :previous, lambda { |d| order("documenti.id desc").where("documenti.id < ?", d).limit(1) }
@@ -51,6 +53,36 @@ class Documento < ActiveRecord::Base
       self.condizioni_pagamento == tipo
     end
   end
+
+
+
+  around_destroy :elimina_registrazione
+  def elimina_registrazione
+    righe_ids = self.righe.map(&:id)
+    
+    yield
+
+    righe_to_update = Riga.includes(:documenti).find righe_ids
+    righe_to_update.each { |r| r.elimina_documento }
+  end
+  
+
+  after_save :registra
+  def registra
+    righe.all.each do |r|
+      if documento_scarico? 
+        #raise r.inspect
+        r.registra
+      elsif documento_causale == "Ordine"
+        r.ordina
+      elsif documento_causale == "Bolla di carico"
+        r.carica
+      elsif documento_causale == "Fattura acquisti"
+        r.registra_carico
+      end
+    end
+  end
+
 
 
   def active?
@@ -98,9 +130,6 @@ class Documento < ActiveRecord::Base
   end
 
 
-
-
-
   def imponibile
     self.totale_importo - self.totale_iva
   end
@@ -125,12 +154,6 @@ class Documento < ActiveRecord::Base
   end
 
 
-  state_machine :initial => :open do
-
-
-  end
-
-
   def previous_documenti
     righe.includes(:documenti).map(&:documenti).flatten.uniq.select{|d| d.causale_id < self.causale_id}
   end
@@ -141,58 +164,7 @@ class Documento < ActiveRecord::Base
   end
 
   
-  around_destroy :elimina_registrazione
-  def elimina_registrazione
-    righe_ids = self.righe.map(&:id)
-    
-    yield
 
-    righe_to_update = Riga.includes(:documenti).find righe_ids
-    righe_to_update.each { |r| r.elimina_documento }
-  end
-  
-
-  # before_save :ricalcola
-  # # ricalcola i totali e cambia stato degli appunti
-  # def ricalcola
-    
-  #   self.totale_copie    = righe.map(&:quantita).sum
-  #   self.totale_importo  = righe.map(&:importo).sum
-  #   self.totale_iva = 0 
-  #   righe.each do |r|
-  #     unless r.libro.iva == "VA"
-  #       self.totale_iva += r.importo / 100 * r.libro.iva.to_f
-  #     end
-  #   end 
-  #   # appunti.each do |a|
-  #   #   if self.pagata == true
-  #   #     a.stato = "X"
-  #   #   else
-  #   #     a.stato = "P"
-  #   #   end 
-  #   #   a.save 
-  #   # end
-  # end
-    
-
-
-  after_save :registra
-  def registra
-    logger.debug "REGISTRAAAAAA"
-
-    righe.each do |r|
-      if documento_scarico?
-        r.registra
-      elsif documento_causale == "Ordine"
-        r.ordina
-      elsif documento_causale == "Bolla di carico"
-        r.carica
-      elsif documento_causale == "Fattura acquisti"
-        r.registra_carico
-      end
-    end
-
-  end
 
   
 

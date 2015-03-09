@@ -528,7 +528,8 @@ CREATE TABLE appunti (
     deleted_at timestamp without time zone,
     completed_at timestamp without time zone,
     nota character varying(255),
-    score integer
+    score integer,
+    righe_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1242,12 +1243,8 @@ CREATE TABLE righe (
     quantita integer,
     prezzo_unitario numeric(9,3),
     sconto numeric(5,2) DEFAULT 0.0,
-    consegnato boolean,
-    pagato boolean,
     appunto_id integer,
-    fattura_id integer,
     magazzino_id integer,
-    causale_id integer,
     movimento integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -1256,7 +1253,8 @@ CREATE TABLE righe (
     state character varying(255),
     "position" integer,
     pagata_il date,
-    consegnata_il date
+    consegnata_il date,
+    documento_id integer
 );
 
 
@@ -2198,20 +2196,6 @@ CREATE INDEX index_righe_on_appunto_id ON righe USING btree (appunto_id);
 
 
 --
--- Name: index_righe_on_causale_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_righe_on_causale_id ON righe USING btree (causale_id);
-
-
---
--- Name: index_righe_on_fattura_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_righe_on_fattura_id ON righe USING btree (fattura_id);
-
-
---
 -- Name: index_righe_on_id_and_position; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -2388,3 +2372,5 @@ INSERT INTO schema_migrations (version) VALUES ('20141204091446');
 INSERT INTO schema_migrations (version) VALUES ('20141210173644');
 
 INSERT INTO schema_migrations (version) VALUES ('20141217173856');
+
+INSERT INTO schema_migrations (version) VALUES ('20150307184934');

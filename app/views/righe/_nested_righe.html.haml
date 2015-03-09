@@ -1,0 +1,23 @@
+- righe ||= []
+- group ||= :appunto
+
+.nested-righe
+  = righe.group_by(&:appunto).map do |a, righe|
+
+    .dettaglio-fattura
+      
+      = check_box_tag "", "select_righe", false, class: 'cb-toggle pill-left'
+
+      = render "appunti/appunto_header", appunto: a
+    /   = 
+
+    / righe_array.sort_by(&:appunto_id).group_by(&:appunto).map do |a, righe|
+    /   content_tag(:div, class: 'dettaglio_fattura') do
+    /     content_tag( :div, check_box_tag("select_righe", nil, false, class: 'cb-toggle') +
+        
+    /     content_tag( :div, render(a).html_safe, class: 'appunto-header') +
+        
+    /     content_tag( :div, righe.collect{ |r| render r }.join.html_safe, class: 'table-righe-new')
+    /   end + content_tag(:br)
+    / end.join.html_safe
+

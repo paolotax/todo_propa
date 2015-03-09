@@ -1,0 +1,31 @@
+- group = group ||= ""
+
+.item[appunto]{ class: "#{appunto.status} #{group}" }
+  
+  .content
+
+    %small
+      %span
+        = link_to appunto do
+          = "appunto #{appunto.id} del #{formatta_data appunto.created_at.to_date}"
+
+
+    - if group == :cliente
+      = link_to appunto.cliente do
+        %strong.full_name= appunto.cliente.titolo       
+      %small.destinatario= "@#{appunto.destinatario}" if appunto.destinatario?
+    
+    - else
+
+      -  if appunto.destinatario?
+        %strong= "@#{appunto.destinatario}"
+      - else
+        %strong.full_name &nbsp 
+
+      = appunto.note
+    
+
+
+
+        
+    

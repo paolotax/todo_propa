@@ -1,6 +1,18 @@
 namespace :youpropa do
   
 
+  desc "Reimposta id_documento e new states"  
+  task :reimposta_id_documento => :environment do
+    
+    Riga.all.each do |r|
+
+      r.update_attributes documento_id: r.documenti.order(:causale_id).last.try(:id)
+
+    end
+    
+  end
+
+
   desc "Crea documenti da fatture"  
   task :create_documenti => :environment do
     

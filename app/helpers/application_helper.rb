@@ -22,6 +22,39 @@ module ApplicationHelper
   end
 
 
+
+  def formatta_data(data)
+
+    if data > Date.today.beginning_of_year
+      I18n.localize(data, format: :short)
+    else
+      I18n.localize(data, format: :month_year)
+    end
+  end
+
+  # time:
+  #   formats:
+  #     default: "%a %d %b %Y, %H:%M:%S %z"
+  #     short: "%d %b %H:%M"
+  #     long: "%d %B %Y %H:%M"
+  #     long_with_day: "%a %d %b %Y %H:%M"
+  #     only_date: "%d-%m-%y"
+
+  # date:
+  #   formats:
+  #     default: "%d-%m-%Y"
+  #     day: "%a %d"
+  #     short: "%e %b"
+  #     long: "%d %B %Y"
+  #     only_date: "%d/%m/%Y"
+  #     long_with_day: "%A, %d %B %Y"
+  #     short_with_day: "%a %d %b"
+  #     day_of_month: "%a, %d"
+  #     month_year: "%B %Y"
+
+
+
+
   def vacanze_image_url(vacanza, stato)
      
     if stato.nil?

@@ -5,67 +5,11 @@
   = render 'clienti/cliente_header',  cliente: @cliente
 
 .row
+
+
+
   
-  .span4
-
-    - unless @righe_da_consegnare.empty?
-      - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'consegna')
-      = simple_form_for @consegna do |f|
-        .module
-          .header
-            = show_hide_tag
-            %h3 vendite da consegnare
-          .more       
-            = nested_righe_per_appunto( @righe_da_consegnare.to_a )
-
-          = f.input :data
-          = f.hidden_field :azione
-          = f.submit "Consegna", class: "btn"
-
-
-    - unless @righe_da_registrare.empty?
-      - @consegna = Consegna.new(user: current_user, azione: 'annulla_consegna')
-      
-      = simple_form_for @consegna do |f|
-        .module
-          .header
-            = show_hide_tag
-            %h3 vendite da registrare
-          .more       
-            = nested_righe_per_appunto( @righe_da_registrare.to_a )
-          
-          = f.hidden_field :azione
-          = f.submit "Annulla consegna", class: "btn"
-
-
-
-    
-    - unless @cliente.documenti.size.zero?
-      .module.transparent
-        .header
-          = show_hide_tag
-          %h3= pluralize(@cliente.documenti.size, "documento")
-        .more
-          .list
-            = render partial: "documenti/documento", collection: @cliente.documenti.per_numero, as: :documento
-
-      
-  .center.span4
-    %header.content-header
-      .header-inner
-        %h2 Appunti
-      
-    - @appunti_per_anno = @cliente.appunti.not_deleted.recente.group_by { |t| t.created_at.year }
-    .appunti.list
-      - for anno, values in @appunti_per_anno do
-        .item
-          %h3= anno
-        - for a in values do
-          = render a, grouped: "grouped"
-        
-    .stream-loader
-    
-  .side-bar.span4
+  .span3
 
     .module
       .header
@@ -79,9 +23,7 @@
                 = d.destinatario
                 = d.telefono
                 = d.email
-
-
-
+    
     - if @cliente.longitude && @cliente.latitude
       .module
         .header
@@ -89,3 +31,133 @@
           %h3 nelle vicinanze...
         .clienti.more
           = render @cliente.nearbys(10).con_qualcosa_da_fare(current_user)
+
+
+  .center.span5
+
+
+
+    - unless @righe_da_consegnare.empty?
+      - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'consegna')
+      = simple_form_for @consegna do |f|
+        .module
+          .header
+            = show_hide_tag "down"
+            %h3 vendite da consegnare
+          = nested_righe_per_appunto( @righe_da_consegnare.to_a )
+
+          .more.hidden       
+            .form
+              .span2
+                = f.input :azione,  collection: ["consegna", "annulla pagamento"], as: :radio_buttons, label: "scegli azione:"
+                = f.input :pagata, as: :boolean, label: "segna come pagata"
+              .span2
+                = f.input :data, label: "data:"
+                = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
+              .clearfix
+
+              .footer   
+                = f.submit "Esegui", class: "btn pull-right"
+                .clearfix
+        
+
+    - unless @righe_da_pagare.empty?
+      - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'paga')
+      = simple_form_for @consegna do |f|
+        .module
+          .header
+            = show_hide_tag "down"
+            %h3 vendite da pagare
+          = nested_righe_per_appunto( @righe_da_pagare)
+
+          .more.hidden       
+
+            .form
+              .span2
+                = f.input :azione,  collection: ["paga", "annulla consegna"], as: :radio_buttons, label: "scegli azione:"
+              .span2
+                = f.input :data, label: "data:"
+                = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
+              .clearfix
+
+              .footer   
+                = f.submit "Esegui", class: "btn pull-right"
+                .clearfix
+
+
+        
+
+          
+    
+
+    - unless @righe_da_registrare.empty?
+      - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'registra')
+      
+      = simple_form_for @consegna do |f|
+        .module
+          .header
+            = show_hide_tag "down"
+            %h3 vendite da registrare
+          = nested_righe_per_appunto( @righe_da_registrare.to_a )
+
+          .more.hidden       
+
+            .form
+              .span2
+                = f.input :azione,  collection: ["registra", "annulla pagamento", "annulla consegna"], as: :radio_buttons, label: "scegli azione:"
+              .span2
+                = f.input :data, label: "data:"
+                = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
+              .clearfix
+
+              .footer   
+                = f.submit "Esegui", class: "btn pull-right"
+                .clearfix
+
+         
+
+  .side-bar.span4
+
+    /# da correggere group_by created at 
+
+    - documenti_per_anno = @cliente.documenti.per_numero.group_by { |d| d.data.year }
+    - unless documenti_per_anno.size.zero?      
+      .module.transparent
+        .header
+          = show_hide_tag "down"
+          %h3= pluralize(documenti_per_anno.values.flatten.size, "documento")
+        .more.hidden
+          .list
+            - for anno, values in documenti_per_anno do
+              .item
+                %h3= anno
+              
+              - for d in values do
+                = render d, grouped: "grouped"
+
+      %br
+
+
+    - appunti_per_anno = @cliente.appunti.not_deleted.senza_righe.group_by { |t| t.created_at.year }
+    - unless appunti_per_anno.size.zero?
+
+      .module.transparent
+        .header
+          = show_hide_tag
+          %h3= pluralize(appunti_per_anno.values.flatten.size, "appunto")
+        
+        .more
+          .list
+            - for anno, values in appunti_per_anno do
+              .item
+                %h3= anno
+              - for a in values do
+                = render a, grouped: "grouped"
+
+
+
+
+
+
+
+

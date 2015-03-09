@@ -6,7 +6,7 @@ class Consegna
   extend ActiveModel::Naming
 
 
-  attr_accessor :user, :data, :riga_ids, :azione
+  attr_accessor :user, :data, :riga_ids, :causale, :azione, :pagata
   
   validates_presence_of :user, :riga_ids
 
@@ -21,29 +21,32 @@ class Consegna
     @righe = user.righe.find(riga_ids)
 
     @righe.each do |r|
-      r.update_attributes consegnata_il: data
-      r.send(azione)
+      
+      if azione == 'consegna'
+        
+        if r.can_consegna?
+          r.update_attributes(consegnata_il: data)
+          r.consegna
+        end
+        
+        if pagata && pagata == '1' && r.can_paga?
+
+          r.update_attributes(pagata_il: data)
+          r.paga
+        end
+
+      elsif azione == 'paga'
+        
+        if r.can_paga? 
+          r.update_attributes(pagata_il: data)
+          r.paga
+        end
+      
+      else
+        r.send(azione.split.join("_").downcase)
+      end
     end
-
   end
-
-
-  def annulla
-    @righe = user.righe.find(riga_ids)
-
-
-    @righe.each do |r|
-      r.update_attributes consegnata_il: nil
-      r.annulla_consegna
-    end
-    
-  end
-
-
-  def righe
-    user.righe.find(riga_ids)
-  end
-
 
 
   def persisted?

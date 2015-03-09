@@ -19,7 +19,9 @@ class ConsegneController < ApplicationController
         data:     params[:consegna][:data],
         riga_ids: params[:riga_ids],
         user:     current_user,
-        azione:   params[:consegna][:azione]
+        azione:   params[:consegna][:azione],
+        causale:  params[:consegna][:causale],
+        pagata:   params[:consegna][:pagata]
       )
     end
 

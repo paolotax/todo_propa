@@ -8,7 +8,7 @@
       %br
 
       %ul.nav.nav-tabs
-        - if @documento.documento_scarico? && !@documento.cliente.righe.scarico.non_documentato.empty?
+        - if @documento.documento_scarico? && !@documento.cliente.righe.scarico.da_registrare.empty?
           %li{class: "#{step == :scegli_appunti ? 'active' : ''}"}
             = link_to "Scegli appunti", wizard_path(:scegli_appunti)      
  

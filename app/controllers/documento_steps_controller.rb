@@ -18,7 +18,7 @@ class DocumentoStepsController < ApplicationController
     when :scegli_appunti
       
       if @documento.causale.scarico?
-        @righe = @documento.cliente.righe.scarico.non_documentato
+        @righe = @documento.cliente.righe.scarico.da_registrare
       elsif @documento.documento_causale == "Bolla di carico"
         @righe = @documento.cliente.righe_documento.carico.open_carico.uniq
       elsif @documento.documento_causale == "Fattura acquisti"

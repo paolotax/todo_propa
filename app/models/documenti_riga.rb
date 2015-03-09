@@ -16,7 +16,6 @@ class DocumentiRiga < ActiveRecord::Base
         totale_importo: riga.importo,
         totale_copie: riga.quantita
     end
-    return true
   end
 
   
@@ -30,10 +29,10 @@ class DocumentiRiga < ActiveRecord::Base
 
     end
     riga.annulla_registra
-    return true
   end 
+end
 
-end# == Schema Information
+# == Schema Information
 #
 # Table name: documenti_righe
 #
