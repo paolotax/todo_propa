@@ -30,6 +30,27 @@ input[type=number] {
   color: #999;
 }
 
+.icon-status {
+  margin: 5px;
+  width: 22px;
+  height: 22px;
+  text-indent: -9999px;
+  cursor: pointer;
+  &.da_fare {
+    background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -26px -2px transparent;
+  }
+  &.preparato {
+    background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -26px -26px transparent;
+  }
+  &.completato{
+    background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -2px -2px transparent;
+  }
+  &.in_sospeso {
+    background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -2px -26px transparent;
+  }
+}
+
+
 .item {
   position: relative;
   .actions {
@@ -93,25 +114,6 @@ input[type=number] {
         line-height: 32px;
         text-indent: -9999px;
         cursor: pointer;
-      }
-      .icon-status {
-        margin: 5px;
-        width: 22px;
-        height: 22px;
-        text-indent: -9999px;
-        cursor: pointer;
-        &.da_fare {
-          background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -26px -2px transparent;
-        }
-        &.preparato {
-          background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -26px -26px transparent;
-        }
-        &.completato{
-          background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -2px -2px transparent;
-        }
-        &.in_sospeso {
-          background: url(<%= asset_path "task-sprite.png" %>) no-repeat scroll -2px -26px transparent;
-        }
       }
     }
     .full_name {

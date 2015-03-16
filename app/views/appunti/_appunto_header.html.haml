@@ -24,6 +24,27 @@
 
       = appunto.note
     
+    .footer-actions
+      
+      %ul.nav-actions
+        
+        - unless appunto.status == "completato"
+          %li.baule-div
+            = baule_tag appunto.cliente
+        
+        %li.print
+          %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
+            %i.icon-tag
+
+        - unless appunto.fatturato?
+          
+          %li.edit
+            %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
+              %i.icon-pencil
+
+          %li.delete
+            %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+              %i.icon-trash
 
 
 

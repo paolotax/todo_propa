@@ -55,19 +55,10 @@
                 Modifica
 
         - if @appunto.has_righe?
+
+          = render 'righe/nested_righe', righe: @appunto.righe, group: :state
           
-          - unless @appunto.da_fatturare?
-            .riferimento-fattura{ style: "margin-top: 10px;"}
-              = link_to @appunto.fattura do
-                = "registrato con #{@appunto.fattura.documento_causale.downcase} nr. #{@appunto.fattura.numero} del #{l @appunto.fattura.data, format: :only_date}"
-          
-          .table-righe-new
-            = render @appunto.righe
-            
-            .totali-new.pull-right
-              %span.totale-copie= "#{@appunto.totale_copie} copie"
-              = "-"
-              %span.totale-importo= number_to_currency @appunto.totale_importo
+
       
         
 

@@ -3,8 +3,8 @@ class Riga < ActiveRecord::Base
   belongs_to :appunto, touch: true
   
   counter_culture :appunto, touch: true  
-  counter_culture :appunto, delta_column: 'quantita', column_name: 'totale_copie'
-  counter_culture :appunto, delta_column: 'importo',  column_name: 'totale_importo', touch: true 
+  # counter_culture :appunto, delta_column: 'quantita', column_name: 'totale_copie'
+  # counter_culture :appunto, delta_column: 'importo',  column_name: 'totale_importo', touch: true 
 
 
   has_many :documenti_righe
@@ -130,6 +130,7 @@ class Riga < ActiveRecord::Base
       riga.save
     end
 
+
     event :registra do
       transition [:open, :pronta] => :registrata
       transition :pagata          => :da_consegnare
@@ -146,7 +147,7 @@ class Riga < ActiveRecord::Base
       transition :corrispettivi   => :da_registrare
     end
     
-
+    # carichi
 
     event :ordina do
       transition :open => :ordinata
@@ -170,6 +171,28 @@ class Riga < ActiveRecord::Base
   end
 
 
+  def consegna_in_data(data = Date.today)
+    self.update_attributes(consegnata_il: data) if can_consegna?
+    self.consegna
+  end
+
+  
+  def paga_in_data(data = Date.today)
+    self.update_attributes(pagata_il: data) if can_paga?
+    self.paga
+  end
+
+
+  def registra_con_documento(documento)
+
+  end
+
+
+  def registra_con_causale(causale)
+
+  end
+  
+  
   def last_ordine?
     true if documenti.last.try(:documento_causale) == "Ordine"
   end
@@ -206,6 +229,8 @@ class Riga < ActiveRecord::Base
 
   def check_scarico_state
 
+    state_was = state
+
     last_documento = self.documenti.order(:causale_id).last
 
     if last_documento
@@ -217,7 +242,7 @@ class Riga < ActiveRecord::Base
       elsif pagata_il.nil? && !consegnata_il.nil?
         self.state = 'da_pagare'
       else
-        if last_documento.bolla_di_carico?          
+        if last_documento.buono_di_consegna?          
           self.state = "corrispettivi"        
         else
           self.state = "fattura"
@@ -232,9 +257,15 @@ class Riga < ActiveRecord::Base
         self.state = 'pagata'
       elsif pagata_il.nil? && !consegnata_il.nil?
         self.state = 'consegnata'
+      elsif !pagata_il.nil? && !consegnata_il.nil?
+        self.state = 'da_registrare'
       end
 
     end
+
+    # if state_was != state
+      puts "#{id} - was #{state_was} is #{state}"
+    # end
 
     save
 
@@ -325,8 +356,13 @@ class Riga < ActiveRecord::Base
   end
 
 
+  def nulla?
+    appunto_id.nil? && documento_id.nil?
+  end
+
+
   def carico?
-    appunto_id.nil?
+    appunto_id.nil? && !nulla?
   end
 
 
@@ -422,11 +458,11 @@ class Riga < ActiveRecord::Base
 
     def ricalcola_after_commit           
       return true  unless quantita_changed? || importo_changed?
-      # if appunto
-      #   Appunto.update_counters appunto.id,
-      #     totale_copie: quantita - (quantita_was || 0.0),
-      #     totale_importo: importo - importo_was      
-      # end
+      if appunto
+        Appunto.update_counters appunto.id,
+          totale_copie: quantita - (quantita_was || 0.0),
+          totale_importo: importo - importo_was      
+      end
       documenti.each do |documento|
         Documento.update_counters documento.id,
           totale_copie:   quantita - (quantita_was || 0.0),
@@ -437,11 +473,11 @@ class Riga < ActiveRecord::Base
 
     
     def ricalcola_before_destroy
-      # unless appunto.nil?
-      #   Appunto.update_counters appunto.id,
-      #     totale_copie: - quantita_was,
-      #     totale_importo: - importo_was
-      # end
+      unless appunto.nil?
+        Appunto.update_counters appunto.id,
+          totale_copie: - quantita_was,
+          totale_importo: - importo_was
+      end
       documenti.each do |documento|
         Documento.update_counters documento.id,
           totale_copie:   - quantita_was,

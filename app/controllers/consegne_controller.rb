@@ -21,7 +21,7 @@ class ConsegneController < ApplicationController
         user:     current_user,
         azione:   params[:consegna][:azione],
         causale:  params[:consegna][:causale],
-        pagata:   params[:consegna][:pagata]
+        group:    params[:consegna][:group]
       )
     end
 

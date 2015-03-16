@@ -11,6 +11,7 @@ class ChangeRigheAndAppunti < ActiveRecord::Migration
 
     add_column :appunti, :righe_count, :integer, :null => false, :default => 0
 
+
     say "eseguo rake youpropa:reimposta_id_documento"
     Rake::Task['youpropa:reimposta_id_documento'].invoke
   end

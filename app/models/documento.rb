@@ -62,8 +62,13 @@ class Documento < ActiveRecord::Base
     
     yield
 
-    righe_to_update = Riga.includes(:documenti).find righe_ids
-    righe_to_update.each { |r| r.elimina_documento }
+    righe_to_update = Riga.find righe_ids
+    
+    if documento_carico?
+      righe_to_update.each { |r| r.elimina_documento }
+    else
+      righe_to_update.each { |r| r.annulla_registra }
+    end
   end
   
 

@@ -7,67 +7,79 @@
 @import "mixins";
 
 
-#righe .riga .titolo a {
+.riga .titolo a {
   color: inherit;
     &:hover {
     color: inherit;
   }
 }
 
+.table-righe-new {
+  padding: 5px 0 10px;
+}
+
+
+.nested-righe {
+  margin: 10px -12px 0;
+}
+
+
+.riga {
+  padding: 3px 12px;
+  border-bottom: 1px solid #E8E8E8;
+  @include clearfix;
+  
+  &:nth-child(odd) {
+    background-color: #E7E7E7;
+  }
+  .consegnata {
+    padding: 0 5px 0 5px;
+    float: left;
+  }
+  .pagata {
+    padding: 0 5px 0 5px;
+    float: left;
+  }  
+  .cb {
+    float: left;
+  }
+  .titolo {
+    float: left;
+    padding-top: 2px;
+    padding-left: 5px;
+    font-style: italic;
+    a {
+      color: inherit;
+      &:hover {
+        color: inherit;
+      }
+    }
+  }
+  .dati-riga {
+    float: right;
+    min-width: 224px;
+    .quantita, .prezzo, .sconto, .importo {
+      float:left;
+      width: 56px;
+      min-width: 56px;
+      text-align: center;
+    }
+    .prezzo {
+      font-weight: normal;
+    }
+    .importo {
+      float: right;
+      text-align: right;
+    }
+  }
+}
 
 .table-righe-new {
+  
   .rif-appunto {
     padding: 5px 12px;
   }
-  .riga {
-    padding: 3px 12px;
-    border-bottom: 1px solid #E8E8E8;
-    @include clearfix;
-    
-    &:nth-child(odd) {
-      background-color: #E7E7E7;
-    }
-    .consegnata {
-      padding: 0 5px 0 5px;
-      float: left;
-    }
-    .pagata {
-      padding: 0 5px 0 5px;
-      float: left;
-    }  
-    .cb {
-      float: left;
-    }
-    .titolo {
-      float: left;
-      padding-top: 2px;
-      padding-left: 5px;
-      font-style: italic;
-      a {
-        color: inherit;
-        &:hover {
-          color: inherit;
-        }
-      }
-    }
-    .dati-riga {
-      float: right;
-      min-width: 224px;
-      .quantita, .prezzo, .sconto, .importo {
-        float:left;
-        width: 56px;
-        min-width: 56px;
-        text-align: center;
-      }
-      .prezzo {
-        font-weight: normal;
-      }
-      .importo {
-        float: right;
-        text-align: right;
-      }
-    }
-  }
+  
 }
 
 

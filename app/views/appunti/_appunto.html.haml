@@ -1,4 +1,5 @@
 - grouped = grouped ||= ""
+- righe   = righe   ||= appunto.cached_righe
 
 - cache [current_user.id, appunto, appunto.cliente, grouped] do
 
@@ -29,15 +30,18 @@
       .stato.dropdown
         %a{ class: "dropdown-toggle #{appunto.status}", "data-toggle" => "dropdown" }
           .icon-status{ class: "#{appunto.status}" }
-        %ul.dropdown-menu
-          %li
-            %a.change-status{ href: "#", "data-status" => "",  "data-id" => "#{appunto.id}"} da fare
-          %li
-            %a.change-status{ href: "#", "data-status" => "S",  "data-id" => "#{appunto.id}"} preparato
-          %li
-            %a.change-status{ href: "#", "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
-          %li
-            %a.change-status{ href: "#", "data-status" => "X", "data-id" => "#{appunto.id}"} completato
+
+        - if !appunto.has_righe? || appunto.da_fatturare?
+        
+          %ul.dropdown-menu
+            %li
+              %a.change-status{ href: "#", "data-status" => "",  "data-id" => "#{appunto.id}"} da fare
+            %li
+              %a.change-status{ href: "#", "data-status" => "S",  "data-id" => "#{appunto.id}"} preparato
+            %li
+              %a.change-status{ href: "#", "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
+            %li
+              %a.change-status{ href: "#", "data-status" => "X", "data-id" => "#{appunto.id}"} completato
       
       
       - if grouped == ""
@@ -89,8 +93,10 @@
           
       
       - if appunto.has_righe?
-        .table-righe-new
-          = render appunto.cached_righe
+
+        = render 'righe/nested_righe', righe: righe, group: :state
+        / .table-righe-new
+        / = render appunto.cached_righe
     
     %footer
       

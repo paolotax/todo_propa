@@ -33,7 +33,7 @@ class LibriController < ApplicationController
 
   
   def show
-    @libro = Libro.includes(righe: [ :libro, :appunto, :fattura ] ).find(params[:id])
+    @libro = Libro.includes(righe: [ :libro, :appunto ] ).find(params[:id])
     
     
     @adozioni = current_user.adozioni.includes(:classe => :cliente).del_libro(@libro.id).per_scuola

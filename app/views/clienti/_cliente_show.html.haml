@@ -36,85 +36,108 @@
   .center.span5
 
 
+    %header.content-header
+      .header-inner
+        %h2 Appunti
+    
+    = render :partial => 'shared/filters'
 
-    - unless @righe_da_consegnare.empty?
-      - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'consegna')
-      = simple_form_for @consegna do |f|
-        .module
-          .header
-            = show_hide_tag "down"
-            %h3 vendite da consegnare
-          = nested_righe_per_appunto( @righe_da_consegnare.to_a )
-
-          .more.hidden       
-            .form
-              .span2
-                = f.input :azione,  collection: ["consegna", "annulla pagamento"], as: :radio_buttons, label: "scegli azione:"
-                = f.input :pagata, as: :boolean, label: "segna come pagata"
-              .span2
-                = f.input :data, label: "data:"
-                = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
-              .clearfix
-
-              .footer   
-                = f.submit "Esegui", class: "btn pull-right"
-                .clearfix
-        
-
-    - unless @righe_da_pagare.empty?
-      - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'paga')
-      = simple_form_for @consegna do |f|
-        .module
-          .header
-            = show_hide_tag "down"
-            %h3 vendite da pagare
-          = nested_righe_per_appunto( @righe_da_pagare)
-
-          .more.hidden       
-
-            .form
-              .span2
-                = f.input :azione,  collection: ["paga", "annulla consegna"], as: :radio_buttons, label: "scegli azione:"
-              .span2
-                = f.input :data, label: "data:"
-                = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
-              .clearfix
-
-              .footer   
-                = f.submit "Esegui", class: "btn pull-right"
-                .clearfix
+    #appunti.list
 
 
-        
+      - unless @righe_da_consegnare.empty?
+        - @righe_da_consegnare.group_by(&:appunto).each do |appunto, righe_dc|
+
+          = render "appunti/appunto", appunto: appunto, righe: righe_dc
+
+        / - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'consegna')
+        / = simple_form_for @consegna do |f|
+        /   .module
+        /     .header
+        /       = show_hide_tag "down"
+        /       %h3 vendite da consegnare
+            
+
+
+
+        /     / = nested_righe_per_appunto( @righe_da_consegnare.to_a )
+
+        /     .more.hidden       
+        /       .form
+        /         .span2
+        /           = f.input :azione,  collection: ["consegna", "consegna e paga", "annulla pagamento"], as: :radio_buttons, label: "scegli azione:"
+        /         .span2
+        /           = f.input :data, label: "data:"
+        /           = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
+        /         .clearfix
+
+        /         .footer   
+        /           = f.submit "Esegui", class: "btn pull-right"
+        /           .clearfix
+
+
+      - unless @righe_da_pagare.empty?
+        - @righe_da_pagare.group_by(&:appunto).each do |appunto, righe_dc|
+
+          = render "appunti/appunto", appunto: appunto, righe: righe_dc
+
+        / - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'paga')
+        / = simple_form_for @consegna do |f|
+        /   .module
+        /     .header
+        /       = show_hide_tag "down"
+        /       %h3 vendite da pagare
+        /     = nested_righe_per_appunto( @righe_da_pagare)
+
+        /     .more.hidden       
+
+        /       .form
+        /         .span2
+        /           = f.input :azione,  collection: ["paga", "registra", "annulla consegna"], as: :radio_buttons, label: "scegli azione:"
+        /         .span2
+        /           = f.input :data, label: "data:"
+        /           = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
+        /         .clearfix
+
+        /         .footer   
+        /           = f.submit "Esegui", class: "btn pull-right"
+        /           .clearfix
+
 
           
-    
 
-    - unless @righe_da_registrare.empty?
-      - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'registra')
+            
       
-      = simple_form_for @consegna do |f|
-        .module
-          .header
-            = show_hide_tag "down"
-            %h3 vendite da registrare
-          = nested_righe_per_appunto( @righe_da_registrare.to_a )
 
-          .more.hidden       
+      - unless @righe_da_registrare.empty?
 
-            .form
-              .span2
-                = f.input :azione,  collection: ["registra", "annulla pagamento", "annulla consegna"], as: :radio_buttons, label: "scegli azione:"
-              .span2
-                = f.input :data, label: "data:"
-                = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
-              .clearfix
 
-              .footer   
-                = f.submit "Esegui", class: "btn pull-right"
+        - @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'registra')
+        
+        = simple_form_for @consegna do |f|
+          .module
+            .header
+              = show_hide_tag "down"
+              %h3 vendite da registrare
+            
+            - @righe_da_registrare.group_by(&:appunto).each do |appunto, righe_dc|
+              = render "appunti/appunto", appunto: appunto, righe: righe_dc
+
+            .more.hidden       
+
+              .form
+                .span2
+                  = f.input :azione,  collection: ["registra", "annulla pagamento", "annulla consegna"], as: :radio_buttons, label: "scegli azione:"
+                .span2
+                  = f.input :data, label: "data:"
+                  = f.input :causale, collection: ["Buono di consegna", "Fattura"], include_blank: true, label: "crea documento con causale:"
                 .clearfix
 
-         
+                .footer   
+                  = f.submit "Esegui", class: "btn pull-right"
+                  .clearfix
+
+           
 
   .side-bar.span4
 

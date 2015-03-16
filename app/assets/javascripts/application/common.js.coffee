@@ -13,7 +13,7 @@ document.addEventListener "page:receive", ->
 jQuery ->
 
   $( '.cb-toggle' ).on 'click', () ->
-    $( 'input[type="checkbox"]', $(@).parent().parent()).prop('checked', this.checked)
+    $( 'input[type="checkbox"]', $(@).parent()).prop('checked', this.checked)
 
   $('form').on 'focus', 'input[type=number]', (e) ->
     $(@).on 'mousewheel.disableScroll', (e) ->

@@ -1,4 +1,5 @@
 #create-riga.form-inline
+  
   - @vendibili = Libro.unscoped.vendibili.select('distinct settore').order(:settore)
   
   = select_tag 'new_libro', option_groups_from_collection_for_select(@vendibili, :bros, :settore, :id, :titolo), {:include_blank => true, :class => 'chzn-select span4', 'data-placeholder' => "Seleziona un titolo..."}

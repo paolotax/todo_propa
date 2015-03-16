@@ -131,14 +131,17 @@ class Appunto < ActiveRecord::Base
     end
   end
   
+  
   def status
     STATUS[STATUS_CODES.index(stato)]
   end
+  
   
   def status=(stato)
     self.stato = STATUS_CODES[STATUS.index(stato)]
   end 
 
+  
   def deleted?
     !deleted_at.nil?
   end 
@@ -147,9 +150,11 @@ class Appunto < ActiveRecord::Base
     self.stato.blank?
   end
   
+  
   def consegnato?
     in_sospeso? || completato?
   end
+  
   
   def create_righe(scope)
     libri = scope.order(:titolo)
@@ -226,6 +231,7 @@ class Appunto < ActiveRecord::Base
     appunti = appunti.in_sospeso if params[:status].present? && params[:status] == "in_sospeso"
     appunti
   end
+
   
   def self.ordina(params)
     appunti = scoped
@@ -303,6 +309,7 @@ class Appunto < ActiveRecord::Base
   end
   
   after_save :update_righe_status
+  
   after_save :load_into_soulmate
 
   after_commit :update_cliente_properties
@@ -350,20 +357,36 @@ class Appunto < ActiveRecord::Base
 
   
     def update_righe_status
-          
-      if stato == 'X'
-        righe.each do |riga|
-          riga.update_attributes({:pagato => true, :consegnato => true})
-        end
-      elsif stato == 'P'
-        righe.each do |riga|
-          riga.update_attributes({:pagato => false, :consegnato => true})
-        end
-      else
-        righe.each do |riga|
-          riga.update_attributes({:pagato => false, :consegnato => false})
+
+      return if stato_was == stato || !has_righe?
+
+      righe.each do |r|
+
+        unless r.state?(:fattura) || r.state?(:corrispettivi)
+
+          if stato == "X"
+            r.consegna_in_data
+            r.paga_in_data
+
+          elsif stato == "S"
+
+            r.annulla_pagamento
+            r.annulla_consegna
+            r.prepara
+
+          elsif stato == "P"
+            r.consegna_in_data Date.today
+            r.annulla_pagamento
+            
+          elsif stato.blank?
+            r.annulla_prepara
+            r.annulla_consegna
+            r.annulla_pagamento
+          end
         end
       end
+
+      flush_cache
     end
 
     def update_cliente_properties
