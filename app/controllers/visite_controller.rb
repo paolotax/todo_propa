@@ -51,14 +51,17 @@ class VisiteController < ApplicationController
         format.json { render json: @visita.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   
   def destroy
     
     @visita = current_user.visite.find(params[:id])
+    
     @cliente = @visita.cliente
-    @appunti = @cliente.appunti.in_corso
+    @appunti = @cliente.appunti
+    
     @giro  = Giro.new(user: current_user, giorno: @visita.data, baule: @visita.baule)
     
     @visita.destroy

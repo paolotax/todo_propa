@@ -2,8 +2,10 @@
 - group ||= :appunto
 
 .nested-righe
-
-  - righe.group_by(&group).map do |a, righe|
+  
+  - righe_grouped = righe.group_by(&group)
+  
+  - righe_grouped.each do |a, righe|
 
     .grouped-righe
 
@@ -15,21 +17,14 @@
         = a.to_s
       
       .table-righe-new
-        - for riga in righe
-          = render riga
 
-        .riga
-          .dati-riga      
-            .quantita
-              %strong
-                = righe.map(&:quantita).sum
-            .importo              
-              = number_to_currency righe.map(&:importo).sum, unit: ''
+        = render righe
 
-  .riga
-    .dati-riga      
-      .quantita
-        %strong
-          = righe.map(&:quantita).sum
-      .importo              
-        = number_to_currency righe.map(&:importo).sum, unit: ''
+        - if righe_grouped.keys.count > 1
+          .riga
+            .dati-riga      
+              .quantita
+                %small= righe.map(&:quantita).sum
+              .importo              
+                %small= number_to_currency righe.map(&:importo).sum, unit: ''
+

@@ -103,7 +103,7 @@ class DocumentoStepsController < ApplicationController
           @new_appunto.righe << @righe_nuove
           @new_appunto.totale_copie   = @righe_nuove.map(&:quantita).sum
           @new_appunto.totale_importo = @righe_nuove.map(&:importo).sum
-          if @documento.pagata?
+          if @documento.pagato?
             @new_appunto.status = "completato"
           else
             @new_appunto.status = "in_sospeso"

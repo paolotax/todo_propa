@@ -2,20 +2,20 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-$(document).on "click", ".appunto.item", (e) ->
-  e.stopPropagation()
-  $(@).toggleClass('opened')
+# $(document).on "click", ".appunto.item", (e) ->
+#   e.stopPropagation()
+#   $(@).toggleClass('opened')
 
 $(document).on "click", ".appunto.item input[type='checkbox'], .appunto.item a, .appunto-item button, .nav-actions li a, .nav-actions li button", (e) ->
   e.stopPropagation()
 
-$(document).on "click", ".item .show a", (e) ->
+$(document).on "click", ".item .actions a.apri", (e) ->
   e.stopPropagation()
   e.preventDefault()
   item = $(@).closest($('.item'))
   item.addClass('opened')
 
-$(document).on "click", '.item .chiudi a', (e) ->
+$(document).on "click", '.item .actions a.chiudi', (e) ->
   e.stopPropagation()
   e.preventDefault()
   item = $(@).closest($('.item'))

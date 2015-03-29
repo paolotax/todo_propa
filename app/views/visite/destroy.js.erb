@@ -1,21 +1,19 @@
+
+var new_baule_div = "<%= escape_javascript( baule_tag @cliente ) %>" 
+
+
 var visita = $("#<%= dom_id(@visita) %>");
+
 if (visita.length > 0) {
   visita.remove();
 }
 
+
+
 // if ($('.map-baule').length > 0) {
-//   var clienti = <%= raw current_user.clienti.nel_baule.to_gmaps4rails %>
+//   var clienti = <%= raw @giro.clienti.to_gmaps4rails %>
 //   Gmaps.map.replaceMarkers(clienti)
 // };
-
-if ($(".<%= dom_id(@visita) %>").length > 0) {
-  $(".<%= dom_id(@visita) %>").remove();
-}
-
-if ($('.map-baule').length > 0) {
-  var clienti = <%= raw @giro.clienti.to_gmaps4rails %>
-  Gmaps.map.replaceMarkers(clienti)
-};
 
 if ($('.list-giro').length > 0) {
   $('.list-giro').replaceWith("<%= escape_javascript( render partial: 'giri/list_giro') %>");
@@ -37,8 +35,12 @@ if ($('.riepilogo-baule').length > 0) {
 
 <% @appunti.each do |a|  %>
   var appunto = $("#<%= dom_id(a) %>");
-  appunto.toggleClass('favorited');
-  $('.baule-div', appunto).html("<%= escape_javascript( baule_tag @cliente ) %>");
+  if ($('.appunto').length > 0) {  
+    <%- if a.stato != 'X' %>
+      appunto.removeClass('favorited');
+    <% end %> 
+    $('.baule_btn', appunto).replaceWith(new_baule_div);
+  }  
 <% end %>
 
 

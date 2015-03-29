@@ -26,9 +26,9 @@ module ApplicationHelper
   def formatta_data(data)
 
     if data > Date.today.beginning_of_year
-      I18n.localize(data, format: :short)
+      I18n.localize(data, format: :short).downcase
     else
-      I18n.localize(data, format: :month_year)
+      I18n.localize(data, format: :month_year).downcase
     end
   end
 
@@ -116,11 +116,11 @@ module ApplicationHelper
     end
   end
 
-  def paga_tag(fattura, options = {})    
-    if fattura.pagata? == true
-      render "fatture/non_paga", fattura: fattura  
+  def paga_tag(documento, options = {})    
+    if documento.pagato? == true
+      render "documenti/non_paga", documento: documento  
     else
-      render "fatture/paga", fattura: fattura
+      render "documenti/paga", documento: documento
     end
   end
     

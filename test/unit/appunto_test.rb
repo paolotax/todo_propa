@@ -30,5 +30,6 @@ end
 #  completed_at   :datetime
 #  nota           :string(255)
 #  score          :integer
+#  righe_count    :integer         default(0), not null
 #
 

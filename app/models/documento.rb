@@ -140,7 +140,10 @@ class Documento < ActiveRecord::Base
   end
 
 
-  def pagata?
+  
+
+
+  def pagato?
     !self.payed_at.nil?
   end
 
@@ -149,14 +152,43 @@ class Documento < ActiveRecord::Base
     true
     unless appunti.empty?
       appunti.each do |a|
-        return false if a.stato == 'X' && pagata? != true
-        return false if a.stato == "P" && pagata? != false
-        return false if a.stato.blank? && pagata? != false
+        return false if a.stato == 'X' && pagato? != true
+        return false if a.stato == "P" && pagato? != false
+        return false if a.stato.blank? && pagato? != false
       end
     else
       true
     end
   end
+
+
+  def pagato?
+    pagato_array = righe.map(&:can_paga?).uniq
+    
+    if pagato_array.size == 1 && pagato_array.first == false
+      return true
+    else
+      return false
+    end
+  end
+
+
+  def pagato=(pagato)
+
+    if pagato == 'f'     
+      righe.each do |r|
+        r.annulla_pagamento if r.can_annulla_pagamento?
+      end
+    elsif pagato == 't'
+      righe.each do |r|
+        if r.can_paga?
+          r.update_attributes(pagata_il: Date.today)
+          r.paga
+        end
+      end
+    end
+  end
+
 
 
   def previous_documenti
@@ -217,6 +249,8 @@ class Documento < ActiveRecord::Base
       end
     end
   end
+
+
 
 
   def importa_file=(file)

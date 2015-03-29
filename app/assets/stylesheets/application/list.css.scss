@@ -11,6 +11,109 @@ ul.list li.item {
 }
 
 
+.table-righe-new {
+  padding: 5px 0 10px;
+}
+
+.list {
+  .item {
+
+
+
+    position: relative;
+
+    .actions {
+
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      padding-left: 35px;
+
+      a.apri,
+      a.chiudi {
+        display: none;
+      }
+    }
+    
+    .time {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      font-size: 12px;
+      color: #999;
+      -webkit-transition: opacity .15s ease-in-out;
+      -moz-transition: opacity .2s ease-in-out;
+      transition: opacity .15s ease-in-out;
+    }
+
+    &:hover .time {
+      display:none;
+    }  
+
+    &:hover .actions {
+      a.apri {
+        display: block;
+      }
+    }
+    &.opened:hover a.apri {
+      display: none;
+    }
+
+    &.opened {
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      .time {
+        display: none;
+      }
+      a.chiudi {
+        display: block;
+      }
+      .more {
+        display:block;
+      }
+    }
+
+    .more-actions {
+      display: none;
+      position: absolute;
+      bottom: 10px;
+    }
+    
+    .footer-actions ul.nav-actions {
+      @include inline-list;
+    }
+
+    .footer-actions {
+      display: none;
+    }
+    
+
+    &:hover .footer-actions,
+    &.opened .footer-actions {
+      float: left;
+      display: block;   
+    }
+
+    .content {
+      margin-left: 46px;
+    }
+
+    .more {
+      display: none;
+    }
+
+
+
+
+    a:hover {
+      text-decoration: none;
+      .full_name {
+        color: #999;        
+      }
+    }
+  }
+}
 
 
 
@@ -43,33 +146,39 @@ ul.list li.item {
     background-clip: padding-box;
 
 
-    min-height: 70px;
-     
+    /*min-height: 70px;*/
+    
+
+
+
+
     footer {
       min-height: 37px;
       line-height: 37px;
       margin-top: 5px;
     }
-    .footer-actions ul.nav-actions {
-      @include inline-list;
-    }
-    .footer-actions {
-      display: none;
-    }
-    &:hover .footer-actions,
-    &.opened .footer-actions {
-      float: left;
-      display: block;
-    }
-    .time {
+    
+    .stato {
       position: absolute;
-      right: 12px;
-      font-size: 12px;
-      color: #999;
-      -webkit-transition: opacity .15s ease-in-out;
-      -moz-transition: opacity .2s ease-in-out;
-      transition: opacity .15s ease-in-out;
+      
+      top: 5px;
+      left: 12px;
+      
+      display: inline-block;
+      > a {
+        line-height: 32px;
+        text-indent: -9999px;
+        cursor: pointer;
+      }
     }
+
+    .full_name {
+      font-weight: bold;
+      color: #333;
+    }
+    
+
+
 
     &.da_pagare {
       color: white;
@@ -79,6 +188,10 @@ ul.list li.item {
     &.non_coerente {
       color: white;
       background-color: #b62c42 !important;
+    }
+
+    &.favorited {
+      background-color: #FFF8A4 !important; 
     }
     
     &.da_pagare .numero span,
@@ -124,15 +237,15 @@ ul.list li.item {
     .copie,
     .importo-totale {
       position: absolute;
-      bottom: 0;
+      top: 0;
       padding: 2px 12px;
       color: #999;
       font-size: 10px;
       line-height: 16px;
       text-transform: uppercase;
-      border-right: 1px solid #E8E8E8;
+      // border-right: 1px solid #E8E8E8;
       border-left: 1px solid #E8E8E8;
-      border-top: 1px solid #E8E8E8;
+      border-bottom: 1px solid #E8E8E8;
       strong {
         display: block;
         color: #333;
@@ -159,6 +272,8 @@ ul.list li.item {
       right: 0px;
       width: 63px
     }
+
+
     .copie {
       right: 94px;
       width: 35px;
@@ -168,41 +283,5 @@ ul.list li.item {
       width: 70px;
     }
 
-    
-    &.opened {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      .actions {
-        display: none;
-      }
-      .table-righe-new,
-      .more-actions,
-      .righe {
-        display: block;
-      }
-    }
-    
-    .more-actions {
-      display: none;
-      position: absolute;
-      bottom: 10px;
-    }
-    .chiudi {
-      display: none;
-    }
-    &.opened:hover .chiudi {
-      display: block;
-    }
-    
-    .actions .nav-fattura {
-      display: none;
-    }
-
-    &:hover .time {
-      display:none;
-    }
-    &:hover .actions .nav-fattura {
-      display:block;
-    }
   }
 }

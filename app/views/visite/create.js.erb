@@ -1,3 +1,6 @@
+
+var new_baule_div = "<%= escape_javascript( baule_tag @visita.cliente ) %>"
+
 $(".nav-baule sup").text("<%= current_user.visite.nel_baule.size %>");
 
 if ($('.map-baule').length > 0) {
@@ -5,26 +8,27 @@ if ($('.map-baule').length > 0) {
   Gmaps.map.replaceMarkers(clienti)
 };
 
+
 if ($('.riepilogo-baule').length > 0) {
   $('.riepilogo-baule').replaceWith("<%= escape_javascript( render 'baule/riepilogo_baule' ) %>");
 };
 
 
-<%- @visita.appunti.each do |a|  %>
-
+<%- @visita.cliente.appunti.each do |a|  %>
   appunto = $("#<%= dom_id(a) %>")
   if ($('.appunto').length > 0) {  
-    appunto.toggleClass('favorited');
-    $('.baule_btn', appunto).replaceWith("<%= escape_javascript( baule_tag @visita.cliente ) %>");
-  }
-  
+    <%- if a.stato != 'X' %>
+      appunto.addClass('favorited');
+    <% end %> 
+    $('.baule_btn', appunto).replaceWith(new_baule_div);
+  }  
 <% end %>  
 
 
 clienti = $(".<%= dom_id(@visita.cliente) %>")
 if (clienti.length > 0) {
-  clienti.toggleClass('favorited');
-  $('.baule_btn', clienti).replaceWith("<%= escape_javascript( baule_tag @visita.cliente ) %>");
+  clienti.addClass('favorited');
+  $('.baule_btn', clienti).replaceWith(new_baule_div);
 }
   
 

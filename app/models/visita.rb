@@ -14,10 +14,9 @@ class Visita < ActiveRecord::Base
   #                      :source => :appunti, 
   #                      :conditions => ['appunti.stato <> ?', 'X']
   
-
   # has_many :visita_appunti, dependent: :destroy
   
-  # has_many :appunti, :through => :visita_appunti
+  # has_many :appunti, :through => :cliente
   
   # after_create :add_appunti
 
@@ -92,16 +91,7 @@ class Visita < ActiveRecord::Base
   end
 
   
-  def appunti
-    
-    if nel_baule?
 
-      cliente.appunti.in_corso
-    else
-
-      []
-    end
-  end
 
 
   # def mie_adozioni_grouped_titolo

@@ -62,15 +62,15 @@ class DocumentiController < ApplicationController
   def update
     @documento = current_user.documenti.find(params[:id])
 
-    raise params.inspect
-    
     respond_to do |format|
       if @documento.update_attributes(documento_params)
         format.html { redirect_to @documento, notice: 'Documento was successfully updated.' }
         format.json { head :no_content }
+        format.js
       else
         format.html { render action: "edit" }
         format.json { render json: @documento.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -98,7 +98,7 @@ class DocumentiController < ApplicationController
 
 
     def documento_params
-      params.require(:documento).permit(:causale_id, :cliente_id, :data, :numero, :righe, :appunto_ids, :documento_ids)
+      params.require(:documento).permit(:causale_id, :cliente_id, :data, :numero, :righe, :appunto_ids, :documento_ids, :pagato)
     end
 
 end

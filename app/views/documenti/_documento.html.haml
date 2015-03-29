@@ -1,26 +1,29 @@
-.item[documento]{ class: "#{ documento.coerente? ? '' : 'non_coerente'} #{ documento.pagata? ? '' : 'da_pagare'}", data: { id: "#{documento.id}"} }
+.item[documento]{ class: "#{ documento.coerente? ? '' : 'non_coerente'} #{ documento.pagato? ? '' : 'da_pagare'}", data: { id: "#{documento.id}"} }
   
   .actions
-    %ul.nav-documento
-      %li.show
-        %a.apri{ title: 'mostra dettagli', href: "#"}
-          Apri  
-  .chiudi{ style: "float: right;"}
-    %a{href: "#"}
+    %a.apri{ title: 'mostra dettagli', href: "#"}
+      Apri  
+    %a.chiudi{ title: 'chiudi', href: "#"}
       Chiudi
+
   .causale
     %h4
       = "#{documento.documento_causale} #{documento.numero}"
       %small= "del #{l(documento.data, format: :short).downcase}" 
   .clearfix    
+  
   .cliente-titolo
     %strong= link_to documento.titolo, documento.cliente
+  
+  
   .copie
-    %strong= documento.totale_copie
-    copie
+    %strong.pull-right= documento.totale_copie
+    %span.pull-right copie
+
   .importo-totale
-    %strong= pretty_prezzo documento.totale_importo
-    importo
+    %strong.pull-right= pretty_prezzo documento.totale_importo
+    %span.pull-right importo
+  
   .clearfix
 
   .more

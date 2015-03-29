@@ -3,7 +3,7 @@
 
 - cache [current_user.id, appunto, appunto.cliente, grouped] do
 
-  - if !(appunto.stato == "completato") && (appunto.cliente.nel_baule?)
+  - if !(appunto.stato == "X") && (appunto.cliente.nel_baule?)
     - favorited = "favorited"
   - else
     -favorited = ''
@@ -13,20 +13,16 @@
     .content
       
       .dogear
-      
+
       %small.time
         %time.timeago{ datetime: "#{appunto.updated_at || appunto.created_at}" }
       
       .actions
-        %ul.nav-appunto
-          %li.show
-            %a{ title: 'mostra dettagli', href: "#"}
-              Apri
-      
-      .chiudi{ style: "float: right;"}
-        %a{ title: 'chiudi', href: "#"}
+        %a.apri{ title: 'mostra dettagli', href: "#"}
+          Apri  
+        %a.chiudi{ title: 'chiudi', href: "#"}
           Chiudi
-
+      
       .stato.dropdown
         %a{ class: "dropdown-toggle #{appunto.status}", "data-toggle" => "dropdown" }
           .icon-status{ class: "#{appunto.status}" }
@@ -42,9 +38,11 @@
               %a.change-status{ href: "#", "data-status" => "P", "data-id" => "#{appunto.id}"} in sospeso
             %li
               %a.change-status{ href: "#", "data-status" => "X", "data-id" => "#{appunto.id}"} completato
+
       
       
       - if grouped == ""
+        
         = link_to appunto.cliente do
           %strong.full_name= appunto.cliente.titolo       
         %small.destinatario= "@#{appunto.destinatario}" if appunto.destinatario?
@@ -75,49 +73,40 @@
         %p
           da registrare
 
-    .more
-      
-      .dates.content
-        %small
-          %span= link_to "##{appunto.id}", appunto
-          %span - creato il
-          %span= l appunto.created_at, format: :only_date
-          %span= "- modificato il"
-          %span= l appunto.updated_at, format: :only_date
-
-          - if appunto.fattura
-            = '-'
-            = link_to appunto.fattura do
-              = "#{appunto.fattura.documento_causale} #{appunto.fattura.numero}" 
-              = l appunto.fattura.data, format: :only_date
-          
-      
-      - if appunto.has_righe?
-
-        = render 'righe/nested_righe', righe: righe, group: :state
-        / .table-righe-new
-        / = render appunto.cached_righe
-    
-    %footer
-      
       - if appunto.has_righe?
 
         .copie
-          %strong= appunto.totale_copie
-          copie
+          %strong.pull-right= appunto.totale_copie
+          %span.pull-right copie
         .importo-totale
-          %strong= pretty_prezzo appunto.totale_importo
-          importo
+          %strong.pull-right= pretty_prezzo appunto.totale_importo
+          %span.pull-right importo
+
+
+    .more
+            
+      - if appunto.has_righe?
+
+        = render 'righe/nested_righe', righe: righe, group: :state
+
+    
+    %footer
+
+
 
 
       .footer-actions
         
         %ul.nav-actions
           
-          - unless appunto.status == "completato"
-            %li.baule-div
-              = baule_tag appunto.cliente
-          
+
+          %li= baule_tag appunto.cliente
+              
+          %li   
+            %small.label.label-info= formatta_data appunto.updated_at.to_date
+          %li  
+            %small.label.label-success= formatta_data appunto.created_at.to_date
+
           %li.print
             %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
               %i.icon-tag
@@ -134,4 +123,5 @@
               %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
                 %i.icon-trash
                 Elimina
+
 
