@@ -88,7 +88,7 @@ class Appunto < ActiveRecord::Base
   
   scope :recente_da_data, lambda { |data| includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?", data).recente  }
   
-  scope :un_anno, lambda {  includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?",  1.year.ago)  }
+  scope :un_anno, lambda {  includes(:cliente).where("appunti.stato <> 'X' or appunti.updated_at >= ?",  6.month.ago)  }
   
   scope :di_questa_propaganda,  where("appunti.created_at > ?", Date.new(2014,5,1))
   
