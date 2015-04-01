@@ -200,7 +200,14 @@ ul.list li.item {
     &.da_pagare .importo-totale,
     &.da_pagare .copie strong,
     &.da_pagare .importo-totale strong,
-    &.da_pagare a {
+    &.da_pagare a,
+    &.non_coerente .numero span,
+    &.non_coerente .numero strong,
+    &.non_coerente .copie,
+    &.non_coerente .importo-totale,
+    &.non_coerente .copie strong,
+    &.non_coerente .importo-totale strong,
+    &.non_coerente a {
       color: white;
     }
     &.da_pagare .table-righe-new {
