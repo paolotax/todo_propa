@@ -11,10 +11,10 @@ class Api::V1::AppuntiController < Api::V1::BaseController
     
     elsif params[:updated_at]
       @appunti = current_resource_owner.appunti.where("appunti.updated_at > ?", params[:updated_at]).includes(:cliente)
-
     else
-		  @appunti = current_resource_owner.appunti.includes(:cliente).in_corso_e_ultimi_salvati
+		  @appunti = current_resource_owner.appunti.includes(:cliente).recente_modifica.limit(100)
     end
+
 		respond_with @appunti
 	end
 
