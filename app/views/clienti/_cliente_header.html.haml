@@ -70,37 +70,47 @@
 
 
         %div
+          %ul.unstyled
 
-          - unless cliente.telefono.blank?
-            %a.btn{ href: "tel:#{cliente.telefono.split.join}" }
-              %i.icon-phone
-              = cliente.telefono
-            %br
+            - unless cliente.telefono.blank?
+              %li
+                %a.btn{ href: "tel:#{cliente.telefono.split.join}" }
+                  %i.icon-phone
+                  = cliente.telefono
 
-          - unless cliente.email.blank?
-            %a.btn{ href: "mailto:#{cliente.email}" }
-              %i.icon-envelope
-              = cliente.email
-            %br
 
-          - unless cliente.latitude.nil?
-            %a.btn{ href: "http://maps.apple.com/maps?q=#{cliente.latitude},#{cliente.longitude}" }
-              / %a.btn{ href: "navigon://coordinate/#{cliente.titolo.parameterize}/#{cliente.longitude}/#{cliente.latitude}" }
-              %i.icon-road
-              Mostra percorso
+            - unless cliente.email.blank?
+              %li
+                %a.btn{ href: "mailto:#{cliente.email}" }
+                  %i.icon-envelope
+                  = cliente.email
+
+            - unless cliente.latitude.nil?
+              %li
+                %a.btn{ href: "http://maps.apple.com/maps?q=#{cliente.latitude},#{cliente.longitude}" }
+                  /# %a.btn{ href: "navigon://coordinate/#{cliente.titolo.parameterize}/#{cliente.longitude}/#{cliente.latitude}" }
+                  %i.icon-road
+                  Mostra percorso
 
     %footer.show-toolbar
       .btn-group.pull-left
         = previous_tag cliente_url(Cliente.previous(cliente, 'id').first)
-        = next_tag cliente_url(Cliente.next(cliente, 'id').first)
+        = next_tag     cliente_url(Cliente.next(cliente, 'id').first)
 
       - unless cliente.eliminato?
         .pull-right
+          
+          - if cliente.has_righe_da_registrare?
+            = link_to new_documento_url(cliente: cliente), class: "btn" do
+              Registra Vendite
+
           = baule_tag cliente
+          
           - unless cliente.has_documenti?
             = link_to cliente, method: 'delete', title: 'elimina', confirm: "Sei sicuro?", class: "btn btn-danger" do
               %i.icon-trash
               Elimina
+          
           = link_to edit_cliente_url(cliente), class: "btn btn-primary" do
             %i.icon-pencil
             Modifica

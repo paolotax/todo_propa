@@ -139,6 +139,7 @@ class Riga < ActiveRecord::Base
       transition :da_registrare   => :corrispettivi, if: :last_buono? 
     end
     
+    
     event :annulla_registra do
       transition :registrata      => :open
       transition :da_consegnare   => :pagata
@@ -376,9 +377,6 @@ class Riga < ActiveRecord::Base
   end
 
   
-  def da_registrare?
-    self.fattura_id.nil?
-  end
 
 
   def riga_abbreviata

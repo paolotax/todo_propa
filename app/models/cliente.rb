@@ -30,7 +30,8 @@ class Cliente < ActiveRecord::Base
   has_many :mie_adozioni, :through => :classi, :source => :adozioni, :include => :libro, :conditions => "libri.settore = 'Scolastico'"
   
   has_many :righe,           through: :appunti
-  has_many :righe_documenti, through: :fatture, source: :righe
+  
+  # has_many :righe_documenti, through: :fatture, source: :righe
 
   has_many :documenti, dependent: :destroy
   has_many :righe_documento, through: :documenti, source: :righe
@@ -39,12 +40,12 @@ class Cliente < ActiveRecord::Base
 
   accepts_nested_attributes_for :indirizzi,  :reject_if => lambda {|a| a[:comune].nil? || a[:provincia].nil?}, :allow_destroy => true  
   
-  validates :titolo,  :presence => true,
-                      :uniqueness => { :scope => :user_id, :message => "gia' utilizzato" }
+  validates :titolo,  presence: true,
+                      uniqueness: { :scope => :user_id, :message => "gia' utilizzato" }
 
-  validates :comune,       :presence => true
-  validates :provincia,    :presence => true, :length => { :is => 2 }
-  validates :cliente_tipo, :inclusion => {:in => TIPI_CLIENTI, :message => "non hai scelto il tipo cliente" }
+  validates :comune,       presence: true
+  validates :provincia,    presence: true, length: { is: 2 }
+  validates :cliente_tipo, inclusion: { in: TIPI_CLIENTI, message: "non hai scelto il tipo cliente" }
   
   before_validation do
     self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
@@ -203,7 +204,7 @@ class Cliente < ActiveRecord::Base
 
 
   def has_documenti?
-    !self.fatture.empty?
+    !self.documenti.empty?
   end
   
   
@@ -211,7 +212,17 @@ class Cliente < ActiveRecord::Base
     !self.appunti.select {|a| a.status == 'in_sospeso'  && !a.totale_importo.zero? }.empty?
   end
 
+
+  def righe_da_registrare
+    righe.select {|r| r.can_registra? || r.da_registrare? }
+  end
   
+  
+  def has_righe_da_registrare?
+    !righe_da_registrare.empty?
+  end
+
+
   def eliminato?
     !deleted_at.nil?
   end

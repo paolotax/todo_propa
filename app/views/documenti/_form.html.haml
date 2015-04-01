@@ -8,6 +8,10 @@
   = f.hidden_field :user_id, value: current_user.id
   
   = f.input :cliente_id, collection: current_user.clienti.order(:titolo), label_method: :titolo, value_method: :id, input_html: { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
+
+
+  /# = f.input :cliente_id, :collection => current_user.clienti.not_deleted.order(:titolo), :label_method => :titolo, :value_method => :id, :input_html => { :class => 'chzn-select', "data-placeholder" => "Seleziona il cliente..." }
+
   
   = f.input :causale_id, collection: Documento.next_numeri(current_user, anno), prompt: "Seleziona causale", label: "Causale"
 

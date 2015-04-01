@@ -42,8 +42,20 @@ class DocumentiController < ApplicationController
   end
 
 
+
+
   def new
-    @documento = current_user.documenti.build
+
+    #session[:return_to] = request.referer
+
+    if params[:cliente].present?
+      @cliente = Cliente.find(params[:cliente])
+    else
+      @cliente = nil
+    end 
+
+    @documento = current_user.documenti.build(cliente: @cliente)
+
   end
 
 
