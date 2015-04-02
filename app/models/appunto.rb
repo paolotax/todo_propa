@@ -76,7 +76,8 @@ class Appunto < ActiveRecord::Base
 
   scope :recente,               order("appunti.id desc")
   scope :in_corso,              where("appunti.stato <> 'X'")
-  scope :recente_modifica       order("appunti.updated_at desc")
+  
+  scope :recente_modifica,      order("appunti.updated_at desc")
 
   scope :senza_righe,           where(righe_count: 0)
 

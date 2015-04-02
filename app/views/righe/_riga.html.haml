@@ -1,23 +1,14 @@
 %div.clearfix[riga]
-  .cb
-    = check_box_tag("riga_ids[]", riga.id, false)
-    / / - if riga.can_registra?
-    / / %small= riga.state
-    / - unless riga.consegnata_il.nil?
-    /   .badge.badge-info
-    /     %small C
-    / - unless riga.pagata_il.nil?  
-    /   .badge.badge-success
-    /     %small P
-    /     / formatta_data riga.pagata_il
+  / .cb
+  /   = check_box_tag("riga_ids[]", riga.id, false)
 
   .titolo
     = link_to riga.cached_libro.titolo, riga.cached_libro
 
-    - if Rails.env.production?
-      %small= riga.cached_libro.cm
-    - else
-      %small= riga.state
+    /# - if Rails.env.production?
+    /#   %small= riga.cached_libro.cm
+    /# - else
+    /#   %small= riga.state
 
   .dati-riga      
     .quantita
