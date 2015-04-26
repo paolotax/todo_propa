@@ -2,9 +2,9 @@
     <Cell><Data ss:Type="Number"><%= cliente.id %></Data></Cell>
     <Cell><Data ss:Type="String"><%= cliente.titolo %></Data></Cell>
 
-    <Cell><Data ss:Type="DateTime"><%= cliente.propa2014.data_visita %></Data></Cell>
-    <Cell><Data ss:Type="DateTime"><%= cliente.propa2014.data_vacanze %></Data></Cell>
-    <Cell><Data ss:Type="DateTime"><%= cliente.propa2014.data_ritiro %></Data></Cell>
+    <Cell><Data ss:Type="DateTime"><%= cliente.propa2014.try(:data_visita) %></Data></Cell>
+    <Cell><Data ss:Type="DateTime"><%= cliente.propa2014.try(:data_vacanze) %></Data></Cell>
+    <Cell><Data ss:Type="DateTime"><%= cliente.propa2014.try(:data_ritiro) %></Data></Cell>
 
 
 

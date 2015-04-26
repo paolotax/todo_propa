@@ -98,11 +98,6 @@
                   .clearfix
 
 
-          
-
-            
-      
-
       - unless @righe_da_registrare.empty?
 
 
@@ -154,7 +149,7 @@
       %br
 
 
-    - appunti_per_anno = @cliente.appunti.not_deleted.order('created_at desc').senza_righe.group_by { |t| t.created_at.year }
+    - appunti_per_anno = @cliente.appunti.order('created_at desc').senza_righe.group_by { |t| t.created_at.year }
     - unless appunti_per_anno.size.zero?
 
       .module.transparent

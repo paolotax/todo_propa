@@ -1,5 +1,9 @@
 @import "compass/utilities/lists/inline-list";
+@import "application/mixins";
 
+.item span.label {
+  margin-top: 5px;
+}
 
 
 .module.transparent {
@@ -18,9 +22,22 @@ ul.list li.item {
 .list {
   .item {
 
-
+    @include clearfix;
 
     position: relative;
+
+    background-color: white;
+    
+    padding: 5px 12px;
+
+    border-bottom: 1px solid #E8E8E8;
+    border-left: 1px solid #E8E8E8;
+    border-right: 1px solid #E8E8E8;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+
+    /*min-height: 70px;*/
 
     .actions {
 
@@ -134,19 +151,7 @@ ul.list li.item {
 
   .item {
 
-    background-color: white;
-    padding: 9px 12px 0;
 
-    border-bottom: 1px solid #E8E8E8;
-
-    border-left: 1px solid #E8E8E8;
-    border-right: 1px solid #E8E8E8;
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-
-
-    /*min-height: 70px;*/
     
 
 

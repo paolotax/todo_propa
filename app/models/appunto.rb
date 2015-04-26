@@ -33,6 +33,9 @@ class Appunto < ActiveRecord::Base
   #before_save :leggi
   before_save :save_data_visita_text
 
+
+  after_save :update_righe_status
+
   after_update  :flush_cache
   after_destroy :flush_cache
   after_create  :flush_cache
@@ -74,13 +77,13 @@ class Appunto < ActiveRecord::Base
 
 
 
-  scope :recente,               order("appunti.id desc")
-  scope :in_corso,              where("appunti.stato <> 'X'")
+  scope :recente,               not_deleted.order("appunti.id desc")
+  scope :in_corso,              not_deleted.where("appunti.stato <> 'X'")
   
-  scope :recente_modifica,      order("appunti.updated_at desc")
+  scope :recente_modifica,      not_deleted.order("appunti.updated_at desc")
 
-  scope :senza_righe,           where(righe_count: 0)
-
+  scope :senza_righe,           not_deleted.where(righe_count: 0)
+  scope :vendita,               not_deleted.where("righe_count > 0")
 
   scope :pop,        lambda { |id| where("appunti.cliente_id = ?", id) }
   
@@ -308,7 +311,6 @@ class Appunto < ActiveRecord::Base
     puts errors.sort
   end
   
-  after_save :update_righe_status
   
   after_save :load_into_soulmate
 
