@@ -21,7 +21,7 @@ class MagazzinoController < ApplicationController
     end
 
     @appunti = @vendite.group_by(&:appunto).keys
-
+    
   end
 
 

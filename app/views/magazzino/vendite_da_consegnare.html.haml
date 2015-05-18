@@ -41,4 +41,5 @@
         %li{ class: "#{@status == 'preparate' ? 'active' : ''}"}
           = link_to "preparate",     params.merge(status: "preparate")
 
-
+    .module
+      = render 'shared/riepilogo_libri', collection: @vendite.joins(:libro), tipo_riepilogo: ""
