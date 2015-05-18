@@ -4,47 +4,41 @@
   
   .content
 
-    %small
-      %span
+    %div
+      %small
         = link_to appunto do
           = "appunto #{appunto.id} del #{formatta_data appunto.created_at.to_date}"
 
-
-    - if group == :cliente
+    %div    
       = link_to appunto.cliente do
         %strong.full_name= appunto.cliente.titolo       
       %small.destinatario= "@#{appunto.destinatario}" if appunto.destinatario?
     
-    - else
 
-      -  if appunto.destinatario?
-        %strong= "@#{appunto.destinatario}"
-      - else
-        %strong.full_name &nbsp 
-
+    %div
       = appunto.note
     
-    .footer-actions
+    / .footer-actions
       
-      %ul.nav-actions
+    /   %ul.nav-actions.pull-right
         
-        - unless appunto.status == "completato"
-          %li.baule-div
-            = baule_tag appunto.cliente
+    /     - unless appunto.status == "completato"
+    /       %li.baule-div
+    /         = baule_tag appunto.cliente
         
-        %li.print
-          %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
-            %i.icon-tag
+    /     %li.print
+    /       %a{ href: "/appunti/#{appunto.id}.pdf", title: 'stampa etichetta', target: "_blank" }
+    /         %i.icon-tag
 
-        - unless appunto.fatturato?
+    /     - unless appunto.fatturato?
           
-          %li.edit
-            %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
-              %i.icon-pencil
+    /       %li.edit
+    /         %a{ href: "/appunti/#{appunto.id}/edit", title: 'modifica appunto'}
+    /           %i.icon-pencil
 
-          %li.delete
-            %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
-              %i.icon-trash
+    /       %li.delete
+    /         %a{ href: "/appunti/#{appunto.id}", title: 'elimina', "data-confirm" => "Sei sicuro?", "data-method" => "delete", "data-remote" => true}
+    /           %i.icon-trash
 
 
 

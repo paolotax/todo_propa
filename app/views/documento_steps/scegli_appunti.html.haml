@@ -2,9 +2,10 @@
   
 
   %div
-    = check_box_tag "select_all", nil, false, class: 'cb-toggle'
-    
-    = label_tag "select_all", 'seleziona'
+
+    = label_tag "select_all" do
+      = check_box_tag "select_all", nil, false, class: 'select-all'
+      seleziona tutto
 
     - if @documento.causale.carico?
       = nested_righe_documenti_per_documento(@righe)

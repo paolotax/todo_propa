@@ -13,9 +13,9 @@ class Riga < ActiveRecord::Base
 
   belongs_to :libro, touch: true
 
-  # belongs_to :fattura
   
   after_initialize :init
+
   before_save :set_importo
 
   # uso after_save etc... perche counter_culture non funziona 
@@ -24,10 +24,7 @@ class Riga < ActiveRecord::Base
   # counter_culture :documenti, delta_column: 'quantita', column_name: 'totale_copie'
   # counter_culture :documenti, delta_column: 'importo',  column_name: 'totale_importo', touch: true 
 
-  
   delegate :titolo, :settore, :prezzo_copertina, :prezzo_consigliato, :iva, :to => :libro
-
-
 
   before_validation do
     self.uuid = UUIDTools::UUID.random_create.to_s if uuid.nil?
@@ -60,20 +57,18 @@ class Riga < ActiveRecord::Base
 
   scope :open_carico,  -> { carico.with_state(:open, :ordinata) }
   scope :open_fattura, -> { carico.with_state(:open, :ordinata, :caricata) }
-  
-  
+    
+  scope :preparate,     -> { scarico.with_state(:pronta) }
 
-  scope :da_consegnare, -> { scarico.with_state(:open, :pronta, :pagata, :registrata, :da_consegnare) }
-
-  scope :da_pagare,     -> { scarico.with_state(:open, :pronta, :consegnata, :registrata, :da_pagare) }
-
-  scope :da_registrare, -> { scarico.with_state(:open, :pronta, :pagata, :consegnata, :da_registrare) }
+  scope :da_consegnare, -> { scarico.with_state(:open) }
+  scope :da_pagare,     -> { scarico.with_state(:consegnata) }
+  scope :da_registrare, -> { scarico.with_state(:da_registrare) }
 
 
+  # scope :da_consegnare, -> { scarico.with_state(:open, :pronta, :pagata, :registrata, :da_consegnare) }
+  # scope :da_pagare,     -> { scarico.with_state(:open, :pronta, :consegnata, :registrata, :da_pagare) }
+  # scope :da_registrare, -> { scarico.with_state(:open, :pronta, :pagata, :consegnata, :da_registrare) }
 
-
-  # da eseguire sul server
-  # Riga.find(Riga.scarico.where(state: 'registrata').map(&:id)).map { |r| r.state = 'fattura'; r.save }
 
   state_machine :initial => :open do
 
@@ -84,7 +79,6 @@ class Riga < ActiveRecord::Base
     event :annulla_prepara do
       transition :pronta => :open
     end
-
     
     event :consegna do
       transition [:open, :pronta] => :consegnata

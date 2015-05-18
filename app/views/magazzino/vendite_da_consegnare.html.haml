@@ -1,0 +1,44 @@
+- @consegna = Consegna.new(user: current_user, data: Date.today, azione: 'consegna')
+
+.row
+  
+    
+  .content-main.span7
+    
+    .content-header
+      .header-inner
+
+        %h2 Vendite
+        
+    .list
+      = label_tag "select_all" do
+        = check_box_tag "select_all", nil, false, class: 'select-all'
+        seleziona tutto
+     
+      = render @appunti
+
+  .side-bar.span5
+    .well
+      %ul.nav.nav-pills
+        %li{ class: "#{@anno == '2015' ? 'active' : ''}"}
+          = link_to "2015", params.merge(anno: 2015)
+        %li{ class: "#{@anno == '2014' ? 'active' : ''}"}
+          = link_to "2014", params.merge(anno: 2014)
+        %li{ class: "#{@anno == '2013' ? 'active' : ''}"}
+          = link_to "2013", params.merge(anno: 2013)
+        %li{ class: "#{@anno == '2012' ? 'active' : ''}"}
+          = link_to "2012", params.merge(anno: 2012)
+        %li{ class: "#{@anno == '2011' ? 'active' : ''}"}
+          = link_to "2011", params.merge(anno: 2011)
+
+      %ul.nav.nav-pills
+        %li{ class: "#{@status == 'da consegnare' ? 'active' : ''}"}
+          = link_to "da consegnare", params.merge(status: "da consegnare")
+        %li{ class: "#{@status == 'da pagare' ? 'active' : ''}"}
+          = link_to "da pagare",     params.merge(status: "da pagare")
+        %li{ class: "#{@status == 'da registrare' ? 'active' : ''}"}
+          = link_to "da registrare", params.merge(status: "da registrare")
+        %li{ class: "#{@status == 'preparate' ? 'active' : ''}"}
+          = link_to "preparate",     params.merge(status: "preparate")
+
+

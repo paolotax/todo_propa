@@ -24,6 +24,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
+input[type="checkbox"].cb-toggle,
+input[type="checkbox"].select-all {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
 .side-bar.span4 {
   .form-horizontal {
     .control-label {

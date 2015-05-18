@@ -6,7 +6,7 @@ class Consegna
   extend ActiveModel::Naming
 
 
-  attr_accessor :user, :data, :riga_ids, :causale, :azione, :group
+  attr_accessor :user, :data, :riga_ids, :causale, :azione, :group, :stampa
   
   validates_presence_of :user, :riga_ids
 
@@ -34,6 +34,13 @@ class Consegna
         r.send(azione.split.join("_").downcase)
       end
     end
+
+    # if stampa == true
+    #   pdf = AppuntoPdf.new(appunti, view_context)
+    #   send_data pdf.render, filename: "sovrapacchi_#{Time.now}.pdf",
+    #                           type: "application/pdf",
+    #                           disposition: "inline"
+    # end
   end
 
 
@@ -52,6 +59,11 @@ class Consegna
 
   def righe
     @righe ||= user.righe.find(riga_ids)
+  end
+
+
+  def appunti
+    @appunti ||= @righe.select(&:appunto).uniq
   end
 
 

@@ -80,7 +80,8 @@ TodoPropa::Application.routes.draw do
   get 'error_check', to: 'error_check#index'
   
   
-  get 'vendite_nuove', controller: 'magazzino', action: 'vendite_nuove'
+  get 'riepilogo_vendite',         controller: 'magazzino', action: 'vendite_nuove'
+  get 'vendite_da_consegnare', controller: 'magazzino', action: 'vendite_da_consegnare'
   
   match '/vendite', controller: 'magazzino', action: 'vendite'
   

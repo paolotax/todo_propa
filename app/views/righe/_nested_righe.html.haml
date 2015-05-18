@@ -9,7 +9,7 @@
 
     .grouped-righe
 
-      = check_box_tag "", "select_righe", false, class: 'cb-toggle'
+      = check_box_tag "", "select_righe", false, class: 'cb-toggle pull-left'
       
       - if group == :appunto
         = render "appunti/appunto_header", appunto: a

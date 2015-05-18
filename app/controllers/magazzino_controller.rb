@@ -1,5 +1,30 @@
 class MagazzinoController < ApplicationController
   
+  
+  def vendite_da_consegnare
+
+    @anno   = params[:anno] || Time.now.year.to_s
+    @status = params[:status] || 'da consegnare'
+
+    @vendite = current_user.righe.scarico.dell_anno(@anno)
+
+
+    if @status == 'preparate' 
+      @vendite = @vendite.preparate
+    elsif @status == 'da pagare'
+      @vendite = @vendite.da_pagare
+    elsif @status == 'da registrare'
+      @vendite = @vendite.da_registrare
+    else
+      @status = 'da consegnare'
+      @vendite = @vendite.da_consegnare
+    end
+
+    @appunti = @vendite.group_by(&:appunto).keys
+
+  end
+
+
   def vendite_nuove
 
     anno = params[:anno] || Time.now.year

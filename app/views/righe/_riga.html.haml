@@ -1,6 +1,6 @@
 %div.clearfix[riga]
-  / .cb
-  /   = check_box_tag("riga_ids[]", riga.id, false)
+  .cb
+    = check_box_tag("riga_ids[]", riga.id, false)
 
   .titolo
     = link_to riga.cached_libro.titolo, riga.cached_libro
