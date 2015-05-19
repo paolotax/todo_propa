@@ -57,7 +57,6 @@ jQuery ->
 
     e.preventDefault();
     if $(@).is(":checked") is false
-      console.log "false"
       $("input:hidden[name='riga_ids[]'][value='#{$(@).val()}']").remove()
     else
       cliente = $(@).closest($('.box-consegna'))
@@ -114,14 +113,22 @@ jQuery ->
   $(".esandi-tutto").on "click", (e) ->
     e.preventDefault();
     if $(@).text() == 'esandi tutto'
+      
       $(".more").removeClass("hidden")
+
+      $(".item").addClass("opened")
+
       $(@).text("nascondi tutto")
       $(".show-hide").each -> 
         $("i", $(@)).removeClass('icon-caret-down');
         $("i", $(@)).addClass('icon-caret-up');
       $(".show a").each ->    $(@).trigger "click"  
     else
+      
       $(".more").addClass("hidden");
+
+      $(".item").removeClass("opened")
+
       $(@).text("esandi tutto")
       $(".show-hide").each ->
         $("i", @).removeClass('icon-caret-up')

@@ -9,7 +9,7 @@
         %small= tipo_riepilogo.humanize.downcase
     .more.riepilogo-libri
       %ul
-        - for libro, righe in collection.order("libri.titolo").group_by(&:libro) do
+        - for libro, righe in collection.sort_by{|r| r.libro.titolo }.group_by(&:libro) do
           %li
             %span.titolo= link_to libro.titolo, libro
             %span.quantita= righe.sum(&:quantita)

@@ -14,13 +14,17 @@ $(document).on "click", ".item .actions a.apri", (e) ->
   e.preventDefault()
   item = $(@).closest($('.item'))
   item.addClass('opened')
+  $('.more', item).removeClass("hidden")
+
 
 $(document).on "click", '.item .actions a.chiudi', (e) ->
   e.stopPropagation()
   e.preventDefault()
   item = $(@).closest($('.item'))
   item.removeClass('opened')
+  $('.more', item).addClass("hidden")
 
+  
 $(document).on "click", 'a.change-status', (e) ->
   console.log 'change-status'
   e.stopPropagation()

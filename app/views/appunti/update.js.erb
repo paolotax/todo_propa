@@ -22,8 +22,10 @@ if (grouped) {
   appunto.replaceWith("<%= j render @appunto %>");
 }
 
-if (opened) $("#<%= dom_id(@appunto) %>").addClass("opened");
-
+if (opened) {
+  $("#<%= dom_id(@appunto) %>").addClass("opened");
+  $('.more', $("#<%= dom_id(@appunto) %>")).removeClass("hidden");
+}
 new_status = "<%= @appunto.status %>";
 
 incrementStatus = function(status) {

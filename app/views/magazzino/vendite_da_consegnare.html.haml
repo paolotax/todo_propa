@@ -8,7 +8,13 @@
     .content-header
       .header-inner
 
+
+        .btn-group.pull-right
+          = link_to "esandi tutto", "", class: "esandi-tutto btn"
+
         %h2 Vendite
+
+        .clearfix
         
     .list
       = label_tag "select_all" do
@@ -41,5 +47,16 @@
         %li{ class: "#{@status == 'preparate' ? 'active' : ''}"}
           = link_to "preparate",     params.merge(status: "preparate")
 
+      %ul.nav.nav-pills
+        %li{ class: "#{params[:comune].present? ? '' : 'active'}"}
+          = link_to "tutti", params.except(:comune)
+
+        - @comuni.each do |comune|
+
+          %li{ class: "#{params[:comune] == comune ? 'active' : ''}"}
+            = link_to comune, params.merge(comune: comune)
+
+
+
     .module
-      = render 'shared/riepilogo_libri', collection: @vendite.joins(:libro), tipo_riepilogo: ""
+      = render 'shared/riepilogo_libri', collection: @vendite, tipo_riepilogo: "Volumi #{@status}"

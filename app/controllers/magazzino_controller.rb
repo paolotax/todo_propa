@@ -20,8 +20,16 @@ class MagazzinoController < ApplicationController
       @vendite = @vendite.da_consegnare
     end
 
-    @appunti = @vendite.group_by(&:appunto).keys
     
+    @comuni  = @vendite.map{|v| v.appunto.cliente.comune}.uniq
+
+    if params[:comune].present?
+      @vendite = @vendite.select{|r| r.appunto.cliente.comune == params[:comune]}
+    end
+
+    @appunti = @vendite.group_by(&:appunto).keys
+
+
   end
 
 
