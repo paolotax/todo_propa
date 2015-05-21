@@ -165,6 +165,11 @@ class Riga < ActiveRecord::Base
     end
   end
 
+  # questo serve per la scheda libro
+  def data_da_raggruppare
+    (consegnata_il || created_at).to_date
+  end
+
 
   def consegna_in_data(data = Date.today)
     self.update_attributes(consegnata_il: data) if can_consegna?

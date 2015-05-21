@@ -18,7 +18,7 @@ class GiacenzaLibro
 
 
   def scarichi
-    @scarichi ||= user.righe.scarico.where("consegnata_il is not null").del_libro( libro )
+    @scarichi ||= user.righe.scarico.del_libro( libro )
   end
 
   
@@ -28,7 +28,7 @@ class GiacenzaLibro
 
   
   def carichi
-    @carichi ||= user.righe_documento.where("consegnata_il is not null").carico.del_libro( libro )
+    @carichi ||= user.righe_documento.carico.del_libro( libro )
   end
 
 
@@ -46,12 +46,12 @@ class GiacenzaLibro
 
 
   def carichi_per_anno
-    carichi.sort_by{|x| x.consegnata_il }.reverse.group_by{|r| r.consegnata_il.year}
+    carichi.sort_by{|x| x.data_da_raggruppare }.reverse.group_by{|r| r.data_da_raggruppare.year}
   end
 
 
   def scarichi_per_anno
-    scarichi.sort_by{|x| x.consegnata_il }.reverse.group_by{|r| r.consegnata_il.year}
+    scarichi.sort_by{|x| x.data_da_raggruppare }.reverse.group_by{|r| r.data_da_raggruppare.year}
   end
 
 
