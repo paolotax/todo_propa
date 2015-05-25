@@ -25,11 +25,11 @@ class DocumentiRiga < ActiveRecord::Base
       Documento.update_counters documento.id,  
         totale_importo: - riga.importo,
         totale_copie: - riga.quantita
-      
-
-    end
-    riga.annulla_registra
+    end    
+    riga.annulla_registra if riga.scarico?
   end 
+
+
 end
 
 # == Schema Information

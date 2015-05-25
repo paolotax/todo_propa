@@ -5,7 +5,7 @@ class GiacenzaCounter
   extend ActiveModel::Naming
 
 
-  attr_accessor :user, :anno, :params
+  attr_accessor :user, :params
   
 
   def initialize(attributes = {})
@@ -16,12 +16,12 @@ class GiacenzaCounter
 
 
   def scarichi
-    @scarichi ||= user.righe.scarico.dell_anno(anno).joins(:libro).includes(:libro).order("libri.titolo").group_by(&:libro)
+    @scarichi ||= user.righe.scarico.filtra(params).joins(:libro).includes(:libro).order("libri.titolo").group_by(&:libro)
   end
 
 
   def carichi
-    @carichi ||= user.righe_documento.carico.dell_anno(anno).joins(:libro).includes(:libro).order("libri.titolo").group_by(&:libro)
+    @carichi ||= user.righe_documento.carico.filtra(params).joins(:libro).includes(:libro).order("libri.titolo").group_by(&:libro)
   end
 
   
@@ -36,17 +36,20 @@ class GiacenzaCounter
       libri.each do |libro|
         c =  handle_nil_array(carichi.values_at(libro))
         s =  handle_nil_array(scarichi.values_at(libro)).group_by(&:state)
-        @data << OpenStruct.new(
+
+        hash = {
           libro: libro, 
-          carichi: c, 
-          scarichi: s,
           copie_caricate: c.map(&:quantita).sum,
           copie_vendute:  s.values.flatten.map(&:quantita).sum,
-          giacenza:       c.map(&:quantita).sum - s.values.flatten.map(&:quantita).sum,
-          copie_consegnate:    handle_nil_array(s.values_at('consegnata')).map(&:quantita).sum + handle_nil_array(s.values_at('pronta')).map(&:quantita).sum + handle_nil_array(s.values_at('open')).map(&:quantita).sum,
-          copie_corrispettivi: handle_nil_array(s.values_at('corrispettivi')).map(&:quantita).sum,
-          copie_registrate:    handle_nil_array(s.values_at('registrata')).map(&:quantita).sum
-        )
+          giacenza:       c.map(&:quantita).sum - s.values.flatten.map(&:quantita).sum
+        }
+
+        s.keys.each do |state|
+          key = "scarico_#{state}".to_sym
+          hash.merge! key => handle_nil_array(s.values_at(state)).map(&:quantita).sum
+        end
+
+        @data << OpenStruct.new( hash )
       end
       @data
     end

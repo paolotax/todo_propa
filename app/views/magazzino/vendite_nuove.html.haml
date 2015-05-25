@@ -1,64 +1,53 @@
 .row
-  .content-main.span10
+  .content-main.span9
     
     .content-header
-      .header-inner
-        .pull-right
-          %ul.nav.nav-pills
-            %li
-              = link_to "2015", params.merge(anno: 2015)
-            %li
-              = link_to "2014", params.merge(anno: 2014)
-            %li
-              = link_to "2013", params.merge(anno: 2013)
-            %li
-              = link_to "2012", params.merge(anno: 2012)
-            %li
-              = link_to "2011", params.merge(anno: 2011)
-              
-        %h2 Vendite Nuove
+      .header-inner              
+        %h2 Riepilogo Vendite
     
     .list
       - @giacenza.each do |settore, libri|
         .item
-          .span5
-            = settore
-          .span1 Carichi
-          .span1 Scarichi
-          .span1 Giacenza
+          .row
+            .span5
+              = settore
+            .span1 Carichi
+            .span1 Scarichi
+            .span1 Giacenza
 
         - libri.each do |l|
           .item
-            .span5
-              = link_to image_tag(l.libro.image_url(:small_thumb)), l.libro
-              %strong= l.libro.titolo
-              %br
-              = l.libro.cm
-            .span1
-              = l.copie_caricate
-            .span2
-              = l.copie_registrate
-              %br
-              = l.copie_corrispettivi
-              %br
-              = l.copie_consegnate
-            .span1
-              = l.giacenza
-              %br
-              &nbsp
-              %br
-              = l.giacenza_contabile
+            .row
+              .span5
+                = link_to image_tag(l.libro.image_url(:small_thumb)), l.libro, class: 'libro-thumb'
+                %strong= l.libro.titolo
+                = l.libro.cm
+              .span1
+                = l.copie_caricate
+              .span1
+                = l.copie_vendute
+                %br
+                / - l.members.grep(/scarico_/).each do |m|
+                /   = l.m
+
+
+              .span1
+                = l.giacenza
+                %br
+                &nbsp
+                %br
+                = l.giacenza_contabile
               
         .item.totale-generale
-          .span5
-            %strong parziale
-          .span2
-            = libri.map(&:copie_caricate).sum
-          .span1
-            = libri.map(&:copie_vendute).sum
-            
-          .span1
-            = libri.map(&:giacenza).sum
+          .row
+            .span5
+              %strong parziale
+            .span1
+              = libri.map(&:copie_caricate).sum
+            .span1
+              = libri.map(&:copie_vendute).sum              
+            .span1
+              = libri.map(&:giacenza).sum
 
       .item.totale-generale
         .span5
@@ -69,3 +58,28 @@
           = @giacenza.values.flatten.sum(&:copie_vendute)
         .span1
           = @giacenza.values.flatten.sum(&:giacenza)
+
+  .span3
+
+    .well
+      %ul.nav.nav-pills
+        %li{ class: "#{@anno == '2015' ? 'active' : ''}"}
+          = link_to "2015", params.merge(anno: 2015)
+        %li{ class: "#{@anno == '2014' ? 'active' : ''}"}
+          = link_to "2014", params.merge(anno: 2014)
+        %li{ class: "#{@anno == '2013' ? 'active' : ''}"}
+          = link_to "2013", params.merge(anno: 2013)
+        %li{ class: "#{@anno == '2012' ? 'active' : ''}"}
+          = link_to "2012", params.merge(anno: 2012)
+        %li{ class: "#{@anno == '2011' ? 'active' : ''}"}
+          = link_to "2011", params.merge(anno: 2011)
+        %li{ class: "#{@anno == 'tutti' ? 'active' : ''}"}
+          = link_to "tutti", params.merge(anno: 'tutti')
+
+      %ul.nav.nav-pills
+
+        - Libro::SETTORI.each do |s|
+          %li{ class: "#{@filtri[:settore] == s ? 'active' : ''}"}
+            = link_to s, params.merge(settore: s)
+
+

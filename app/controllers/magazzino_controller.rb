@@ -3,23 +3,9 @@ class MagazzinoController < ApplicationController
   
   def vendite_da_consegnare
 
-    @anno   = params[:anno] || Time.now.year.to_s
-    @status = params[:status] || 'da consegnare'
+    set_filtri anno: Time.now.year.to_s, status: 'da consegnare' 
 
-    @vendite = current_user.righe.scarico.dell_anno(@anno)
-
-
-    if @status == 'preparate' 
-      @vendite = @vendite.preparate
-    elsif @status == 'da pagare'
-      @vendite = @vendite.da_pagare
-    elsif @status == 'da registrare'
-      @vendite = @vendite.da_registrare
-    else
-      @status = 'da consegnare'
-      @vendite = @vendite.da_consegnare
-    end
-
+    @vendite = current_user.righe.scarico.filtra(@filtri)
     
     @comuni  = @vendite.map{|v| v.appunto.cliente.comune}.uniq
 
@@ -27,17 +13,17 @@ class MagazzinoController < ApplicationController
       @vendite = @vendite.select{|r| r.appunto.cliente.comune == params[:comune]}
     end
 
-    @appunti = @vendite.group_by(&:appunto).keys
+    @appunti = @vendite.group_by(&:appunto).keys.sort_by{|a| [a.cliente.provincia, a.cliente.titolo]}
 
 
   end
 
 
-  def vendite_nuove
+  def vendite_nuove 
 
-    anno = params[:anno] || Time.now.year
+    set_filtri anno: Time.now.year.to_s
 
-    @giacenza = GiacenzaCounter.new(user: current_user, anno: anno, params: nil).per_settore
+    @giacenza = GiacenzaCounter.new(user: current_user, params: @filtri).per_settore
 
 
   end
@@ -79,5 +65,21 @@ class MagazzinoController < ApplicationController
   def incassi
     @completati = current_user.appunti.not_deleted.di_questa_propaganda.completato.order("appunti.updated_at desc")
   end
+
+
+  private
+
+
+    def set_filtri(defaults)
+
+      @filtri = ActiveSupport::HashWithIndifferentAccess.new defaults
+      
+      @filtri = @filtri.merge!(params)
+      
+      @anno   = @filtri[:anno]
+      @status = @filtri[:status]
+
+    end
+
 
 end

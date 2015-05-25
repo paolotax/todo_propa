@@ -49,7 +49,9 @@ class Riga < ActiveRecord::Base
   
   scope :di_quest_anno,         joins(:fattura).where("extract(year from fatture.data) = ?", 2014)
   
-  scope :dell_anno, lambda { |anno | where("extract(year from righe.consegnata_il) = ? or extract(year from righe.created_at) = ?", anno, anno) }
+  scope :dell_anno, lambda { |anno | where("extract(year from righe.consegnata_il) = ? or (extract(year from righe.created_at) = ? and extract(year from righe.consegnata_il) is null) ", anno, anno) }
+  
+  #scope :dell_anno, lambda { |anno | where("extract(year from righe.consegnata_il) = ?", anno) }
   
   scope :del_libro, lambda { |libro| where("righe.libro_id = ?", libro.id) }
 
@@ -344,7 +346,15 @@ class Riga < ActiveRecord::Base
   end
 
 
+  def scarico?
+    !appunto_id.nil?
+  end
 
+
+  def carico?
+    appunto_id.nil? && !orfana?
+  end
+  
 
   def orfana?
     appunto_id.nil? && documenti.empty?
@@ -356,19 +366,10 @@ class Riga < ActiveRecord::Base
   end
 
 
-  def nulla?
-    appunto_id.nil? && documento_id.nil?
-  end
 
 
-  def carico?
-    appunto_id.nil? && !nulla?
-  end
 
 
-  def scarico?
-    !carico?
-  end
 
 
   def cached_libro
@@ -435,6 +436,29 @@ class Riga < ActiveRecord::Base
     self.prezzo_unitario = text
   end
   
+
+  def self.filtra(params)
+    righe = scoped
+    #righe = righe.search(params[:search]) if params[:search].present?
+
+    if params[:settore].present?
+      righe = righe.joins(:libro).where('libri.settore = ?', params[:settore])
+    end
+    
+    if params[:anno] != 'tutti'
+      righe = righe.dell_anno(params[:anno])
+    end    
+
+    if params[:status]
+      righe = righe.try(params[:status].split(" ").join("_"))
+    end
+
+    # if params[:comune]
+    #   righe = righe.joins(appunto: :cliente).where('clienti.comune = ?', params[:comune])
+    # end
+
+    righe
+  end
   
 
     

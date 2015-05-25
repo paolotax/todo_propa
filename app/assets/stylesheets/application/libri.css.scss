@@ -27,3 +27,8 @@
 .show-toolbar {
  @include clearfix;
 }
+
+
+.libro-thumb img {
+  max-width: 32px;
+}
