@@ -1,8 +1,8 @@
 class Riga < ActiveRecord::Base
   
-  belongs_to :appunto, touch: true
+  belongs_to :appunto, touch: true, counter_cache: true
   
-  counter_culture :appunto, touch: true  
+  # counter_culture :appunto, touch: true  
   # counter_culture :appunto, delta_column: 'quantita', column_name: 'totale_copie'
   # counter_culture :appunto, delta_column: 'importo',  column_name: 'totale_importo', touch: true 
 

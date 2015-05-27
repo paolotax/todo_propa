@@ -112,7 +112,7 @@ gem 'raphael-rails'
 gem 'strong_parameters'
 gem 'state_machine'
 
-gem 'counter_culture'
+# gem 'counter_culture'
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'

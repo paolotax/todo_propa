@@ -4,7 +4,12 @@ namespace :youpropa do
   desc "Reimposta id_documento e new states"  
   task :reimposta_id_documento => :environment do
     
-    Riga.counter_culture_fix_counts
+
+
+    # Riga.counter_culture_fix_counts
+    Appunto.includes(:righe).all.each do |a|
+      a.update_attributes righe_count: a.righe.size
+    end
 
     Riga.all.each do |r|
       r.update_attributes documento_id: r.documenti.order(:causale_id).last.try(:id)

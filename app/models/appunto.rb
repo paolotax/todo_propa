@@ -342,6 +342,14 @@ class Appunto < ActiveRecord::Base
   end
 
 
+  def self.ricalcola_righe_count
+
+    Appunto.includes(:righe).all.each do |a|
+      a.update_attributes righe_count: a.righe.size
+    end
+  end
+  
+
   private
 
     def leggi    
