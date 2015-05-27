@@ -69,7 +69,7 @@ class Riga < ActiveRecord::Base
 
   # scope :da_consegnare, -> { scarico.with_state(:open, :pronta, :pagata, :registrata, :da_consegnare) }
   # scope :da_pagare,     -> { scarico.with_state(:open, :pronta, :consegnata, :registrata, :da_pagare) }
-  # scope :da_registrare, -> { scarico.with_state(:open, :pronta, :pagata, :consegnata, :da_registrare) }
+  scope :non_completa, -> { scarico.with_state(:open, :pronta, :pagata, :consegnata, :da_registrare) }
 
 
   state_machine :initial => :open do
@@ -354,7 +354,7 @@ class Riga < ActiveRecord::Base
   def carico?
     appunto_id.nil? && !orfana?
   end
-  
+
 
   def orfana?
     appunto_id.nil? && documenti.empty?
