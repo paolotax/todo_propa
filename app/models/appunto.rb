@@ -130,6 +130,8 @@ class Appunto < ActiveRecord::Base
     self.documenti[0] unless self.documenti.empty?
   end
   
+  
+
   STATUS.each_with_index do |status, index|
     scope "#{status}", not_deleted.where("appunti.stato = ?", STATUS_CODES[index])
     

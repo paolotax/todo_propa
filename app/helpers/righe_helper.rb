@@ -1,6 +1,14 @@
 module RigheHelper
     
   
+  def state_header(state)
+
+    if state == 'open'
+    end
+
+  end
+
+
   def nested_righe_per_appunto(righe_array)
     render 'righe/nested_righe', righe: righe_array, group: :appunto
   end

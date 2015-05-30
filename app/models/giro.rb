@@ -95,6 +95,15 @@ class Giro
   end
   
 
+
+  def appunti
+    @appunti ||= user.appunti.not_deleted.da_fare.where("appunti.cliente_id in (?)", clienti.map(&:id))
+  end
+
+  def appunti_completati_il
+     
+  end
+
   def appunti_da_fare
     appunti = user.appunti.not_deleted.da_fare.where("appunti.cliente_id in (?)", clienti.map(&:id))
     appunti_da_fare = []

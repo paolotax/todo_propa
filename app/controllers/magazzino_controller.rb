@@ -8,9 +8,18 @@ class MagazzinoController < ApplicationController
     @vendite = current_user.righe.scarico.filtra(@filtri)
     
     @comuni  = @vendite.map{|v| v.appunto.cliente.comune}.uniq
+    @clienti = @vendite.map{|v| v.appunto.cliente}.uniq.sort_by{|c| [c.provincia, c.comune, c.titolo]}
+
 
     if params[:comune].present?
       @vendite = @vendite.select{|r| r.appunto.cliente.comune == params[:comune]}
+
+      @clienti = @clienti.select{|c| c.comune == params[:comune]}
+
+    end
+
+    if params[:cliente].present?
+      @vendite = @vendite.select{|r| r.appunto.cliente.titolo == params[:cliente]}
     end
 
     @appunti = @vendite.group_by(&:appunto).keys.sort_by{|a| [a.cliente.provincia, a.cliente.titolo]}

@@ -56,7 +56,14 @@
           %li{ class: "#{params[:comune] == comune ? 'active' : ''}"}
             = link_to comune, params.merge(comune: comune)
 
+      %ul.nav.nav-pills
+        %li{ class: "#{params[:cliente].present? ? '' : 'active'}"}
+          = link_to "#{@clienti.size} clienti", params.except(:cliente)
 
+        - @clienti.each do |cliente|
+
+          %li{ class: "#{params[:cliente] == cliente.titolo ? 'active' : ''}"}
+            = link_to cliente.titolo, params.merge(cliente: cliente.titolo)
 
     .module
       = render 'shared/riepilogo_libri', collection: @vendite, tipo_riepilogo: "Volumi #{@status}"

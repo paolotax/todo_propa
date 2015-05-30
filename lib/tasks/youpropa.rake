@@ -27,6 +27,8 @@ namespace :youpropa do
   end
 
 
+  
+
 
   desc "Reimposta id_documento e new states"  
   task :reimposta_id_documento => :environment do
