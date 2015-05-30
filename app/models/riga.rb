@@ -55,7 +55,7 @@ class Riga < ActiveRecord::Base
   
   scope :del_libro, lambda { |libro| where("righe.libro_id = ?", libro.id) }
 
-  
+
 
   scope :open_carico,  -> { carico.with_state(:open, :ordinata) }
   scope :open_fattura, -> { carico.with_state(:open, :ordinata, :caricata) }

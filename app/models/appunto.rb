@@ -98,6 +98,10 @@ class Appunto < ActiveRecord::Base
   scope :creato_il, lambda { |data| where("date(appunti.created_at) = ?", data) }
   scope :modificato_il, lambda { |data| where("date(appunti.updated_at) = ? and date(appunti.created_at) != ?", data, data) }
   
+  
+
+
+
   include PgSearch
   pg_search_scope :search, against: [:destinatario, :note],
     using: {tsearch: {dictionary: "italian"}},
@@ -187,7 +191,8 @@ class Appunto < ActiveRecord::Base
   end
   
   def has_righe?
-    righe_count > 0
+    #righe_count > 0
+    self.righe.size > 0
   end
   
   def has_recapiti?
