@@ -4,6 +4,7 @@ module RigheHelper
   def state_header(state)
 
     if state == 'open'
+      render "appunto"
     end
 
   end

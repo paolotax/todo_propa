@@ -135,7 +135,7 @@ class Giro
 
 
   def righe_da_consegnare
-    user.righe.not_deleted.includes(:libro).where("righe.appunto_id in (?)", appunti_da_fare.map(&:id))
+    @righe_da_consegnare ||= user.righe.not_deleted.includes(:libro).where("righe.appunto_id in (?)", appunti_da_fare.map(&:id))
   end
 
 
@@ -157,12 +157,12 @@ class Giro
   
 
   def righe_in_sospeso
-    user.righe.not_deleted.in_sospeso.joins(:libro, :appunto => :visite).where("date(start) = ?", @giorno)
+    @righe_in_sospeso ||= user.righe.not_deleted.in_sospeso.joins(:libro, :appunto => :visite).where("date(start) = ?", @giorno)
   end  
   
 
   def adozioni
-    user.mie_adozioni.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", clienti.map(&:id)).order("libri.materia_id, libri.titolo, classi.sezione")
+    @adozioni ||= user.mie_adozioni.includes(:libro).joins(:classe).where("classi.cliente_id in (?)", clienti.map(&:id)).order("libri.materia_id, libri.titolo, classi.sezione")
   end
   
 

@@ -21,16 +21,17 @@ class GiacenzaLibro
     @scarichi ||= user.righe.scarico.del_libro( libro )
   end
 
-  
+  def carichi
+    @carichi ||= user.righe_documento.carico.del_libro( libro )
+  end
+
+
+
   def scarichi_non_registrati
     scarichi.select{|r| r.documento.class == Appunto}
   end
 
   
-  def carichi
-    @carichi ||= user.righe_documento.carico.del_libro( libro )
-  end
-
 
   def copie_caricate
     carichi.map(&:quantita).sum

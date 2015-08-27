@@ -13,12 +13,13 @@
       
       - if group == :appunto
         = render "appunti/appunto_header", appunto: a
+
       - else
         = a.to_s
       
       .table-righe-new
 
-        = render righe
+        = render righe.sort_by(&:id)
 
         - if righe_grouped.keys.count > 1
           .riga
@@ -27,4 +28,5 @@
                 %small= righe.map(&:quantita).sum
               .importo              
                 %small= number_to_currency righe.map(&:importo).sum, unit: ''
+                
 

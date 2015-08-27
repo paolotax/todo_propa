@@ -50,7 +50,7 @@ module DocumentiHelper
       content_tag :div, :class => 'dettaglio_documento' do
         content_tag( :div, check_box_tag("documenti_ids[]", a.id, false, {:class => 'cb-toggle'}) +
         link_to( "#{a.documento_causale} #{a.numero} del #{l a.data, :format => :only_date} - copie #{a.totale_copie} - Importo #{a.totale_importo}", documento_path(a)).html_safe, :class => 'consegna') +
-        content_tag( :div, righe.collect{ |r| render r }.join.html_safe, :class => 'table-righe-new')
+        content_tag( :div, righe.sort_by(&:id).collect{ |r| render r }.join.html_safe, :class => 'table-righe-new')
       end
     end.join.html_safe
   end

@@ -12,7 +12,7 @@ load "config/recipes/rbenv"
 load "config/recipes/check"
 load "config/recipes/todopropa"
 
-server "198.211.124.102", :web, :app, :db, primary: true
+server "188.166.70.233", :web, :app, :db, primary: true
 
 set :user, "deployer"
 set :application, "todo_propa"
