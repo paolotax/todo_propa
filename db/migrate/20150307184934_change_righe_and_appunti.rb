@@ -23,10 +23,9 @@ class ChangeRigheAndAppunti < ActiveRecord::Migration
     add_column :righe, :pagato
     add_column :righe, :causale_id
 
-    remove_column  :righe, :documento_id, :integer
-    
+    remove_column :righe, :documento_id    
     remove_column :appunti, :data
-    remove_column :appunti, :righe_count, :integer, :null => false, :default => 0
+    remove_column :appunti, :righe_count
 
   end
 
