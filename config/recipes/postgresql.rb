@@ -11,8 +11,9 @@ namespace :postgresql do
     
     run "#{sudo} apt-get -y update"
     # ubuntu 10.04
-    # run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib-9.1"
-    run "#{sudo} apt-get -y install postgresql libpq-dev postgresql-contrib"
+    run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib"
+    
+    #run "#{sudo} apt-get -y install postgresql libpq-dev postgresql-contrib"
 
     
   end
