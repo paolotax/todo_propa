@@ -13,7 +13,7 @@ load "config/recipes/check"
 load "config/recipes/todopropa"
 #load "config/recipes/memcached"
 
-server "188.166.88.89", :web, :app, :db, primary: true
+server "188.166.97.119", :web, :app, :db, primary: true
 
 set :user, "deployer"
 set :application, "todo_propa"
