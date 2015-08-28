@@ -9,6 +9,7 @@ load "config/recipes/unicorn"
 load "config/recipes/postgresql"
 load "config/recipes/nodejs"
 load "config/recipes/rbenv"
+load "config/recipes/memcached"
 load "config/recipes/check"
 load "config/recipes/todopropa"
 
