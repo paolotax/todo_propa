@@ -18,11 +18,11 @@ BASHRC
     run %q{export PATH="$HOME/.rbenv/bin:$PATH"}
     run %q{eval "$(rbenv init -)"}
     
-    # 
+    # 10-04
     #run "rbenv #{rbenv_bootstrap}"
-
-    # change
-    run "sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev"
+    # Manual bootstrap 12-04
+    run "#{sudo} apt-get -y update"
+    run "#{sudo} apt-get -y install build-essential tklib zlib1g-dev libssl-dev libreadline-gplv2-dev libxml2 libxml2-dev libxslt1-dev"
 
     run "rbenv install #{ruby_version}"
     run "rbenv global #{ruby_version}"
