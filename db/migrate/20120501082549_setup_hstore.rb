@@ -1,8 +1,5 @@
-# CANCELLATO PER DEPLOY
-
-
-# class SetupHstore < ActiveRecord::Migration
-#   def self.up
+class SetupHstore < ActiveRecord::Migration
+  def self.up
 #     sql = <<-HSTORE_SQL
 # /* $PostgreSQL: pgsql/contrib/hstore/hstore.sql.in,v 1.11 2009/06/11 18:30:03 tgl Exp $ */
 
@@ -272,9 +269,9 @@
 # STORAGE         text;
 # HSTORE_SQL
 #     execute sql
-#   end
+  end
 
-#   def self.down
-#     # Kinda... hard.
-#   end
-# end
+  def self.down
+    # Kinda... hard.
+  end
+end
