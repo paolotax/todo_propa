@@ -7,12 +7,12 @@ namespace :postgresql do
   desc "Install the latest stable release of PostgreSQL."
   task :install, roles: :db, only: {primary: true} do
     
-    #run "#{sudo} add-apt-repository ppa:pitti/postgresql"
+    # run "#{sudo} add-apt-repository ppa:pitti/postgresql"
     
     run "#{sudo} apt-get -y update"
     # ubuntu 10.04
     # run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib-9.1"
-    run "#{sudo} apt-get -y install postgresql libpq-dev postgresql-contrib"
+    run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib-9.1"
 
     
   end
@@ -23,7 +23,7 @@ namespace :postgresql do
     run %Q{#{sudo} -u postgres psql -c "create user #{postgresql_user} with password '#{postgresql_password}';"}
     run %Q{#{sudo} -u postgres psql -c "create database #{postgresql_database} owner #{postgresql_user};"}
   end
-  #after "deploy:setup", "postgresql:create_database"
+  after "deploy:setup", "postgresql:create_database"
 
   desc "Generate the database.yml configuration file."
   task :setup, roles: :app do
