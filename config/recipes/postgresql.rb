@@ -10,7 +10,11 @@ namespace :postgresql do
     #run "#{sudo} add-apt-repository ppa:pitti/postgresql"
     
     run "#{sudo} apt-get -y update"
-    run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib-9.1"
+    # ubuntu 10.04
+    # run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib-9.1"
+    run "#{sudo} apt-get -y install postgresql"
+
+    
   end
   after "deploy:install", "postgresql:install"
 
