@@ -5,7 +5,7 @@ namespace :redis do
     
     run "#{sudo} apt-get -y update"
     run "#{sudo} apt-get -y install redis-server"
-    run "#{sudo} update-rc.d redis-server /etc/redis.conf"
+    #run "#{sudo} update-rc.d redis-server /etc/redis.conf"
     
     # ["cd /tmp",
     #  "wget http://download.redis.io/redis-stable.tar.gz",
