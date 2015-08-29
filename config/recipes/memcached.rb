@@ -1,6 +1,7 @@
 set_default :memcached_memory_limit, 64
 
 namespace :memcached do
+  
   desc "Install Memcached"
   task :install, roles: :app do
     run "#{sudo} apt-get install memcached"

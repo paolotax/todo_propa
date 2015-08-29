@@ -17,7 +17,12 @@ load "config/recipes/redis"
 
 load "config/recipes/memcached"
 
-server "178.62.239.249", :web, :app, :db, primary: true
+# 12
+# server "178.62.239.249", :web, :app, :db, primary: true
+
+# 14
+server "188.166.61.92", :web, :app, :db, primary: true
+
 
 set :user, "deployer"
 set :application, "todo_propa"

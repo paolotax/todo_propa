@@ -13,21 +13,21 @@ namespace :postgresql do
     run "#{sudo} apt-get -y update"
     
     # ubuntu 10.04 12.04
-    run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib"
+    # run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib"
     
     # ubuntu 14.04 12.04
-    #run "#{sudo} apt-get -y install postgresql libpq-dev postgresql-contrib"
+    run "#{sudo} apt-get -y install postgresql libpq-dev postgresql-contrib"
    
   end
   after "deploy:install", "postgresql:install"
 
   desc "Create a database for this application."
   task :create_database, roles: :db, only: {primary: true} do
+    
     run %Q{#{sudo} -u postgres psql -c "create user #{postgresql_user} with password '#{postgresql_password}';"}
     
     run %Q{#{sudo} -u postgres psql -c "create database #{postgresql_database} owner #{postgresql_user};"}
-
-    
+   
     run %Q{#{sudo} -u postgres psql #{postgresql_database} -c "create extension hstore;"}
   end
 
