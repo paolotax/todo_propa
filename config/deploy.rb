@@ -3,7 +3,8 @@ require "bundler/capistrano"
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 
-#load "config/recipes/base"
+load "config/recipes/base"
+
 #load "config/recipes/nginx"
 #load "config/recipes/unicorn"
 #load "config/recipes/postgresql"
@@ -12,6 +13,7 @@ require "whenever/capistrano"
 #load "config/recipes/check"
 
 #load "config/recipes/todopropa"
+
 load "config/recipes/memcached"
 
 
