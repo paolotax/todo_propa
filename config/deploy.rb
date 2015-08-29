@@ -24,7 +24,7 @@ load "config/recipes/redis"
 # 14
 
 
-server "188.166.61.92", :web, :app, :db, primary: true
+server "188.166.8.251", :web, :app, :db, primary: true
 
 
 set :user, "deployer"

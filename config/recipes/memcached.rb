@@ -12,14 +12,14 @@ namespace :memcached do
   task :setup, roles: :app do
     template "memcached.erb", "/tmp/memcached.conf"
     run "#{sudo} mv /tmp/memcached.conf /etc/memcached.conf"
-    restart
+    # restart
   end
   after "deploy:setup", "memcached:setup"
 
   %w[start stop restart].each do |command|
     desc "#{command} Memcached"
     task command, roles: :app do
-      run "service memcached #{command}"
+      run "#{sudo} service memcached #{command}"
     end
   end
 end
