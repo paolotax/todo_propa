@@ -7,15 +7,17 @@ namespace :postgresql do
   desc "Install the latest stable release of PostgreSQL."
   task :install, roles: :db, only: {primary: true} do
     
+    # ubuntu 10.04
     # run "#{sudo} add-apt-repository ppa:pitti/postgresql"
     
     run "#{sudo} apt-get -y update"
-    # ubuntu 10.04
+    
+    # ubuntu 10.04 12.04
     run "#{sudo} apt-get -y install postgresql-9.1 libpq-dev postgresql-contrib"
     
+    # ubuntu 14.04 12.04
     #run "#{sudo} apt-get -y install postgresql libpq-dev postgresql-contrib"
-
-    
+   
   end
   after "deploy:install", "postgresql:install"
 

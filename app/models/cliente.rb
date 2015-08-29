@@ -603,11 +603,6 @@ class Cliente < ActiveRecord::Base
     !self.visite.nel_baule.empty?
   end
 
-  
-  def self.search_mate(term, id_user)
-    matches = Soulmate::Matcher.new("#{id_user}_cliente").matches_for_term(term)
-  end
-
 
   def self.import(file, user_id)
     current_user = User.find(user_id)
@@ -648,7 +643,12 @@ class Cliente < ActiveRecord::Base
     end
   end
   
-  
+
+  def self.search_mate(term, id_user)
+    matches = Soulmate::Matcher.new("#{id_user}_cliente").matches_for_term(term)
+  end
+
+    
   def load_into_soulmate
     
     loader = Soulmate::Loader.new("#{user_id}_cliente")
@@ -662,6 +662,15 @@ class Cliente < ActiveRecord::Base
                   }
                 })
   end
+
+
+  def self.reload_into_soulmate
+
+    Cliente.all.each do |c|
+      c.load_into_soulmate
+    end
+  end
+
 
   private
 

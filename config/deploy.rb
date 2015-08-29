@@ -10,8 +10,12 @@ load "config/recipes/postgresql"
 load "config/recipes/nodejs"
 load "config/recipes/rbenv"
 load "config/recipes/check"
+
 load "config/recipes/todopropa"
-#load "config/recipes/memcached"
+
+load "config/recipes/redis"
+
+load "config/recipes/memcached"
 
 server "178.62.239.249", :web, :app, :db, primary: true
 

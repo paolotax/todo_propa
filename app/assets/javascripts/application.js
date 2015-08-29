@@ -38,7 +38,7 @@
 
 //= require_tree ../templates
 //= require_tree ./application
-//= require demo
+
 //= require accounting
 //= require gmaps
 //= require stuff

@@ -122,6 +122,14 @@ class Libro < ActiveRecord::Base
   end
 
 
+  def self.reload_into_soulmate
+
+    Libro.all.each do |c|
+      c.load_into_soulmate
+    end
+  end
+
+
   def self.filtra(params)
     libri = scoped
     libri = libri.search(params[:search]) if params[:search].present?

@@ -1,5 +1,18 @@
 namespace :youpropa do
   
+
+  desc "ricalcola soulmate"  
+  task :ricalcola_soulmate => :environment do
+    Rails.application.eager_load!
+
+    Cliente.reload_into_soulmate
+    Libro.reload_into_soulmate
+    Appunto.reload_into_soulmate
+    
+    puts "---Fine ricalcola_soulmate---"
+  end
+
+
   desc "ricalcola counters"  
   task :ricalcola_counters => :environment do
     Rails.application.eager_load!

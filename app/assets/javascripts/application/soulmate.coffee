@@ -1,4 +1,5 @@
 jQuery ->
+  
   $('#search-input').focus()
 
   render = (term, data, type) ->
@@ -24,7 +25,7 @@ jQuery ->
     
   $('#search-query, #search-input').soulmate {
     url:            '/search/autocomplete.json'
-    types:          ["cliente", "appunto", "libro"]
+    types:          ["cliente", "libro", "appunto"]
     renderCallback: render
     selectCallback: select
     minQueryLength: 2
@@ -33,7 +34,7 @@ jQuery ->
   
   $('#main-search-input').soulmate {
     url:            '/search/autocomplete.json'
-    types:          ["cliente", "appunto", "libro"]
+    types:          ["cliente", "libro", "appunto"]
     renderCallback: render
     selectCallback: select
     minQueryLength: 2

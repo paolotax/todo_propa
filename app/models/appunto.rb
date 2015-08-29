@@ -349,6 +349,14 @@ class Appunto < ActiveRecord::Base
   end
 
 
+  def self.reload_into_soulmate
+
+    Appunto.all.each do |c|
+      c.load_into_soulmate
+    end
+  end
+
+
   def self.ricalcola_righe_count
 
     Appunto.includes(:righe).all.each do |a|
