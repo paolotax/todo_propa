@@ -672,6 +672,46 @@ class Cliente < ActiveRecord::Base
   end
 
 
+  def scorri_classi_e_adozioni
+  
+    return unless da_scorrere?
+    
+    classi.order("classi.classe desc, classi.sezione desc").each do |c|
+      c.classe += 1
+      c.anno = Time.now.year.to_s
+      c.save    
+    end
+    
+    classi.order("classi.classe desc, classi.sezione desc").each do |c|
+      if c.classe == 6
+        c.classe = 1
+        c.save
+      end
+    end
+
+    classi.order("classi.classe desc, classi.sezione desc").each do |c|
+      
+      c.adozioni.each do |old| 
+
+        seguito = old.try(:libro).try(:seguito)
+        
+        if seguito.nil?
+          old.destroy
+        else
+          old.libro = seguito
+          old.materia_id = seguito.materia_id
+          old.kit_1 = nil
+          old.kit_2 = nil
+          old.save
+        end
+
+        seguito = nil
+      end
+    end
+
+  end
+
+
   private
 
   

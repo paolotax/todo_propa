@@ -40,9 +40,6 @@ namespace :youpropa do
   end
 
 
-  
-
-
   desc "Reimposta id_documento e new states"  
   task :reimposta_id_documento => :environment do
     
@@ -141,5 +138,19 @@ namespace :youpropa do
     puts "#{Riga.all.size} righe ricalcolate"
   
   end
+
+
+  desc "Scorri classi e adozioni"  
+  task :scorri_classi_e_adozioni => :environment do
+    
+    Cliente.scuola_primaria.each do |c|
+      c.scorri_classi_e_adozioni
+      puts c.to_s
+    end
+    
+    puts "Fine scorrimento"  
+
+  end
+
 
 end
