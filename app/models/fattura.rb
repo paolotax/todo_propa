@@ -260,6 +260,8 @@ class Fattura < ActiveRecord::Base
 
   def self.next_numeri(user, anno)
 
+    
+    
     numeri = Fattura.where("user_id = ? and extract(year from data) = ?", user.id, anno).select("causale_id, max(numero) as numero").group("causale_id")
 
 

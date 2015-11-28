@@ -3,7 +3,9 @@ jQuery ->
   $("#documento_causale_id").on 'change', (e) ->
     values = $(@).val().split(',')
     if values.length == 2
+      
       $("#documento_numero").val values[1]
+      console.log values[1]
       
 
   $(".remove-documento").live 'click', (e) ->

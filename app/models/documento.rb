@@ -314,7 +314,8 @@ class Documento < ActiveRecord::Base
 
 
   def self.next_numeri(user, anno)
-    numeri = Documento.where("user_id = ? and extract(year from data) = ?", user.id, anno).select("causale_id, max(numero) as numero").group("causale_id")
+
+    numeri = user.documenti.dell_anno(anno).select("causale_id, max(numero) as numero").group("causale_id") 
     
     Causale.all.map do |c|
       [
@@ -322,6 +323,8 @@ class Documento < ActiveRecord::Base
         "#{c.id},#{(numeri.select{|a| a.causale_id == c.id}.first.try(:numero) || 0) + 1}"
       ]
     end
+
+
   end
 
 
