@@ -67,7 +67,7 @@ class MagazzinoController < ApplicationController
   
   
   def cassa
-    @incassi = current_user.fatture.where(causale_id: 2).order(:data).select("data, sum(importo_fattura) as incasso").group(:data)
+    @incassi = current_user.documenti.where(causale_id: 2).order(:data).select("data, sum(totale_importo) as incasso").group(:data)
   end  
 
 
