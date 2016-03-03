@@ -181,7 +181,7 @@ class DocumentoPdf < Prawn::Document
 
       unless @documento.righe.empty?
         @documento.righe.includes(:appunto).order("appunti.created_at").group_by(&:appunto).each do |a, righe|
-          text "Ordine del #{l a.created_at, :format => :short}", size: 8 unless a.nil?
+          text "" ## "Ordine del #{l a.created_at, :format => :short}", size: 8 unless a.nil?
           r =  righe.map do |riga|
             [
               riga.libro.titolo,
