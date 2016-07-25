@@ -106,11 +106,120 @@ class DocumentiController < ApplicationController
   end
 
 
+  def create_multiple
+
+    righe = current_user.righe.joins(appunto: :cliente).da_registrare.dell_anno(params[:anno])
+
+    if params[:pagamento] == 'In sospeso'
+      righe = righe.where("appunti.stato = 'P'")
+    end
+
+    if params[:pagamento] == 'Pagati'
+      righe = righe.where("appunti.stato = 'X'")
+    end
+
+    if params[:tipo_cliente] == 'Scuole'
+      righe = righe.where("clienti.cliente_tipo = 'Scuola Primaria'")
+    end
+
+    if params[:tipo_cliente] == 'Altri'
+      righe = righe.where("clienti.cliente_tipo != 'Scuola Primaria'")
+    end
+    
+    if params[:data] == 'data ultima modifica'
+      righe = righe.order("appunti.updated_at desc, appunti.id desc")
+    else
+      righe = righe.order("appunti.id desc")
+    end
+
+    if params[:raggruppa]
+      righe = righe.group_by(&:cliente)
+    else
+      righe = righe.group_by(&:appunto)
+    end
+
+    #raise righe.inspect   
+
+    crea_documenti righe, params[:causale_id], params[:data]
+
+    redirect_to documenti_url(anno: params[:anno], causale: params[:causale]), notice: "#{ActionController::Base.helpers.pluralize(righe.keys.size, "documento")} generati!"
+
+  end
+
+  def modifica_numero
+
+    @documenti = current_user.documenti.filtra(params).per_numero_asc
+
+    @documenti.each_with_index do |f, i|
+      f.update_column(:numero, i + 1)
+    end
+
+    redirect_to documenti_url(anno: params[:anno], causale: params[:causale]), notice: "#{ActionController::Base.helpers.pluralize(@documenti.size, "documento")} rinumerati!"
+
+  end
+
+
+
   private
 
 
     def documento_params
       params.require(:documento).permit(:causale_id, :cliente_id, :data, :numero, :righe, :appunto_ids, :documento_ids, :pagato)
+    end
+
+    def crea_documenti(righe_da_registrare, causale_id, data)
+
+      # last_id = Fattura.where("user_id = ? and data > ? and data < ? and causale_id = ?", current_user.id, data.beginning_of_year, data.end_of_year, causale_id).order('numero desc').limit(1)
+      
+      # if last_id.empty?
+      #   numero_fattura = 1
+      # else
+      #   numero_fattura = last_id[0][:numero] + 1  
+      # end
+
+      righe_da_registrare.reverse_each do |key, righe|
+        
+        new_righe = righe.sort { |a, b| a.id <=> b.id }
+
+        if key.is_a? Cliente
+          cliente_id = key.id
+        else
+          cliente_id = key.cliente.id
+        end
+
+        if data == 'oggi'
+          data_documento = Time.now
+        elsif data == 'data ultima modifica'
+          data_documento = righe.first.appunto.updated_at
+        elsif data == 'data creazione'
+          data_documento = righe.first.appunto.created_at
+        end
+          
+        if righe.first.appunto.stato == 'X'
+          pagato = true
+        else
+          pagato = false
+        end
+
+        fattura = Documento.new( 
+            user_id:    current_user.id, 
+            causale_id: causale_id, 
+            cliente_id: cliente_id, 
+            data:       data_documento, 
+            numero:     999#,
+            #pagata:     pagato
+        )
+
+        new_righe.each do |riga|
+          r = Riga.find riga.id
+          fattura.righe << r
+        end
+
+                                         
+        fattura.save!
+
+      end 
+
     end
 
 end

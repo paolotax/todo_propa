@@ -18,112 +18,112 @@
     .stream-loader
       = paginate @documenti
 
-  / .side-bar.span3
+  .side-bar.span3
     
-  /   - [@righe_da_fatturare, @righe_da_pagare ].each_with_index do |righe, index|
+    /   - [@righe_da_fatturare, @righe_da_pagare ].each_with_index do |righe, index|
 
-  /     - index == 0 ? label = "pagati" : label = "da incassare" 
+    /     - index == 0 ? label = "pagati" : label = "da incassare" 
 
-  /     .module
-  /       .header
-  /         = show_hide_tag "down"
-  /         %h3
-  /           = number_to_currency righe.sum(&:importo)
-  /           %small= label
-  /       .more.hidden
-                        
-  /         - unless righe.empty?
+    /     .module
+    /       .header
+    /         = show_hide_tag "down"
+    /         %h3
+    /           = number_to_currency righe.sum(&:importo)
+    /           %small= label
+    /       .more.hidden
+                          
+    /         - unless righe.empty?
+              
+    /           - for c, r in righe.group_by(&:cliente) do
+    /             .cliente-vendite
+    /               %header
+    /                 = link_to  c do
+    /                   %span.titolo= c[:titolo]
+                  
+    /               - for a, righe in r.group_by(&:appunto) do               
+    /                 = render "appunti/item", appunto: a
+
+    /               %footer.clearfix
+    /                 .pull-left
+    /                   = render 'registra', c: c, r: r
+    /                 .totale-importo.pull-right
+    /                   %strong= number_to_currency r.sum(&:importo)
+    /                 .totale-copie.pull-right
+    /                   %strong= r.sum(&:quantita)
             
-  /           - for c, r in righe.group_by(&:cliente) do
-  /             .cliente-vendite
-  /               %header
-  /                 = link_to  c do
-  /                   %span.titolo= c[:titolo]
-                
-  /               - for a, righe in r.group_by(&:appunto) do               
-  /                 = render "appunti/item", appunto: a
+    /         - else
+    /           %span.list-link 
+    /             %small= "non ci sono appunti #{label}"
 
-  /               %footer.clearfix
-  /                 .pull-left
-  /                   = render 'registra', c: c, r: r
-  /                 .totale-importo.pull-right
-  /                   %strong= number_to_currency r.sum(&:importo)
-  /                 .totale-copie.pull-right
-  /                   %strong= r.sum(&:quantita)
-          
-  /         - else
-  /           %span.list-link 
-  /             %small= "non ci sono appunti #{label}"
+    .well.well-small
 
-  /   .well.well-small
+      = form_tag :create_multiple_documenti, method: :put, class: 'form-horizontal', id: "form-genera-documenti" do
 
-  /     = form_tag :create_multiple_documenti, method: :put, class: 'form-horizontal', id: "form-genera-documenti" do
+        %h3 Genera documenti
 
-  /       %h3 Genera documenti
+        %hr
 
-  /       %hr
-
-  /       .control-group
-  /         %label.control-label{ for: 'inputAnno' } Anno
-  /         .controls
-  /           = select_tag "anno", options_for_select(["2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-block-level", id: 'inputAnno'
+        .control-group
+          %label.control-label{ for: 'inputAnno' } Anno
+          .controls
+            = select_tag "anno", options_for_select(["2016", "2015", "2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-block-level", id: 'inputAnno'
         
-  /       .control-group
-  /         %label.control-label{ for: 'inputCausale' } Tipo documento
-  /         .controls
-  /           = select_tag "causale_id", options_for_select([["Buoni di consegna", 1], ["documenti", 0]]), class: "input-block-level", id: 'inputCausale'
+        .control-group
+          %label.control-label{ for: 'inputCausale' } Tipo documento
+          .controls
+            = select_tag "causale_id", options_for_select([["Buoni di consegna", 2], ["documenti", 0]]), class: "input-block-level", id: 'inputCausale'
 
-  /       .control-group
-  /         %label.control-label{ for: 'inputClienti' } Clienti
-  /         .controls
-  /           = select_tag "tipo_cliente", options_for_select(["Scuole", "Altri", "Tutti"]), class: "input-block-level", id: 'inputClienti'
+        .control-group
+          %label.control-label{ for: 'inputClienti' } Clienti
+          .controls
+            = select_tag "tipo_cliente", options_for_select(["Scuole", "Altri", "Tutti"]), class: "input-block-level", id: 'inputClienti'
 
-  /       .control-group
-  /         %label.control-label{ for: 'inputPagamento' } Pagamento
-  /         .controls
-  /           = select_tag "pagamento", options_for_select(['Pagati', 'In sospeso', 'Tutti']), class: "input-block-level", id: 'inputPagamento'
+        .control-group
+          %label.control-label{ for: 'inputPagamento' } Pagamento
+          .controls
+            = select_tag "pagamento", options_for_select(['Pagati', 'In sospeso', 'Tutti']), class: "input-block-level", id: 'inputPagamento'
 
-  /       .control-group
-  /         %label.control-label{ for: 'inputData' } Data documenti
-  /         .controls
-  /           = select_tag "data", options_for_select(['data creazione', 'data ultima modifica', 'ultima data', 'oggi']), class: "input-block-level", id: 'inputData'
+        .control-group
+          %label.control-label{ for: 'inputData' } Data documenti
+          .controls
+            = select_tag "data", options_for_select(['data creazione', 'data ultima modifica', 'ultima data', 'oggi']), class: "input-block-level", id: 'inputData'
 
-  /       .contol-group
-  /         .controls
-  /           %label.checkbox
-  /             = check_box_tag "raggruppa" 
-  /             raggruppa per cliente
+        .contol-group
+          .controls
+            %label.checkbox
+              = check_box_tag "raggruppa" 
+              raggruppa per cliente
         
-  /       %hr
+        %hr
 
-  /       .contol-group
+        .contol-group
         
-  /         .controls
-  /           = submit_tag "Genera", class: "btn btn-primary", confirm: "Sei sicuro"
+          .controls
+            = submit_tag "Genera", class: "btn btn-primary", confirm: "Sei sicuro"
 
 
-  /   .well.well-small
+    .well.well-small
 
-  /     = form_tag :modifica_numero_documenti, method: :put, class: 'form-horizontal', id: "form-modifica-numero" do
+      = form_tag :modifica_numero_documenti, method: :put, class: 'form-horizontal', id: "form-modifica-numero" do
 
-  /       %h3 Modifica Numero
+        %h3 Modifica Numero
 
-  /       %hr
+        %hr
 
-  /       .control-group
-  /         %label.control-label{ for: 'inputAnno' } Anno
-  /         .controls
-  /           = select_tag "anno", options_for_select(["2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-block-level", id: 'inputAnno'
+        .control-group
+          %label.control-label{ for: 'inputAnno' } Anno
+          .controls
+            = select_tag "anno", options_for_select(["2016", "2015", "2014", "2013", "2012", "2011", "2010"], params[:anno]), class: "input-block-level", id: 'inputAnno'
         
-  /       .control-group
-  /         %label.control-label{ for: 'inputCausale' } Tipo documento
-  /         .controls
-  /           = select_tag "causale", options_for_select(["Buono di consegna", "Ordine"]), class: "input-block-level", id: 'inputCausale'
+        .control-group
+          %label.control-label{ for: 'inputCausale' } Tipo documento
+          .controls
+            = select_tag "causale", options_for_select(["Buono di consegna", "Ordine"]), class: "input-block-level", id: 'inputCausale'
         
-  /       %hr
+        %hr
 
-  /       .contol-group
+        .contol-group
         
-  /         .controls
-  /           = submit_tag "Modifica", class: "btn btn-primary", confirm: "Sei sicuro"
+          .controls
+            = submit_tag "Modifica", class: "btn btn-primary", confirm: "Sei sicuro"
 

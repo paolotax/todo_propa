@@ -195,7 +195,7 @@ class Cliente < ActiveRecord::Base
   
   def da_scorrere?
     anno = anno_scolastico
-    if anno && anno < Time.now.year.to_s && Time.now > Date.new(Time.now.year, 6, 1)
+    if anno && anno < Time.now.year.to_s && Time.now > Date.new(Time.now.year, 5, 1)
       true
     else
       false
