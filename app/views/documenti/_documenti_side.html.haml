@@ -59,7 +59,7 @@
           Anni 
           %i.chev-right
 
-      - for c in ["2016", "2015", "2014", "2013", "2012", "2011", "2010"]
+      - for c in ["2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010"]
         %li{ class: "#{ params[:anno] == c ? 'active' : ''}"}
           = link_to params.merge(:anno => c), class: "list-link", remote: false  do
             = c
