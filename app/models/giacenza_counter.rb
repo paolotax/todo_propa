@@ -16,7 +16,7 @@ class GiacenzaCounter
 
 
   def scarichi
-    @scarichi ||= user.righe.scarico.filtra(params).joins(:libro).includes(:libro).order("libri.titolo").group_by(&:libro)
+    @scarichi ||= user.righe.scarico.completa.filtra(params).joins(:libro).includes(:libro).order("libri.titolo").group_by(&:libro)
   end
 
 
@@ -41,6 +41,7 @@ class GiacenzaCounter
           libro: libro, 
           copie_caricate: c.map(&:quantita).sum,
           copie_vendute:  s.values.flatten.map(&:quantita).sum,
+          importo:  s.values.flatten.map(&:importo).sum,
           giacenza:       c.map(&:quantita).sum - s.values.flatten.map(&:quantita).sum
         }
 

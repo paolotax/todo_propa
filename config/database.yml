@@ -7,6 +7,7 @@ development:
   username: paolotax
   password: ptaxptax
   min_messages: warning
+  host: localhost
 
 test:
   adapter: sqlite3

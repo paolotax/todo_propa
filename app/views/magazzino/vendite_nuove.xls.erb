@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">stato</Data></Cell>        
+        <Cell><Data ss:Type="String">causale</Data></Cell>
+        <Cell><Data ss:Type="String">data</Data></Cell>
+        <Cell><Data ss:Type="String">quantita</Data></Cell>
+        <Cell><Data ss:Type="String">importo</Data></Cell>
+        <Cell><Data ss:Type="String">titolo</Data></Cell>
+        <Cell><Data ss:Type="String">cliente</Data></Cell>
+        <Cell><Data ss:Type="String">provincia</Data></Cell>
+        
+        <Cell><Data ss:Type="String">settore</Data></Cell>
+        <Cell><Data ss:Type="String">editore</Data></Cell>
+       
+      </Row>
+    <% current_user.righe.scarico.dell_anno('2022').each do |riga| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= riga.state %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= riga.causale %></Data></Cell>
+
+        <Cell><Data ss:Type="String"><%= l riga.data, format: :only_date %></Data></Cell>
+
+        <Cell><Data ss:Type="Number"><%= riga.quantita %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= riga.importo %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= riga.titolo %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= riga.cliente.titolo %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= riga.cliente.provincia %></Data></Cell>
+        
+        <Cell><Data ss:Type="String"><%= riga.settore %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= riga.libro.editore %></Data></Cell>
+
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

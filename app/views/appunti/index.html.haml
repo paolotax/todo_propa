@@ -19,10 +19,10 @@
       = paginate @appunti
 
   .side-right.span3.only_desktop 
-
-    .module.white
-      - cache ['wunderground', params[:comune]], expires_in: 2.hours do
-        = render 'forecast', location: @location
+    / # modifica 2020
+    / .module.white
+    /   - cache ['wunderground', params[:comune]], expires_in: 2.hours do
+    /     = render 'forecast', location: @location
 
 
     = render_calendar

@@ -71,6 +71,7 @@ class Riga < ActiveRecord::Base
   # scope :da_pagare,     -> { scarico.with_state(:open, :pronta, :consegnata, :registrata, :da_pagare) }
   scope :non_completa, -> { scarico.with_state(:open, :pronta, :pagata, :consegnata, :da_registrare) }
 
+  scope :completa, -> { scarico.with_state(:fattura, :corrispettivi, :da_pagare)}
 
   state_machine :initial => :open do
 

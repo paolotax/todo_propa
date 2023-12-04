@@ -184,7 +184,7 @@ class DocumentoPdf < Prawn::Document
           text "" ## "Ordine del #{l a.created_at, :format => :short}", size: 8 unless a.nil?
           r =  righe.map do |riga|
             [
-              riga.libro.titolo,
+              riga.libro.titolo + " - " + riga.libro.ean,
               riga.quantita,
               price(riga.prezzo_unitario),
               price(riga.sconto),

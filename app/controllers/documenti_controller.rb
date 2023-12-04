@@ -132,6 +132,8 @@ class DocumentiController < ApplicationController
       righe = righe.order("appunti.id desc")
     end
 
+    #raise righe.to_sql.inspect
+
     if params[:raggruppa]
       righe = righe.group_by(&:cliente)
     else
